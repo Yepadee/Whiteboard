@@ -7,6 +7,7 @@ import java.util.List;
 import org.microboard.whiteboard.services.GroupProjectService;
 import org.microboard.whiteboard.services.ProjectService;
 import org.microboard.whiteboard.services.SoloProjectService;
+import org.microboard.whiteboard.services.UserService;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.project.Project;
@@ -30,6 +31,9 @@ public class ProjectController {
 	
 	@Autowired
 	private SoloProjectService soloProjectService;
+	
+	@Autowired
+	private UserService userService;
 
 	@GetMapping("/projects")
 	public List<Project> getAllMyProjects() {
@@ -55,6 +59,9 @@ public class ProjectController {
 		User user2 = new User();
 		user2.setName("Alex");
 		
+		userService.addUser(user1);
+		userService.addUser(user2);
+		
 		cohort.add(user1);
 		cohort.add(user2);
 		
@@ -70,22 +77,14 @@ public class ProjectController {
 		assessment1.setDescription("A test solo assessment.");
 		assessment1.setMarkerDeadline(new Date());
 		assessment1.setStudentDeadline(new Date());
-
+		
+		project.addAssessment(assessment1);
+		projectService.addProject(project);
+		
 		for (User user : project.getCohort()) {
-			System.out.println("TEST MATE");
-			System.out.println(user.getName());
 			SoloTask task = new SoloTask();
 			task.setAccountable(user);
 			assessment1.addTask(task);
 		}
-		
-		project.addAssessment(assessment1);
-		projectService.addProject(project);
 	}
-	/*
-	@GetMapping("/test")
-	public void addAssessment() {
-		projectService.getAllProjects().get(0).getAssessments().add(new SoloAssessment());
-	}
-	*/
 }

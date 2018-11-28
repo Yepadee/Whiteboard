@@ -2,6 +2,7 @@ package org.microboard.whiteboard.model.assessment;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,7 @@ public class GroupAssessment extends Assessment {
 	@ManyToOne
 	private GroupProject project;
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "assessment")
 	private List<GroupTask> tasks;
 
 	

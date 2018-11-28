@@ -18,7 +18,7 @@ public class SoloAssessment extends Assessment{
 	@ManyToOne
 	private SoloProject project;
 	
-	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "assessment")
 	private List<SoloTask> tasks = new ArrayList<>();
 
 	public SoloProject getProject() {

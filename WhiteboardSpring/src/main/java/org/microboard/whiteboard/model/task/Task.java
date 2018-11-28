@@ -16,7 +16,7 @@ import javax.persistence.MappedSuperclass;
 
 import org.microboard.whiteboard.model.user.User;
 
-@MappedSuperclass
+@Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Task {

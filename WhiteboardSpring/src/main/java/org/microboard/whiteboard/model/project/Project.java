@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -25,15 +27,14 @@ import javax.persistence.DiscriminatorType;
 public abstract class Project {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@JsonIgnore
 	private long id;
 	private String name;
 	private String description;
 
 
-	@OneToOne
+	@ManyToOne
 	private UnitDirector creator;
-	@OneToMany
+	@ManyToMany
 	private List<UnitDirector> helpers;
 	
 	public long getId() {

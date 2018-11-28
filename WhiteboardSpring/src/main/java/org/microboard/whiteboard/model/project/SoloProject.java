@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
@@ -14,10 +15,10 @@ import org.microboard.whiteboard.model.user.User;
 @Entity
 @DiscriminatorValue("solo")
 public class SoloProject extends Project {
-	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "project")
 	private List<SoloAssessment> assessments = new ArrayList<>();
 	
-	@OneToMany
+	@ManyToMany
 	private List<User> cohort = new ArrayList<>();
 	
 	

@@ -15,10 +15,10 @@ public class Group {
 	private long id;
 	private String name;
 	
-	@OneToMany
+	@ManyToMany(mappedBy = "groups")
 	private List<User> members;
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
 	private List<GroupTask> tasks;
 	
 	@ManyToOne

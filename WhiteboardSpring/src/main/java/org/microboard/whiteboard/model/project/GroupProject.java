@@ -3,6 +3,7 @@ package org.microboard.whiteboard.model.project;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -13,10 +14,10 @@ import org.microboard.whiteboard.model.user.Group;
 @Entity
 @DiscriminatorValue("group")
 public class GroupProject extends Project {
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "project")
 	private List<GroupAssessment> assessments = new ArrayList<>();
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "project")
 	private List<Group> groups;
 
 	

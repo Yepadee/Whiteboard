@@ -2,6 +2,7 @@ package org.microboard.whiteboard.model.user;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -16,7 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -34,15 +36,21 @@ public class User {
 	private String password;
 	
 	@ManyToMany
+    @JoinTable(
+            name = "Users_Groups", 
+            joinColumns = { @JoinColumn(name = "user_id") }, 
+            inverseJoinColumns = { @JoinColumn(name = "group_id") }
+        )
 	private List<Group> groups;
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
 	private List<SoloTask> tasks;
 	
 	public User()
 	{
 		
 	}
+	
 	public User(String name,String password)
 	{
 		this.name=name;
