@@ -32,9 +32,10 @@ public class ProjectController {
 	public void testAddProject() {
 		projectService.addProject(new SoloProject());
 	}
-	
+	/*
 	@GetMapping("/test")
 	public void addAssessment() {
-		//projectService.getAllProjects().get(0).getAssessments().add(new SoloAssessment());
+		projectService.getAllProjects().get(0).getAssessments().add(new SoloAssessment());
 	}
+	*/
 }
