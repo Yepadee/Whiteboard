@@ -16,8 +16,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
 
 @Entity
 @Table(name = "Users")
@@ -37,12 +39,21 @@ public class User {
 	@OneToMany
 	private List<SoloTask> tasks;
 	
-	
+	public User()
+	{
+		
+	}
+	public User(String name,String password)
+	{
+		this.name=name;
+		this.password=password;
+				
+	}
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
-		this.id = id;
+		this.id = id; //comment
 	}
 	public String getName() {
 		return name;
@@ -56,6 +67,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	public List<Group> getGroups() {
 		return groups;
 	}
@@ -73,5 +85,5 @@ public class User {
 		task.setAccountable(this);
 		this.tasks.add(task);
 	}
-	
+
 }
