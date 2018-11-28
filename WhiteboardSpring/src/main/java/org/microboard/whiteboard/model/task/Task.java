@@ -12,10 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.MappedSuperclass;
 
 import org.microboard.whiteboard.model.user.User;
 
-@Entity
+@MappedSuperclass
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Task {
@@ -28,8 +29,8 @@ public abstract class Task {
 	@ManyToMany
 	private List<User> markers;
 	
-	@Embedded
-	private Submission submission;
+	//@Embedded
+	//private Submission submission;
 	private String status;
 	
 	public long getId() {
@@ -56,12 +57,12 @@ public abstract class Task {
 	public void setMarkers(List<User> markers) {
 		this.markers = markers;
 	}
-	public Submission getSubmission() {
+	/*public Submission getSubmission() {
 		return submission;
 	}
 	public void setSubmission(Submission submission) {
 		this.submission = submission;
-	}
+	}*/
 	public String getStatus() {
 		return status;
 	}

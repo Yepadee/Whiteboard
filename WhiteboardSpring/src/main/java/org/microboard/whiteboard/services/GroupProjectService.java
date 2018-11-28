@@ -6,7 +6,9 @@ import java.util.List;
 import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.repositories.GroupProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class GroupProjectService {
 	@Autowired
 	private GroupProjectRepository groupProjectRepository;
