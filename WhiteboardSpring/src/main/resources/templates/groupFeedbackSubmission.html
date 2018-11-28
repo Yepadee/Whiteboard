@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+	<link rel="stylesheet" type="text/css"href="./resources/css/style.css">
+	<script type="text/javascript" src="./resources/js/scripts.js"></script>
+</head>
+<body>
+  <div class="sidebar">
+    <img src="./resources/img/logo.png" class="logo">
+    <div class="nav-profile">
+      <div class="profile-image">
+        <img src="./resources/img/no-profile-photo.jpg" alt="profile image" class="img-circle">
+      </div>
+      <div class="text-wrapper">
+        <p class="profile-name">James Wickenden</p>
+        <small class="designation text-muted">User</small>
+        <span class="glyphicon glyphicon-asterisk"></span>
+      </div>
+    </div>
+    <a href="#newProject" class="allProject">Outstanding Tasks</a> <!-- How many project do student have? -->
+
+    <a href="./studentLog.html">
+      <span class="glyphicon glyphicon-edit"></span>
+      <span class="sidebar-element">View Log</span>
+    </a>
+    <a href="./archive.html">
+      <span class="glyphicon glyphicon-briefcase"></span>
+      <span class="sidebar-element">Completed Tasks</span>
+    </a>
+  </div>
+
+
+<div class="right-side">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav navbar-left">
+      <h3>Group Feedback Page <small>- Assignment 5</small></h3>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <h3><small><strong>Task Deadline: </strong>20/10/2022</small></h3>
+    </ul>
+  </div>
+  </nav>
+</div>
+<div class="content">
+  <div class="container outstanding-tasks black-background">
+    <div class="row">
+	    <div class="col-sm-12 table-wrapper">
+	      <h4 class="text-middle"><strong>Description</strong></h4>
+	      <p class="text-middle gray-color">Task Description</p>
+		</div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+    </br>
+      <div class="col-sm-3">
+      <span class="font-bold">Filter:</span>
+      <select class="form-control" id="sel1">
+        <option>View All</option>
+        <option>Group 1</option>
+        <option>Group 2</option>
+        <option>Group 3 </option>
+      </select>
+    </div>
+  </div>
+  <div class="container outstanding-tasks">
+    <div class="row">
+      <div class="col-sm-12 table-wrapper panel-group">
+        <h2> Group 1</h2>
+        <table class="table panel panel-default" id="table">
+          <div class="panel-heading">Submissions</div>
+          <thead>
+            <tr>
+              <th>Submission Name</th>
+              <th>Deadline</th>
+              <th>Uploaded</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Submission Name1</td>
+              <td class="warning">2020-01-11 13:23:44</td>
+              <td class="success">2020-01-11 12:23:44</td>
+              <td><button class="btn btn-danger btn-sm" type="submit">View</button></td>
+            </tr>
+            <tr>
+              <td>Submission Name2</td>
+              <td class="warning">2020-02-12 13:23:44</td>
+              <td class="success">2020-02-11 13:23:44</td>
+              <td><button class="btn btn-danger btn-sm" type="submit">View</button></td>
+            </tr>
+            <tr>
+              <td>Submission Name3</td>
+              <td class="warning">2020-03-10 13:23:44</td>
+              <td class="success">2020-01-10 13:23:44</td>
+              <td><button class="btn btn-danger btn-sm" type="submit">View</button></td>
+            </tr>
+            <tr>
+              <td>Submission Name3</td>
+              <td class="warning">2020-04-11 13:23:44</td>
+              <td class="danger">Not Submitted</td>
+              <td><button class="btn btn-danger btn-sm" type="submit">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="panel-footer feedback">
+          </br>
+          <div class="row">
+            <div class="col-sm-5">
+              <p class="font-bold">Group Mark</p>
+              <div class="group-mark">
+                <form action="./">
+                  <div class="input-group">
+                    <span class="input-group-addon">%</span>
+                    <input type="number" class="form-control" name="mark" min="0" max="25">
+                    <button class="btn-blue" type="submit" placeholder="0">Submit</button>
+                  </div>
+                </form>
+              </div>
+              </br>
+              <form action="./">
+                <label for="txtFeedback">Group Textual Feedback:</label>
+      					<textarea class="form-control" rows="5" id="txtFeedback"></textarea>
+                <button class="btn btn-blue" type="submit">Submit</button>
+                <input class="btn btn-default" type="button" id="lsoadFileXml" value="Upload a feedback file" onclick="document.getElementById('file').click();" />
+                <input type="file" style="display:none;" id="file" name="file"/>
+              </form>
+            </div>
+            <div class="col-sm-7">
+              <div class="table-wrapper panel-group">
+                <table class="table panel panel-default" id="table">
+                  <div class="panel-heading">Group members</div>
+                  <thead>
+                    <tr>
+                      <th>Student Name</th>
+                      <th>Mark</th>
+                      <th>Feedback</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Student Name1</td>
+                      <td class="group-mark">
+                        <form action="./">
+                          <div class="input-group">
+                            <span class="input-group-addon input-xs">%</span>
+                            <input type="number" class="form-control input-xs" name="mark" min="0" max="25">
+                            <button class="btn-blue btn-xs" type="submit" placeholder="0">Submit</button>
+                          </div>
+                        </form>
+                      </td>
+                      <td>
+                        <input class="btn btn-blue btn-sm" type="button" id="lsoadFileXml" value="Upload" onclick="document.getElementById('file').click();" />
+                        <input type="file" class="btn-sm" style="display:none;" id="file" name="file"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Student Name2</td>
+                      <td class="group-mark">
+                        <form action="./">
+                          <div class="input-group">
+                            <span class="input-group-addon input-xs">%</span>
+                            <input type="number" class="form-control input-xs" name="mark" min="0" max="25">
+                            <button class="btn-blue btn-xs" type="submit" placeholder="0">Submit</button>
+                          </div>
+                        </form>
+                      </td>
+                      <td>
+                        <input class="btn btn-blue btn-sm" type="button" id="lsoadFileXml" value="Upload" onclick="document.getElementById('file').click();" />
+                        <input type="file" class="btn-sm" style="display:none;" id="file" name="file"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Student Name3</td>
+                      <td class="group-mark">
+                        <form action="./">
+                          <div class="input-group">
+                            <span class="input-group-addon input-xs">%</span>
+                            <input type="number" class="form-control input-xs" name="mark" min="0" max="25">
+                            <button class="btn-blue btn-xs" type="submit" placeholder="0">Submit</button>
+                          </div>
+                        </form>
+                      </td>
+                      <td>
+                        <input class="btn btn-blue btn-sm" type="button" id="lsoadFileXml" value="Upload" onclick="document.getElementById('file').click();" />
+                        <input type="file" class="btn-sm" style="display:none;" id="file" name="file"/>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Student Name4 </td>
+                      <td class="group-mark">
+                        <form action="./">
+                          <div class="input-group">
+                            <span class="input-group-addon input-xs">%</span>
+                            <input type="number" class="form-control input-xs" name="mark" min="0" max="25">
+                            <button class="btn-blue btn-xs" type="submit" placeholder="0">Submit</button>
+                          </div>
+                        </form>
+                      </td>
+                      <td>
+                        <input class="btn btn-blue btn-sm" type="button" id="lsoadFileXml" value="Upload" onclick="document.getElementById('file').click();" />
+                        <input type="file" class="btn-sm" style="display:none;" id="file" name="file"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        </div>
+    </div>
+  </div>
+	 </div>
+</body>
+</html>

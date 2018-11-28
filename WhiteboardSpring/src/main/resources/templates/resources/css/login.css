@@ -1,0 +1,90 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300);
+  
+	  body{
+	    font-size: 18px;
+	    background: url(../img/login/background.jpg);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		height: auto;
+		min-height: 710px;
+	 }
+	 header p{
+	 font-size:23px;
+	 font-family:Palatino Linotype;
+	 }
+	.jumbotron {
+	    background-color: rgba(0,0,0,0.3);
+	    color: #fff;
+	    padding: 35px 25px;
+	    font-family: Montserrat, sans-serif;
+	  }
+	  .loginForm{
+		padding: 50px 50px;
+		background:rgba(87,0,0,0.72);
+		border-radius: 25px;
+		animation: slideInFromLeft 2s;
+	    -moz-animation: slideInFromLeft 2s; /* Firefox */
+    	-webkit-animation: slideInFromLeft 2s; /* Safari and Chrome */
+	    -o-animation: slideInFromLeft 4s; /* Opera */
+	  }
+ 	  .loginForm h2{
+ 		padding-bottom:50px;
+		color:#fff;
+ 	  }
+ 	  .loginForm label{
+ 		font-weight:normal;
+ 		color:#fff;
+ 		font-size=14px;
+ 	  }
+ 	  .loginForm .rememberMe{
+ 		color:#b01c2e;
+ 	  }
+ 	  .loginForm .checkbox{
+		font-size:13px;
+ 	  }
+ 	  .loginForm a{
+ 	  font-size:15px;
+ 	  }
+ 	  .loginForm .btn-danger{
+ 	  	background:#000;
+ 	  	padding-left:35px;
+ 	  	padding-right:35px;
+ 	  }
+   	  .loginForm .btn-danger:hover,.loginForm .btn-danger:focus{
+   	   	background:#b01c2e;
+   	  }
+   	  
+   	  @keyframes slideInFromLeft {
+	    0% {
+    		transform: translateX(-100%);
+	  	}
+	  	100% {
+	    transform: translateX(0);
+	  	}
+	  }
+	  @-moz-keyframes slideInFromLeft { /* Firefox */
+	    0% {
+	    transform: translateX(-100%);
+	  	}
+	  	100% {
+	    transform: translateX(0);
+  		}
+	  }
+	  @-webkit-keyframes slideInFromLeft { /* Safari and Chrome */
+	    0% {
+    	transform: translateX(-100%);
+  		}
+  		100% {
+    	transform: translateX(0);
+  		}
+  	}
+	  @-o-keyframes slideInFromLeft { /* Opera */
+	    0% {
+    	transform: translateX(-100%);
+  		}
+  		100% {
+    	transform: translateX(0);
+  		}
+	  }
