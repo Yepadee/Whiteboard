@@ -1,5 +1,7 @@
 package org.microboard.whiteboard.model.user;
 
+import java.util.List;
+
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 
 @Entity
 @Table(name = "Users")
@@ -22,6 +25,9 @@ public class User {
 	private long id;
 	private String name;
 	private String password;
+	
+	@ManyToMany
+	private List<Group> groups;
 	
 	
 	public long getId() {
@@ -42,4 +48,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public List<Group> getGroups() {
+		return groups;
+	}
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
+	}
+	
 }
