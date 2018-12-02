@@ -8,8 +8,6 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import org.microboard.whiteboard.model.task.GroupTask;
 import org.microboard.whiteboard.model.task.SoloTask;
 
 import javax.persistence.GeneratedValue;
