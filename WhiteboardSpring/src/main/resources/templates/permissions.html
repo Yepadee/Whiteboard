@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+	<link rel="stylesheet" type="text/css"href="./resources/css/style.css">
+	<script type="text/javascript" src="./resources/js/scripts.js"></script>
+</head>
+<body>
+
+  <div class="sidebar">
+    <img src="./resources/img/logo.png" class="logo">
+    <div class="nav-profile">
+      <div class="profile-image">
+        <img src="./resources/img/no-profile-photo.jpg" alt="profile image" class="img-circle">
+      </div>
+      <div class="text-wrapper">
+        <p class="profile-name">Aydin Nassehi</p>
+        <small class="designation text-muted">Unit Director</small>
+        <span class="glyphicon glyphicon-asterisk"></span>
+      </div>
+    </div>
+    <a href="./newProject.html" class="newProject">New Project +</a>
+    <a class="active" href="#controlPanel">
+      <span class="glyphicon glyphicon-globe"></span>
+      <span class="sidebar-element">View Projects</span>
+    </a>
+    <a href="./log.html">
+      <span class="glyphicon glyphicon-edit"></span>
+      <span class="sidebar-element">View Log</span>
+    </a>
+    <a href="#archive">
+      <span class="glyphicon glyphicon-briefcase"></span>
+      <span class="sidebar-element">Archive</span>
+    </a>
+    <a href="#controlPanel">
+      <span class="glyphicon glyphicon-cog"></span>
+      <span class="sidebar-element">Manage permissions</span>
+    </a>
+  </div>
+
+<div class="right-side">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav navbar-left">
+      <li class="active">
+        <a href="./main_unitDirector.html"><span class="glyphicon glyphicon-home"></span> Home</a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown user-wrapper">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hello, Aydin Nassehi
+        <span class="profile-image">
+          <img src="./resources/img/no-profile-photo.jpg" alt="profile image" class="img-circle">
+        </span>
+        <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="manageAccounts">Manage Accounts</a></li>
+          <li><a href="changePassword">Change Password</a></li>
+          <li class="divider"></li>
+          <li><a href="signOut">Sign Out</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  </nav>
+</div>
+	<div class="content">
+		<div class="container content-wrapper">
+		<div class="row">
+			<div class="col-xs-12">
+			<h5 class="page-header">Aydin's Log</h5>
+				<div class="panel panel-default" id="tables">
+					<div class="panel-heading"  id="flip1">
+						<a href="#">
+							<span class="glyphicon glyphicon-plus"></span>
+						</a> My Actions
+					</div>
+					<div id="panel1">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Time</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<c:forEach var="i" begin="1" end="3">
+									<tr>
+										<td>03/11/2018 13:11</td>
+										<td>Submitted <a>"Documentation.pdf"</a> to <a>"Assessment 5"</a></td>
+									</tr>
+								</c:forEach>
+
+								<tr>
+									<td>03/11/2018 13:11</td>
+									<td>Submitted <a>"Documentation.pdf"</a> to <a>"Assessment 5"</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="container content-wrapper">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel panel-default" id="tables">
+						<div class="panel-heading"  id="flip2">
+							<a href="#">
+								<span class="glyphicon glyphicon-plus"></span>
+							</a> Student Actions
+						</div>
+						<div id="panel2">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Project</th>
+									<th>Time</th>
+									<th>User</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<c:forEach var="i" begin="1" end="3">
+									<tr>
+										<td>Project1</td>
+										<td>03/11/2018 13:11</td>
+										<td>James Hawkins</td>
+										<td>Submitted <a>Documentation.pdf</a> to <a>Assessment 5</a></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container content-wrapper">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel panel-default" id="tables">
+						<div class="panel-heading"  id="flip3">
+							<a href="#">
+								<span class="glyphicon glyphicon-plus"></span>
+							</a> All User Actions
+						</div>
+						<div id="panel3">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Project</th>
+									<th>Time</th>
+									<th>User</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<c:forEach var="i" begin="1" end="3">
+									<tr>
+										<td>Project1</td>
+										<td>03/11/2018 13:11</td>
+										<td>James Hawkins</td>
+										<td>Submitted <a>Documentation.pdf</a> to <a>Assessment 5</a></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+ 	 </div>
+</body>
+</html>
