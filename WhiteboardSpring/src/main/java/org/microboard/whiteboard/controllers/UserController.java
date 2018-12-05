@@ -44,7 +44,8 @@ public class UserController {
 		userService.updateUser(id,newUser);
 	}
 	
-	@GetMapping("/ViewAllUsers")
+	//TODO:Make so only unit director can make this call.
+	@GetMapping("/users")
 	public List<User> getAllUsers() {
 		return userService.getAllUsers();
 	}
