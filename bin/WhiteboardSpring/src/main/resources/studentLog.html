@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+	<link rel="stylesheet" type="text/css"href="./resources/css/style.css">
+	<script type="text/javascript" src="./resources/js/scripts.js"></script>
+</head>
+<body>
+  <div class="sidebar">
+    <img src="./resources/img/logo.png" class="logo">
+    <div class="nav-profile">
+      <div class="profile-image">
+        <img src="./resources/img/no-profile-photo.jpg" alt="profile image" class="img-circle">
+      </div>
+      <div class="text-wrapper">
+        <p class="profile-name">James Wickenden</p>
+        <small class="designation text-muted">User</small>
+        <span class="glyphicon glyphicon-asterisk"></span>
+      </div>
+    </div>
+    <a href="./main_student.html" class="allProject">Outstanding Tasks</a> <!-- How many project do student have? -->
+
+    <a href="./studentLog.html">
+      <span class="glyphicon glyphicon-edit"></span>
+      <span class="sidebar-element">View Log</span>
+    </a>
+    <a href="./archive.html">
+      <span class="glyphicon glyphicon-briefcase"></span>
+      <span class="sidebar-element">Completed Tasks</span>
+    </a>
+  </div>
+
+  <div class="content">
+		<div class="container content-wrapper">
+			<div class="row">
+				<div class="col-xs-12">
+				<h5 class="page-header font-bold">James's Log</h5>
+					<div class="panel panel-default" id="tables">
+						<div class="panel-heading">
+							<a href="#">
+								<span class="glyphicon glyphicon-plus"></span>
+							</a> My Actions
+						</div>
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Time</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<c:forEach var="i" begin="1" end="3">
+									<tr>
+										<td>03/11/2018 13:11</td>
+										<td>Submitted <a>"Documentation.pdf"</a> to <a>"Assessment 5"</a></td>
+									</tr>
+								</c:forEach>
+
+								<tr>
+									<td>03/11/2018 13:11</td>
+									<td>Submitted <a>"Documentation.pdf"</a> to <a>"Assessment 5"</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	 </div>
+</body>
+</html>

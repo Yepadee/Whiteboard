@@ -1,0 +1,216 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="org.apache.commons.fileupload.FileItem
+				,org.apache.commons.io.FilenameUtils
+				,org.apache.commons.fileupload.disk.DiskFileItemFactory
+				,org.apache.commons.fileupload.servlet.ServletFileUpload
+				,java.util.List
+				,java.util.ArrayList"%>
+<%@ page isELIgnored="false" %>
+
+<%@ include file="./layoutHeader_student.jsp" %>
+
+<style>
+.mb-lg {
+	margin-bottom: 100px;
+}
+.mb-md {
+	margin-bottom: 100px;
+}
+.well {
+	background-color: white;
+}
+</style>
+</head>
+
+	<%
+		try {
+			ServletFileUpload sf = new ServletFileUpload(new DiskFileItemFactory());
+			List<FileItem> multiFiles = sf.parseRequest(request);
+
+			List<String> fileNames = new ArrayList<>();
+			for (FileItem fi : multiFiles) {
+				fileNames.add(FilenameUtils.getName(fi.getName()));
+			}
+
+			session.setAttribute("feedbackFileNames", fileNames);
+		} catch (Exception e) {
+
+		} finally {
+
+		}
+	%>
+<div class="right-side">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav navbar-left">
+      <h3>Group Feedback Page</h3>
+    </ul>
+  </div>
+  </nav>
+</div>
+<div class="content">
+	<div class="container content-wrapper">
+		<div class="col-xs-12 text-center">
+			<h1 class="page-header">
+				<small>(Assignment 5)</small>
+			</h1>
+		</div>
+		<c:forEach var="i" begin="1" end="3">
+			<h4>
+				Group ${i} <a href="#group${i}Feedback" data-toggle="collapse"
+					class="btn btn-primary btn-sm"> <span class="caret"></span></a>
+			</h4>
+			<hr>
+			<div id="group${i}Feedback" class="collapse well">
+				<div class="row">
+					<div class="col-xs-12">
+
+						<div class="panel panel-default" id="tables">
+							<div class="panel-heading">Submissions</div>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>FileName</th>
+										<th>Date Uploaded</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<c:forEach var="i" begin="1" end="3">
+										<tr>
+											<td>Project Design 1</td>
+											<td>31/10/2018 18:54:47</td>
+											<td><a href="#" class="btn btn-primary btn-xs">View</a></td>
+										</tr>
+									</c:forEach>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="panel panel-default" id="tables">
+							<div class="panel-heading">Feedback Files</div>
+							<c:if test="${feedbackFileNames != null}">
+
+								<table class="table">
+									<thead>
+										<tr>
+											<th>File</th>
+											<th>Date Uploaded</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${feedbackFileNames}" var="feedbackFileName">
+											<tr>
+												<td>${feedbackFileName}</td>
+												<td>31/10/2018 18:54:47</td>
+												<td><a href="#" class="btn btn-danger btn-xs">Remove</a></td>
+											</tr>
+										</c:forEach>
+
+									</tbody>
+								</table>
+							</c:if>
+							<button type="button"
+								class="btn btn-secondary btn-block glyphicon glyphicon-plus"
+								data-toggle="modal" title="Add a file"
+								data-target="#exampleModal"></button>
+						</div>
+
+						<div class="modal fade" id="exampleModal" tabindex="-1"
+							role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h3 class="modal-title" id="exampleModalLabel">Feedback
+											Upload</h3>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<form name="feedbackFileForm"
+										action="groupFeedbackSubmission.jsp" method="post"
+										enctype="multipart/form-data">
+										<div class="modal-body">
+											<div class="form-group">
+												<label for="feedbackFiles">Upload Feedback</label> <input
+													type="file" name="feedbackFiles" id="feedbackFiles"
+													multiple>
+												<p class="help-block">Select the file you would like to
+													upload.</p>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-dismiss="modal">Close</button>
+											<input type="submit" class="btn btn-primary" value="Upload">
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="panel panel-default" id="tables">
+							<div class="panel-heading">Group Members</div>
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>User Name</th>
+										<th>Full Name</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<c:forEach var="i" begin="1" end="4">
+										<tr>
+											<td>jh17437</td>
+											<td>James Hawkins</td>
+											<td><a href="feedbackSubmission.jsp"
+												class="btn btn-primary btn-xs">Manage Feedback</a></td>
+										</tr>
+									</c:forEach>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="txtFeedback">Textual Feedback:</label>
+							<textarea class="form-control" rows="5" id="txtFeedback"></textarea>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label for="mark">Mark:</label>
+							<input type="number" name="mark" min="0" max="21">
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</c:forEach>
+
+		<div class="col-xs-12 text-center mb-md">
+			<a href="main.jsp" type="button" class="btn btn-primary btn-lg"
+				title="Submit Feedback">Submit Feedback</a>
+		</div>
+	</div>
+<%@ include file="./layoutFooter.jsp" %>

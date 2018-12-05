@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css"href="./resources/css/login.css">
+</head>
+<body>
+<header>
+<div class="container-fluid">
+  <div class="row">
+  	<div class="jumbotron text-center">
+	  <h1>Whiteboard</h1>
+	  <p><img src="./resources/img/login/logo.png" width="40px" height="40px"> The University of Bristol</p>
+	</div>
+    <br>
+  </div>
+</div>
+</header>
+
+<div class="container loginForm col-sm-4 col-sm-push-4">
+  <h2>Single Sign-On</h2>
+  <form class="form-horizontal" action="/action_page.php">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="username">Username: </label>
+      <div class="col-sm-9 col-sm-push-1">
+        <input type="text" class="form-control" id="username" placeholder="Enter your username" name="username">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password: </label>
+      <div class="col-sm-9 col-sm-push-1">
+        <input type="password" class="form-control" id="pwd" placeholder="Enter your password" name="pwd">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-10">
+        <div class="checkbox">
+          <label class="rememberMe"><input type="checkbox" name="remember"> Remember me</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-10">
+        <button type="submit" class="btn btn-danger">Login</button>
+      </div>
+    </div>
+    <a href="https://www.bris.ac.uk/it-services/contacts/passwordreset.html">Forgotten your password?</a>
+  </form>
+</div>
+</body>
+</html>
