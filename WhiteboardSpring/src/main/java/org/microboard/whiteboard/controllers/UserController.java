@@ -5,6 +5,7 @@ import java.util.List;
 import org.microboard.whiteboard.services.UserService;
 import org.microboard.whiteboard.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,8 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.stereotype.Controller;
 
-@RestController
+@Controller
 public class UserController {
 	
 	@Autowired
@@ -57,17 +59,16 @@ public class UserController {
 	}
 	
 	@GetMapping("/GetUser/{id}")
-	public User getUser(@PathVariable Long id)
-	{
+	public User getUser(@PathVariable Long id) {
 		return userService.getUser(id);
 	}
 	
 	
-	
-	/*
-	@GetMapping("/test")
-	public void addAssessment() {
-		projectService.getAllProjects().get(0).getAssessments().add(new SoloAssessment());
+	@GetMapping("/users/tasks")
+	public String getUserTasks(Model model) {
+		User newUser = new User();
+		newUser.setName("Alex");
+		model.addAttribute("user", newUser);
+		return "test";
 	}
-	*/
 }
