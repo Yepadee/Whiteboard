@@ -48,11 +48,24 @@ body {
 .btn-silver{
   background-color: red;
 }
-
 .btn-blue{
   border: 1px solid #0696b7;
   color:#fff;
   background-color: #0696b7;
+}
+.btn-blue:focus,
+.btn-blue:hover{
+  color: #fff;
+  background-color: #386c78;
+}
+.btn-red:focus,
+.btn-red:hover {
+  background-color: #8a0707;
+  color: #fff;
+}
+.btn-red{
+    background-color: #570000;
+    color: #fff;
 }
 /* End of Buttons */
 
@@ -83,6 +96,9 @@ body {
 }
 .hint{
   color: #7a7a7a;
+}
+.dottedLine{
+  border-top: dotted 1px;
 }
 /* End of General style*/
 
@@ -317,4 +333,12 @@ body {
   background-color:#f5f5f5;
   border-color:#ddd;
   font-weight: bold;
+}
+
+/*Assignment Section*/
+.assignment-background{
+  background-color: #f5f5f5;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
