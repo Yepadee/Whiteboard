@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+  <link rel="stylesheet" type="text/css"href="./resources/css/style.css">
+  <script type="text/javascript" src="./resources/js/scripts.js"></script>
+</head>
+<body>
+
+  <div class="sidebar">
+    <img src="./resources/img/logo.png" class="logo">
+    <div class="nav-profile">
+      <div class="profile-image">
+        <img src="./resources/img/no-profile-photo.jpg" alt="profile image" class="img-circle">
+      </div>
+      <div class="text-wrapper">
+        <p class="profile-name">Aydin Nassehi</p>
+        <small class="designation text-muted">Unit Director</small>
+        <span class="glyphicon glyphicon-asterisk"></span>
+      </div>
+    </div>
+    <a href="./newProject.html" class="newProject">New Project +</a>
+    <a class="active" href="#controlPanel">
+      <span class="glyphicon glyphicon-globe"></span>
+      <span class="sidebar-element">View Projects</span>
+    </a>
+    <a href="./log.html">
+      <span class="glyphicon glyphicon-edit"></span>
+      <span class="sidebar-element">View Log</span>
+    </a>
+    <a href="#archive">
+      <span class="glyphicon glyphicon-briefcase"></span>
+      <span class="sidebar-element">Archive</span>
+    </a>
+    <a href="#controlPanel">
+      <span class="glyphicon glyphicon-cog"></span>
+      <span class="sidebar-element">Manage permissions</span>
+    </a>
+  </div>
+
+  <div class="right-side">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav navbar-left">
+        <h3>Add New Project <small>- Group Project</small> </h3>
+      </ul>
+    </div>
+    </nav>
+  </div>
+
+  <div class="content">
+    <div class="container outstanding-tasks">
+      <div class="row">
+          <div class="col-sm-12 table-wrapper">
+            <form class="form-horizontal" action="./newProjectNext.html">
+            </br>
+              <div class="form-group">
+                <label class="control-label col-sm-2" for="projectName">Project Name:</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" id="projectName" placeholder="Enter a project name" name="projectName">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label  class="control-label col-sm-2" for="description">Description:</label>
+                <div class="col-sm-8">
+                  <textarea class="form-control" rows="5" id="description" placeholder="Add a description for the project"></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="radio col-sm-2 col-sm-push-2">
+                  <label><input type="radio" name="groupOrSoloProject" checked>Group Project</label>
+                </div>
+                <div class="radio col-sm-2 col-sm-push-2">
+                  <label><input type="radio" name="groupOrSoloProject">Solo Project</label>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <hr class="dottedLine col-sm-8 col-sm-push-2"/>
+              </div>
+
+              <div class="form-group">
+                <div class="col-sm-3 col-sm-push-2">
+                  <label for="sourceSelect">Select Cohort:</label>
+                  <select class="form-control" name="sourceSelect" id="sourceSelect" size="3"  onclick="">
+                    <option>COMS20001</option>
+                    <option>COMS20005</option>
+                    <option>COMS20805</option>
+                    <option>COMS20756</option>
+                    <option>COMS20320</option>
+                    <option>COMS20458</option>
+                  </select>
+                </div>
+                <div class="col-sm-1 col-sm-push-2">
+                  </br>
+                  <input class="btn btn-blue" type="button" name="forward" id="forward" value=">>"/>
+                  </br></br>
+                  <input class="btn btn-blue" type="button" name="back" id="back" value="<<"/>
+                </div>
+                <div class="col-sm-3 col-sm-push-2">
+                  <label for="destinationSelect">Selected Cohort:</label>
+                  <select class="form-control" name="destinationSelect" id="destinationSelect" multiple="multiple" size="3" onclick="">
+                  <!--SELECTED LIST WILL BE HERE-->
+                  </select>
+                </div>
+              </div>
+
+              </br>
+              <div class="form-group">
+                <hr class="dottedLine col-sm-8 col-sm-push-2"/>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-blue">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+    	    <div class="modal fade" id="view1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    			<div class="modal-dialog" role="document">
+    				<div class="modal-content">
+    					<div class="modal-header">
+    						<h3 class="modal-title" id="exampleModalLabel">Portfolio A Upload</h3>
+    						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    							<span aria-hidden="true">&times;</span>
+    						</button>
+    					</div>
+    					<div class="modal-body">
+    						<div class="form-group">
+    							<label for="feedbackFile">Upload Feedback</label> <input type="file" id="feedbackFile">
+    							<p class="help-block">Choose the file to upload.</p>
+    						</div>
+    					</div>
+
+    					<div class="modal-footer">
+    						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    						<button type="button" class="btn btn-danger">Upload</button>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+        </div>
+      </div>
+   	 </div>
+  </body>
+  </html>
