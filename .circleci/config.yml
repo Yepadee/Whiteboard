@@ -1,7 +1,7 @@
 version: 2 # use CircleCI 2.0
 jobs: # a collection of steps
     build: # runs not using Workflows must have a `build` job as entry point
-        working_directory: ~/WhiteboardSpring/WhiteboardSpring # directory where steps will run
+        working_directory: ~/Whiteboard/WhiteboardSpring # directory where steps will run
         
         docker:
             - image: circleci/openjdk:8-jdk-browsers
@@ -10,14 +10,14 @@ jobs: # a collection of steps
           - checkout
 
           - restore_cache:
-              key: WhiteboardSpring/WhiteboardSpring-{{ checksum "pom.xml" }}
+              key: Whiteboard/WhiteboardSpring-{{ checksum "pom.xml" }}
           
           - run: mvn dependency:go-offline
           
           - save_cache:
               paths:
                 - ~/.m2
-              key: WhiteboardSpring/WhiteboardSpring-{{ checksum "pom.xml" }}
+              key: Whiteboard/WhiteboardSpring-{{ checksum "pom.xml" }}
           
           - run: mvn package
           
