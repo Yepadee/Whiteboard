@@ -1,104 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-  <link rel="stylesheet" type="text/css"href="./resources/css/style.css">
+  <link rel="stylesheet" type="text/css"href="./css/style.css">
   <script type="text/javascript" src="./resources/js/scripts.js"></script>
 </head>
 <body>
   <div class="sidebar">
-    <img src="./resources/img/logo.png" class="logo">
+    <img src="./img/logo.png" class="logo">
     <div class="nav-profile">
       <div class="profile-image">
-        <img src="./resources/img/no-profile-photo.jpg" alt="profile image" class="img-circle">
+        <img src="./img/no-profile-photo.jpg" alt="profile image" class="img-circle">
       </div>
       <div class="text-wrapper">
-        <p class="profile-name">James Wickenden</p>
+        <p class="profile-name"><span th:text="user.name"/></p>
         <small class="designation text-muted">User</small>
         <span class="glyphicon glyphicon-asterisk"></span>
       </div>
     </div>
-    <a href="#newProject" class="allProject">Outstanding Tasks</a> <!-- How many project do student have? -->
-
-    <a href="./studentLog.html">
+    <a href="./log.html">
       <span class="glyphicon glyphicon-edit"></span>
       <span class="sidebar-element">View Log</span>
     </a>
-    <a href="./archive.html">
+    <a href="#archive">
       <span class="glyphicon glyphicon-briefcase"></span>
       <span class="sidebar-element">Completed Tasks</span>
     </a>
   </div>
 
-  <div class="right-side">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <ul class="nav navbar-nav navbar-left">
-        <h3>Outstanding Tasks</h3>
-      </ul>
-    </div>
-    </nav>
+<div class="right-side">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav navbar-left">
+      <li class="active">
+        <a href="./main_unitDirector.html"><span class="glyphicon glyphicon-home"></span> Home</a>
+      </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown user-wrapper">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hello, <span th:text="user.name"/>
+        <span class="profile-image">
+          <img src="./img/no-profile-photo.jpg" class="img-circle">
+        </span>
+        <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="manageAccounts">Manage Accounts</a></li>
+          <li><a href="changePassword">Change Password</a></li>
+          <li class="divider"></li>
+          <li><a href="signOut">Sign Out</a></li>
+        </ul>
+      </li>
+    </ul>
   </div>
+  </nav>
+</div>
   <div class="content">
     <div class="container outstanding-tasks">
       <div class="row">
         <div class="col-sm-8 table-wrapper">
+             
           <table class="table panel panel-default" id="table">
           <h5>Outstanding Tasks</h5>
             <thead>
               <tr>
-                <th>Project</th>
-                <th>Task Name</th>
+                <th>Id</th>
+                <th>Status</th>
                 <th>Deadline</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Individual Feedback</td>
-                <td class="warning">20.10.2020</td>
+              <tr th:each="task: ${tasks}">
+                <td><span th:text="${task.id}"/></td>
+                <td><span th:text="${task.status}"/></td>
+                <td class="warning">Date Here</td>
                 <td><a href="feedbackSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Group Feedback</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="groupFeedbackSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Reconcile Feedback</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Portfolio A</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Portfolio A</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Portfolio A</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Portfolio A</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
               </tr>
             </tbody>
           </table>

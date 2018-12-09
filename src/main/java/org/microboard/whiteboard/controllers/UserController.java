@@ -72,4 +72,19 @@ public class UserController {
 		model.addAttribute("user", newUser);
 		return "test";
 	}
+	
+	@GetMapping("/main_student")
+	public String getMainTasks(Model model) {
+		User newUser = new User();
+		newUser.setName("Alex");
+		model.addAttribute("user", newUser);
+		return "main_student";
+	}
+	@GetMapping("/main_unitDirector")
+	public String getDirectorTasks(Model model) {
+		User newUser = new User();
+		newUser.setName("Alex");
+		model.addAttribute("user", newUser);
+		return "main_unitDirector";
+	}
 }
