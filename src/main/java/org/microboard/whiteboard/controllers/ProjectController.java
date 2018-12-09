@@ -14,6 +14,7 @@ import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.SoloProject;
 import org.microboard.whiteboard.model.task.SoloTask;
+import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,10 +67,10 @@ public class ProjectController {
 	@GetMapping("/test")
 	public void testAddProject() {
 		List<User> cohort = new ArrayList<>();
-		User user1 = new User();
+		User user1 = new Student();
 		user1.setName("James");
 		
-		User user2 = new User();
+		User user2 = new Student();
 		user2.setName("Alex");
 		
 		userService.addUser(user1);

@@ -3,6 +3,7 @@ package org.microboard.whiteboard.controllers;
 import java.util.List;
 
 import org.microboard.whiteboard.services.UserService;
+import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -26,8 +27,8 @@ public class UserController {
 //		User u=new User();
 //		u.setName("ABCD");
 //		u.setPassword("12345");
-		userService.addUser(new User("A","12345"));
-		userService.addUser(new User("B","12345"));
+		userService.addUser(new Student("A","12345"));
+		userService.addUser(new Student("B","12345"));
 //		userService.addUser(new User("C","12345"));
 //		userService.addUser(new User("D","12345"));
 //		userService.addUser(new User("E","12345"));
@@ -67,7 +68,7 @@ public class UserController {
 	
 	@GetMapping("/users/tasks")
 	public String getUserTasks(Model model) {
-		User newUser = new User();
+		User newUser = new Student();
 		newUser.setName("Alex");
 		model.addAttribute("user", newUser);
 		return "test";
@@ -75,14 +76,14 @@ public class UserController {
 	
 	@GetMapping("/main_student")
 	public String getMainTasks(Model model) {
-		User newUser = new User();
+		User newUser = new Student();
 		newUser.setName("Alex");
 		model.addAttribute("user", newUser);
 		return "main_student";
 	}
 	@GetMapping("/main_unitDirector")
 	public String getDirectorTasks(Model model) {
-		User newUser = new User();
+		User newUser = new Student();
 		newUser.setName("Alex");
 		model.addAttribute("user", newUser);
 		return "main_unitDirector";

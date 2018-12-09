@@ -25,8 +25,7 @@ import javax.persistence.OneToMany;
 @Table(name = "Users")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="perms", discriminatorType=DiscriminatorType.STRING)
-@DiscriminatorValue("user")
-public class User {
+public abstract class User {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
@@ -44,17 +43,7 @@ public class User {
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
 	private List<SoloTask> tasks;
 	
-	public User()
-	{
-		
-	}
 	
-	public User(String name,String password)
-	{
-		this.name=name;
-		this.password=password;
-				
-	}
 	public long getId() {
 		return id;
 	}
