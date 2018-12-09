@@ -2,6 +2,7 @@ package org.microboard.whiteboard.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.UserRepository;
@@ -66,6 +67,42 @@ public class UserService {
 //			}
 //		}
 		userRepository.deleteById(id);
+		
+	}
+	public User login(String username, String password) {
+		List<User> u=new ArrayList<>();
+		userRepository.findAll().forEach(u::add);
+		for(User user : u)
+		{
+			if(user.getName().equals(username) && user.getPassword().equals(password))
+			{
+				return user;
+			}
+		}
+		return new User();
+		
+	}
+//	public User loginUser(String username, String password)
+//	{
+//		User thisuser=new User();
+//		List<User> u=new ArrayList<>();
+//		userRepository.findAll().forEach(u::add);
+//		for(User user : u)
+//		{
+//			if(user.getName().equals(username) && user.getPassword().equals(password))
+//			{
+//				thisuser=user;
+//			}
+//		}
+//		if(thisuser!=null && thisuser.getPassword().equals(password)) 
+//		{
+//			return thisuser;
+//		}
+//		return null; 
+//	}
+	public List<User> getByName(String name)
+	{
+		return userRepository.findByName(name);
 		
 	}
 } 
