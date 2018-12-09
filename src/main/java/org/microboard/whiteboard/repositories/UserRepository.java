@@ -7,6 +7,6 @@ import org.microboard.whiteboard.model.user.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
-	List<User> findByName(String name);
+	Optional<User> findByName(String name);
 	
 }

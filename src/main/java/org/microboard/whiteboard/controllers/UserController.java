@@ -96,10 +96,10 @@ public class UserController {
 	}
 
 	@PostMapping("/signUp")
-	public String signup(@ModelAttribute(name="signupForm") User user, Model model)
+	public String signup(@ModelAttribute(name="signupForm") Student user, Model model)
 	{
 		userService.addUser(user);
-		return "login";
+		return "signUp";
 
 	}
 	@GetMapping("/login")
@@ -109,20 +109,14 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public String login(@ModelAttribute(name="loginForm") User user, Model model)
+	public String login(@ModelAttribute(name="loginForm") Student user, Model model)
 	{
 		String username=user.getName();
 		String password=user.getPassword();
-		List<User> maybeUser=userService.getByName(username);
-		System.out.println(maybeUser.size());
-		for(User uss : maybeUser)
+		Optional<User> maybeUser=userService.getByName(username);
+		if(maybeUser.isPresent())
 		{
-			System.out.println(uss.getName());
-		}
-		if(!maybeUser.isEmpty())
-		{
-			User foundUser = maybeUser.get(1);
-			//				System.out.println(foundUser.getName());
+			User foundUser = maybeUser.get();
 			if(foundUser.getPassword().equals(password))
 			{
 				model.addAttribute("message", "Wellcomeeee");
