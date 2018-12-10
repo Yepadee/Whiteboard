@@ -17,9 +17,8 @@
         <img src="./img/no-profile-photo.jpg" alt="profile image" class="img-circle">
       </div>
       <div class="text-wrapper">
-        <p class="profile-name"><span th:text="user.name"/></p>
-        <small class="designation text-muted">User</small>
-        <span class="glyphicon glyphicon-asterisk"></span>
+        <p class="profile-name" th:text="${user.name}">
+        <p class="designation text-muted">User <span class="glyphicon glyphicon-asterisk"></span></p>
       </div>
     </div>
     <a href="./log.html">
@@ -37,13 +36,13 @@
   <div class="container-fluid">
     <ul class="nav navbar-nav navbar-left">
       <li class="active">
-        <a href="./main_unitDirector.html"><span class="glyphicon glyphicon-home"></span> Home</a>
+        <a href="./main_unitDirector"><span class="glyphicon glyphicon-home"></span> Home</a>
       </li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown user-wrapper">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hello, <span th:text="user.name"/>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hello, <span th:text="${user.name}"/>
         <span class="profile-image">
           <img src="./img/no-profile-photo.jpg" class="img-circle">
         </span>

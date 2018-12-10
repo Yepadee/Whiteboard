@@ -1,11 +1,21 @@
 package org.microboard.whiteboard.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.microboard.whiteboard.services.UserService;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.User;
+
+import org.microboard.whiteboard.model.task.Task;
+import org.microboard.whiteboard.model.project.SoloProject;
+import org.microboard.whiteboard.model.assessment.SoloAssessment;
+import org.microboard.whiteboard.model.task.SoloTask;
+import org.microboard.whiteboard.model.project.GroupProject;
+import org.microboard.whiteboard.model.assessment.GroupAssessment;
+import org.microboard.whiteboard.model.task.GroupTask;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -79,6 +89,25 @@ public class UserController {
 	public String getMainTasks(Model model) {
 		User newUser = new Student();
 		newUser.setName("Alex");
+		List<Task> tasks = new ArrayList<>();
+		
+		SoloProject s = new SoloProject();
+		GroupProject g = new GroupProject();
+		for (SoloAssessment sA : s.getAssessments()) {
+			for (SoloTask sT : sA.getTasks())  { tasks.add(sT); } }
+		for (GroupAssessment gA : g.getAssessments()) {
+			for (GroupTask gT : gA.getTasks()) { tasks.add(gT); } }
+		
+		SoloTask x = new SoloTask();
+		x.setId(100);
+		x.setStatus("Marks Released");
+		tasks.add(x);
+		GroupTask y = new GroupTask();
+		y.setId(101);
+		y.setStatus("Not active");
+		tasks.add(y);
+		
+		model.addAttribute("tasks", tasks);
 		model.addAttribute("user", newUser);
 		return "main_student";
 	}
