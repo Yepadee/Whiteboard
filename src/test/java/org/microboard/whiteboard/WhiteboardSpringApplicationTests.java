@@ -1,5 +1,7 @@
 package org.microboard.whiteboard;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,6 +13,7 @@ public class WhiteboardSpringApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		assertEquals(true, true);
 	}
 
 }

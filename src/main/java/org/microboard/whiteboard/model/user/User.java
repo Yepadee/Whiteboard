@@ -5,10 +5,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.microboard.whiteboard.model.task.SoloTask;
+import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +29,7 @@ public abstract class User {
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	private String name;
+	private String userName;
 	private String password;
 	
 	@ManyToMany
@@ -47,18 +47,23 @@ public abstract class User {
 	public long getId() {
 		return id;
 	}
+	
 	public void setId(long id) {
 		this.id = id; //comment
 	}
-	public String getName() {
-		return name;
+	
+	public String getUserName() {
+		return userName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	
+	public void setUserName(String name) {
+		this.userName = name;
 	}
+	
 	public String getPassword() {
 		return password;
 	}
+	
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -66,6 +71,7 @@ public abstract class User {
 	public List<Group> getGroups() {
 		return groups;
 	}
+	
 	public void setGroups(List<Group> groups) {
 		this.groups = groups;
 	}
@@ -73,12 +79,15 @@ public abstract class User {
 	public List<SoloTask> getTasks() {
 		return tasks;
 	}
+	
 	public void setTasks(List<SoloTask> tasks) {
 		this.tasks = tasks;
 	}
+	
 	public void addTask(SoloTask task) {
 		task.setAccountable(this);
 		this.tasks.add(task);
 	}
-
+	
+	public abstract void accept(UserVisitor v);
 }

@@ -6,10 +6,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.microboard.whiteboard.model.project.Project;
+import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 
 @DiscriminatorValue("unit director")
 @Entity
@@ -22,6 +22,11 @@ public class UnitDirector extends User {
 	}
 	public void setMyProjects(List<Project> myProjects) {
 		this.myProjects = myProjects;
+	}
+	
+	@Override
+	public void accept(UserVisitor v) {
+		v.visit(this);
 	}
 	
 }

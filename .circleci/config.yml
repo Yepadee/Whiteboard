@@ -1,28 +1,34 @@
-version: 2 # use CircleCI 2.0
-jobs: # a collection of steps
-    build: # runs not using Workflows must have a `build` job as entry point
-        working_directory: ~/Whiteboard # directory where steps will run
-        
-        docker:
-            - image: circleci/openjdk:8-jdk-browsers
-        
-        steps:
-          - checkout
+version: 2
+jobs:
+  build:
+    
+    working_directory: ~/whiteboard-spring
 
-          - restore_cache:
-              key: Whiteboard-{{ checksum "pom.xml" }}
+    docker:
+      - image: circleci/openjdk:8-jdk-browsers
+      - image: circleci/postgres:9.6.3-alpine
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle_test
+
+    steps:
+
+      - checkout
+
+      - restore_cache:
+          key: whiteboard-spring-{{ checksum "pom.xml" }}
+      
+      - run: mvn dependency:go-offline
+      
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: whiteboard-spring-{{ checksum "pom.xml" }}
+      
+      - run: mvn package
+      
+      - store_test_results:
+          path: target/surefire-reports
           
-          - run: mvn dependency:go-offline
-          
-          - save_cache:
-              paths:
-                - ~/.m2
-              key: Whiteboard-{{ checksum "pom.xml" }}
-          
-          - run: mvn package
-          
-          - store_test_results:
-              path: target/surefire-reports
-          
-          - store_artifacts:
-              path: target/demo-java-spring-0.0.1-SNAPSHOT.jar
+      - store_artifacts:
+         path: target/whiteboard-spring-0.0.1-SNAPSHOT.jar
