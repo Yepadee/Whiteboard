@@ -31,12 +31,6 @@ public class ProjectController {
 	private ProjectService projectService;
 	
 	@Autowired
-	private GroupProjectService groupProjectService;
-	
-	@Autowired
-	private SoloProjectService soloProjectService;
-	
-	@Autowired
 	private UserService userService;
 
 	@GetMapping("/projects")
@@ -68,10 +62,10 @@ public class ProjectController {
 	public void testAddProject() {
 		List<User> cohort = new ArrayList<>();
 		User user1 = new Student();
-		user1.setName("James");
+		user1.setUserName("James");
 		
 		User user2 = new Student();
-		user2.setName("Alex");
+		user2.setUserName("Alex");
 		
 		userService.addUser(user1);
 		userService.addUser(user2);

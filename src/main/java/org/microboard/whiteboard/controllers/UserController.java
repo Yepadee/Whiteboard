@@ -71,67 +71,24 @@ public class UserController {
 	@GetMapping("/users/tasks")
 	public String getUserTasks(Model model) {
 		User newUser = new Student();
-		newUser.setName("Alex");
+		newUser.setUserName("Alex");
 		model.addAttribute("user", newUser);
 		return "test";
 	}
 	@GetMapping("/main_student")
 	public String getMainTasks(Model model) {
 		User newUser = new Student();
-		newUser.setName("Alex");
+		newUser.setUserName("Alex");
 		model.addAttribute("user", newUser);
 		return "main_student";
 	}
 	@GetMapping("/main_unitDirector")
 	public String getDirectorTasks(Model model) {
 		User newUser = new Student();
-		newUser.setName("Alex");
+		newUser.setUserName("Alex");
 		model.addAttribute("user", newUser);
 		return "main_unitDirector";
 	}
-	@GetMapping("/signUp")
-	public String getSignupForm()
-	{
-		return "signUp";
-	}
-
-	@PostMapping("/signUp")
-	public String signup(@ModelAttribute(name="signupForm") Student user, Model model)
-	{
-		userService.addUser(user);
-		return "signUp";
-
-	}
-	@GetMapping("/login")
-	public String getLoginForm()
-	{
-		return "login";
-	}
-
-	@PostMapping("/login")
-	public String login(@ModelAttribute(name="loginForm") Student user, Model model)
-	{
-		String username=user.getName();
-		String password=user.getPassword();
-		Optional<User> maybeUser=userService.getByName(username);
-		if(maybeUser.isPresent())
-		{
-			User foundUser = maybeUser.get();
-			if(foundUser.getPassword().equals(password))
-			{
-				model.addAttribute("message", "Wellcomeeee");
-			}
-			else
-				model.addAttribute("message","Password incorrect");
-		}
-		else
-			model.addAttribute("message","User not found!!!");
-
-
-		return "login";
-
-	}
-
 
 }
 
