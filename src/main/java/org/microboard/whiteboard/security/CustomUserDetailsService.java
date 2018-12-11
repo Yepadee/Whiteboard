@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 

@@ -7,9 +7,11 @@ import java.util.Optional;
 import org.microboard.whiteboard.controllers.LoginController;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.UserRepository;
+import org.microboard.whiteboard.security.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,37 +23,44 @@ public class UserService {
 	private UserRepository userRepository;
 
 
-	public void addUser(User user)
-	{
+	public void addUser(User user) {
 		userRepository.save(user);
 		logger.info("Added user \"" + user.getUserName() + "\"");
 	}
+
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();
 		userRepository.findAll().forEach(users::add);
+
 		return users;
 	}
-	public User getUser(Long id)
-	{
+
+	public User getUser(Long id) {
 		return userRepository.findById(id).get();
 
 	}
-	public void DeleteAll()
-	{
+
+	public void DeleteAll() {
 		userRepository.deleteAll();
 	}
-	public void updateUser(User newUser) 
-	{
+
+	public void updateUser(User newUser) {
 		userRepository.save(newUser);
-		
+
 	}
+
 	public void deleteUser(Long id) {
 		userRepository.deleteById(id);
-		
+
 	}
-	public Optional<User> getByUserName(String name)
-	{
+
+	public Optional<User> getByUserName(String name) {
 		return userRepository.findByUserName(name);
-		
+
+	}
+	
+	public User getLoggedInUser() {
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return userDetails.getUser();
 	}
 } 

@@ -21,20 +21,20 @@ public class WhiteboardSpringApplication {
     private UserService userService;
 	
 	
-	 @EventListener
-	    public void appReady(ApplicationReadyEvent event) {
-			BCryptPasswordEncoder en = new BCryptPasswordEncoder();
-			
-			User user = new Student();
-			user.setUserName("james");
-			user.setPassword(en.encode("test"));
-			
-			User user1 = new UnitDirector();
-			
-			user1.setUserName("b");
-			user1.setPassword(en.encode("2"));
-			
-			userService.addUser(user);
-			userService.addUser(user1);
-	    }
+	@EventListener
+	public void appReady(ApplicationReadyEvent event) {
+		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
+
+		User student = new Student();
+		student.setUserName("student");
+		student.setPassword(en.encode("test"));
+
+		User unitDirector = new UnitDirector();
+
+		unitDirector.setUserName("admin");
+		unitDirector.setPassword(en.encode("test"));
+
+		userService.addUser(student);
+		userService.addUser(unitDirector);
+	}
 }
