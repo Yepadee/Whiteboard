@@ -4,23 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.microboard.whiteboard.controllers.LoginController;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+	
+	Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
 	private UserRepository userRepository;
 
-	List<User> users = new ArrayList<>();
 
 	public void addUser(User user)
 	{
 		userRepository.save(user);
-		users.add(user);
+		logger.info("Added user \"" + user.getUserName() + "\"");
 	}
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();

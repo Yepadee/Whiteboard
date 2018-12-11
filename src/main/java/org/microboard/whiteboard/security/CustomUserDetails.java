@@ -23,6 +23,10 @@ public class CustomUserDetails implements UserDetails {
 		String roles = StringUtils.collectionToCommaDelimitedString(userRoles);
 		return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
 	}
+	
+	public User getUser() {
+		return this.user;
+	}
 
 	@Override
 	public String getPassword() {
