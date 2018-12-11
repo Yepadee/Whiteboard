@@ -14,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 
+import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.user.User;
 
 @Entity
@@ -69,4 +70,6 @@ public abstract class Task {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public abstract Assessment getAssessment();
 }

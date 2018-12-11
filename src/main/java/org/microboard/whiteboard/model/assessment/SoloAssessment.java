@@ -38,7 +38,7 @@ public class SoloAssessment extends Assessment{
 	}
 	
 	public void addTask(SoloTask task) {
-		task.setAssessment(this);
+		task.setSoloAssessment(this);
 		this.tasks.add(task);
 	}
 }

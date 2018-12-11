@@ -40,7 +40,7 @@ public abstract class User {
             joinColumns = { @JoinColumn(name = "user_id") }, 
             inverseJoinColumns = { @JoinColumn(name = "group_id") }
         )
-	private List<Group> groups;
+	private List<Group> groups = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
 	private List<SoloTask> tasks = new ArrayList<>();

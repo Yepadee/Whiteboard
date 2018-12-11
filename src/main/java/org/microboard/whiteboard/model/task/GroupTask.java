@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.user.Group;
 
@@ -26,12 +27,20 @@ public class GroupTask extends Task {
 		this.accountable = accountable;
 	}
 
-	public GroupAssessment getAssessment() {
+	public GroupAssessment getGroupAssessment() {
 		return assessment;
 	}
+	
+	
 
-	public void setAssessment(GroupAssessment assessment) {
-		this.assessment = assessment;
+	public void setGroupAssessment(GroupAssessment groupAssessment) {
+		this.assessment = groupAssessment;
+	}
+
+	@Override
+	public Assessment getAssessment() {
+		return assessment;
+		
 	}
 	
 	/** TODO:

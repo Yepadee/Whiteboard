@@ -18,7 +18,7 @@ public class GroupProject extends Project {
 	private List<GroupAssessment> assessments = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "project")
-	private List<Group> groups;
+	private List<Group> groups = new ArrayList<>();
 
 	
 	public List<GroupAssessment> getAssessments() {

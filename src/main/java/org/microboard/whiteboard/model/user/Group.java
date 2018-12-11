@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -16,10 +17,10 @@ public class Group {
 	private String name;
 	
 	@ManyToMany(mappedBy = "groups")
-	private List<User> members;
+	private List<User> members = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
-	private List<GroupTask> tasks;
+	private List<GroupTask> tasks = new ArrayList<>();;
 	
 	@ManyToOne
 	private GroupProject project;
@@ -58,5 +59,10 @@ public class Group {
 	public void addTask(GroupTask task) {
 		task.setAccountable(this);
 		this.tasks.add(task);
+	}
+	
+	public void addMember(User user) {
+		user.getGroups().add(this);
+		members.add(user);
 	}
 }

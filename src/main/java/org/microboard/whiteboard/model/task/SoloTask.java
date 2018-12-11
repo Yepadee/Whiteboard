@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
+
+import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.user.User;
 
@@ -26,15 +28,13 @@ public class SoloTask extends Task{
 		this.accountable = accountable;
 	}
 
-	public SoloAssessment getAssessment() {
+	public void setSoloAssessment(SoloAssessment soloAssessment) {
+		this.assessment = soloAssessment;
+	}
+
+	@Override
+	public Assessment getAssessment() {
 		return assessment;
 	}
 
-	public void setAssessment(SoloAssessment assessment) {
-		this.assessment = assessment;
-	}
-	
-	/** TODO:
-	 * add feedback
-	 */
 }

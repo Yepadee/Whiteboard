@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.assessment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,7 +20,7 @@ public class GroupAssessment extends Assessment {
 	private GroupProject project;
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "assessment")
-	private List<GroupTask> tasks;
+	private List<GroupTask> tasks = new ArrayList<>();
 
 	
 	public GroupProject getProject() {
@@ -39,7 +40,7 @@ public class GroupAssessment extends Assessment {
 	}
 	
 	public void addTask(GroupTask task) {
-		task.setAssessment(this);
+		task.setGroupAssessment(this);
 		this.tasks.add(task);
 	}
 	
