@@ -7,6 +7,7 @@ import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,20 +35,24 @@ public class LoginController {
 	@GetMapping("/login")
 	public String getLoginForm()
 	{
+		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
+		
 		User user = new Student();
 		user.setUserName("a");
-		user.setPassword("1");
+		user.setPassword(en.encode("1"));
 		
 		User user1 = new UnitDirector();
+		
 		user1.setUserName("b");
-		user1.setPassword("2");
+		user1.setPassword(en.encode("2"));
 		
 		userService.addUser(user);
 		userService.addUser(user1);
+		
 		return "login";
 	}
 
-	@PostMapping("/login")
+	/*@PostMapping("/login")
 	public String login(@ModelAttribute(name="loginForm") Student user, Model model)
 	{
 		String username=user.getUserName();
@@ -69,5 +74,5 @@ public class LoginController {
 
 		return "login";
 
-	}
+	}*/
 }

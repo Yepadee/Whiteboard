@@ -9,10 +9,11 @@
 	<p th:text="${message}">
 	
 	</p>
-	<form th:action="@{/login}" th:object="${loginForm}" method="post">
+	<!-- th:object="${loginForm}" -->
+	<form th:action="@{/login}"  method="post">
 
-		<label for="name">Username</label>
-		 <input type="text" id="name" name="name" autofocus="autofocus"/>
+		<label for="username">Username</label>
+		 <input type="text" id="username" name="username" autofocus="autofocus"/>
 		<label for="password">Password</label> 
 		<input type="password" id="password" name="password" autofocus="autofocus" />
 			<br/>

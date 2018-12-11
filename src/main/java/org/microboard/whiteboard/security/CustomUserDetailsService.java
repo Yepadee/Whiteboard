@@ -1,7 +1,6 @@
 package org.microboard.whiteboard.security;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import org.microboard.whiteboard.model.user.User;
@@ -26,11 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 			UserRoleGetter roleGetter = new UserRoleGetter();
 			user.accept(roleGetter);
 			Collection<String> userRoles = roleGetter.getResult();
-			
+			return new CustomUserDetails(user, userRoles);
 		} else {
 			throw new UsernameNotFoundException("No user present with username \"" + username + "\".");
 		}
-		return null;
 	}
 
 }

@@ -17,7 +17,7 @@
         <img src="./img/no-profile-photo.jpg" alt="profile image" class="img-circle">
       </div>
       <div class="text-wrapper">
-        <p class="profile-name" th:text="${user.name}">
+        <p class="profile-name" th:text="${user.userName}">
         <p class="designation text-muted">User <span class="glyphicon glyphicon-asterisk"></span></p>
       </div>
     </div>
@@ -42,7 +42,7 @@
 
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown user-wrapper">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hello, <span th:text="${user.name}"/>
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Hello, <span th:text="${user.userName}"/>
         <span class="profile-image">
           <img src="./img/no-profile-photo.jpg" class="img-circle">
         </span>
