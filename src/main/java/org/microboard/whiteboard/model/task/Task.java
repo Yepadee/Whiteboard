@@ -19,7 +19,7 @@ import org.microboard.whiteboard.model.user.User;
 
 @MappedSuperclass
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-//@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Task {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
 	private long id;

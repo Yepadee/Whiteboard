@@ -14,7 +14,7 @@ import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.user.User;
 
 @Entity
-//@DiscriminatorValue("solo")
+@DiscriminatorValue("solo")
 @SequenceGenerator(name = "default_gen", sequenceName = "role_seq", allocationSize = 1)
 public class SoloTask extends Task {
 	@ManyToOne
