@@ -33,10 +33,6 @@ public class WhiteboardSpringApplication {
     private ProjectService projectService;
 	
 	
-	@Autowired
-	private GroupRepository groupRepository;
-	
-	
 	@EventListener
 	public void appReady(ApplicationReadyEvent event) {
 		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
@@ -63,24 +59,27 @@ public class WhiteboardSpringApplication {
 		sa1.setDescription("Description for \"Test Solo Assessment 1\"");
 		sp.addAssessment(sa1);
 		
+		/*
 		SoloAssessment sa2 = new SoloAssessment();
 		sa2.setName("Test Solo Assessment 2");
 		sa2.setDescription("Description for \"Test Solo Assessment 2\"");
 		sp.addAssessment(sa2);
+		*/
 		
 		SoloTask st1 = new SoloTask();
 		st1.setStatus("new");
-		student.addTask(st1);
 		sa1.addTask(st1);
+		student.addTask(st1);
 		
+		/*
 		SoloTask st2 = new SoloTask();
 		st2.setStatus("new");
 		student.addTask(st2);
 		sa2.addTask(st2);
+		*/
 		
+		projectService.addProject(sp);
 		unitDirector.addProject(sp);
-		userService.updateUser(unitDirector);
-		userService.updateUser(student);
 		
 		
 		/*

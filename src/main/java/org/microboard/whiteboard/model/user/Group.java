@@ -26,7 +26,7 @@ public class Group {
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
 	private List<GroupTask> tasks = new ArrayList<>();
 	
-	@ManyToOne//(cascade = {CascadeType.ALL})
+	@ManyToOne
 	private GroupProject project;
 	
 	public long getId() {

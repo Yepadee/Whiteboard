@@ -15,14 +15,12 @@ import org.microboard.whiteboard.model.task.GroupTask;
 @Entity
 @DiscriminatorValue("group")
 public class GroupAssessment extends Assessment {
-	
 	@ManyToOne//(cascade = {CascadeType.ALL})
 	private GroupProject project;
 	
-	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "assessment")
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "groupAssessment")
 	private List<GroupTask> tasks = new ArrayList<>();
 
-	
 	public GroupProject getProject() {
 		return project;
 	}

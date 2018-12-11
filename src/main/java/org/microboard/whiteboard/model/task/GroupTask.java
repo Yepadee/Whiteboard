@@ -18,7 +18,7 @@ public class GroupTask extends Task {
 	
 	@ManyToOne
 	@JoinColumn(name="assessment_id", nullable=false)
-	private GroupAssessment assessment;
+	private GroupAssessment groupAssessment;
 
 	public Group getAccountable() {
 		return accountable;
@@ -29,18 +29,16 @@ public class GroupTask extends Task {
 	}
 
 	public GroupAssessment getGroupAssessment() {
-		return assessment;
+		return groupAssessment;
 	}
 	
-	
-
 	public void setGroupAssessment(GroupAssessment groupAssessment) {
-		this.assessment = groupAssessment;
+		this.groupAssessment = groupAssessment;
 	}
 
 	@Override
 	public Assessment getAssessment() {
-		return assessment;
+		return groupAssessment;
 		
 	}
 	

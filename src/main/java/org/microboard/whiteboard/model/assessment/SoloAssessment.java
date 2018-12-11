@@ -15,10 +15,10 @@ import org.microboard.whiteboard.model.task.SoloTask;
 @Entity
 @DiscriminatorValue("solo")
 public class SoloAssessment extends Assessment{
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	private SoloProject project;
 	
-	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "assessment")
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "soloAssessment")
 	private List<SoloTask> tasks = new ArrayList<>();
 
 	public SoloProject getProject() {
