@@ -8,9 +8,6 @@ import org.microboard.whiteboard.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.microboard.whiteboard.model.task.Task;
-import org.microboard.whiteboard.model.task.SoloTask;
-import org.microboard.whiteboard.model.task.GroupTask;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,30 +21,21 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/access_denied")
-	public String getAccessDeniedPage() {
-		return "access_denied";
-	}
-	
-	@GetMapping("/error")
-	public String getErrorPage() {
-		return "error";
+	@GetMapping("/")
+	private String getMainPage() {
+		return "redirect:home";
 	}
 	
 	@GetMapping("/home")
-	public String getMainTasks(Model model) {
+	public String getTaskPage(Model model) {
 		User user = userService.getLoggedInUser();
+		List<Task> tasks = new ArrayList<Task>();
+		tasks.addAll(user.getTasks());
 		
-		//Tests
-		List<Task> tasks = new ArrayList<>();
-		SoloTask x = new SoloTask();
-		x.setId(100);
-		x.setStatus("Marks Released");
-		tasks.add(x);
-		GroupTask y = new GroupTask();
-		y.setId(101);
-		y.setStatus("Not active");
-		tasks.add(y);
+		System.out.println("Tasks:");
+		for (Task t : user.getTasks()) {
+			System.out.println(t.getStatus());
+		}
 		
 		model.addAttribute("tasks", tasks);
 		model.addAttribute("user", user);

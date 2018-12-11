@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UnitDirectorController {
 
-	@GetMapping("/unitDirector")
-	public String accessDenied() {
-		return "main_unitDirector";
+	@GetMapping("/unit_director/new_project")
+	public String getNewProjectPage() {
+		return "newProject";
 	}
 	
 }

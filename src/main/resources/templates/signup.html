@@ -9,7 +9,7 @@
 	<p th:text="${message}">
 	
 	</p>
-	<form th:action="@{/signUp}" th:object="${signupForm}" method="post">
+	<form th:action="@{/signUp}" th:object="${newStudent}" method="post">
 
 		<label for="name">Username</label>
 		 <input type="text" id="name" name="name" autofocus="autofocus"/>

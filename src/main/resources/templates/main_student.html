@@ -76,8 +76,8 @@
             </thead>
             <tbody>
               <tr th:each="task: ${tasks}">
-                <td><span th:text="${task.id}"/></td>
-                <td><span th:text="${task.status}"/></td>
+                <td><span th:text="${task.assessment.name}"></span></td>
+                <td><span th:text="${task.status}"></span></td>
                 <td class="warning">Date Here</td>
                 <td><a href="feedbackSubmission.html" class="btn btn-primary btn-xs">View</a></td>
               </tr>

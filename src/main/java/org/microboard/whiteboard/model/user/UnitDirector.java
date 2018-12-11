@@ -20,8 +20,14 @@ public class UnitDirector extends User {
 	public List<Project> getMyProjects() {
 		return myProjects;
 	}
+	
 	public void setMyProjects(List<Project> myProjects) {
 		this.myProjects = myProjects;
+	}
+	
+	public void addProject(Project project) {
+		project.setCreator(this);
+		myProjects.add(project);
 	}
 	
 	@Override

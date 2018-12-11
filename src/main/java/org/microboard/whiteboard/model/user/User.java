@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import org.microboard.whiteboard.model.task.SoloTask;
+import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 
 import javax.persistence.GeneratedValue;
@@ -41,7 +43,7 @@ public abstract class User {
 	private List<Group> groups;
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
-	private List<SoloTask> tasks;
+	private List<SoloTask> tasks = new ArrayList<>();
 	
 	
 	public long getId() {
@@ -86,7 +88,7 @@ public abstract class User {
 	
 	public void addTask(SoloTask task) {
 		task.setAccountable(this);
-		this.tasks.add(task);
+		this.getTasks().add(task);
 	}
 	
 	public abstract void accept(UserVisitor v);

@@ -1,7 +1,9 @@
 package org.microboard.whiteboard.model.project;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,13 +13,10 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
+import org.microboard.whiteboard.model.assessment.Assessment;
+import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.user.UnitDirector;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.DiscriminatorType;
 
@@ -30,8 +29,7 @@ public abstract class Project {
 	private long id;
 	private String name;
 	private String description;
-
-
+	
 	@ManyToOne
 	private UnitDirector creator;
 	@ManyToMany
