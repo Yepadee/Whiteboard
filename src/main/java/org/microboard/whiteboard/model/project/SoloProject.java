@@ -21,7 +21,6 @@ public class SoloProject extends Project {
 	@ManyToMany
 	private List<User> cohort = new ArrayList<>();
 	
-	
 
 	public List<User> getCohort() {
 		return cohort;

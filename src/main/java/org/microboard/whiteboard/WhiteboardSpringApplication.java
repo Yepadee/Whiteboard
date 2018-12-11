@@ -9,7 +9,8 @@ import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Group;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
-import org.microboard.whiteboard.model.user.User;
+import org.microboard.whiteboard.repositories.GroupRepository;
+import org.microboard.whiteboard.repositories.TaskRepository;
 import org.microboard.whiteboard.services.ProjectService;
 import org.microboard.whiteboard.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,10 @@ public class WhiteboardSpringApplication {
     private ProjectService projectService;
 	
 	
+	@Autowired
+	private GroupRepository groupRepository;
+	
+	
 	@EventListener
 	public void appReady(ApplicationReadyEvent event) {
 		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
@@ -47,6 +52,7 @@ public class WhiteboardSpringApplication {
 
 		userService.addUser(student);
 		userService.addUser(unitDirector);
+		
 		
 		SoloProject sp = new SoloProject();
 		sp.setName("Test Solo Project 1");
@@ -71,11 +77,13 @@ public class WhiteboardSpringApplication {
 		st2.setStatus("new");
 		student.addTask(st2);
 		sa2.addTask(st2);
-
+		
 		unitDirector.addProject(sp);
+		userService.updateUser(unitDirector);
+		userService.updateUser(student);
 		
 		
-		
+		/*
 		GroupProject gp = new GroupProject();
 		gp.setName("Test Group Project 1");
 		gp.setDescription("Description for \"Test Group Project 1\"");
@@ -84,7 +92,6 @@ public class WhiteboardSpringApplication {
 		Group g = new Group();
 		g.setName("Test group 1");
 		g.addMember(student);
-		
 		gp.addGroup(g);
 		
 		
@@ -93,27 +100,37 @@ public class WhiteboardSpringApplication {
 		ga1.setDescription("Description for \"Test Group Assessment 1\"");
 		gp.addAssessment(ga1);
 		
+		
 		GroupAssessment ga2 = new GroupAssessment();
 		ga2.setName("Test Group Assessment 2");
 		ga2.setDescription("Description for \"Test Group Assessment 2\"");
 		gp.addAssessment(ga2);
-
+		
 		
 		GroupTask gt1 = new GroupTask();
 		gt1.setStatus("new");
 		g.addTask(gt1);
 		ga1.addTask(gt1);
 		
+		
 		GroupTask gt2 = new GroupTask();
 		gt2.setStatus("new");
 		g.addTask(gt2);
 		ga2.addTask(gt2);
 		
-		unitDirector.addProject(gp);
 		
+		//TODO: Remove cascades from children
+		
+		projectService.addProject(gp);
+		unitDirector.addProject(gp);
+		*/
 		
 		userService.updateUser(unitDirector);
-		
-		
+		userService.updateUser(unitDirector);
+		userService.updateUser(unitDirector);
+
+		userService.updateUser(student);
+		userService.updateUser(student);
+		userService.updateUser(student);
 	}
 }

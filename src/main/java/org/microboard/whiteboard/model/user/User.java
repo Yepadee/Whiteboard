@@ -34,12 +34,7 @@ public abstract class User {
 	private String userName;
 	private String password;
 	
-	@ManyToMany
-    @JoinTable(
-            name = "Users_Groups", 
-            joinColumns = { @JoinColumn(name = "user_id") }, 
-            inverseJoinColumns = { @JoinColumn(name = "group_id") }
-        )
+	@ManyToMany(mappedBy = "members")
 	private List<Group> groups = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")

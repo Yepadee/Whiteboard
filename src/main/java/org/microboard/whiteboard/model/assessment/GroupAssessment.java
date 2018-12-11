@@ -16,7 +16,7 @@ import org.microboard.whiteboard.model.task.GroupTask;
 @DiscriminatorValue("group")
 public class GroupAssessment extends Assessment {
 	
-	@ManyToOne
+	@ManyToOne//(cascade = {CascadeType.ALL})
 	private GroupProject project;
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "assessment")

@@ -14,7 +14,7 @@ import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 @DiscriminatorValue("unit director")
 @Entity
 public class UnitDirector extends User {
-	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "creator")
+	@OneToMany(mappedBy= "creator")
 	private List<Project> myProjects = new ArrayList<>();
 	
 	public List<Project> getMyProjects() {

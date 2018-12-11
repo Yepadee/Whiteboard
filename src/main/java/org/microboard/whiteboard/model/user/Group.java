@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.*;
 
 import org.microboard.whiteboard.model.project.GroupProject;
-import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.task.GroupTask;
 
 @Entity
@@ -16,13 +15,18 @@ public class Group {
 	private long id;
 	private String name;
 	
-	@ManyToMany(mappedBy = "groups")
+	@OneToMany
+    @JoinTable(
+            name = "Groups_Members", 
+            joinColumns = { @JoinColumn(name = "group_id") }, 
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+        )
 	private List<User> members = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
-	private List<GroupTask> tasks = new ArrayList<>();;
+	private List<GroupTask> tasks = new ArrayList<>();
 	
-	@ManyToOne
+	@ManyToOne//(cascade = {CascadeType.ALL})
 	private GroupProject project;
 	
 	public long getId() {

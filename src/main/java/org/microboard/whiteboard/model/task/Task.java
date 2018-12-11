@@ -17,11 +17,11 @@ import javax.persistence.MappedSuperclass;
 import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.user.User;
 
-@Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
+@MappedSuperclass
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+//@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Task {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
 	private long id;
 	
 	private int studentExtension;
