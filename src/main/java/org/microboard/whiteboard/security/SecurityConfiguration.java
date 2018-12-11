@@ -21,7 +21,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	@Autowired
 	private UserDetailsService userDetialsService;
 	
-	@SuppressWarnings("deprecation")
 	@Autowired
 	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth
@@ -39,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.authorizeRequests()
-        .antMatchers("/").permitAll()
+        .antMatchers("/addTestUsers").permitAll()
         .antMatchers("/unitDirector").hasRole(UserRoleGetter.UNIT_DIRECTOR_ROLE)
         .anyRequest().authenticated()
 	    .and()

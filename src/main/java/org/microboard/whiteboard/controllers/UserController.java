@@ -1,11 +1,13 @@
 package org.microboard.whiteboard.controllers;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.User;
+import org.microboard.whiteboard.security.CustomUserDetails;
 import org.microboard.whiteboard.services.UserService;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.project.SoloProject;
@@ -16,6 +18,7 @@ import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.task.GroupTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,18 +36,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/AddMockUsers")
-	public void testAddUser() {
-//		User u=new User();
-//		u.setName("ABCD");
-//		u.setPassword("12345");
-		userService.addUser(new Student("A","12345"));
-		userService.addUser(new Student("B","12345"));
-//		userService.addUser(new User("C","12345"));
-//		userService.addUser(new User("D","12345"));
-//		userService.addUser(new User("E","12345"));
-//		userService.addUser(new User("F","12345"));
-	}
 
 	@PostMapping("/AddUser")
 	public void addUser(@RequestBody User newUser) {
@@ -84,11 +75,15 @@ public class UserController {
 		model.addAttribute("user", newUser);
 		return "test";
 	}
-	@GetMapping("/main_student")
+	@GetMapping("/home")
 	public String getMainTasks(Model model) {
-		User newUser = new Student();
-		newUser.setUserName("Alex");
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User newUser = userDetails.getUser();
+		
 		List<Task> tasks = new ArrayList<>();
+		/*
+		newUser.setUserName("Alex");
+		
 		
 		SoloProject s = new SoloProject();
 		GroupProject g = new GroupProject();
@@ -96,7 +91,7 @@ public class UserController {
 			for (SoloTask sT : sA.getTasks())  { tasks.add(sT); } }
 		for (GroupAssessment gA : g.getAssessments()) {
 			for (GroupTask gT : gA.getTasks()) { tasks.add(gT); } }
-		
+		*/
 		SoloTask x = new SoloTask();
 		x.setId(100);
 		x.setStatus("Marks Released");
