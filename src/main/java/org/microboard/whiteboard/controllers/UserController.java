@@ -2,6 +2,8 @@ package org.microboard.whiteboard.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HomePageGetter;
 import org.microboard.whiteboard.services.UserService;
@@ -28,23 +30,24 @@ public class UserController {
 	
 	@GetMapping("/home")
 	public String getTaskPage(Model model) {
-		User user = userService.getLoggedInUser();
-		List<Task> tasks = new ArrayList<Task>();
-		tasks.addAll(user.getTasks());
-		
-		System.out.println("Tasks:");
-		for (Task t : user.getTasks()) {
-			System.out.println(t.getStatus());
+		Optional<User> maybeLoggedInUser = userService.getLoggedInUser();
+		if (maybeLoggedInUser.isPresent()) {
+			User user = maybeLoggedInUser.get();
+			List<Task> tasks = new ArrayList<Task>();
+			tasks.addAll(user.getTasks());
+			
+			model.addAttribute("tasks", tasks);
+			model.addAttribute("user", user);
+
+			//Get the correct page to visit depending on user type.
+			//Pages returned can be changed in "mode/user/visitors/HomePageGetter"
+			HomePageGetter homePageGetter = new HomePageGetter();
+			user.accept(homePageGetter);
+			return homePageGetter.getResult();
+		} else {
+			return "redirect:login";
 		}
 		
-		model.addAttribute("tasks", tasks);
-		model.addAttribute("user", user);
-
-		//Get the correct page to visit depending on user type.
-		//Pages returned can be changed in "mode/user/visitors/HomePageGetter"
-		HomePageGetter homePageGetter = new HomePageGetter();
-		user.accept(homePageGetter);
-		return homePageGetter.getResult();
 	}
 }
 

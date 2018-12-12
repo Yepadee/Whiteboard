@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -33,8 +35,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.authorizeRequests()
-		.antMatchers("/").permitAll()
-        .antMatchers("/unit_director/**").hasRole(UserRoleGetter.UNIT_DIRECTOR_ROLE)
+		.antMatchers("/css/**","/icons/**","/img/**","/js/**","/layer/**").permitAll()
+		.antMatchers("/").hasAuthority(UserRoleGetter.ROLE_STUDENT)
+        .antMatchers("/unit_director/**").hasAuthority(UserRoleGetter.ROLE_UNIT_DIRECTOR)
         .anyRequest().fullyAuthenticated()
 	    .and()
 	    .formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username").passwordParameter("password")
@@ -48,6 +51,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	    .and().csrf();
 	}
 	
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+	    web.ignoring().antMatchers("/javax.faces.resource/**");
+	}
 	
 	@Bean(name="passwordEncoder")
 	public PasswordEncoder passwordencoder() {

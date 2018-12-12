@@ -32,3 +32,12 @@ jobs:
           
       - store_artifacts:
          path: target/WhiteboardSpring-0.0.1-SNAPSHOT.jar
+         
+    deploy:
+        machine:
+          enabled: true
+        steps:
+          - run:
+              name: Deploy Over SSH
+              command: |
+                ssh -i C:\Users\James\.ssh\whiteboard 132.145.159.255 -l ubuntu

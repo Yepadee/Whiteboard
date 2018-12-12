@@ -42,7 +42,7 @@ public class LoginController {
 			message = "Incorrect details. Please try again.";
 		}
 		model.addAttribute("message", message);
-		return "login";
+		return "index";
 	}
 	
 	@GetMapping("/access_denied")
