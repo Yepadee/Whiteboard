@@ -38,7 +38,7 @@ public abstract class User {
 	private List<Group> groups = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
-	private List<SoloTask> tasks = new ArrayList<>();
+	private List<SoloTask> soloTasks = new ArrayList<>();
 	
 	
 	public long getId() {
@@ -73,17 +73,26 @@ public abstract class User {
 		this.groups = groups;
 	}
 	
-	public List<SoloTask> getTasks() {
-		return tasks;
+	public List<SoloTask> getSoloTasks() {
+		return soloTasks;
 	}
 	
-	public void setTasks(List<SoloTask> tasks) {
-		this.tasks = tasks;
+	public void setSoloTasks(List<SoloTask> soloTasks) {
+		this.soloTasks = soloTasks;
 	}
 	
 	public void addTask(SoloTask task) {
 		task.setAccountable(this);
-		this.getTasks().add(task);
+		this.getSoloTasks().add(task);
+	}
+	
+	public List<Task> getAllTasks() {
+		List<Task> allTasks = new ArrayList<Task>();
+		allTasks.addAll(soloTasks);
+		for (Group g : groups) {
+			allTasks.addAll(g.getTasks());
+		}
+		return allTasks;
 	}
 	
 	public abstract void accept(UserVisitor v);
