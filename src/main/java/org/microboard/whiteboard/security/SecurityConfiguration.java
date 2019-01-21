@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 		.authorizeRequests()
 		.antMatchers("/css/**","/icons/**","/img/**","/js/**","/layer/**").permitAll()
 		.antMatchers("/").permitAll()
-        .antMatchers("/unit_director/**").hasAuthority(UserRoleGetter.ROLE_UNIT_DIRECTOR)
+        .antMatchers("/unit_director/**", "/h2-console/**").hasAuthority(UserRoleGetter.ROLE_UNIT_DIRECTOR)
         .anyRequest().fullyAuthenticated()
 	    .and()
 	    .formLogin().loginPage("/login").failureUrl("/login?error").usernameParameter("username").passwordParameter("password")
@@ -48,7 +48,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
 	    .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")
 	    .and()
 	    .exceptionHandling().accessDeniedPage("/access_denied")
-	    .and().csrf();
+	    .and().csrf().ignoringAntMatchers("/h2-console/**");
+		
+		http.headers().frameOptions().disable();
 	}
 	
 	@Override

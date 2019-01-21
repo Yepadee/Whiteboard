@@ -8,6 +8,7 @@ import javax.persistence.SequenceGenerator;
 
 import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
+import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Group;
 
 @Entity
@@ -28,23 +29,22 @@ public class GroupTask extends Task {
 	public void setAccountable(Group accountable) {
 		this.accountable = accountable;
 	}
-
+	
 	public GroupAssessment getGroupAssessment() {
 		return groupAssessment;
 	}
-	
+
 	public void setGroupAssessment(GroupAssessment groupAssessment) {
 		this.groupAssessment = groupAssessment;
 	}
-
-	@Override
+	
 	public Assessment getAssessment() {
 		return groupAssessment;
-		
 	}
-	
-	/** TODO:
-	 * add feedback
-	 */
+
+	@Override
+	public void accept(TaskVisitor v) {
+		v.visit(this);
+	}
 	
 }

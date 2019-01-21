@@ -1,16 +1,15 @@
 package org.microboard.whiteboard.model.task;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
+import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.User;
 
 @Entity
@@ -32,17 +31,21 @@ public class SoloTask extends Task {
 		this.accountable = accountable;
 	}
 
-	public void setSoloAssessment(SoloAssessment soloAssessment) {
-		this.soloAssessment = soloAssessment;
-	}
-	
 	public SoloAssessment getSoloAssessment() {
 		return soloAssessment;
 	}
 
-	@Override
+	public void setSoloAssessment(SoloAssessment assessment) {
+		this.soloAssessment = assessment;
+	}
+	
 	public Assessment getAssessment() {
 		return soloAssessment;
+	}
+
+	@Override
+	public void accept(TaskVisitor v) {
+		v.visit(this);
 	}
 
 }

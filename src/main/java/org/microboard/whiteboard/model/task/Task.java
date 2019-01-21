@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
@@ -11,13 +12,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import org.microboard.whiteboard.model.assessment.Assessment;
+import org.microboard.whiteboard.model.assessment.SoloAssessment;
+import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
+import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.User;
 
-@MappedSuperclass
+@Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Task {
@@ -28,7 +34,7 @@ public abstract class Task {
 	private int markerExtension;
 	
 	@ManyToMany
-	private List<User> markers;
+	private List<Assessor> markers = new ArrayList<>();
 	
 	//@Embedded
 	//private Submission submission;
@@ -52,10 +58,10 @@ public abstract class Task {
 	public void setMarkerExtension(int markerExtension) {
 		this.markerExtension = markerExtension;
 	}
-	public List<User> getMarkers() {
+	public List<Assessor> getMarkers() {
 		return markers;
 	}
-	public void setMarkers(List<User> markers) {
+	public void setMarkers(List<Assessor> markers) {
 		this.markers = markers;
 	}
 	/*public Submission getSubmission() {
@@ -71,5 +77,5 @@ public abstract class Task {
 		this.status = status;
 	}
 	
-	public abstract Assessment getAssessment();
+	public abstract void accept(TaskVisitor v);
 }

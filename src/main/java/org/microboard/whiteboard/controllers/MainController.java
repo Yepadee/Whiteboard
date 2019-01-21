@@ -17,34 +17,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-	Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	@Autowired
-	private UserService userService;
-	
 	@GetMapping("/")
 	private String getMainPage() {
-		return "redirect:home";
+		return "redirect:user/outstanding_tasks";
 	}
 	
-	@GetMapping("/home")
-	public String getTaskPage(Model model) {
-		Optional<User> maybeLoggedInUser = userService.getLoggedInUser();
-		if (maybeLoggedInUser.isPresent()) {
-			User user = maybeLoggedInUser.get();
-			List<Task> tasks = user.getAllTasks();
-			
-			model.addAttribute("tasks", tasks);
-			model.addAttribute("user", user);
-
-			//Get the correct page to visit depending on user type.
-			//Pages returned can be changed in "mode/user/visitors/HomePageGetter"
-			HomePageGetter homePageGetter = new HomePageGetter();
-			user.accept(homePageGetter);
-			return homePageGetter.getResult();
-		} else {
-			return "redirect:login";
-		}
-		
-	}
 }

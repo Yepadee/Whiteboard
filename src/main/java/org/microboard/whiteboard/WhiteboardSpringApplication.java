@@ -6,6 +6,7 @@ import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.project.SoloProject;
 import org.microboard.whiteboard.model.task.GroupTask;
 import org.microboard.whiteboard.model.task.SoloTask;
+import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Group;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
@@ -42,12 +43,16 @@ public class WhiteboardSpringApplication {
 		student.setPassword(en.encode("test"));
 
 		UnitDirector unitDirector = new UnitDirector();
-
 		unitDirector.setUserName("admin");
 		unitDirector.setPassword(en.encode("test"));
+		
+		Assessor assessor = new Assessor();
+		assessor.setUserName("assessor");
+		assessor.setPassword(en.encode("test"));
 
 		userService.addUser(student);
 		userService.addUser(unitDirector);
+		userService.addUser(assessor);
 		
 		
 		SoloProject sp = new SoloProject();

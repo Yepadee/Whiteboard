@@ -13,4 +13,16 @@ public class UnitDirectorController {
 		return "newProject";
 	}
 	
+	@GetMapping("/edit_project/{id}")
+	public String editProjectPage() {
+		return "newProject";
+	}
+	
+	@GetMapping("/projects")
+	public String viewProjectsPage() {
+		return "newProject";
+	}
+	
+	
+	
 }

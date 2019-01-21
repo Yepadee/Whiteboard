@@ -8,12 +8,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import org.microboard.whiteboard.model.project.SoloProject;
 import org.microboard.whiteboard.model.task.SoloTask;
 
 @Entity
 @DiscriminatorValue("solo")
+@SequenceGenerator(name = "default_gen", sequenceName = "role_seq", allocationSize = 1)
 public class SoloAssessment extends Assessment{
 	@ManyToOne
 	private SoloProject project;
