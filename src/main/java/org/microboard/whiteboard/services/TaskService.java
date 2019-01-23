@@ -15,4 +15,8 @@ public class TaskService {
 	public Optional<Task> getTask(long id) {
 		return taskRepository.findById(id);
 	}
+	
+	public void updateTask(Task task) {
+		taskRepository.save(task);
+	}
 }

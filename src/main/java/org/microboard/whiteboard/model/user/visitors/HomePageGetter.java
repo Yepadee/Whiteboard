@@ -5,27 +5,27 @@ import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
 
 public class HomePageGetter extends UserVisitor {
-	private String homePage;
+	private String pathSuffix;
 	
 	
 	public String getResult() {
-		return homePage;
+		return pathSuffix;
 	}
 	
 	@Override
 	public void visit(Student student) {
-		homePage = "main_student";
+		pathSuffix = "main_student";
 	}
 
 	@Override
 	public void visit(Assessor assessor) {
-		homePage = "main_student";
+		pathSuffix = "main_assessor";
 		
 	}
 
 	@Override
 	public void visit(UnitDirector unitDirector) {
-		homePage = "main_unitDirector";
+		pathSuffix = "main_unitDirector";
 	}
 
 }

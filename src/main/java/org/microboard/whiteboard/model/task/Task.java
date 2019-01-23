@@ -12,16 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
-
-import org.microboard.whiteboard.model.assessment.Assessment;
-import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
-import org.microboard.whiteboard.model.user.User;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
@@ -36,9 +29,9 @@ public abstract class Task {
 	@ManyToMany
 	private List<Assessor> markers = new ArrayList<>();
 	
-	//@Embedded
-	//private Submission submission;
+	private String txtSubmission;
 	private String status;
+	
 	
 	public long getId() {
 		return id;
@@ -64,17 +57,22 @@ public abstract class Task {
 	public void setMarkers(List<Assessor> markers) {
 		this.markers = markers;
 	}
-	/*public Submission getSubmission() {
-		return submission;
+	public String getTxtSubmission() {
+		return txtSubmission;
 	}
-	public void setSubmission(Submission submission) {
-		this.submission = submission;
-	}*/
+	public void setTxtSubmission(String txtSubmission) {
+		this.txtSubmission = txtSubmission;
+	}
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public void addMarker(Assessor assessor) {
+		this.markers.add(assessor);
+		assessor.addTaskToMark(this);
 	}
 	
 	public abstract void accept(TaskVisitor v);

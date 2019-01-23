@@ -18,7 +18,19 @@ import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 public class Assessor extends User {
 
 	@ManyToMany(mappedBy="markers")
-	private List<Task> tasks = new ArrayList<>();
+	private List<Task> toMark = new ArrayList<>();
+	
+	public List<Task> getToMark() {
+		return toMark;
+	}
+
+	public void setToMark(List<Task> toMark) {
+		this.toMark = toMark;
+	}
+
+	public void addTaskToMark(Task task) {
+		toMark.add(task);
+	}
 	
 	@Override
 	public void accept(UserVisitor v) {

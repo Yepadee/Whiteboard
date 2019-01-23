@@ -22,6 +22,11 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	public UserService() {}
+	
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 
 	public void addUser(User user) {
 		userRepository.save(user);

@@ -76,6 +76,8 @@ public class WhiteboardSpringApplication {
 		sa1.addTask(st1);
 		student.addTask(st1);
 		
+		st1.addMarker(assessor);
+		
 		
 		SoloTask st2 = new SoloTask();
 		st2.setStatus("new");
@@ -136,5 +138,8 @@ public class WhiteboardSpringApplication {
 		userService.updateUser(student);
 		userService.updateUser(student);
 		userService.updateUser(student);
+		
+		
+		
 	}
 }
