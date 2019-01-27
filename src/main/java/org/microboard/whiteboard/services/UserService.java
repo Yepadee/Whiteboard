@@ -64,14 +64,9 @@ public class UserService {
 
 	}
 	
-	public Optional<User> getLoggedInUser() {
-		Optional<User> maybeLoggedInUser = Optional.empty();
-		try { 
-			CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			User loggedInUser = userDetails.getUser();
-			maybeLoggedInUser = Optional.of(loggedInUser);
-		} catch (Exception e) {}
-		
-		return maybeLoggedInUser;
+	public User getLoggedInUser() {
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User loggedInUser = userDetails.getUser();
+		return loggedInUser;
 	}
 } 

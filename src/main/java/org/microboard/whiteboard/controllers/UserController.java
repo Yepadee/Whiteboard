@@ -34,55 +34,47 @@ public class UserController {
 	
 	@GetMapping("/tasks")
 	public String getOutstandingTaskPage(Model model) {
-		Optional<User> maybeLoggedInUser = userService.getLoggedInUser();
-		if (maybeLoggedInUser.isPresent()) {
-			User user = maybeLoggedInUser.get();
-			HomePageGetter homePageGetter = new HomePageGetter();
-			user.accept(homePageGetter);
-			return homePageGetter.getResult();
-		} else {
-			return "redirect:login";
-		}
+		User user = userService.getLoggedInUser();
+		HomePageGetter homePageGetter = new HomePageGetter(model);
+		user.accept(homePageGetter);
+		return homePageGetter.getResult();
 	}
 	
 	@GetMapping("/tasks/{id}")
 	public String getSubmissionPage(Model model, @PathVariable long id) {
-		Optional<User> maybeUser = userService.getLoggedInUser();
+		User user = userService.getLoggedInUser();
 		Optional<Task> maybeTask = taskService.getTask(id);
-		if (maybeUser.isPresent()) {
-			User user = maybeUser.get();
-			if (maybeTask.isPresent()) {
-				Task task = maybeTask.get();
-				TaskAccessValidator accessValidator = new TaskAccessValidator(user);
-				task.accept(accessValidator);
-				if (accessValidator.getResult()) {
-					model.addAttribute("task", task);
-					return "submission";
-				} else {
-					return "access_denied";
-				}
+		if (maybeTask.isPresent()) {
+			Task task = maybeTask.get();
+			TaskAccessValidator accessValidator = new TaskAccessValidator(user);
+			task.accept(accessValidator);
+			if (accessValidator.getResult()) {
+				model.addAttribute("task", task);
+				model.addAttribute("user", user);
+				return "submission";
 			} else {
-				return "error";
+				return "access_denied";
 			}
 		} else {
-			return "redirect:login";
+			return "error";
 		}
 	}
 	
 	@PostMapping("/tasks/{id}")
 	public String submitTask(@PathVariable long id, @ModelAttribute(name = "comments") String comments) {
-		Optional<User> maybeUser = userService.getLoggedInUser();
 		Optional<Task> maybeTask = taskService.getTask(id);
-		if (maybeTask.isPresent() && maybeUser.isPresent()) {
+		if (maybeTask.isPresent()) {
 			Task task = maybeTask.get();
-			User user = maybeUser.get();
+			User user = userService.getLoggedInUser();
 			TaskAccessValidator accessValidator = new TaskAccessValidator(user);
 			task.accept(accessValidator);
 			if (accessValidator.getResult()) {
 				task.setTxtSubmission(comments);
 				taskService.updateTask(task);
-				/*
-				 * Deal with file uploading here.
+				/*TODO:
+				 * Record date
+				 * Add action to log
+				 * Build file uploader/downloader
 				 */
 				return "redirect:/user/tasks/" + id;
 			} else {
@@ -92,12 +84,5 @@ public class UserController {
 			return "error";
 		}
 	}
-	
-	@ModelAttribute("user")
-	public User getUnitDirector() {
-	   return userService.getLoggedInUser().get();
-	}
-	
-	
 }
 

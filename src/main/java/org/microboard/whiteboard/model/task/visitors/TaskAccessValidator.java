@@ -32,6 +32,7 @@ public class TaskAccessValidator extends TaskVisitor {
 		for (User groupMember : accountable) {
 			if (groupMember.getId() == user.getId()) {
 				result = true;
+				break;
 			}
 		}
 	}

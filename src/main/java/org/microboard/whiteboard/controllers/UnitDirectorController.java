@@ -1,9 +1,6 @@
 package org.microboard.whiteboard.controllers;
 
-import java.util.Optional;
-
 import org.microboard.whiteboard.model.user.UnitDirector;
-import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +33,7 @@ public class UnitDirectorController {
 	
 	@ModelAttribute("user")
 	public UnitDirector getUnitDirector() {
-	   return (UnitDirector) userService.getLoggedInUser().get();
+	   return (UnitDirector) userService.getLoggedInUser();
 	}
 	
 }
