@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.services;
+package org.microboard.whiteboard.services.task;
 
 import java.util.Optional;
 

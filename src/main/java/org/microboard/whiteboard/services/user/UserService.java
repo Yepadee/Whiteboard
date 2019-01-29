@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.services;
+package org.microboard.whiteboard.services.user;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,11 +4,10 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
-import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HomePageGetter;
-import org.microboard.whiteboard.services.TaskService;
-import org.microboard.whiteboard.services.UserService;
+import org.microboard.whiteboard.services.task.TaskService;
+import org.microboard.whiteboard.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,7 @@
 package org.microboard.whiteboard.controllers;
 
 import org.microboard.whiteboard.model.user.Student;
-import org.microboard.whiteboard.model.user.User;
-import org.microboard.whiteboard.services.UserService;
+import org.microboard.whiteboard.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

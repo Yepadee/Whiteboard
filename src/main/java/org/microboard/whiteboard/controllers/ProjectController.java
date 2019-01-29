@@ -5,23 +5,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.microboard.whiteboard.services.GroupProjectService;
-import org.microboard.whiteboard.services.ProjectService;
-import org.microboard.whiteboard.services.SoloProjectService;
-import org.microboard.whiteboard.services.UserService;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
-import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.SoloProject;
 import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.User;
+import org.microboard.whiteboard.services.task.ProjectService;
+import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
