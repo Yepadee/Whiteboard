@@ -1,0 +1,64 @@
+
+#pageNotFound .text-wrapper {
+  margin-top: 10%;
+  text-align: center;
+}
+
+.text-wrapper .text-wrapper-404 {
+  height: 240px;
+}
+
+.text-wrapper .text-wrapper-404 h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 252px;
+  color: #570000;
+  letter-spacing: -40px;
+  margin: 0;
+  line-height: 0.9;
+}
+
+.text-wrapper .text-wrapper-404 h1>span {
+  text-shadow: -8px 0px 0px #fff;
+}
+
+.text-wrapper .text-wrapper-404 h3 {
+  font-family: 'Cabin', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #262626;
+  margin: 0px;
+  letter-spacing: 4px;
+  text-align: center;
+}
+
+.text-wrapper h2 {
+  font-family: 'Cabin', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #000;
+  margin-top: 0px
+}
+
+@media only screen and (max-width: 767px) {
+  .text-wrapper .text-wrapper-404 {
+    height: 200px;
+  }
+  .text-wrapper .text-wrapper-404 h1 {
+    font-size: 200px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .text-wrapper .text-wrapper-404 {
+    height: 162px;
+  }
+  .text-wrapper .text-wrapper-404 h1 {
+    font-size: 162px;
+    height: 150px;
+    line-height: 162px;
+  }
+  .text-wrapper h2 {
+    font-size: 16px;
+  }
+}

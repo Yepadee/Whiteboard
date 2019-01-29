@@ -201,7 +201,7 @@ body {
 
 /* Top Navbar */
 .navbar{
-  min-height: 65px;
+  min-height: 80px;
 }
 .navbar-inverse{
   background: #570000;
