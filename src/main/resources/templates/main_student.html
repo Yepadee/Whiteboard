@@ -2,79 +2,44 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="studentHeader:: head"></head>
 <body>
-  <div th:replace="sidebar_student:: sidebar"></div>
+	<div th:replace="sidebar_student:: sidebar"></div>
 
-  <div class="right-side">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <ul class="nav navbar-nav navbar-left">
-        <h3>Outstanding Tasks</h3>
-      </ul>
-    </div>
-    </nav>
-  </div>
-  <div class="content">
-    <div class="container outstanding-tasks">
-      <div class="row">
-        <div class="col-sm-8 table-wrapper">
-          <table class="table panel panel-default" id="table">
-          <h5>Outstanding Tasks</h5>
-            <thead>
-              <tr>
-                <th>Project</th>
-                <th>Task Name</th>
-                <th>Deadline</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Individual Feedback</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="feedbackSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Group Feedback</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="groupFeedbackSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Reconcile Feedback</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Portfolio A</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Portfolio A</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Portfolio A</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-              <tr>
-                <td>Software Product Engineering1</td>
-                <td>Portfolio A</td>
-                <td class="warning">20.10.2020</td>
-                <td><a href="workSubmission.html" class="btn btn-primary btn-xs">View</a></td>
-              </tr>
-            </tbody>
-          </table>
-          </div>
-      </div>
-    </div>
- 	 </div>
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-left">
+					<h3>Outstanding Tasks</h3>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="content">
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<table class="table panel panel-default" id="table">
+						<h5>Outstanding Tasks</h5>
+						<thead>
+							<tr>
+								<th>Project</th>
+								<th>Task Name</th>
+								<th>Deadline</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="task: ${user.allTasks}">
+								<td><span th:text="${task.assessment.name}"></span></td>
+								<td><span th:text="${task.status}"></span></td>
+								<td><span th:text="${task.assessment.studentDeadline}" class="warning"></span></td>
+								<td><a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}"
+									class="btn btn-primary btn-xs">View</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
