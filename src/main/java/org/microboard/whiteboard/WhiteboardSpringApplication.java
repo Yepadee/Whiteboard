@@ -1,5 +1,8 @@
 package org.microboard.whiteboard;
 
+import java.io.File;
+
+import org.microboard.whiteboard.controllers.UserController;
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.GroupProject;
@@ -12,6 +15,7 @@ import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.UserService;
+import org.microboard.whiteboard.uploadDemo.FileUploadApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,14 +27,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WhiteboardSpringApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(WhiteboardSpringApplication.class, args);
+		FileUploadApp f = new FileUploadApp();
+		f.upload(args);
 	}
 	@Autowired
     private UserService userService;
 	
 	@Autowired
     private ProjectService projectService;
-	
 	
 	@EventListener
 	public void appReady(ApplicationReadyEvent event) {

@@ -1,5 +1,9 @@
 package org.microboard.whiteboard.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.microboard.whiteboard.model.task.Task;
@@ -16,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -83,5 +89,25 @@ public class UserController {
 			return "error";
 		}
 	}
+	
+	@PostMapping("/testUpload")
+	public String UploadPage(Model model, @RequestParam("files") MultipartFile[] files) {
+		String uploadDirectory = System.getProperty("user.dir") + "/uploads";
+		StringBuilder fileNames = new StringBuilder();
+		for (MultipartFile file : files) {
+			Path fileNameAndPath = Paths.get(uploadDirectory,file.getOriginalFilename());
+			fileNames.append(file.getOriginalFilename());
+			try {
+				Files.write(fileNameAndPath, file.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		model.addAttribute("msg","Success: "+fileNames.toString());
+		return "submission";
+	}
+	
+
 }
 
