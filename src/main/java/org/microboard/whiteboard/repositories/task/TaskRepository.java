@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.repositories;
+package org.microboard.whiteboard.repositories.task;
 
 import org.microboard.whiteboard.model.task.Task;
 import org.springframework.data.repository.CrudRepository;

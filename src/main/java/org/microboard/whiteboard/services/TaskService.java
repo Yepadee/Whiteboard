@@ -3,7 +3,7 @@ package org.microboard.whiteboard.services;
 import java.util.Optional;
 
 import org.microboard.whiteboard.model.task.Task;
-import org.microboard.whiteboard.repositories.TaskRepository;
+import org.microboard.whiteboard.repositories.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

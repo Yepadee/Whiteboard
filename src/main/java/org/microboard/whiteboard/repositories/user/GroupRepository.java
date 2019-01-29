@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.repositories;
+package org.microboard.whiteboard.repositories.user;
 
 import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.user.Group;

@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.controllers.LoginController;
 import org.microboard.whiteboard.model.user.User;
-import org.microboard.whiteboard.repositories.UserRepository;
+import org.microboard.whiteboard.repositories.user.UserRepository;
 import org.microboard.whiteboard.security.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

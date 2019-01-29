@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.UserRoleGetter;
-import org.microboard.whiteboard.repositories.UserRepository;
+import org.microboard.whiteboard.repositories.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

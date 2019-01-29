@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.repositories;
+package org.microboard.whiteboard.repositories.user;
 
 import java.util.Optional;
 

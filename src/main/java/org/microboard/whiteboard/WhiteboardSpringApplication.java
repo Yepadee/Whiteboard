@@ -10,8 +10,6 @@ import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Group;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
-import org.microboard.whiteboard.repositories.GroupRepository;
-import org.microboard.whiteboard.repositories.TaskRepository;
 import org.microboard.whiteboard.services.ProjectService;
 import org.microboard.whiteboard.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

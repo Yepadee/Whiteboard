@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.microboard.whiteboard.model.project.SoloProject;
-import org.microboard.whiteboard.repositories.SoloProjectRepository;
+import org.microboard.whiteboard.repositories.project.SoloProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

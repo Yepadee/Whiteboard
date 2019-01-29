@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.microboard.whiteboard.model.project.Project;
-import org.microboard.whiteboard.repositories.ProjectRepository;
+import org.microboard.whiteboard.repositories.project.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
