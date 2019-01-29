@@ -82,6 +82,12 @@ public class WhiteboardSpringApplication {
 		student.addTask(st2);
 		sa2.addTask(st2);
 		
+		SoloTask stu = new SoloTask();
+		stu.setStatus("new");
+		unitDirector.addTask(stu);
+		sa2.addTask(stu);
+		
+		
 		
 		projectService.addProject(sp);
 		unitDirector.addProject(sp);
