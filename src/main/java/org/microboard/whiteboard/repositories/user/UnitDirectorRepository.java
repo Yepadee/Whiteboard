@@ -1,10 +1,8 @@
 package org.microboard.whiteboard.repositories.user;
 
-import java.util.Optional;
+import org.microboard.whiteboard.model.user.UnitDirector;
+import org.springframework.transaction.annotation.Transactional;
 
-import org.microboard.whiteboard.model.user.User;
-import org.springframework.data.repository.CrudRepository;
-
-public interface UnitDirectorRepository extends CrudRepository<User, Long> {
-	Optional<User> findByUserName(String userName);	
+@Transactional
+public interface UnitDirectorRepository extends BaseUserRepository<UnitDirector> {
 }

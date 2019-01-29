@@ -14,7 +14,7 @@ import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.user.UserRepository;
-import org.microboard.whiteboard.services.UserService;
+import org.microboard.whiteboard.services.user.UserService;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 

@@ -9,9 +9,8 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.microboard.whiteboard.model.user.UnitDirector;
-import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.user.UnitDirectorRepository;
-import org.microboard.whiteboard.services.UserService;
+import org.microboard.whiteboard.services.user.UnitDirectorService;
 import org.mockito.Mock;
 
 public class UnitDirectorServiceTest {
@@ -28,15 +27,15 @@ public class UnitDirectorServiceTest {
 	
 	@Test
 	public void getUser_returnsUser() {
-		User mockUser = new UnitDirector();
-		mockUser.setUserName("admin");
+		UnitDirector mockUnitDirector = new UnitDirector();
+		mockUnitDirector.setUserName("admin");
 		
-		given(repository.findByUserName("admin")).willReturn(Optional.ofNullable(mockUser));
+		given(repository.findByUserName("admin")).willReturn(Optional.ofNullable(mockUnitDirector));
 		
-		Optional<User> maybeUser = service.getByUserName("admin");
+		Optional<UnitDirector> maybeUnitDirector = service.getByUserName("admin");
 		
-		assertTrue(maybeUser.isPresent());
-		assertThat(maybeUser.get().getUserName()).isEqualTo("admin");
+		assertTrue(maybeUnitDirector.isPresent());
+		assertThat(maybeUnitDirector.get().getUserName()).isEqualTo("admin");
 	}
 
 }

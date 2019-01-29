@@ -1,6 +1,5 @@
 package org.microboard.whiteboard.repositories.user;
 
-import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.user.Group;
 import org.springframework.data.repository.CrudRepository;
 
