@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -9,37 +7,3 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
   <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
 </head>
-<body>
-
-  <div class="sidebar" th:fragment="sidebar">
-    <img th:src="@{/img/logo.png}" class="logo">
-    <div class="nav-profile">
-      <div class="profile-image">
-        <img src="../static/img/no-profile-photo.jpg" th:src="@{/img/no-profile-photo.jpg}" alt="profile image" class="img-circle">
-      </div>
-      <div class="text-wrapper">
-        <p class="profile-name"  th:text="${user.userName}"></p>
-        <small class="designation text-muted">Unit Director</small>
-        <span class="glyphicon glyphicon-asterisk"></span>
-      </div>
-    </div>
-    <a href="./newProject.html" class="newProject">New Project +</a>
-    <a class="active" href="#controlPanel" th:href="@{/unit_director/projects}">
-      <span class="glyphicon glyphicon-globe"></span>
-      <span class="sidebar-element">View Projects</span>
-    </a>
-    <a href="./log.html">
-      <span class="glyphicon glyphicon-edit"></span>
-      <span class="sidebar-element">View Log</span>
-    </a>
-    <a href="#archive">
-      <span class="glyphicon glyphicon-briefcase"></span>
-      <span class="sidebar-element">Archive</span>
-    </a>
-    <a href="#controlPanel">
-      <span class="glyphicon glyphicon-cog"></span>
-      <span class="sidebar-element">Manage permissions</span>
-    </a>
-  </div>
-  </body>
-  </html>
