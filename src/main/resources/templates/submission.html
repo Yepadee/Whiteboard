@@ -24,6 +24,10 @@
 						id="comments" name="comments" th:text="${task.txtSubmission}" form="submissionForm"></textarea>
 						<input type="submit" value="Submit" />
 					</form>
+						<form action="/testUpload" method="post" enctype="multipart/form-data">
+							<input type="file" name="files" multiple>
+							<input type="submit" value="Upload Files"></input>
+						</form>
 				</div>
 			</div>
 		</div>
