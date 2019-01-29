@@ -5,8 +5,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.microboard.whiteboard.controllers.LoginController;
+import org.microboard.whiteboard.repositories.project.ProjectRepository;
+import org.microboard.whiteboard.repositories.user.UserRepository;
+import org.microboard.whiteboard.services.task.ProjectService;
+import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -17,6 +22,18 @@ public class LoginControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@MockBean
+	private UserService userService;
+	
+	@MockBean
+	private UserRepository userRepository;
+	
+	@MockBean
+	private ProjectService projectService;
+	
+	@MockBean
+	private ProjectRepository projectRepository;
 	
 	@Test
 	public void test() throws Exception {
