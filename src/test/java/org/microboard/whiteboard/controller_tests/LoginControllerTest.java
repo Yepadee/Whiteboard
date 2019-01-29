@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.microboard.whiteboard.controllers.LoginController;
 import org.microboard.whiteboard.repositories.project.ProjectRepository;
 import org.microboard.whiteboard.repositories.user.UserRepository;
-import org.microboard.whiteboard.services.task.ProjectService;
+import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
