@@ -6,12 +6,12 @@ import static org.mockito.BDDMockito.given;
 
 import java.util.Optional;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.repositories.user.UnitDirectorRepository;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -21,13 +21,9 @@ public class UnitDirectorServiceTest {
 	@Mock
 	private UnitDirectorRepository unitDirectorRepository;
 	
+	@InjectMocks
 	private UnitDirectorService unitDirectorService;
-	
-	@Before
-	public void setUp() {
-		this.unitDirectorService = new UnitDirectorService(unitDirectorRepository);
-	}
-	
+
 	@Test
 	public void getUser_returnsUnitDirector() {
 		UnitDirector mockUnitDirector = new UnitDirector();

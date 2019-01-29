@@ -24,8 +24,7 @@ public class ProjectService {
 		projectRepository.findAll().forEach(projects::add);
 		return projects;
 	}
-	
-	
+		
 	public void addProject(Project project) {
 		projectRepository.save(project);
 	}

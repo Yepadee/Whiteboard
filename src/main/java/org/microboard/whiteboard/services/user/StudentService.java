@@ -7,8 +7,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudentService extends BaseUserService<Student> {
 	
-	public StudentService(StudentRepository repository) {
-		this.repository = repository;
-	}
-	
 } 

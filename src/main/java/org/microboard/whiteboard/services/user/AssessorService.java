@@ -10,8 +10,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class AssessorService extends BaseUserService<Assessor> {
 	
-	public AssessorService(AssessorRepository repository) {
-		this.repository = repository;
-	}
-	
 } 

@@ -6,13 +6,12 @@ import static org.mockito.BDDMockito.given;
 
 import java.util.Optional;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.microboard.whiteboard.model.user.Assessor;
-import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.repositories.user.AssessorRepository;
 import org.microboard.whiteboard.services.user.AssessorService;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -22,12 +21,9 @@ public class AssessorServiceTest {
 	@Mock
 	private AssessorRepository assessorRepository;
 	
+	@InjectMocks
 	private AssessorService assessorService;
 	
-	@Before
-	public void setUp() {
-		this.assessorService = new AssessorService(assessorRepository);
-	}
 	
 	@Test
 	public void getUser_returnsAssessor() {

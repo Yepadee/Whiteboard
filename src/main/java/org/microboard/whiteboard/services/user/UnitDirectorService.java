@@ -7,8 +7,4 @@ import org.springframework.stereotype.Service;
 @Service
 public class UnitDirectorService extends BaseUserService<UnitDirector> {
 	
-	public UnitDirectorService(UnitDirectorRepository repository) {
-		this.repository = repository;
-	}
-	
 } 

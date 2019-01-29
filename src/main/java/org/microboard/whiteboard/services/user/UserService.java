@@ -8,11 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService extends BaseUserService<User> {
-	
-	public UserService(UserRepository repository) {
-		this.repository = repository;
-	}
-	
 	public User getLoggedInUser() {
 		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User loggedInUser = userDetails.getUser();

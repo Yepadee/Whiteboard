@@ -3,10 +3,8 @@ package org.microboard.whiteboard.service_tests;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
-
 import java.util.Optional;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.microboard.whiteboard.model.user.Assessor;
@@ -15,6 +13,7 @@ import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.user.UserRepository;
 import org.microboard.whiteboard.services.user.UserService;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -25,12 +24,8 @@ public class UserServiceTest {
 	@Mock
 	private UserRepository userRepository;
 	
+	@InjectMocks
 	private UserService userService;
-	
-	@Before
-	public void setUp() {
-		this.userService = new UserService(userRepository);
-	}
 	
 	@Test
 	public void getUser_returnsUser() {
@@ -40,7 +35,6 @@ public class UserServiceTest {
 		given(userRepository.findByUserName("admin")).willReturn(Optional.ofNullable(mockUser));
 		
 		Optional<User> maybeUser = userService.getByUserName("admin");
-		
 		assertTrue(maybeUser.isPresent());
 		assertThat(maybeUser.get().getUserName()).isEqualTo("admin");
 	}

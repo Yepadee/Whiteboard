@@ -18,17 +18,22 @@ public class UnitDirectorController {
 	
 	@GetMapping("/new_project")
 	public String getNewProjectPage(Model model) {
-		return "newProject";
+		return "new_project";
 	}
 	
 	@GetMapping("/edit_project/{id}")
 	public String editProjectPage() {
-		return "newProject";
+		return "edit_project";
 	}
 	
 	@GetMapping("/projects")
 	public String viewProjectsPage() {
-		return "newProject";
+		return "view_projects";
+	}
+	
+	@GetMapping("/manage_permissions")
+	public String managePermissionsPage() {
+		return "manage_permissions";
 	}
 	
 	@ModelAttribute("user")
