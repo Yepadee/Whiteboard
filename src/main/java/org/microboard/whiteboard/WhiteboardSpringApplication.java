@@ -1,8 +1,5 @@
 package org.microboard.whiteboard;
 
-import java.io.File;
-
-import org.microboard.whiteboard.controllers.UserController;
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.GroupProject;
@@ -12,8 +9,10 @@ import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Group;
 import org.microboard.whiteboard.model.user.Student;
+import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.services.project.ProjectService;
+import org.microboard.whiteboard.services.user.UnitService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.microboard.whiteboard.uploadDemo.FileUploadApp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +37,9 @@ public class WhiteboardSpringApplication {
 	@Autowired
     private ProjectService projectService;
 	
+	@Autowired
+    private UnitService unitService;
+	
 	@EventListener
 	public void appReady(ApplicationReadyEvent event) {
 		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
@@ -58,10 +60,18 @@ public class WhiteboardSpringApplication {
 		userService.addUser(unitDirector);
 		userService.addUser(assessor);
 		
+		Unit unit = new Unit();
+		unit.setUnitName("COMS20005");
+		
+		unitService.addUnit(unit);
+		unit.addUser(student);
+		
+
 		
 		SoloProject sp = new SoloProject();
 		sp.setName("Test Solo Project 1");
 		sp.setDescription("Description for \"Test Solo Project 1\"");
+		sp.setUnit(unit);
 		
 		SoloAssessment sa1 = new SoloAssessment();
 		sa1.setName("Test Solo Assessment 1");
@@ -103,6 +113,7 @@ public class WhiteboardSpringApplication {
 		GroupProject gp = new GroupProject();
 		gp.setName("Test Group Project 1");
 		gp.setDescription("Description for \"Test Group Project 1\"");
+		gp.setUnit(unit);
 		
 		
 		Group g = new Group();

@@ -31,7 +31,6 @@ public abstract class BaseUserService<T extends User> {
 
 	public Optional<T> getUser(Long id) {
 		return repository.findById(id);
-
 	}
 
 	public void DeleteAll() {
@@ -40,16 +39,13 @@ public abstract class BaseUserService<T extends User> {
 
 	public void updateUser(T newUser) {
 		repository.save(newUser);
-
 	}
 
 	public void deleteUser(Long id) {
 		repository.deleteById(id);
-
 	}
 
 	public Optional<T> getByUserName(String name) {
 		return repository.findByUserName(name);
-
 	}
 }

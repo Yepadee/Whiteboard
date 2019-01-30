@@ -17,8 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -40,13 +38,16 @@ public abstract class User {
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
 	private List<SoloTask> soloTasks = new ArrayList<>();
 	
+	@ManyToMany(mappedBy = "cohort")
+	private List<Unit> units = new ArrayList<>();
+	
 	
 	public long getId() {
 		return id;
 	}
 	
 	public void setId(long id) {
-		this.id = id; //comment
+		this.id = id;
 	}
 	
 	public String getUserName() {
@@ -96,4 +97,18 @@ public abstract class User {
 	}
 	
 	public abstract void accept(UserVisitor v);
+
+	public List<Unit> getUnits() {
+		return units;
+	}
+
+	public void setUnits(List<Unit> units) {
+		this.units = units;
+	}
+	
+	public void addUnit(Unit unit) {
+		units.add(unit);
+		unit.getCohort().add(this);
+	}
+	
 }

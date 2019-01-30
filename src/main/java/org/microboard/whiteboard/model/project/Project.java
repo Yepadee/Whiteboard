@@ -9,8 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 
 import javax.persistence.DiscriminatorType;
@@ -29,6 +32,10 @@ public abstract class Project {
 	private UnitDirector creator;
 	@ManyToMany
 	private List<UnitDirector> helpers;
+	
+	@ManyToOne
+	@JoinColumn(name="unit_id", nullable=false)
+	private Unit unit;
 	
 	public long getId() {
 		return id;
@@ -59,6 +66,12 @@ public abstract class Project {
 	}
 	public void setHelpers(List<UnitDirector> helpers) {
 		this.helpers = helpers;
+	}
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 	
 }
