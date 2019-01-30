@@ -173,7 +173,7 @@ body {
 .sidebar a .sidebar-element{
   padding-left: 10px;
 }
-.sidebar a.newProject {
+a.newProject {
     background-color: #00ce68;
     color: #fff;
     padding-left: 40px;
