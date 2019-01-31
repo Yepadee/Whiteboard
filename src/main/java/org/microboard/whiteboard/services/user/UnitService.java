@@ -19,6 +19,10 @@ public class UnitService {
 		repository.save(unit);
 	}
 	
+	public Optional<Unit> getUnit(Long id) {
+		return repository.findById(id);
+	}
+	
 	public Optional<Unit> getByUnitCode(String unitCode) {
 		return repository.findByUnitCode(unitCode);
 	}

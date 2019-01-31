@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<p>Solo Project</p>
+	<form name="newProject" action="#" th:action="@{/unit_director/new_solo_project}"
+		th:object="${soloProject}" method="post">
+		
+		<select th:field="*{unit.id}" >
+			<option th:each="unit : ${unitList}" th:value="${unit.id}"
+				th:text=${unit.unitName}></option>
+		</select>
+		<button type="submit" name="setUnit">Set Unit</button>
+		
+		<input type="text" th:field="*{name}" />
+		<input type="text"th:field="*{description}" />
+		<button type="submit" name="addAssessment">Add Assessment</button>
+		<div th:each="assessment, a: *{assessments}">
+			<p>Assessment</p>
+			<label for="assessmentName">Name: </label> <input type="text"
+				id="assessmentName" th:field="*{assessments[__${a.index}__].name}"
+				name="assessmentName" /> <label for="assessmentDesc">Description:
+			</label> <input type="text" id="assessmentDesc"
+				th:field="*{assessments[__${a.index}__].description}"
+				name="assessmentDesc" />
+
+			<div th:each="task, t: *{assessments[__${a.index}__].tasks}">
+				<span
+					th:text=*{assessments[__${a.index}__].tasks[__${t.index}__].accountable.userName}></span>
+			</div>
+		</div>
+		
+
+	</form>
+</body>
+</html>

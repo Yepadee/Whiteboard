@@ -53,42 +53,4 @@ public class ProjectController {
 	public void deleteProject(@RequestBody long id) {
 		projectService.deleteProject(id);
 	}
-	
-	@GetMapping("/test")
-	public void testAddProject() {
-		List<User> cohort = new ArrayList<>();
-		User user1 = new Student();
-		user1.setUserName("James");
-		
-		User user2 = new Student();
-		user2.setUserName("Alex");
-		
-		userService.addUser(user1);
-		userService.addUser(user2);
-		
-		cohort.add(user1);
-		cohort.add(user2);
-		
-		SoloProject project = new SoloProject();
-		project.setName("Test 1");
-		project.setCreator(null);
-		project.setDescription("A test solo project.");
-		project.setHelpers(new ArrayList<>());
-		project.getCohort().addAll(cohort);
-		
-		SoloAssessment assessment1 = new SoloAssessment();
-		assessment1.setName("solo assessment 1");
-		assessment1.setDescription("A test solo assessment.");
-		assessment1.setMarkerDeadline(new Date());
-		assessment1.setStudentDeadline(new Date());
-		
-		project.addAssessment(assessment1);
-		projectService.addProject(project);
-		
-		for (User user : project.getCohort()) {
-			SoloTask task = new SoloTask();
-			task.setAccountable(user);
-			assessment1.addTask(task);
-		}
-	}
 }

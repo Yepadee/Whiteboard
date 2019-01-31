@@ -17,18 +17,6 @@ import org.microboard.whiteboard.model.user.User;
 public class SoloProject extends Project {
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "project")
 	private List<SoloAssessment> assessments = new ArrayList<>();
-	
-	@ManyToMany
-	private List<User> cohort = new ArrayList<>();
-	
-
-	public List<User> getCohort() {
-		return cohort;
-	}
-
-	public void setCohort(List<User> cohort) {
-		this.cohort = cohort;
-	}
 
 	public List<SoloAssessment> getAssessments() {
 		return assessments;

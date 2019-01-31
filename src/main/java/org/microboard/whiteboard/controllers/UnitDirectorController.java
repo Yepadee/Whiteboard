@@ -1,15 +1,16 @@
 package org.microboard.whiteboard.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.microboard.whiteboard.model.project.builder.ProjectTemplate;
-import org.microboard.whiteboard.model.project.builder.SoloProjectTemplate;
-import org.microboard.whiteboard.model.user.Assessor;
+import org.microboard.whiteboard.model.assessment.SoloAssessment;
+import org.microboard.whiteboard.model.project.SoloProject;
+import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
+import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.user.AssessorService;
-import org.microboard.whiteboard.services.user.StudentService;
 import org.microboard.whiteboard.services.user.UnitService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UnitDirectorController {
 	
 	Logger logger = LoggerFactory.getLogger(UnitDirectorController.class);
-
+	
 	@Autowired
 	private AssessorService assessorService;
 	
@@ -39,22 +40,44 @@ public class UnitDirectorController {
 	
 	@GetMapping("/new_solo_project")
 	public String getNewSoloProjectPage(Model model) {
-		List<Unit> allUnits = unitService.getAllUnits();
-		List<Assessor> allAssessors = assessorService.getAllUsers();
+		SoloProject p = new SoloProject();
+		model.addAttribute("soloProject", p);
 		
-		model.addAttribute("units", allUnits);
-		model.addAttribute("assessors", allAssessors);
 		
-		return "new_project";
+		return "new_project_test";
 	}
 	
-	@PostMapping("/new_solo_project")
-	public String makeNewSoloProject(Model model, @ModelAttribute SoloProjectTemplate projectTemplate) {
-		logger.info("New project added.");
+	@PostMapping(value="/new_solo_project", params={"addAssessment"})
+	public String addRow(final SoloProject project) {
+		SoloAssessment assessment = new SoloAssessment();
+		Unit unit = unitService.getUnit(project.getUnit().getId()).get();
 		
-		logger.info("Added new solo project with name: " + projectTemplate.getName());
+		for (User user : project.getUnit().getCohort()) {
+			SoloTask task = new SoloTask();
+			task.setAccountable(user);
+			assessment.addTask(task);
+			System.out.print("Username: ");
+			System.out.println(user.getUserName());
+		}
 		
-		return "new_project";
+		project.getAssessments().add(assessment);
+		
+	    return "new_project_test";
+	}
+	
+	@PostMapping(value="/new_solo_project", params={"setUnit"})
+	public String setUnit(Model model, final SoloProject project) {
+		Unit unit = unitService.getUnit(project.getUnit().getId()).get();
+
+		for (SoloAssessment assessment : project.getAssessments()) {
+			assessment.setTasks(new ArrayList<SoloTask>());
+			for (User user : unit.getCohort()) {
+				SoloTask task = new SoloTask();
+				task.setAccountable(user);
+				assessment.addTask(task);
+			}
+		}
+	    return "new_project_test";
 	}
 	
 	@GetMapping("/edit_project/{id}")
@@ -75,6 +98,11 @@ public class UnitDirectorController {
 	@ModelAttribute("user")
 	public UnitDirector getUnitDirector() {
 	   return (UnitDirector) userService.getLoggedInUser();
+	}
+	
+	@ModelAttribute("unitList")
+	public List<Unit> getUnitList() {
+	   return unitService.getAllUnits();
 	}
 	
 }

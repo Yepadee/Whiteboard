@@ -11,6 +11,7 @@ import org.microboard.whiteboard.model.user.Group;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
+import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.UnitService;
 import org.microboard.whiteboard.services.user.UserService;
@@ -60,18 +61,37 @@ public class WhiteboardSpringApplication {
 		userService.addUser(unitDirector);
 		userService.addUser(assessor);
 		
-		Unit unit = new Unit();
-		unit.setUnitName("COMS20005");
+		int numUsers = 5;
+		Unit unit1 = new Unit();
+		unit1.setUnitName("COMS20005");
+		for (int i = 1; i <= numUsers; i ++) {
+			User s = new Student();
+			s.setUserName("User " + i);
+			userService.addUser(s);
+			unit1.addUser(s);
+		}
 		
-		unitService.addUnit(unit);
-		unit.addUser(student);
+		
+		unitService.addUnit(unit1);
+		
+		unit1.addUser(student);
+		
+		Unit unit2 = new Unit();
+		unit2.setUnitName("Signals, Patterns and Symbols");
+		for (int i = numUsers + 1; i <= numUsers * 2; i ++) {
+			User s = new Student();
+			s.setUserName("User " + i);
+			userService.addUser(s);
+			unit2.addUser(s);
+		}
+		unitService.addUnit(unit2);
 		
 
 		
 		SoloProject sp = new SoloProject();
 		sp.setName("Test Solo Project 1");
 		sp.setDescription("Description for \"Test Solo Project 1\"");
-		sp.setUnit(unit);
+		sp.setUnit(unit1);
 		
 		SoloAssessment sa1 = new SoloAssessment();
 		sa1.setName("Test Solo Assessment 1");
@@ -113,7 +133,7 @@ public class WhiteboardSpringApplication {
 		GroupProject gp = new GroupProject();
 		gp.setName("Test Group Project 1");
 		gp.setDescription("Description for \"Test Group Project 1\"");
-		gp.setUnit(unit);
+		gp.setUnit(unit1);
 		
 		
 		Group g = new Group();
@@ -151,6 +171,8 @@ public class WhiteboardSpringApplication {
 		projectService.addProject(gp);
 		unitDirector.addProject(gp);
 		
+		projectService.updateProject(gp);
+		projectService.updateProject(sp);
 		
 		userService.updateUser(unitDirector);
 		userService.updateUser(unitDirector);
