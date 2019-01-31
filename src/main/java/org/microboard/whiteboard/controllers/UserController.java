@@ -45,6 +45,11 @@ public class UserController {
 		return homePageGetter.getResult();
 	}
 	
+	@GetMapping("/test")
+	public String UploadPage() {
+		return "uploadStatusView";
+	}
+	
 	@GetMapping("/tasks/{id}")
 	public String getSubmissionPage(Model model, @PathVariable long id) {
 		User user = userService.getLoggedInUser();
@@ -90,7 +95,7 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/testUpload")
+	@RequestMapping("/testUpload")
 	public String UploadPage(Model model, @RequestParam("files") MultipartFile[] files) {
 		String uploadDirectory = System.getProperty("user.dir") + "/uploads";
 		StringBuilder fileNames = new StringBuilder();
@@ -104,7 +109,7 @@ public class UserController {
 			}
 		}
 		model.addAttribute("msg","Success: "+fileNames.toString());
-		return "main_unitDirector";
+		return "uploadStatusView";
 	}
 	
 
