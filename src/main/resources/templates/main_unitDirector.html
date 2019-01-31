@@ -65,7 +65,11 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-danger">Upload</button>
+									<form action="/testUpload" method="get" enctype="multipart/form-data">
+										<input type="file" name="files" multiple>
+										<input type="submit" value="Upload Files"></input>
+									</form>
+								<!--<button type="button" class="btn btn-danger">Upload</button> -->
 							</div>
 						</div>
 					</div>

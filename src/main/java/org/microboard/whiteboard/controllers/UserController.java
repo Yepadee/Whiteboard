@@ -90,7 +90,7 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/testUpload")
+	@GetMapping("/testUpload")
 	public String UploadPage(Model model, @RequestParam("files") MultipartFile[] files) {
 		String uploadDirectory = System.getProperty("user.dir") + "/uploads";
 		StringBuilder fileNames = new StringBuilder();
@@ -100,12 +100,11 @@ public class UserController {
 			try {
 				Files.write(fileNameAndPath, file.getBytes());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		model.addAttribute("msg","Success: "+fileNames.toString());
-		return "submission";
+		return "main_unitDirector";
 	}
 	
 
