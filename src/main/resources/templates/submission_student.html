@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head th:replace="studentHeader:: head"></head>
+<head th:replace="header_student:: head"></head>
 <body>
 	<div th:replace="sidebar_student:: sidebar"></div>
 
@@ -24,7 +24,7 @@
 						id="comments" name="comments" th:text="${task.txtSubmission}" form="submissionForm"></textarea>
 						<input type="submit" value="Submit" />
 					</form>
-						<form action="/testUpload" method="post" enctype="multipart/form-data">
+						<form th:action="@{/user/testUpload}" method="post" enctype="multipart/form-data">
 							<input type="file" name="files" multiple>
 							<input type="submit" value="Upload Files"></input>
 						</form>

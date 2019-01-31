@@ -10,6 +10,7 @@ import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HomePageGetter;
+import org.microboard.whiteboard.model.user.visitors.SubmissionPageGetter;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.slf4j.Logger;
@@ -61,7 +62,9 @@ public class UserController {
 			if (accessValidator.getResult()) {
 				model.addAttribute("task", task);
 				model.addAttribute("user", user);
-				return "submission";
+				SubmissionPageGetter submissionPageGetter = new SubmissionPageGetter(model);
+				user.accept(submissionPageGetter);
+				return submissionPageGetter.getResult();
 			} else {
 				return "access_denied";
 			}
@@ -95,7 +98,7 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping("/testUpload")
+	@PostMapping("/testUpload")
 	public String UploadPage(Model model, @RequestParam("files") MultipartFile[] files) {
 		String uploadDirectory = System.getProperty("user.dir") + "/uploads";
 		StringBuilder fileNames = new StringBuilder();
@@ -111,7 +114,5 @@ public class UserController {
 		model.addAttribute("msg","Success: "+fileNames.toString());
 		return "uploadStatusView";
 	}
-	
-
 }
 
