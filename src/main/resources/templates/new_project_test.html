@@ -27,13 +27,18 @@
 				th:field="*{assessments[__${a.index}__].description}"
 				name="assessmentDesc" />
 
-			<div th:each="task, t: *{assessments[__${a.index}__].tasks}">
-				<span
-					th:text=*{assessments[__${a.index}__].tasks[__${t.index}__].accountable.userName}></span>
-			</div>
+				<div th:each="task, t: *{assessments[__${a.index}__].tasks}">
+					<input type="hidden" th:field=*{assessments[__${a.index}__].tasks[__${t.index}__].accountable}>
+					<span th:text=*{assessments[__${a.index}__].tasks[__${t.index}__].accountable.userName}></span>
+					<div th:each="marker, m: *{assessments[__${a.index}__].tasks[__${t.index}__].markers}">
+					<button type="submit" name="addMarker">Add Marker</button>
+						<select th:field="*{assessments[__${a.index}__].tasks[__${t.index}__].markers[__${m.index}__]}" >
+							<option th:each="assessor : ${assessorList}" th:value="${assessor.id}"
+								th:text=${assessor.userName}></option>
+						</select>
+					</div>
+				</div>
 		</div>
-		
-
 	</form>
 </body>
 </html>

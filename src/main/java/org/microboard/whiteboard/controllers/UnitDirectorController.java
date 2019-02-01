@@ -6,6 +6,8 @@ import java.util.List;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.SoloProject;
 import org.microboard.whiteboard.model.task.SoloTask;
+import org.microboard.whiteboard.model.task.Task;
+import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
@@ -42,7 +44,7 @@ public class UnitDirectorController {
 	public String getNewSoloProjectPage(Model model) {
 		SoloProject p = new SoloProject();
 		model.addAttribute("soloProject", p);
-		
+		model.addAttribute("numMarkers", 1);
 		
 		return "new_project";
 	}
@@ -51,8 +53,8 @@ public class UnitDirectorController {
 	public String addRow(final SoloProject project) {
 		SoloAssessment assessment = new SoloAssessment();
 		Unit unit = unitService.getUnit(project.getUnit().getId()).get();
-		
-		for (User user : project.getUnit().getCohort()) {
+
+		for (User user : unit.getCohort()) {
 			SoloTask task = new SoloTask();
 			task.setAccountable(user);
 			assessment.addTask(task);
@@ -80,6 +82,12 @@ public class UnitDirectorController {
 	    return "new_project_test";
 	}
 	
+	@PostMapping(value="/new_solo_project", params={"addMarker"})
+	public String addMarker(Model model, final SoloProject project) {
+		
+	    return "new_project_test";
+	}
+	
 	@GetMapping("/edit_project/{id}")
 	public String editProjectPage() {
 		return "edit_project";
@@ -103,6 +111,11 @@ public class UnitDirectorController {
 	@ModelAttribute("unitList")
 	public List<Unit> getUnitList() {
 	   return unitService.getAllUnits();
+	}
+	
+	@ModelAttribute("assessorList")
+	public List<Assessor> getAssessorList() {
+	   return assessorService.getAllUsers();
 	}
 	
 }
