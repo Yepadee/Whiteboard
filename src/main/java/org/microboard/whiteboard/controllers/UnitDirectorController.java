@@ -46,7 +46,7 @@ public class UnitDirectorController {
 		model.addAttribute("soloProject", p);
 		model.addAttribute("numMarkers", 1);
 		
-		return "new_project_test";
+		return "new_project";
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"addAssessment"})
