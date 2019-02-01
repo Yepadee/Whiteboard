@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="header_unit_director:: head"></head>
-<body>
-	<div th:replace="sidebar_unit_director:: sidebar"></div>
+<html>
 
-  <div class="right-side">
+<head th:replace="header_unit_director:: head">
+<link href="./resources/css/jquery.multiselect.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <div th:replace="sidebar_unit_director:: sidebar"></div>
+<div class="right-side">
     <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <ul class="nav navbar-nav navbar-left">
-        <li><h3>Add New Project </h3></li>
+        <h3>Add New Project </h3>
       </ul>
     </div>
     </nav>
   </div>
-
   <div class="content">
     <div class="container outstanding-tasks">
       <div class="row">
           <div class="col-sm-12 table-wrapper">
             <form class="form-horizontal" action="./newProjectNext.html">
+            </br>
               <div class="form-group">
                 <label class="control-label col-sm-2" for="projectName">Project Name:</label>
                 <div class="col-sm-4">
@@ -41,12 +43,30 @@
                   <label><input type="radio" name="groupOrSoloProject">Solo Project</label>
                 </div>
               </div>
-
-
+              <div class="form-group">
+                <hr class="dottedLine col-sm-8 col-sm-push-2"/>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-4 col-sm-push-2">
+                  <label for="selectCohort">Select Cohort:</label>
+                  </br>
+                  <input list="cohort" name="cohort" class="form-control datalist" id="selectCohort">
+                  <datalist id="cohort">
+                    <option value="COMS20001">COMS20001</option>
+                    <option value="COMS20005">COMS20005</option>
+                    <option value="COMS20805">COMS20805</option>
+                    <option value="COMS20756">COMS20756</option>
+                    <option value="COMS20320">COMS20320</option>
+                    <option value="COMS20458">COMS20458</option>
+                  </datalist>
+                  <input type="submit" value="Select" class="btn btn-black">
+                </div>
+              </div>
               <div class="form-group">
                 <hr class="dottedLine col-sm-8 col-sm-push-2"/>
               </div>
 
+              <!--
               <div class="form-group">
                 <div class="col-sm-3 col-sm-push-2">
                   <label for="sourceSelect">Select Cohort:</label>
@@ -68,15 +88,17 @@
                 <div class="col-sm-3 col-sm-push-2">
                   <label for="destinationSelect">Selected Cohort:</label>
                   <select class="form-control" name="destinationSelect" id="destinationSelect" multiple="multiple" size="3" onclick="">
-                  <!--SELECTED LIST WILL BE HERE-->
+                  << SELECTED LIST WILL BE HERE >>
                   </select>
                 </div>
-              </div>
+              </div> -->
 
+              <!--
               </br>
               <div class="form-group">
                 <hr class="dottedLine col-sm-8 col-sm-push-2"/>
               </div>
+              -->
 
               <!-- Assignment Section -->
               <div class="form-group">
@@ -103,7 +125,6 @@
                   </div>
                 </div>
                 <div class="control-label col-sm-2" ><label for="deadline">Weight:</label></div>
-
                 <div class="form-group">
                   <div class="col-sm-2">
                     <div class="input-group">
@@ -113,6 +134,66 @@
                   </div>
                 </div>
                 <div class="clearfix"></div>
+                <div class="form-group">
+                  <hr class="dottedLine col-sm-8 col-sm-push-2"/>
+                </div>
+                <p class="col-sm-12 col-sm-push-2" style="font-weight:bold; font-size:16px;">Add marker to this assignment:</p>
+                </br></br></br>
+
+                <!-- Marker Section> -->
+
+                <div class="markerWrapper">
+                  <div class="form-group">
+                    <div class="col-sm-4 col-sm-push-2">
+                      <label for="selectMarker">Select Marker:</label>
+                      </br>
+                      <input list="marker" name="markers" class="form-control datalist" id="selectMarker">
+                      <datalist id="marker">
+                        <option value="Marker1"> Marker name 1</option>
+                        <option value="Marker2"> Marker name 2</option>
+                        <option value="Marker3"> Marker name 3</option>
+                        <option value="Marker4"> Marker name 4</option>
+                        <option value="Marker5"> Marker name 5</option>
+                        <option value="Marker6"> Marker name 6</option>
+                      </datalist>
+                      <input type="submit" value="Select" class="btn btn-black">
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+
+                  <div class="form-group">
+                    <div class="col-sm-3 col-sm-push-2">
+                      <select name="stuOpt[]" multiple class="stuOpt">
+                        <option value="oa17248">oa17248</option>
+                        <option value="bs56489">bs56489</option>
+                        <option value="fd17569">fd17569</option>
+                        <option value="rd54698">rd54698</option>
+                        <option value="lf56984">lf56984</option>
+                        <option value="oa52793">oa52793</option>
+                        <option value="go17546">go17546</option>
+                        <option value="kj54897">kj54897</option>
+                        <option value="br17546">br17546</option>
+                        <option value="qw54897">qw54897</option>
+                        <option value="qw54894">qw54894</option>
+                        <option value="qw54895">qw54895</option>
+                        <option value="qw54896">qw54896</option>
+                        <option value="qw54896">qw54896</option>
+                        <option value="qw54896">qw54896</option>
+                        <option value="qw54896">qw54896</option>
+                        <option value="qw54896">qw54896</option>
+                        <option value="qw54896">qw54896</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-sm-2 col-sm-push-2">
+                      <a type="button" class="btn btn-green add_button1"  href="javascript:void(0);"><span class="glyphicon glyphicon-plus"></span> Marker</a>
+                    </div>
+                  </div>
+
+                </div>
+                <!-- End of Marker Section> -->
+                </br></br>
                 <div class="form-group">
                   <div class="col-sm-2 col-sm-push-2">
                     <a type="button" class="btn btn-blue add_button"  href="javascript:void(0);">Add another assignment</a>
@@ -134,6 +215,9 @@
                   $(this).parent().remove();
                 });*/
               </script>
+
+              <script src="./resources/js/jquery.multiselect.js"></script>
+
               <div class="clearfix"></div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

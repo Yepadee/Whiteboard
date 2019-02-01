@@ -15,6 +15,16 @@ $(document).ready(function(){
 			$selected.remove();
 	});
 
+	$('#forward').on('click',function(){
+			var $selected = $('option:selected','#sourceSelect');
+			$selected.each(function(i,e){
+					console.log(e.value + e.innerHTML);
+					$('#destinationSelect').append(
+							$('<option />').val(e.value).html(e.innerHTML)
+					);
+			});
+			$selected.remove();
+	});
 
 	$('#back').on('click',function(){
 
@@ -28,8 +38,71 @@ $(document).ready(function(){
 			$selected.remove();
 	});
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/* /////////Add Multiple Marker///////// */
+	var addMarker = $('.add_button1'); //Add button selector
+	var markerWrapper = $('.markerWrapper'); //Input field wrapper
+	var fieldHTML1 = '<div><div class="form-group"><div class="col-sm-4 col-sm-push-2">'; //New input field html
+	fieldHTML1+= '<label for="selectMarker">Select Marker:</label></br>';
+	fieldHTML1+= '<input list="marker" name="markers" class="form-control datalist" id="selectMarker">';
+	fieldHTML1+= '<datalist id="marker">';
+	fieldHTML1+= '<option value="Marker1"> Marker name 1</option><option value="Marker2"> Marker name 2</option><option value="Marker3"> Marker name 3</option><option value="Marker4"> Marker name 4</option><option value="Marker5"> Marker name 5</option><option value="Marker6"> Marker name 6</option>';
+	fieldHTML1+= '</datalist>';
+	fieldHTML1+= '<input type="submit" value="Select" class="btn btn-black">';
+	fieldHTML1+= '</div></div>';
+	fieldHTML1+= '<div class="clearfix"></div>';
+	fieldHTML1+= '<div class="form-group"><div class="col-sm-3 col-sm-push-2"><select name="stuOpt[]" multiple class="stuOpt">';
+	fieldHTML1+= '<option value="oa17248">oa17248</option><option value="bs56489">bs56489</option><option value="fd17569">fd17569</option><option value="rd54698">rd54698</option><option value="lf56984">lf56984</option><option value="oa52793">oa52793</option><option value="go17546">go17546</option><option value="kj54897">kj54897</option>';
+	fieldHTML1+= '</select>';
+	fieldHTML1+= '</div></div>';
+	fieldHTML1+='<div class="form-group"><div class="col-sm-2 col-sm-push-2"><button type="button"  class="btn btn-danger addService removeMarker"><span class="glyphicon glyphicon-minus"></span> Marker</button></div></div>';
+	fieldHTML1+='</div>';
+/*
+	var fieldHTML1 = '<div class="clearfix"></div>'; //New input field html
+	fieldHTML1 += '<div class="form-group"><div class="col-sm-3 col-sm-push-2"><select name="stuOpt[]" multiple class="stuOpt">';
+	fieldHTML1 += '<option value="oa17248">oa17248</option>';
+	fieldHTML1 += '<option value="bs56489">bs56489</option>';
+	fieldHTML1 += '<option value="fd17569">fd17569</option><option value="rd54698">rd54698</option><option value="lf56984">lf56984</option><option value="oa52793">oa52793</option><option value="go17546">go17546</option><option value="kj54897">kj54897</option><option value="br17546">br17546</option><option value="qw54897">qw54897</option><option value="qw54894">qw54894</option>';
+	fieldHTML1 += '<option value="qw54895">qw54895</option><option value="qw54896">qw54896</option><option value="qw54896">qw54896</option><option value="qw54896">qw54896</option><option value="qw54896">qw54896</option><option value="qw54896">qw54896</option><option value="qw54896">qw54896</option>';
+	fieldHTML1 += '</select></div></div>';
+*/
+
+	//Once add button is clicked
+	$(addMarker).click(function(){
+
+	$(markerWrapper).append(fieldHTML1); //Add field html
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src = "./resources/js/jquery.multiselect.js";
+	document.getElementsByTagName("head")[0].appendChild(script);
+	});
+
+	//Once remove button is clicked
+	$(markerWrapper).on('click', '.removeMarker', function(e){
+			e.preventDefault(); //This method stops the default action of an element from happening.
+			$(this).parent().parent().parent().remove(); //Remove field html
+	});
+	/* /////////End of Add Multiple Markers///////// */
+
 	/* /////////Add Multiple Assignment///////// */
-	var maxField = 10; //Input fields increment limitation
 	var addButton = $('.add_button'); //Add button selector
 	var wrapper = $('.assignmentWrapper'); //Input field wrapper
 	var fieldHTML = '<div class="assignment-background remove">'; //New input field html
@@ -42,9 +115,9 @@ $(document).ready(function(){
 	fieldHTML+='<div class="form-group"><div class="col-sm-2 col-sm-push-2"><button type="button" class="btn btn-danger addService removeAssignment">Remove</button></div></div>';
 	fieldHTML+='</div>';
 
+
 	//Once add button is clicked
 	$(addButton).click(function(){
-			//Check maximum number of input fields
 
 	$(wrapper).append(fieldHTML); //Add field html
 	});
@@ -56,4 +129,10 @@ $(document).ready(function(){
 	});
 	/* /////////End of Add Multiple Assignment///////// */
 
+	$('.stuOpt').multiselect({
+			columns: 1,
+			placeholder: 'Select Students',
+			search: true,
+			selectAll: true
+	});
 });
