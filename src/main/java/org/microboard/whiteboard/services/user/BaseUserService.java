@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.user.BaseUserRepository;
+import org.microboard.whiteboard.security.CustomUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public abstract class BaseUserService<T extends User> {
 	
@@ -47,5 +49,11 @@ public abstract class BaseUserService<T extends User> {
 
 	public Optional<T> getByUserName(String name) {
 		return repository.findByUserName(name);
+	}
+	
+	public T getLoggedInUser() {
+		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		T loggedInUser = (T) userDetails.getUser();
+		return loggedInUser;
 	}
 }

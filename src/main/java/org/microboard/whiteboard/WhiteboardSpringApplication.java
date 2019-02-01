@@ -65,7 +65,8 @@ public class WhiteboardSpringApplication {
 		
 		int numUsers = 5;
 		Unit unit1 = new Unit();
-		unit1.setUnitName("COMS20005");
+		unit1.setUnitName("Computer Science in Society");
+		unit1.setUnitCode("COMS20003");
 		for (int i = 1; i <= numUsers; i ++) {
 			User s = new Student();
 			s.setUserName("User " + i);
@@ -80,6 +81,7 @@ public class WhiteboardSpringApplication {
 		
 		Unit unit2 = new Unit();
 		unit2.setUnitName("Signals, Patterns and Symbols");
+		unit1.setUnitCode("COMS20005");
 		for (int i = numUsers + 1; i <= numUsers * 2; i ++) {
 			User s = new Student();
 			s.setUserName("User " + i);
