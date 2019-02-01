@@ -9,22 +9,29 @@
 	<form name="newProject" action="#" th:action="@{/unit_director/new_solo_project}"
 		th:object="${soloProject}" method="post">
 		
-		<select th:field="*{unit.id}" >
+		<label for="selectUnit">Unit: </label>
+		<select id="selectUnit" th:field="*{unit.id}" onchange="setUnit.click()">
 			<option th:each="unit : ${unitList}" th:value="${unit.id}"
 				th:text=${unit.unitName}></option>
 		</select>
-		<button type="submit" name="setUnit">Set Unit</button>
+		<button style="display: none;" type="submit" id="setUnit" name="setUnit">Set Unit</button>
+		<br>
 		
-		<input type="text" th:field="*{name}" />
-		<input type="text"th:field="*{description}" />
-		<button type="submit" name="addAssessment">Add Assessment</button>
+		<label for="projectName">Project Name: </label>
+		<input id="projectName"type="text" th:field="*{name}" />
+		<br>
+		<label for="projectDesc">Project Description: </label>
+		<input id="projectDesc" type="text" th:field="*{description}" />
+		
 		<div th:each="assessment, a: *{assessments}">
-			<p>Assessment</p>
-			<button type="submit" name="removeAssessment" th:value="${a.index}">Remove Assessment</button>
-			<label for="assessmentName">Name: </label> <input type="text"
+			<p>New Assessment:</p>
+			<label for="assessmentName">Name: </label>
+			<input type="text"
 				id="assessmentName" th:field="*{assessments[__${a.index}__].name}"
-				name="assessmentName" /> <label for="assessmentDesc">Description:
-			</label> <input type="text" id="assessmentDesc"
+				name="assessmentName" />
+				<br>
+			<label for="assessmentDesc">Description: </label>
+			<input type="text" id="assessmentDesc"
 				th:field="*{assessments[__${a.index}__].description}"
 				name="assessmentDesc" />
 
@@ -40,9 +47,10 @@
 						<button type="submit" name="removeMarker" th:value="${'__${a.index}__, __${t.index}__, __${m.index}__'}">Remove Marker</button>
 					</div>
 				</div>
+				<button type="submit" name="removeAssessment" th:value="${a.index}">Remove Assessment</button>
 		</div>
-		
-
+		<br>
+		<button type="submit" name="addAssessment">Add Assessment</button>
 	</form>
 </body>
 </html>

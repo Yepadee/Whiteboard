@@ -74,7 +74,7 @@ public class UnitDirectorController {
 	@PostMapping(value="/new_solo_project", params={"setUnit"})
 	public String setUnit(Model model, final SoloProject project) {
 		Unit unit = unitService.getUnit(project.getUnit().getId()).get();
-
+		System.out.println("TEST");
 		for (SoloAssessment assessment : project.getAssessments()) {
 			assessment.setTasks(new ArrayList<SoloTask>());
 			for (User user : unit.getCohort()) {
