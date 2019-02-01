@@ -20,6 +20,7 @@
 		<button type="submit" name="addAssessment">Add Assessment</button>
 		<div th:each="assessment, a: *{assessments}">
 			<p>Assessment</p>
+			<button type="submit" name="removeAssessment" th:value="${a.index}">Remove Assessment</button>
 			<label for="assessmentName">Name: </label> <input type="text"
 				id="assessmentName" th:field="*{assessments[__${a.index}__].name}"
 				name="assessmentName" /> <label for="assessmentDesc">Description:
@@ -30,15 +31,18 @@
 				<div th:each="task, t: *{assessments[__${a.index}__].tasks}">
 					<input type="hidden" th:field=*{assessments[__${a.index}__].tasks[__${t.index}__].accountable}>
 					<span th:text=*{assessments[__${a.index}__].tasks[__${t.index}__].accountable.userName}></span>
+					<button type="submit" name="addMarker" th:value="${'__${a.index}__, __${t.index}__'}">Add Marker</button>
 					<div th:each="marker, m: *{assessments[__${a.index}__].tasks[__${t.index}__].markers}">
-					<button type="submit" name="addMarker">Add Marker</button>
 						<select th:field="*{assessments[__${a.index}__].tasks[__${t.index}__].markers[__${m.index}__]}" >
 							<option th:each="assessor : ${assessorList}" th:value="${assessor.id}"
 								th:text=${assessor.userName}></option>
 						</select>
+						<button type="submit" name="removeMarker" th:value="${'__${a.index}__, __${t.index}__, __${m.index}__'}">Remove Marker</button>
 					</div>
 				</div>
 		</div>
+		
+
 	</form>
 </body>
 </html>

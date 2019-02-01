@@ -1,14 +1,15 @@
 package org.microboard.whiteboard.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.SoloProject;
 import org.microboard.whiteboard.model.task.SoloTask;
-import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.Assessor;
-import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/unit_director")
@@ -44,9 +46,8 @@ public class UnitDirectorController {
 	public String getNewSoloProjectPage(Model model) {
 		SoloProject p = new SoloProject();
 		model.addAttribute("soloProject", p);
-		model.addAttribute("numMarkers", 1);
 		
-		return "new_project";
+		return "new_project_test";
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"addAssessment"})
@@ -58,12 +59,15 @@ public class UnitDirectorController {
 			SoloTask task = new SoloTask();
 			task.setAccountable(user);
 			assessment.addTask(task);
-			System.out.print("Username: ");
-			System.out.println(user.getUserName());
 		}
 		
 		project.getAssessments().add(assessment);
-		
+	    return "new_project_test";
+	}
+	
+	@PostMapping(value="/new_solo_project", params={"removeAssessment"})
+	public String addRow(final SoloProject project, @RequestParam("removeAssessment") int index) {
+		project.getAssessments().remove(index);
 	    return "new_project_test";
 	}
 	
@@ -83,7 +87,22 @@ public class UnitDirectorController {
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"addMarker"})
-	public String addMarker(Model model, final SoloProject project) {
+	public String addMarker(Model model, final SoloProject project, @RequestParam("addMarker") List<Integer> addMarker) {
+		int assessmentIndex = addMarker.get(0);
+		int taskIndex = addMarker.get(1);
+		
+		project.getAssessments().get(assessmentIndex).getTasks().get(taskIndex).addMarker(new Assessor());
+		
+	    return "new_project_test";
+	}
+	
+	@PostMapping(value="/new_solo_project", params={"removeMarker"})
+	public String removeMarker(Model model, final SoloProject project, @RequestParam("removeMarker") List<Integer> removeMarker) {
+		int assessmentIndex = removeMarker.get(0);
+		int taskIndex = removeMarker.get(1);
+		int markerIndex = removeMarker.get(2);
+		
+		project.getAssessments().get(assessmentIndex).getTasks().get(taskIndex).getMarkers().remove(markerIndex);
 		
 	    return "new_project_test";
 	}

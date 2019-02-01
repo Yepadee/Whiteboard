@@ -1,0 +1,29 @@
+package org.microboard.whiteboard.model.project.dto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class NewSoloProject {
+	private String name;
+	private String description;
+	private List<NewSoloAssessment> assessments = new ArrayList<>();
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public List<NewSoloAssessment> getAssessments() {
+		return assessments;
+	}
+	public void setAssessments(List<NewSoloAssessment> assessments) {
+		this.assessments = assessments;
+	}
+}
