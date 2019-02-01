@@ -1,5 +1,7 @@
 package org.microboard.whiteboard;
 
+import java.io.File;
+
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.GroupProject;
@@ -30,7 +32,7 @@ public class WhiteboardSpringApplication {
 		
 		SpringApplication.run(WhiteboardSpringApplication.class, args);
 		FileUploadApp f = new FileUploadApp();
-		f.upload(args);
+		f.addBaseUploadDirectory();
 	}
 	@Autowired
     private UserService userService;

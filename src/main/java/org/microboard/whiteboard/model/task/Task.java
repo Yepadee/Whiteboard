@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
 
@@ -29,6 +32,10 @@ public abstract class Task {
 	private List<Assessor> markers = new ArrayList<>();
 	
 	private String txtSubmission;
+	
+	@ElementCollection
+	private List<String> uploadPath= new ArrayList<>();
+	
 	private String status;
 	
 	
@@ -58,6 +65,12 @@ public abstract class Task {
 	}
 	public String getTxtSubmission() {
 		return txtSubmission;
+	}
+	public List<String> getUploadPath() {
+		return uploadPath;
+	}
+	public void addUploadPath(String path) {
+		uploadPath.add(path);
 	}
 	public void setTxtSubmission(String txtSubmission) {
 		this.txtSubmission = txtSubmission;

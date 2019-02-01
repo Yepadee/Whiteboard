@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,7 @@ import org.microboard.whiteboard.model.user.visitors.HomePageGetter;
 import org.microboard.whiteboard.model.user.visitors.SubmissionPageGetter;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.UserService;
+import org.microboard.whiteboard.uploadDemo.FileUploadApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class UserController {
 	private TaskService taskService;
 	
 	Logger logger = LoggerFactory.getLogger(UserController.class);
-
+	
 	@Autowired
 	private UserService userService;
 	
@@ -41,6 +43,7 @@ public class UserController {
 	@GetMapping("/tasks")
 	public String getOutstandingTaskPage(Model model) {
 		User user = userService.getLoggedInUser();
+		
 		HomePageGetter homePageGetter = new HomePageGetter(model);
 		user.accept(homePageGetter);
 		return homePageGetter.getResult();
@@ -98,12 +101,17 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/testUpload")
-	public String UploadPage(Model model, @RequestParam("files") MultipartFile[] files) {
-		String uploadDirectory = System.getProperty("user.dir") + "/uploads";
+	@PostMapping("/testUpload/{id}")
+	public String UploadPage(@PathVariable long id, Model model, @RequestParam("files") MultipartFile[] files) {
+		User user = userService.getLoggedInUser();
+		Optional<Task> maybeTask = taskService.getTask(id);
+		String path = (System.getProperty("user.dir") + "/uploads/" + user.getUserName());
+		Task task = maybeTask.get();
+		new File(path).mkdir();
 		StringBuilder fileNames = new StringBuilder();
 		for (MultipartFile file : files) {
-			Path fileNameAndPath = Paths.get(uploadDirectory,file.getOriginalFilename());
+			task.addUploadPath(path + "/" + file.getOriginalFilename());
+			Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
 			try {
 				Files.write(fileNameAndPath, file.getBytes());
