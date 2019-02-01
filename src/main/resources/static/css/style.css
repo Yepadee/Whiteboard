@@ -21,13 +21,38 @@ body {
 /* Buttons */
 .btn{
 	border-radius: 2px;
+  color: #fff;
+}
+.btn-green{
+	background: #039b50;
+}
+.btn-green:hover,
+.btn-green:focus{
+	background: #00ce68;
+	color: #fff;
 }
 .btn-dark{
 	background: #424964;
-	color: #fff;
 }
 .btn-dark:hover,
 .btn-dark:focus{
+	background: #33384d;
+	color: #fff;
+}
+.btn-silver{
+	background: #b4b4b4;
+  color: #fff;
+}
+.btn-silver:hover,
+.btn-silver:focus{
+	background: #33384d;
+	color: #fff;
+}
+.btn-black{
+  background: #282a32;
+}
+.btn-black:hover,
+.btn-black:focus{
 	background: #33384d;
 	color: #fff;
 }
@@ -44,9 +69,6 @@ body {
 .btn-danger:hover,
 .btn-danger:focus{
 	background: #e13130;
-}
-.btn-silver{
-  background-color: red;
 }
 .btn-blue{
   border: 1px solid #0696b7;
@@ -66,6 +88,14 @@ body {
 .btn-red{
     background-color: #570000;
     color: #fff;
+}
+.datalist{
+  display: inline;
+  width:60%;
+}
+.studentDatalist{
+  display: inline;
+  width:79%;
 }
 /* End of Buttons */
 
@@ -173,7 +203,7 @@ body {
 .sidebar a .sidebar-element{
   padding-left: 10px;
 }
-a.newProject {
+.sidebar a.newProject {
     background-color: #00ce68;
     color: #fff;
     padding-left: 40px;
@@ -201,7 +231,7 @@ a.newProject {
 
 /* Top Navbar */
 .navbar{
-  min-height: 80px;
+  min-height: 65px;
 }
 .navbar-inverse{
   background: #570000;
