@@ -1,5 +1,5 @@
 
-
+(function($){
     var defaults = {
         placeholder   : 'Select options', // text to use in dummy input
         columns       : 1,                // how many columns should be use to show options
@@ -357,7 +357,7 @@
                     if( instance.options.selectGroup ) {
                         container.append('<a href="#" class="ms-selectall">Select all</a>')
                     }
-
+                    
                     container.append('<ul></ul>');
 
                     for( var gKey in thisOption.options ) {
@@ -520,3 +520,4 @@
             return ret;
         }
     };
+}(jQuery));
