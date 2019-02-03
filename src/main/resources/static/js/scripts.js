@@ -60,7 +60,7 @@ $(document).ready(function(){
 	/* /////////Add Multiple Marker///////// */
 	var addMarker = $('.add_button1'); //Add button selector
 	var markerWrapper = $('.markerWrapper'); //Input field wrapper
-	var fieldHTML1 = '<div><div class="form-group"><div class="col-sm-4 col-sm-push-2">'; //New input field html
+	var fieldHTML1 = '<div class="markerWrapperAdded"><div class="form-group"><div class="col-sm-4 col-sm-push-3">'; //New input field html
 	fieldHTML1+= '<label for="selectMarker">Select Marker:</label></br>';
 	fieldHTML1+= '<input list="marker" name="markers" class="form-control datalist" id="selectMarker">';
 	fieldHTML1+= '<datalist id="marker">';
@@ -69,11 +69,11 @@ $(document).ready(function(){
 	fieldHTML1+= '<input type="submit" value="Select" class="btn btn-black">';
 	fieldHTML1+= '</div></div>';
 	fieldHTML1+= '<div class="clearfix"></div>';
-	fieldHTML1+= '<div class="form-group"><div class="col-sm-3 col-sm-push-2"><select name="stuOpt[]" multiple class="stuOpt">';
+	fieldHTML1+= '<div class="form-group"><div class="col-sm-3 col-sm-push-3"><select name="stuOpt[]" multiple class="stuOpt">';
 	fieldHTML1+= '<option value="oa17248">oa17248</option><option value="bs56489">bs56489</option><option value="fd17569">fd17569</option><option value="rd54698">rd54698</option><option value="lf56984">lf56984</option><option value="oa52793">oa52793</option><option value="go17546">go17546</option><option value="kj54897">kj54897</option>';
 	fieldHTML1+= '</select>';
 	fieldHTML1+= '</div></div>';
-	fieldHTML1+='<div class="form-group"><div class="col-sm-2 col-sm-push-2"><button type="button"  class="btn btn-danger addService removeMarker"><span class="glyphicon glyphicon-minus"></span> Marker</button></div></div>';
+	fieldHTML1+='<div class="form-group"><div class="col-sm-2 col-sm-push-3"><button type="button"  class="btn btn-danger addService removeMarker"><span class="glyphicon glyphicon-minus"></span> Marker</button></div></div>';
 	fieldHTML1+='</div>';
 /*
 	var fieldHTML1 = '<div class="clearfix"></div>'; //New input field html
@@ -87,12 +87,13 @@ $(document).ready(function(){
 
 	//Once add button is clicked
 	$(addMarker).click(function(){
-
-	$(markerWrapper).append(fieldHTML1); //Add field html
-	var script = document.createElement("script");
-	script.type = "text/javascript";
-	script.src = "./resources/js/jquery.multiselect.js";
-	document.getElementsByTagName("head")[0].appendChild(script);
+		$(markerWrapper).append(fieldHTML1); //Add field html
+		$('.stuOpt').multiselect({
+				columns: 1,
+				placeholder: 'Select Students',
+				search: true,
+				selectAll: true
+		});
 	});
 
 	//Once remove button is clicked

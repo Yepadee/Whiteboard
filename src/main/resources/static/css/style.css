@@ -372,3 +372,13 @@ body {
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
+
+/* New Project Section*/
+.markerWrapperAdded{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #ededed;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+/* The End of New Project Section*/
