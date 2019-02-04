@@ -3,6 +3,8 @@ package org.microboard.whiteboard.model.task;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.ElementCollection;
@@ -14,6 +16,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
@@ -34,7 +37,9 @@ public abstract class Task {
 	private String txtSubmission;
 	
 	@ElementCollection
-	private List<String> uploadPath= new ArrayList<>();
+	@CollectionTable(name="uploadPaths", joinColumns=@JoinColumn(name="user_id"))
+	@Column(name="uploadPath")
+	private List<String> uploadPaths= new ArrayList<>();
 	
 	private String status;
 	
@@ -66,11 +71,11 @@ public abstract class Task {
 	public String getTxtSubmission() {
 		return txtSubmission;
 	}
-	public List<String> getUploadPath() {
-		return uploadPath;
+	public List<String> getUploadPaths() {
+		return uploadPaths;
 	}
 	public void addUploadPath(String path) {
-		uploadPath.add(path);
+		uploadPaths.add(path);
 	}
 	public void setTxtSubmission(String txtSubmission) {
 		this.txtSubmission = txtSubmission;

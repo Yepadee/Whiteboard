@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 
