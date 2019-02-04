@@ -5,12 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.SoloProject;
+import org.microboard.whiteboard.model.project.dto.MarkerDto;
+import org.microboard.whiteboard.model.project.dto.NewSoloAssessment;
+import org.microboard.whiteboard.model.project.dto.NewSoloProject;
+import org.microboard.whiteboard.model.project.dto.UserDto;
 import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
+import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
@@ -53,83 +60,84 @@ public class UnitDirectorController {
 	
 	@GetMapping("/new_solo_project")
 	public String getNewSoloProjectPage(Model model) {
-		SoloProject project = new SoloProject();
-		model.addAttribute("soloProject", project);
-		
+		NewSoloProject project = new NewSoloProject();
+		model.addAttribute("newSoloProject", project);
+		model.addAttribute("cohort", new ArrayList<UserDto>());
 		return "new_project_test";
 	}
 	
-	@PostMapping(value="/new_solo_project", params={"addAssessment"})
-	public String addAssessment(Model model, SoloProject project) {
-		SoloAssessment assessment = new SoloAssessment();
-		Unit unit = unitService.getUnit(project.getUnit().getId()).get();
-
-		for (User user : unit.getCohort()) {
-			SoloTask task = new SoloTask();
-			user.addTask(task);
-			task.setSoloAssessment(assessment);
-			assessment.addTask(task);
+	@PostMapping(value="/new_solo_project", params={"setUnit"})
+	public String setUnit(Model model, NewSoloProject project) {
+		long unitId = project.getUnit().getId();
+		Unit unit = unitService.getUnit(unitId).get();
+		project.setUnit(unit);
+		for (NewSoloAssessment assessment : project.getAssessments()) {
+			for (MarkerDto markerDto : assessment.getMarkerDtos()) {
+				markerDto.setToMark(new ArrayList<>());
+			}
 		}
-		
-		project.addAssessment(assessment);
+	    return "new_project_test";
+	}
+	
+	@PostMapping(value="/new_solo_project", params={"addAssessment"})
+	public String addAssessment(Model model, NewSoloProject project) {
+		project.getAssessments().add(new NewSoloAssessment());
 	    return "new_project_test";
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"removeAssessment"})
-	public String removeAssessment(Model model, SoloProject project, @RequestParam("removeAssessment") int index) {
+	public String removeAssessment(Model model, NewSoloProject project, @RequestParam("removeAssessment") int index) {
 		project.getAssessments().remove(index);
 	    return "new_project_test";
 	}
 	
-	@PostMapping(value="/new_solo_project", params={"setUnit"})
-	public String setUnit(Model model, SoloProject project) {
-		Unit unit = unitService.getUnit(project.getUnit().getId()).get();
-		for (SoloAssessment assessment : project.getAssessments()) {
-			assessment.setTasks(new ArrayList<SoloTask>());
-			for (User user : unit.getCohort()) {
-				SoloTask task = new SoloTask();
-				user.addTask(task);
-				assessment.addTask(task);
-			}
-		}
-	    return "new_project_test";
-	}
-	
 	@PostMapping(value="/new_solo_project", params={"addMarker"})
-	public String addMarker(Model model, SoloProject project, @RequestParam("addMarker") List<Integer> addMarker) {
-		int assessmentIndex = addMarker.get(0);
-		int taskIndex = addMarker.get(1);
-		
-		project.getAssessments().get(assessmentIndex).getTasks().get(taskIndex).addMarker(new Assessor());
+	public String addMarker(Model model, NewSoloProject project, @RequestParam("addMarker") int addMarker) {
+		int assessmentIndex = addMarker;
+		project.getAssessments().get(assessmentIndex).getMarkerDtos().add(new MarkerDto());
 	    return "new_project_test";
 	}
-	
+
 	@PostMapping(value="/new_solo_project", params={"removeMarker"})
-	public String removeMarker(Model model, SoloProject project, @RequestParam("removeMarker") List<Integer> removeMarker) {
+	public String addMarker(Model model, NewSoloProject project, @RequestParam("removeMarker") List<Integer> removeMarker) {
 		int assessmentIndex = removeMarker.get(0);
-		int taskIndex = removeMarker.get(1);
-		int markerIndex = removeMarker.get(2);
-		
-		project.getAssessments().get(assessmentIndex).getTasks().get(taskIndex).getMarkers().remove(markerIndex);
+		int markerIndex = removeMarker.get(1);
+		project.getAssessments().get(assessmentIndex).getMarkerDtos().remove(markerIndex);
 	    return "new_project_test";
 	}
 	
-	@PostMapping(value="/new_solo_project", params={"addProject"})
-	public String submitSoloProject(Model model, SoloProject project) {
-		for (SoloAssessment assessment : project.getAssessments()) {
-			System.out.println(assessment.getName());
-			for (SoloTask task : assessment.getTasks()) {
-				task.setSoloAssessment(assessment);
-			}
-		}
-		
-		unitDirectorService.getLoggedInUser().addProject(project);
-		projectService.addProject(project);
-
+	@PostMapping(value="/new_solo_project", params={"addUser"})
+	public String addUser(Model model, NewSoloProject project, @RequestParam("addUser") List<Integer> addUser) {
+		int assessmentIndex = addUser.get(0);
+		int markerIndex = addUser.get(1);
+		System.out.println(project.getUnit().getCohort().size());
+		project.getAssessments().get(assessmentIndex).getMarkerDtos().get(markerIndex).getToMark().add(new UserDto());
 	    return "new_project_test";
 	}
-
 	
+	@PostMapping(value="/new_solo_project", params={"removeUser"})
+	public String removeUser(Model model, NewSoloProject project, @RequestParam("removeUser") List<Integer> removeUser) {
+		int assessmentIndex = removeUser.get(0);
+		int markerIndex = removeUser.get(1);
+		int userIndex = removeUser.get(2);
+		project.getAssessments().get(assessmentIndex).getMarkerDtos().get(markerIndex).getToMark().remove(userIndex);
+	    return "new_project_test";
+	}
+	/*
+	@PostMapping(value="/new_solo_project", params={"addMarkerStudents"})
+	public String addMarkerStudents(Model model, NewSoloProject project, @RequestParam("addMarkerStudents") List<Integer> addMarkerStudents) {
+		int assessmentIndex = addMarkerStudents.get(0);
+		int markerIndex = addMarkerStudents.get(1);
+		List<Integer> students = addMarkerStudents.subList(2, addMarkerStudents.size());
+		project.getAssessments().get(assessmentIndex).getMarkerDtos()
+		.get(markerIndex).getToMark().addAll(
+				students.stream().map(
+						s -> project.getUnit().getCohort().get(s)
+						).collect(Collectors.toList())
+				);
+	    return "new_project_test";
+	}
+	*/
 	@GetMapping("/edit_project/{id}")
 	public String editProjectPage() {
 		return "edit_project";

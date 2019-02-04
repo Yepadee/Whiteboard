@@ -3,10 +3,13 @@ package org.microboard.whiteboard.model.project.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.microboard.whiteboard.model.user.Unit;
+
 public class NewSoloProject {
 	private String name;
 	private String description;
 	private List<NewSoloAssessment> assessments = new ArrayList<>();
+	private Unit unit;
 	
 	public String getName() {
 		return name;
@@ -25,5 +28,11 @@ public class NewSoloProject {
 	}
 	public void setAssessments(List<NewSoloAssessment> assessments) {
 		this.assessments = assessments;
+	}
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 }

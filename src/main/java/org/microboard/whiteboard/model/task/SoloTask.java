@@ -9,6 +9,7 @@ import javax.persistence.SequenceGenerator;
 import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
+import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.User;
 
 @Entity

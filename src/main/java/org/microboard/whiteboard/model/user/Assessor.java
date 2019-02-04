@@ -3,13 +3,9 @@ package org.microboard.whiteboard.model.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-
-import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 
@@ -30,6 +26,12 @@ public class Assessor extends User {
 
 	public void addTaskToMark(Task task) {
 		toMark.add(task);
+		task.getMarkers().add(this);
+	}
+	
+	public void removeTaskToMark(Task task) {
+		task.getMarkers().remove(this);
+		toMark.remove(task);
 	}
 	
 	@Override

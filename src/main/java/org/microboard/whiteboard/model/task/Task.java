@@ -83,8 +83,8 @@ public abstract class Task {
 	}
 	
 	public void addMarker(Assessor assessor) {
-		this.markers.add(assessor);
-		assessor.addTaskToMark(this);
+		this.getMarkers().add(assessor);
+		assessor.getToMark().add(this);
 	}
 	
 	public abstract void accept(TaskVisitor v);
