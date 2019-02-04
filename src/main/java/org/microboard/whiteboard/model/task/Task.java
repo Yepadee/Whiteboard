@@ -37,7 +37,7 @@ public abstract class Task {
 	private String txtSubmission;
 	
 	@ElementCollection
-	@CollectionTable(name="uploadPaths", joinColumns=@JoinColumn(name="user_id"))
+	@CollectionTable(name="uploadPaths", joinColumns=@JoinColumn(name="task_id"))
 	@Column(name="uploadPath")
 	private List<String> uploadPaths= new ArrayList<>();
 	
