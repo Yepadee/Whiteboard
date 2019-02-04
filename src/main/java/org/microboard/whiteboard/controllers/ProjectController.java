@@ -1,16 +1,9 @@
 package org.microboard.whiteboard.controllers;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.Project;
-import org.microboard.whiteboard.model.project.SoloProject;
-import org.microboard.whiteboard.model.task.SoloTask;
-import org.microboard.whiteboard.model.user.Student;
-import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

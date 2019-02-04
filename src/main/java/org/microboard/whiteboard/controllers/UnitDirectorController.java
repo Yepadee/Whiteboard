@@ -123,21 +123,7 @@ public class UnitDirectorController {
 		project.getAssessments().get(assessmentIndex).getMarkerDtos().get(markerIndex).getToMark().remove(userIndex);
 	    return "new_project_test";
 	}
-	/*
-	@PostMapping(value="/new_solo_project", params={"addMarkerStudents"})
-	public String addMarkerStudents(Model model, NewSoloProject project, @RequestParam("addMarkerStudents") List<Integer> addMarkerStudents) {
-		int assessmentIndex = addMarkerStudents.get(0);
-		int markerIndex = addMarkerStudents.get(1);
-		List<Integer> students = addMarkerStudents.subList(2, addMarkerStudents.size());
-		project.getAssessments().get(assessmentIndex).getMarkerDtos()
-		.get(markerIndex).getToMark().addAll(
-				students.stream().map(
-						s -> project.getUnit().getCohort().get(s)
-						).collect(Collectors.toList())
-				);
-	    return "new_project_test";
-	}
-	*/
+	
 	@GetMapping("/edit_project/{id}")
 	public String editProjectPage() {
 		return "edit_project";

@@ -1,7 +1,5 @@
 package org.microboard.whiteboard;
 
-import java.io.File;
-
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.GroupProject;

@@ -14,7 +14,6 @@ import org.microboard.whiteboard.model.user.visitors.HomePageGetter;
 import org.microboard.whiteboard.model.user.visitors.SubmissionPageGetter;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.UserService;
-import org.microboard.whiteboard.uploadDemo.FileUploadApp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
