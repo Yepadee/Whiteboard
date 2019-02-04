@@ -110,7 +110,7 @@ public class UserController {
 		new File(path).mkdir();
 		StringBuilder fileNames = new StringBuilder();
 		for (MultipartFile file : files) {
-			task.addUploadPath(path + "/" + file.getOriginalFilename());
+			task.addFile(file.getOriginalFilename());
 			Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
 			try {
@@ -121,6 +121,20 @@ public class UserController {
 		}
 		model.addAttribute("msg","Success: "+fileNames.toString());
 		return "uploadStatusView";
+	}
+	
+	private String getPath(Task task) {
+		String path = "";
+		
+		/*
+		 * Generate string file path here from:
+		 * The user accountable for the task
+		 * The assessment the task is for
+		 * The project the assessment is for
+		 * The unit the project is for
+		 */
+		
+		return null;
 	}
 }
 

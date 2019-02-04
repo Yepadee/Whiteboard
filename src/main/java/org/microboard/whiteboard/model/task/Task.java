@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
@@ -37,9 +36,9 @@ public abstract class Task {
 	private String txtSubmission;
 	
 	@ElementCollection
-	@CollectionTable(name="uploadPaths", joinColumns=@JoinColumn(name="task_id"))
-	@Column(name="uploadPath")
-	private List<String> uploadPaths= new ArrayList<>();
+	@CollectionTable(name="fileNames", joinColumns=@JoinColumn(name="task_id"))
+	@Column(name="fileName")
+	private List<String> fileNames= new ArrayList<>();
 	
 	private String status;
 	
@@ -71,11 +70,11 @@ public abstract class Task {
 	public String getTxtSubmission() {
 		return txtSubmission;
 	}
-	public List<String> getUploadPaths() {
-		return uploadPaths;
+	public List<String> getFileNames() {
+		return fileNames;
 	}
-	public void addUploadPath(String path) {
-		uploadPaths.add(path);
+	public void setFileNames(List<String> fileNames) {
+		this.fileNames = fileNames;
 	}
 	public void setTxtSubmission(String txtSubmission) {
 		this.txtSubmission = txtSubmission;
@@ -85,6 +84,10 @@ public abstract class Task {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public void addFile(String fileName) {
+		this.fileNames.add(fileName);
 	}
 	
 	public void addMarker(Assessor assessor) {
