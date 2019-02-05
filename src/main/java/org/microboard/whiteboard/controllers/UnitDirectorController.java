@@ -109,6 +109,19 @@ public class UnitDirectorController {
 	@PostMapping(value="/new_solo_project", params={"addProject"})
 	public String addProject(Model model, NewSoloProject project) {
 		SoloProject soloProject = new SoloProject();
+		String name;
+		String description;
+		UnitDirector creator;
+		List<UnitDirector> helpers = new ArrayList<>();
+		
+		for (NewSoloAssessment newAssessment : project.getAssessments()) {
+			String assessmentName = newAssessment.getName();
+			String assessmentDesc = newAssessment.getDescription();
+			for (User user : project.getUnit().getCohort()) {
+
+			}
+		}
+		
 	    return "new_project_test";
 	}
 	

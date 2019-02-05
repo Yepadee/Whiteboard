@@ -39,29 +39,12 @@
 				<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}">
 					<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
 				</select>
-				<!--
+				
 				<select id="toMark" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" multiple="multiple">
 					<option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}"
 						th:text="${user.userName}">Cinema</option>
 				</select>
-				  -->
-					<div th:each="user : *{unit.cohort}">
-						<input type="checkbox" th:id="${'__${m.index}__, __${user.id}__'}" th:value="${{user}}" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" />
-						<label th:for="${{user}}" th:text="${user.userName}"></label>
-					</div>
-					
-					<!--
-					<select id="selectUser" multiple="multiple" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}">
-						<option th:each="user : *{unit.cohort}" th:value="${{user.id}}" th:text=${user.userName}></option>
-					</select>
-					-->
-				<!--  
-				<div th:each="user, u: *{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}">
 
-					<button type="submit" name="removeUser" th:value="${'__${a.index}__, __${m.index}__, __${u.index}__'}">Remove User</button>
-				</div>
-				-->
-				<!--  <button type="submit" name="addUser" th:value="${'__${a.index}__, __${m.index}__'}">Add User</button> -->
 				<br>
 				<button type="submit" name="removeMarker" th:value="${'__${a.index}__, __${m.index}__'}">Remove Marker</button>	
 			</div>
