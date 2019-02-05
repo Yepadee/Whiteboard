@@ -46,7 +46,7 @@
 				</select>
 				  -->
 					<div th:each="user : *{unit.cohort}">
-						<input type="checkbox" th:id="${{user}}" th:value="${{user}}" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" />
+						<input type="checkbox" th:id="${'__${m.index}__, __${user.id}__'}" th:value="${{user}}" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" />
 						<label th:for="${{user}}" th:text="${user.userName}"></label>
 					</div>
 					

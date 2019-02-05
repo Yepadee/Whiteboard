@@ -106,6 +106,12 @@ public class UnitDirectorController {
 	    return "new_project_test";
 	}
 	
+	@PostMapping(value="/new_solo_project", params={"addProject"})
+	public String addProject(Model model, NewSoloProject project) {
+		SoloProject soloProject = new SoloProject();
+	    return "new_project_test";
+	}
+	
 	@GetMapping("/edit_project/{id}")
 	public String editProjectPage() {
 		return "edit_project";
