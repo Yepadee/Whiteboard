@@ -106,24 +106,6 @@ public class UnitDirectorController {
 	    return "new_project_test";
 	}
 	
-	@PostMapping(value="/new_solo_project", params={"addUser"})
-	public String addUser(Model model, NewSoloProject project, @RequestParam("addUser") List<Integer> addUser) {
-		int assessmentIndex = addUser.get(0);
-		int markerIndex = addUser.get(1);
-		System.out.println(project.getUnit().getCohort().size());
-		project.getAssessments().get(assessmentIndex).getMarkerDtos().get(markerIndex).getToMark().add(new UserDto());
-	    return "new_project_test";
-	}
-	
-	@PostMapping(value="/new_solo_project", params={"removeUser"})
-	public String removeUser(Model model, NewSoloProject project, @RequestParam("removeUser") List<Integer> removeUser) {
-		int assessmentIndex = removeUser.get(0);
-		int markerIndex = removeUser.get(1);
-		int userIndex = removeUser.get(2);
-		project.getAssessments().get(assessmentIndex).getMarkerDtos().get(markerIndex).getToMark().remove(userIndex);
-	    return "new_project_test";
-	}
-	
 	@GetMapping("/edit_project/{id}")
 	public String editProjectPage() {
 		return "edit_project";
