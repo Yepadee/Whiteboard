@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-<head th:replace="header_student:: head"></head>
+<head th:replace="${header}:: head"></head>
 <body>
-	<div th:replace="sidebar_student:: sidebar"></div>
+	<div th:replace="${sidebar}:: sidebar"></div>
 
 	<div class="right-side">
 		<nav class="navbar navbar-inverse navbar-fixed-top">

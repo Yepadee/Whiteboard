@@ -10,8 +10,8 @@ import java.util.Optional;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.user.User;
-import org.microboard.whiteboard.model.user.visitors.HomePageGetter;
-import org.microboard.whiteboard.model.user.visitors.SubmissionPageGetter;
+import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
+import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.slf4j.Logger;
@@ -30,10 +30,16 @@ import org.springframework.ui.Model;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+	
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	private String errorPage = "server/error";
+	private String accessDeniedPage = "server/access_denied";
+	private String homePage = "user/main";
+	private String taskSubmissionPage = "user/task_submission";
+	
 	@Autowired
 	private TaskService taskService;
-	
-	Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -41,16 +47,12 @@ public class UserController {
 	
 	@GetMapping("/tasks")
 	public String getOutstandingTaskPage(Model model) {
-		User user = userService.getLoggedInUser();
-		
-		HomePageGetter homePageGetter = new HomePageGetter(model);
-		user.accept(homePageGetter);
-		return homePageGetter.getResult();
+		return homePage;
 	}
 	
 	@GetMapping("/test")
 	public String UploadPage() {
-		return "uploadStatusView";
+		return "user/uploadStatusView";
 	}
 	
 	@GetMapping("/tasks/{id}")
@@ -63,15 +65,12 @@ public class UserController {
 			task.accept(accessValidator);
 			if (accessValidator.getResult()) {
 				model.addAttribute("task", task);
-				model.addAttribute("user", user);
-				SubmissionPageGetter submissionPageGetter = new SubmissionPageGetter(model);
-				user.accept(submissionPageGetter);
-				return submissionPageGetter.getResult();
+				return taskSubmissionPage;
 			} else {
-				return "access_denied";
+				return accessDeniedPage;
 			}
 		} else {
-			return "error";
+			return errorPage;
 		}
 	}
 	
@@ -93,10 +92,10 @@ public class UserController {
 				 */
 				return "redirect:/user/tasks/" + id;
 			} else {
-				return "access_denied";
+				return accessDeniedPage;
 			}
 		} else {
-			return "error";
+			return errorPage;
 		}
 	}
 	
@@ -119,7 +118,7 @@ public class UserController {
 			}
 		}
 		model.addAttribute("msg","Success: "+fileNames.toString());
-		return "uploadStatusView";
+		return "user/uploadStatusView";
 	}
 	
 	private String getPath(Task task) {
@@ -134,6 +133,27 @@ public class UserController {
 		 */
 		
 		return null;
+	}
+	
+	@ModelAttribute("user")
+	public User getUnitDirector() {
+	   return userService.getLoggedInUser();
+	}
+	
+	@ModelAttribute("header")
+	public String getHeader() {
+		User user = userService.getLoggedInUser();
+		HeaderGetter headerGetter = new HeaderGetter();
+		user.accept(headerGetter);
+		return headerGetter.getResult();
+	}
+	
+	@ModelAttribute("sidebar")
+	public String getSidebar() {
+		User user = userService.getLoggedInUser();
+		SidebarGetter sidebarGetter = new SidebarGetter();
+		user.accept(sidebarGetter);
+		return sidebarGetter.getResult();
 	}
 }
 

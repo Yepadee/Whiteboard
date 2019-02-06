@@ -21,13 +21,13 @@ public class LoginController {
 
 	@GetMapping("/signup")
 	public String getSignupForm() {
-		return "signUp";
+		return "server/signUp";
 	}
 
 	@PostMapping("/signup")
 	public String signup(@ModelAttribute(name = "newStudent") Student user, Model model) {
 		userService.addUser(user);
-		return "signUp";
+		return "server/signUp";
 	}
 
 	@GetMapping("/login")
@@ -41,12 +41,12 @@ public class LoginController {
 			message = "Incorrect details. Please try again.";
 		}
 		model.addAttribute("message", message);
-		return "index";
+		return "server/index";
 	}
 	
 	@GetMapping("/access_denied")
 	public String getAccessDeniedPage() {
-		return "access_denied";
+		return "server/access_denied";
 	}
 	
 	@GetMapping("/error")

@@ -41,7 +41,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/unit_director")
 public class UnitDirectorController {
 	
-	Logger logger = LoggerFactory.getLogger(UnitDirectorController.class);
+	private Logger logger = LoggerFactory.getLogger(UnitDirectorController.class);
+	
+	private String newProjectForm = "unit_director/new_project";
 	
 	@Autowired
 	private UnitService unitService;
@@ -63,7 +65,7 @@ public class UnitDirectorController {
 		NewSoloProject project = new NewSoloProject();
 		model.addAttribute("newSoloProject", project);
 		model.addAttribute("cohort", new ArrayList<UserDto>());
-		return "new_project_test";
+		return newProjectForm;
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"setUnit"})
@@ -76,26 +78,26 @@ public class UnitDirectorController {
 				markerDto.setToMark(new ArrayList<>());
 			}
 		}
-	    return "new_project_test";
+	    return newProjectForm;
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"addAssessment"})
 	public String addAssessment(Model model, NewSoloProject project) {
 		project.getAssessments().add(new NewSoloAssessment());
-	    return "new_project_test";
+	    return newProjectForm;
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"removeAssessment"})
 	public String removeAssessment(Model model, NewSoloProject project, @RequestParam("removeAssessment") int index) {
 		project.getAssessments().remove(index);
-	    return "new_project_test";
+	    return newProjectForm;
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"addMarker"})
 	public String addMarker(Model model, NewSoloProject project, @RequestParam("addMarker") int addMarker) {
 		int assessmentIndex = addMarker;
 		project.getAssessments().get(assessmentIndex).getMarkerDtos().add(new MarkerDto());
-	    return "new_project_test";
+	    return newProjectForm;
 	}
 
 	@PostMapping(value="/new_solo_project", params={"removeMarker"})
@@ -103,7 +105,7 @@ public class UnitDirectorController {
 		int assessmentIndex = removeMarker.get(0);
 		int markerIndex = removeMarker.get(1);
 		project.getAssessments().get(assessmentIndex).getMarkerDtos().remove(markerIndex);
-	    return "new_project_test";
+	    return newProjectForm;
 	}
 	
 	@PostMapping(value="/new_solo_project", params={"addProject"})
@@ -152,7 +154,7 @@ public class UnitDirectorController {
 		
 		unitDirectorService.updateUser(creator);
 		
-	    return "new_project_test";
+	    return newProjectForm;
 	}
 	
 	@GetMapping("/edit_project/{id}")
