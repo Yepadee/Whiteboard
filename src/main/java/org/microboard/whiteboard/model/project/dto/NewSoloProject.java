@@ -11,6 +11,8 @@ public class NewSoloProject {
 	private List<NewSoloAssessment> assessments = new ArrayList<>();
 	private Unit unit;
 	
+	private String errorMsg = "";
+	
 	public String getName() {
 		return name;
 	}
@@ -34,5 +36,45 @@ public class NewSoloProject {
 	}
 	public void setUnit(Unit unit) {
 		this.unit = unit;
+	}
+	
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public boolean validate() {
+		boolean valid = true;
+		
+		if (name == null) {
+			valid = false;
+			errorMsg += "Project name field cannot be empty.\n";
+		} else {
+			if (name.length() == 0)  {
+				valid = false;
+				errorMsg += "Project name field cannot be empty.\n";
+			}
+		}
+		
+		if (description == null) {
+			valid = false;
+			errorMsg += "Project description field cannot be empty.\n";
+		} else {
+			if (description.length() == 0)  {
+				valid = false;
+				errorMsg += "Project description field cannot be empty.\n";
+			}
+		}
+		
+		if (unit == null) {
+			valid = false;
+			errorMsg += "No unit selected.\n";
+		}
+		
+		for (NewSoloAssessment assessment : assessments) {
+			valid = valid && assessment.validate();
+			errorMsg += assessment.getErrorMsg();
+		}
+		
+		return valid;
 	}
 }
