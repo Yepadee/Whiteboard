@@ -1,60 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<html>
+
+<head th:replace="header_unit_director:: head"></head>
 <body>
-	<p>Solo Project</p>
-	<form name="newProject" action="#"
-		th:action="@{/unit_director/new_solo_project}"
-		th:object="${newSoloProject}" method="post">
-
-		<label for="selectUnit">Unit: </label>
-		<select id="selectUnit" th:field="*{unit.id}" onchange="setUnit.click()">
-			<option th:each="unit : ${unitList}" th:value="${unit.id}" th:text=${unit.unitName}></option>
-		</select>
-		
-		<input type="hidden" th:field="*{unit.cohort}" th:value="*{unit.cohort}">
-
-		<button style="display: none;" type="submit" id="setUnit" name="setUnit">Set Unit</button>
-		<br>
-		<label for="projectName">Project Name: </label> <input
-			id="projectName" type="text" th:field="*{name}" /> <br> <label
-			for="projectDesc">Project Description: </label> <input
-			id="projectDesc" type="text" th:field="*{description}" />
-		<br>
-		<div th:each="assessment, a: *{assessments}">
-			<p>New Assessment:</p>
-			<label for="assessmentName">Name: </label>
-			<input type="text" id="assessmentName" th:field="*{assessments[__${a.index}__].name}" name="assessmentName" />
-			<br>
-			<label for="assessmentDesc">Description: </label>
-			<input type="text" id="assessmentDesc" th:field="*{assessments[__${a.index}__].description}" name="assessmentDesc" />
-			<br>
-
-			<br>
-
-			<div th:each="markerDto, m: *{assessments[__${a.index}__].markerDtos}">
-				<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}">
-					<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
-				</select>
-				
-				<select id="toMark" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" multiple="multiple">
-					<option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}"
-						th:text="${user.userName}"></option>
-				</select>
-
-				<br>
-				<button type="submit" name="removeMarker" th:value="${'__${a.index}__, __${m.index}__'}">Remove Marker</button>	
+	<div th:replace="sidebar_unit_director:: sidebar"></div>
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-left">
+					<h3>Add New Project</h3>
+				</ul>
 			</div>
-			<button type="submit" name="addMarker" th:value="${a.index}">Add Marker</button>
-			<br>
-			<button type="submit" name="removeAssessment" th:value="${a.index}">Remove Assessment</button>
+		</nav>
+	</div>
+	<div class="content">
+		<div class="container outstanding-tasks">
+		<div class="clearfix"></div> 
+			
+		<!-- <div class="form-group">
+				<div class="radio col-sm-2 col-sm-push-2">
+					<label><input type="radio" name="project" id="group_project">Group Project</label>
+				</div>
+				<div class="radio col-sm-2 col-sm-push-2">
+					<label><input type="radio" name="project" id="solo_project">Solo Project</label>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="next" class="btn btn-red next">Next</button>
+				</div>
+			</div>-->
+		
+		
+		<div class="project_selected">
+			<div class="row" th:replace="solo_project_form:: solo">
 		</div>
-		<button type="submit" name="addAssessment">Add Assessment</button>
-		<br>
-		<button type="submit" name="addProject">Submit Project</button>
-	</form>
+			
+			
+		</div>
+	</div>
+</div>
 </body>
 </html>
