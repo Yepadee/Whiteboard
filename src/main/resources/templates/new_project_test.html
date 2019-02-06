@@ -42,7 +42,7 @@
 				
 				<select id="toMark" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" multiple="multiple">
 					<option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}"
-						th:text="${user.userName}">Cinema</option>
+						th:text="${user.userName}"></option>
 				</select>
 
 				<br>

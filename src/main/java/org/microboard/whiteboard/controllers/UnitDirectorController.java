@@ -109,18 +109,48 @@ public class UnitDirectorController {
 	@PostMapping(value="/new_solo_project", params={"addProject"})
 	public String addProject(Model model, NewSoloProject project) {
 		SoloProject soloProject = new SoloProject();
-		String name;
-		String description;
-		UnitDirector creator;
+		String name = project.getName();
+		String description = project.getDescription();
 		List<UnitDirector> helpers = new ArrayList<>();
+		Unit unit = project.getUnit();
+		
+		soloProject.setName(name);
+		soloProject.setDescription(description);
+		soloProject.setHelpers(helpers);
+		soloProject.setUnit(unit);
+		
+		/* TODO:
+		 * Add ability to add helpers.
+		 */
+		
 		
 		for (NewSoloAssessment newAssessment : project.getAssessments()) {
 			String assessmentName = newAssessment.getName();
 			String assessmentDesc = newAssessment.getDescription();
+			
+			SoloAssessment soloAssessment = new SoloAssessment();
+			soloAssessment.setName(assessmentName);
+			soloAssessment.setDescription(assessmentDesc);
+			
 			for (User user : project.getUnit().getCohort()) {
-
+				SoloTask soloTask = new SoloTask();
+				user.addTask(soloTask);
+				for (MarkerDto markerDto : newAssessment.getMarkerDtos()) {
+					Assessor marker = markerDto.getMarker();
+					if (markerDto.getToMark().contains(user)) {
+						soloTask.addMarker(marker);
+					}
+				}
+				soloAssessment.addTask(soloTask);
 			}
+			soloProject.addAssessment(soloAssessment);
 		}
+		projectService.addProject(soloProject);
+		
+		UnitDirector creator = unitDirectorService.getLoggedInUser();
+		creator.addProject(soloProject);
+		
+		unitDirectorService.updateUser(creator);
 		
 	    return "new_project_test";
 	}
