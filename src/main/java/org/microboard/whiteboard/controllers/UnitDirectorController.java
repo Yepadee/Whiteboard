@@ -27,6 +27,8 @@ import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
+import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
+import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
 import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
@@ -67,7 +69,7 @@ public class UnitDirectorController {
 	@Autowired
 	private ProjectService projectService;
 	
-	@GetMapping("/new_solo_project")
+	@GetMapping("/new_project")
 	public String getNewSoloProjectPage(Model model) {
 		NewSoloProject project = new NewSoloProject();
 		model.addAttribute("newSoloProject", project);

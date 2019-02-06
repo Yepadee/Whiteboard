@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 
-<head th:replace="header_unit_director:: head"></head>
+<head th:replace="page_elements/header_unit_director:: head"></head>
 <body>
-	<div th:replace="sidebar_unit_director:: sidebar"></div>
+	<div th:replace="page_elements/sidebar_unit_director:: sidebar"></div>
 	<div class="right-side">
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
@@ -34,7 +34,7 @@
 		
 		
 		<div class="project_selected">
-			<div class="row" th:replace="solo_project_form:: solo">
+			<div class="row" th:replace="unit_director/solo_project_form:: solo">
 		</div>
 			
 			
