@@ -1,34 +1,18 @@
 package org.microboard.whiteboard.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
-import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.SoloProject;
 import org.microboard.whiteboard.model.project.dto.MarkerDto;
 import org.microboard.whiteboard.model.project.dto.NewSoloAssessment;
 import org.microboard.whiteboard.model.project.dto.NewSoloProject;
 import org.microboard.whiteboard.model.project.dto.UserDto;
 import org.microboard.whiteboard.model.task.SoloTask;
-import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.Assessor;
-import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
-import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
-import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
 import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
@@ -44,7 +28,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/unit_director")
