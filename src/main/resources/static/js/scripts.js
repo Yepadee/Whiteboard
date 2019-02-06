@@ -39,17 +39,28 @@ $(document).ready(function(){
 	});
 
 
+	$('#selected').on('click',function(){
+		var $selected = $('option:selected','#sourceSelect');
+		$selected.each(function(i,e){
+				console.log(e.value + e.innerHTML);
+				$('#destinationSelect').append(
+						$('<option />').val(e.value).html(e.innerHTML)
+				);
+		});
+		$selected.remove();
+	});
 
 
 
 
-
-
-
-
-
-
-
+	/*
+	var seeMarker = $('.seeMarker'); //Add button selector
+	var ppp = $('.ppp'); // where you want put a value in
+	$(seeMarker).click(function(){
+		var contentd = $('#marker').find(":selected").text();
+		$(ppp).append(contentd);	
+	});
+	*/
 
 
 
@@ -95,7 +106,7 @@ $(document).ready(function(){
 				selectAll: true
 		});
 	});
-
+	
 	//Once remove button is clicked
 	$(markerWrapper).on('click', '.removeMarker', function(e){
 			e.preventDefault(); //This method stops the default action of an element from happening.
@@ -136,4 +147,6 @@ $(document).ready(function(){
 			search: true,
 			selectAll: true
 	});
+	
 });
+

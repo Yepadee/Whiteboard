@@ -3,65 +3,73 @@
 
 <head th:replace="header_unit_director:: head"></head>
 <body>
-  <div th:replace="sidebar_unit_director:: sidebar"></div>
-<div class="right-side">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <ul class="nav navbar-nav navbar-left">
-        <h3>Add New Project </h3>
-      </ul>
-    </div>
-    </nav>
-  </div>
-  <div class="content">
-    <div class="container outstanding-tasks">
-      <div class="row">
-          <div class="col-sm-12 table-wrapper">
-            <form class="form-horizontal" name="newProject" action="#" th:action="@{/unit_director/new_solo_project}" th:object="${soloProject}" method="post">
-            </br>
-              <div class="form-group">
-                <label class="control-label col-sm-2" for="projectName">Project Name:</label>
-                <div class="col-sm-4">
-                	<input type="text" class="form-control" id="projectName" placeholder="Enter a project name" th:field="*{name}" />
-                </div>
-              </div>
+	<div th:replace="sidebar_unit_director:: sidebar"></div>
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-left">
+					<h3>Add New Project</h3>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="content">
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-12 table-wrapper">
+					<form class="form-horizontal" name="newProject" action="#"
+						th:action="@{/unit_director/new_solo_project}"
+						th:object="${soloProject}" method="post">
+						</br>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="projectName">Project
+								Name:</label>
+							<div class="col-sm-4">
+								<input class="form-control" id="projectName"
+									placeholder="Enter a project name" type="text" th:field="*{name}" />
+							</div>
+						</div>
 
-              <div class="form-group">
-                <label  class="control-label col-sm-2" for="description">Description:</label>
-                <div class="col-sm-8">
-                  <textarea class="form-control" rows="5" id="description" placeholder="Add a description for the project" th:field="*{description}"></textarea>
-                </div>
-              </div>
+						<div class="form-group">
+							<label class="control-label col-sm-2" for="description">Description:</label>
+							<div class="col-sm-8">
+								<textarea class="form-control" rows="5" id="description"
+									placeholder="Add a description for the project"
+									th:field="*{description}"></textarea>
+							</div>
+						</div>
 
-              <div class="form-group">
-                <div class="radio col-sm-2 col-sm-push-2">
-                  <label><input type="radio" name="groupOrSoloProject" checked>Group Project</label>
-                </div>
-                <div class="radio col-sm-2 col-sm-push-2">
-                  <label><input type="radio" name="groupOrSoloProject">Solo Project</label>
-                </div>
-              </div>
-              <div class="form-group">
-                <hr class="dottedLine col-sm-8 col-sm-push-2"/>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-4 col-sm-push-2">
-                  <label for="selectCohort">Select Cohort:</label>
-                  </br>
-                  <input list="cohort" name="cohort" class="form-control datalist" id="selectCohort">
-                  
-                  <select th:field="*{unit.id}" id="cohort">
-                  	<option th:each="unit : ${unitList}" th:value="${unit.id}" th:text=${unit.unitName}></option>
-                  </select>
-                  <button type="submit" value="Select" class="btn btn-black" name="setUnit">Set Unit</button>
-                  <input >
-                </div>
-              </div>
-              <div class="form-group">
-                <hr class="dottedLine col-sm-8 col-sm-push-2"/>
-              </div>
+						<div class="form-group">
+							<div class="radio col-sm-2 col-sm-push-2">
+								<label><input type="radio" name="groupOrSoloProject"
+									checked>Group Project</label>
+							</div>
+							<div class="radio col-sm-2 col-sm-push-2">
+								<label><input type="radio" name="groupOrSoloProject">Solo
+									Project</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<hr class="dottedLine col-sm-8 col-sm-push-2" />
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4 col-sm-push-2">
+								<label for="selectCohort">Select Cohort:</label> </br> <input
+									list="cohort" name="cohort" class="form-control datalist"
+									id="cohort">
+									<option th:each="unit : ${unitList}" th:value="${unit.id}"
+										th:text=${unit.unitName}></option>
+								</select>
+								<button type="submit" value="Select" class="btn btn-black"
+									name="setUnit">Set Unit</button>
+								<input>
+							</div>
+						</div>
+						<div class="form-group">
+							<hr class="dottedLine col-sm-8 col-sm-push-2" />
+						</div>
 
-              <!--
+						<!--
               <div class="form-group">
                 <div class="col-sm-3 col-sm-push-2">
                   <label for="sourceSelect">Select Cohort:</label>
@@ -88,138 +96,175 @@
                 </div>
               </div> -->
 
-              <!--
+						<!--
               </br>
               <div class="form-group">
                 <hr class="dottedLine col-sm-8 col-sm-push-2"/>
               </div>
               -->
 
-              <!-- Assignment Section -->
-              <div class="form-group">
-                <h4 class="col-sm-2 col-sm-push-2 font-bold" for="assignmentName">Add Assignment:</h4>
-              </div>
-              <div class="assignmentWrapper">
-                <div class="assignment-background">
-                <div class="form-group">
-                  <label class="control-label col-sm-2" for="assignmentName">Name:</label>
-                  <div class="col-sm-3">
-                    <input type="text" class="form-control" id="assignmentName" placeholder="Assignment Name"  name="assignmentName[]">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label  class="control-label col-sm-2" for="description">Description:</label>
-                  <div class="col-sm-8">
-                    <textarea name="descriptionName[]" class="form-control" rows="3" id="description" placeholder="Add a description for the assignment"></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-sm-2" for="deadline">Deadline:</label>
-                  <div class="col-sm-2">
-                    <input class="form-control" type="datetime-local" name="deadline[]" id="deadline">
-                  </div>
-                </div>
-                <div class="control-label col-sm-2" ><label for="deadline">Weight:</label></div>
-                <div class="form-group">
-                  <div class="col-sm-2">
-                    <div class="input-group">
-                      <span class="input-group-addon">%</span>
-                      <input type="number" class="form-control" name="weight[]" min="0" max="100">
-                    </div>
-                  </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="form-group">
-                  <hr class="dottedLine col-sm-8 col-sm-push-2"/>
-                </div>
-                <p class="col-sm-12 col-sm-push-2" style="font-weight:bold; font-size:16px;">Add marker to this assignment:</p>
-                </br></br></br>
+						<!-- Assignment Section -->
+						<div class="form-group">
+							<h4 class="col-sm-2 col-sm-push-2 font-bold" for="assignmentName">Add
+								Assignment:</h4>
+						</div>
+						<div class="assignmentWrapper">
+							<div class="assignment-background">
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="assignmentName">Name:</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="assignmentName" placeholder="Assignment Name" name="assignmentName[]">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="description">Description:</label>
+									<div class="col-sm-8">
+										<textarea name="descriptionName[]" class="form-control"
+											rows="3" id="description"
+											placeholder="Add a description for the assignment"></textarea>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-2" for="deadline">Deadline:</label>
+									<div class="col-sm-2">
+										<input class="form-control" type="datetime-local"
+											name="deadline[]" id="deadline">
+									</div>
+								</div>
+								<div class="control-label col-sm-2">
+									<label for="deadline">Weight:</label>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-2">
+										<div class="input-group">
+											<span class="input-group-addon">%</span> <input type="number"
+												class="form-control" name="weight[]" min="0" max="100">
+										</div>
+									</div>
+								</div>
+								<div class="clearfix"></div>
+								<div class="form-group">
+									<hr class="dottedLine col-sm-8 col-sm-push-2" />
+								</div>
+								<p class="col-sm-12 col-sm-push-2"
+									style="font-weight: bold; font-size: 16px;">Add marker to
+									this assignment:</p>
+								</br> </br> </br>
 
-                <!-- Marker Section> -->
-<div class="markerWrapper">
-                  <div class="form-group">
-                    <div class="col-sm-4 col-sm-push-2">
-                      <label for="selectMarker">Select Marker:</label>
-                      </br>
-                      <input list="marker" name="markers" class="form-control datalist" id="selectMarker">
-                      <datalist id="marker">
-                        <option value="Marker1"> Marker name 1</option>
-                        <option value="Marker2"> Marker name 2</option>
-                        <option value="Marker3"> Marker name 3</option>
-                        <option value="Marker4"> Marker name 4</option>
-                        <option value="Marker5"> Marker name 5</option>
-                        <option value="Marker6"> Marker name 6</option>
-                      </datalist>
-                      <input type="submit" value="Select" class="btn btn-black">
-                    </div>
-                  </div>
-                  <div class="clearfix"></div>
-                  <div class="form-group">
-                    <div class="col-sm-3 col-sm-push-2">
-                      <select name="stuOpt[]" multiple class="stuOpt">
-                        <option value="oa17248">oa17248</option>
-                        <option value="bs56489">bs56489</option>
-                        <option value="fd17569">fd17569</option>
-                        <option value="rd54698">rd54698</option>
-                        <option value="lf56984">lf56984</option>
-                        <option value="oa52793">oa52793</option>
-                        <option value="go17546">go17546</option>
-                        <option value="kj54897">kj54897</option>
-                        <option value="br17546">br17546</option>
-                        <option value="qw54897">qw54897</option>
-                        <option value="qw54894">qw54894</option>
-                        <option value="qw54895">qw54895</option>
-                        <option value="qw54896">qw54896</option>
-                        <option value="qw54896">qw54896</option>
-                        <option value="qw54896">qw54896</option>
-                        <option value="qw54896">qw54896</option>
-                        <option value="qw54896">qw54896</option>
-                        <option value="qw54896">qw54896</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-2 col-sm-push-2">
-                      <a type="button" class="btn btn-green add_button1"  href="javascript:void(0);"><span class="glyphicon glyphicon-plus"></span> Marker</a>
-                    </div>
-                  </div>
-                </div>
-                <!-- End of Marker Section> -->
-                </br></br>
-                <div class="form-group">
-                  <div class="col-sm-2 col-sm-push-2">
-                    <a type="button" class="btn btn-blue add_button"  href="javascript:void(0);">Add another assignment</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-              <!--/////////-->
+								<!-- Marker Section> -->
+								<div class="markerWrapper">
+									<div class="form-group">
+										<div class="col-sm-4 col-sm-push-2">
+											<label for="selectMarker">Select Marker:</label> </br> <input
+												list="marker" name="markers" class="form-control datalist"
+												id="selectMarker">
+											<datalist id="marker">
+												<option value="Marker1">Marker name 1</option>
+												<option value="Marker2">Marker name 2</option>
+												<option value="Marker3">Marker name 3</option>
+												<option value="Marker4">Marker name 4</option>
+												<option value="Marker5">Marker name 5</option>
+												<option value="Marker6">Marker name 6</option>
+											</datalist>
+											<input type="submit" value="Select" class="btn btn-black">
+										</div>
+									</div>
+									<div class="clearfix"></div>
+									<div class="form-group">
+										<div class="col-sm-3 col-sm-push-2">
+											<select name="stuOpt[]" multiple class="stuOpt" id="studentsSelected">
+												<option value="oa17248">oa17248</option>
+												<option value="bs56489">bs56489</option>
+												<option value="fd17569">fd17569</option>
+												<option value="rd54698">rd54698</option>
+												<option value="lf56984">lf56984</option>
+												<option value="oa52793">oa52793</option>
+												<option value="go17546">go17546</option>
+												<option value="kj54897">kj54897</option>
+												<option value="br17546">br17546</option>
+												<option value="qw54897">qw54897</option>
+												<option value="qw54894">qw54894</option>
+												<option value="qw54895">qw54895</option>
+												<option value="qw54896">qw54896</option>
+												<option value="qw54896">qw54896</option>
+												<option value="qw54896">qw54896</option>
+												<option value="qw54896">qw54896</option>
+												<option value="qw54896">qw54896</option>
+												<option value="qw54896">qw54896</option>
+											</select>
+											<script type="text/javascript">
+												var selected = new Array();
+												$(document).ready(function() {
+													var ppp = $('.ppp'); // where you want put a value in
+													var seeStudents= $('.seeStudents'); //Add button selector
+													$(seeStudents).click(function(){
+														$("input:checkbox[name=type]:checked").each(function() {
+														       selected.push($(this).val());
+														  });			
+														 $.each(selected, function (index, value) {
+															 $(ppp).append(value);
+														    });
+														 
+														
+													});
+												  
+												
+												});
+											</script>
+											<a type="button" class="btn btn-green seeStudents"
+												href="javascript:void(0);"> Select Student</a>
+												
+											<!--  <input type="submit" value="Select" class="btn btn-black">-->
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-sm-2 col-sm-push-2">
+											<a type="button" class="btn btn-green add_button1"
+												href="javascript:void(0);"><span
+												class="glyphicon glyphicon-plus"></span> Marker</a>
+										</div>
+									</div>
+								</div>
+								<p class="ppp"></p>
+								<!-- End of Marker Section> -->
+								</br> </br>
+								<div class="form-group">
+									<div class="col-sm-2 col-sm-push-2">
+										<a type="button" class="btn btn-blue add_button"
+											href="javascript:void(0);">Add another assignment</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--/////////-->
 
-              <script>/*
-                $(document).on('click', '.addService', function(){
-                	var html = '</br></br><div><input type="text" name="myInput"><button type="button" class="btn btn-blue addService">Add More</button><button type="button" class="btn btn-blue deleteService">Delete</button></div>';
-                  $(this).parent().append(html);
-                });
+						<script>
+							/*
+							$(document).on('click', '.addService', function(){
+							var html = '</br></br><div><input type="text" name="myInput"><button type="button" class="btn btn-blue addService">Add More</button><button type="button" class="btn btn-blue deleteService">Delete</button></div>';
+							$(this).parent().append(html);
+							});
 
-                $(document).on('click', '.deleteService', function(){
-                	var html = '<div><input type="text" name="myInput"><button type="button" class="addService">';
-                  html += 'Add More</button></div>';
-                  $(this).parent().remove();
-                });*/
-              </script>
+							$(document).on('click', '.deleteService', function(){
+							var html = '<div><input type="text" name="myInput"><button type="button" class="addService">';
+							html += 'Add More</button></div>';
+							$(this).parent().remove();
+							});*/
+						</script>
 
-			<script type="text/javascript" th:src="@{/js/jquery_multiselect.js}"></script>
-              <div class="clearfix"></div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <button type="next" class="btn btn-red">Next</button>
-                </div>
-              </div>
-            </form>
-          </div>
-    		</div>
-        </div>
-      </div>
-   	 </div>
-  </body>
-  </html>
+						<script type="text/javascript"
+							th:src="@{/js/jquery_multiselect.js}"></script>
+						<div class="clearfix"></div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="next" class="btn btn-red">Next</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>

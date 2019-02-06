@@ -31,6 +31,22 @@ body {
 	background: #00ce68;
 	color: #fff;
 }
+.btn-darkBlue{
+	background: #1106b7;
+}
+.btn-darkBlue:hover,
+.btn-darkBlue:focus{
+	background: #5449ff;
+	color: #fff;
+}
+.btn-remove{
+	background: #00ce68;
+}
+.btn-remove:hover,
+.btn-remove:focus{
+	background: #00ce68;
+	color: #fff;
+}
 .btn-dark{
 	background: #424964;
 }
@@ -87,6 +103,15 @@ body {
 }
 .btn-red{
     background-color: #570000;
+    color: #fff;
+}
+.btn-lightred:focus,
+.btn-lightred:hover {
+  background-color: #570000;
+  color: #fff;
+}
+.btn-lightred{
+    background-color: #8a0707;
     color: #fff;
 }
 .datalist{
