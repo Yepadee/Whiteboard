@@ -1,5 +1,10 @@
 package org.microboard.whiteboard.controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +21,7 @@ import org.microboard.whiteboard.model.project.dto.NewSoloAssessment;
 import org.microboard.whiteboard.model.project.dto.NewSoloProject;
 import org.microboard.whiteboard.model.project.dto.UserDto;
 import org.microboard.whiteboard.model.task.SoloTask;
+import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
@@ -36,6 +42,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/unit_director")
@@ -67,7 +74,19 @@ public class UnitDirectorController {
 		model.addAttribute("cohort", new ArrayList<UserDto>());
 		return newProjectForm;
 	}
-	
+
+	/*void createTasks(SoloProject project) {
+		String path = (System.getProperty("user.dir") + "/uploads/");
+		path += project.getUnit().getUnitCode()+"/";
+		List<User> users = project.getUnit().getCohort();
+		for (User user : users) {
+			String userPath = path + user.getUserName() + "/";
+			for (SoloAssessment assessment : project.getAssessments()) {
+				new File(userPath + assessment.getName() + "/").mkdir();
+			}
+		}
+	}*/
+
 	@PostMapping(value="/new_solo_project", params={"setUnit"})
 	public String setUnit(Model model, NewSoloProject project) {
 		long unitId = project.getUnit().getId();
@@ -148,7 +167,7 @@ public class UnitDirectorController {
 			soloProject.addAssessment(soloAssessment);
 		}
 		projectService.addProject(soloProject);
-		
+		//createTasks(soloProject);
 		UnitDirector creator = unitDirectorService.getLoggedInUser();
 		creator.addProject(soloProject);
 		
