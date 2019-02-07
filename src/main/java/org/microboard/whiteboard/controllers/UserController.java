@@ -103,8 +103,8 @@ public class UserController {
 	public String UploadPage(@PathVariable long id, Model model, @RequestParam("files") MultipartFile[] files) {
 		User user = userService.getLoggedInUser();
 		Optional<Task> maybeTask = taskService.getTask(id);
-		String path = (System.getProperty("user.dir") + "/uploads/" + user.getUserName());
 		Task task = maybeTask.get();
+		String path = getPath(task, user);
 		new File(path).mkdir();
 		StringBuilder fileNames = new StringBuilder();
 		for (MultipartFile file : files) {
@@ -121,8 +121,8 @@ public class UserController {
 		return "user/uploadStatusView";
 	}
 	
-	private String getPath(Task task) {
-		String path = "";
+	private String getPath(Task task, User user) {
+		String path = System.getProperty("user.dir") + "\\uploads\\";
 		
 		/*
 		 * Generate string file path here from:
@@ -132,7 +132,7 @@ public class UserController {
 		 * The unit the project is for
 		 */
 		
-		return null;
+		return path;
 	}
 	
 	@ModelAttribute("user")
