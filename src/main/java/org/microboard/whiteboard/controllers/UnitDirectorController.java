@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
+import org.microboard.whiteboard.dto.project.NewProject;
 import org.microboard.whiteboard.dto.project.NewSoloProject;
 import org.microboard.whiteboard.dto.user.MarkerDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
@@ -74,10 +75,12 @@ public class UnitDirectorController {
 	
 	@GetMapping("/edit_solo_project/{id}")
 	public String editProjectPage(Model model, @PathVariable Long id) {
-		Project soloProject = projectService.getProject(id).get();
-		//model.addAttribute("newSoloProject", project);
+		SoloProject soloProject = (SoloProject) projectService.getProject(id).get();
+		NewProject editProject = new NewSoloProject(soloProject);
+		model.addAttribute("newSoloProject", editProject);
 		return newProjectForm;
 	}
+	
 	
 	@GetMapping("/new_project")
 	public String getNewSoloProjectPage(Model model) {

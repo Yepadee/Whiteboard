@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.dto.project;
 
+import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.user.Unit;
 
 public abstract class NewProject {
@@ -7,6 +8,18 @@ public abstract class NewProject {
 	private String description;
 	private Unit unit;
 	protected String errorMsg = "";
+	
+	public NewProject() {}
+	
+	public NewProject(Project project) {
+		String name = project.getName();
+		String description = project.getDescription();
+		Unit unit = project.getUnit();
+		
+		setName(name);
+		setDescription(description);
+		setUnit(unit);
+	}
 	
 	public String getName() {
 		return name;
