@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.controllers;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
@@ -52,6 +53,21 @@ public class UnitDirectorController {
 	@Autowired
 	private ProjectService projectService;
 	
+	private void createSoloProjectUploadFolders(SoloProject project) {
+		String path = System.getProperty("user.dir") + "\\uploads\\";
+		//System.out.println("Unit name: " + project.getUnit().getUnitName());
+		path += project.getUnit().getUnitCode()+"\\";
+		List<User> users = project.getUnit().getCohort();
+		for (User user : users) {
+			String userPath = path + user.getUserName() + "\\";
+			//System.out.println("user path: " + userPath);
+			for (SoloAssessment assessment : project.getAssessments()) {
+				//System.out.println("Assessment name: " + assessment.getName());
+				new File(userPath + assessment.getName() + "\\").mkdirs();
+			}
+		}
+	}
+	
 	@GetMapping("/new_project")
 	public String getNewSoloProjectPage(Model model) {
 		NewSoloProject project = new NewSoloProject();
@@ -59,18 +75,6 @@ public class UnitDirectorController {
 		model.addAttribute("cohort", new ArrayList<UserDto>());
 		return newProjectForm;
 	}
-
-	/*void createTasks(SoloProject project) {
-		String path = (System.getProperty("user.dir") + "/uploads/");
-		path += project.getUnit().getUnitCode()+"/";
-		List<User> users = project.getUnit().getCohort();
-		for (User user : users) {
-			String userPath = path + user.getUserName() + "/";
-			for (SoloAssessment assessment : project.getAssessments()) {
-				new File(userPath + assessment.getName() + "/").mkdir();
-			}
-		}
-	}*/
 
 	@PostMapping(value="/new_solo_project", params={"setUnit"})
 	public String setUnit(Model model, NewSoloProject project) {
@@ -156,6 +160,7 @@ public class UnitDirectorController {
 			projectService.addProject(soloProject);
 			UnitDirector creator = unitDirectorService.getLoggedInUser();
 			creator.addProject(soloProject);	
+			createSoloProjectUploadFolders(soloProject);
 			unitDirectorService.updateUser(creator); 
 		}
 		return newProjectForm;
