@@ -50,55 +50,77 @@
 							<textarea class="form-control" rows="3" placeholder="Add a description for the assignment" type="text" id="assessmentDesc" th:field="*{assessments[__${a.index}__].description}" name="assessmentDesc"></textarea>
 						</div>
 					</div>
+					<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+					</div>
+					
 					<div th:each="markerDto, m: *{assessments[__${a.index}__].markerDtos}">
 						<div class="markerWrapper">
 							<div class="form-group">
 								<div class="col-sm-4 col-sm-push-3">
-									<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}">
+									<label for="selectMarker">Select a marker:</label>
+									<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}" class="form-control">
 										<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
 									</select> 
+								</div>
+							
+								<div class="col-sm-4 col-sm-push-3" id="users">
+									<label for="toMark">Select student/s:</label>
+									<br>
+									<select class="toMark" id="toMark" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" multiple="multiple">
+										<option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}" th:text="${user.userName}"></option>
+									</select>
+									<br>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-4 col-sm-push-3">
-									<select id="toMark" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" multiple="multiple">
-										<option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}" th:text="${user.userName}"></option>
-									</select>
-									<br>
-									<button type="submit" name="removeMarker" th:value="${'__${a.index}__, __${m.index}__'}"  class="btn btn-info">Remove Marker <span class="glyphicon glyphicon-remove"></span></button>
+									<button type="submit" name="removeMarker" th:value="${'__${a.index}__, __${m.index}__'}"  class="border-radius btn btn-danger"><span class="glyphicon glyphicon-minus"></span> Marker</button>
 								</div>
+							</div>
+							<div class="form-group">
+								<hr class="dottedLine col-sm-8 col-sm-push-2" />
 							</div>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-2 col-sm-push-3">
-							<button type="submit" name="addMarker" th:value="${a.index}" class="btn btn-blue">Add Marker</button>
+							<button type="submit" id="addMarker" name="addMarker" th:value="${a.index}" class="border-radius btn btn-green"><span class="glyphicon glyphicon-plus"></span> Marker</button>
 						</div>
 					</div>
 					<br><br>
 					<div class="form-group">
-						<div class="col-sm-2 col-sm-push-2">
-							<button type="submit" name="removeAssessment" th:value="${a.index}"  class="btn btn-danger">Remove Assessment <span class="glyphicon glyphicon-minus"></span></button>
+						<div class="col-sm-2 col-sm-push-3">
+							<button type="submit" name="removeAssessment" th:value="${a.index}"  class="btn btn-lightred">Remove Assessment</button>
 						</div>
 					</div>
 				</div>
 			</div>
-			
-			
 		</div>
+		
 		<div class="form-group">
 			<div class="col-sm-2 col-sm-push-1">
-				<button type="submit" name="addAssessment" class="btn btn-green">Add Assessment <span class="glyphicon glyphicon-plus"></span></button>
+				<button type="submit" name="addAssessment" class="btn btn-blue">Add Assessment</button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
 		<br><br><br>
 		<div class="form-group">
 			<div class="col-sm-10">
-				<button type="submit" class="btn btn-lightred" name="addProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
+				<button type="submit" class="btn btn-black" name="addProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
 			</div>
 		</div>
 	</form>
 	<span th:if="${error != null}" th:text="${error}">Static summary</span>
-	
+		<script type="text/javascript">
+		
+		$(function() {
+		    $('.toMark').multiselect({
+		    	nonSelectedText: 'Add Users',
+		        includeSelectAllOption: true,
+		        enableFiltering: true
+		    });
+		});
+		
+		</script>	
 </div>

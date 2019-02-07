@@ -107,12 +107,15 @@ body {
 }
 .btn-lightred:focus,
 .btn-lightred:hover {
-  background-color: #570000;
+  background-color: #c20000;
   color: #fff;
 }
 .btn-lightred{
     background-color: #8a0707;
     color: #fff;
+}
+.border-radius{
+	border-radius: 20px;
 }
 .datalist{
   display: inline;
@@ -405,5 +408,70 @@ body {
   background: #ededed;
   margin-top: 5px;
   margin-bottom: 5px;
+}
+#addMarker{
+	margin-top:25px;
+}
+#users .multiselect-selected-text{
+	color: #000;
+	
+}
+#users .btn-default.active.focus,
+#users .btn-default.active:focus,
+#users .btn-default.active:hover,
+#users .btn-default:active.focus,
+#users .btn-default:active:focus,
+#users .btn-default:active:hover,
+#users .open>.dropdown-toggle.btn-default.focus,
+#users .open>.dropdown-toggle.btn-default:focus,
+#users .open>.dropdown-toggle.btn-default:hover,
+#users .btn-group>.btn:first-child{
+    background-image: none;
+    color: #000;
+    background-color: #fff;
+    border-color: #d1d1d1;
+}
+
+#users .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background: #0696b7;
+    color: #fff;
+}
+#users .dropdown-menu>.active>a,
+#users .dropdown-menu>.active>a:focus,
+#users .dropdown-menu>.active>a:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #0696b7;
+    outline: 0;
+}
+#users .multiselect-container>li>a>label.checkbox,
+#users .multiselect-container>li>a>label.radio {
+    margin: 0;
+    margin-left: 0;
+    margin-bottom: 1px;
+    font-size: 14px;
+    padding-left: 30px;
+}
+#users .input-group .form-control:not(:first-child):not(:last-child),
+#users .input-group-addon:not(:first-child):not(:last-child),
+#users .input-group-btn:not(:first-child):not(:last-child) {
+    border-radius: 0;
+    height: 34px;
+    width: 150px;
+}
+#users .glyphicon-remove-circle{
+	color: #000;
+}
+#users .dropdown-menu>.active>a,
+#users .dropdown-menu>.active>a:focus,
+#users .dropdown-menu>.active>a:hover{
+	background-image:none;
+}
+#users .multiselect-container>li>a>label {
+  padding: 4px 20px 3px 20px;
+}
+#selectMarker>option{
+	padding-top: 100px;
+	margin: 100px;	
 }
 /* The End of New Project Section*/
