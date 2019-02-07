@@ -27,10 +27,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WhiteboardSpringApplication {
 
 	public static void main(String[] args) {
-		
 		SpringApplication.run(WhiteboardSpringApplication.class, args);
-		FileUploadApp f = new FileUploadApp();
-		f.addBaseUploadDirectory();
+
 	}
 	@Autowired
     private UserService userService;
@@ -43,6 +41,9 @@ public class WhiteboardSpringApplication {
 	
 	@EventListener
 	public void appReady(ApplicationReadyEvent event) {
+		FileUploadApp f = new FileUploadApp();
+		f.addBaseUploadDirectory();
+		
 		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
 
 		Student student = new Student();
