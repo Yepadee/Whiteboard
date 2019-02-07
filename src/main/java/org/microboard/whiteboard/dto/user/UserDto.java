@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.model.project.dto;
+package org.microboard.whiteboard.dto.user;
 
 public class UserDto {
 	private long id;

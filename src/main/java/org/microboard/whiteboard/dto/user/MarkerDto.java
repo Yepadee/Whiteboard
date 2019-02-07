@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.model.project.dto;
+package org.microboard.whiteboard.dto.user;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,9 @@
-package org.microboard.whiteboard.model.project.dto;
+package org.microboard.whiteboard.dto.assessment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.microboard.whiteboard.dto.user.MarkerDto;
 
 public class NewSoloAssessment {
 	private String name;

@@ -1,8 +1,9 @@
-package org.microboard.whiteboard.model.project.dto;
+package org.microboard.whiteboard.dto.project;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
 import org.microboard.whiteboard.model.user.Unit;
 
 public class NewSoloProject {
@@ -44,7 +45,7 @@ public class NewSoloProject {
 
 	public boolean validate() {
 		boolean valid = true;
-		
+		errorMsg += "Error creating new project:\n";
 		if (name == null) {
 			valid = false;
 			errorMsg += "Project name field cannot be empty.\n";
@@ -70,9 +71,11 @@ public class NewSoloProject {
 			errorMsg += "No unit selected.\n";
 		}
 		
+		int i = 1;
 		for (NewSoloAssessment assessment : assessments) {
 			valid = valid && assessment.validate();
-			errorMsg += assessment.getErrorMsg();
+			errorMsg += "Assessment " + i  + ": " + assessment.getErrorMsg();
+			i ++;
 		}
 		
 		return valid;

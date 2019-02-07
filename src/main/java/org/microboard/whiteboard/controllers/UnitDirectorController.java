@@ -3,12 +3,13 @@ package org.microboard.whiteboard.controllers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
+import org.microboard.whiteboard.dto.project.NewSoloProject;
+import org.microboard.whiteboard.dto.user.MarkerDto;
+import org.microboard.whiteboard.dto.user.UserDto;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.SoloProject;
-import org.microboard.whiteboard.model.project.dto.MarkerDto;
-import org.microboard.whiteboard.model.project.dto.NewSoloAssessment;
-import org.microboard.whiteboard.model.project.dto.NewSoloProject;
-import org.microboard.whiteboard.model.project.dto.UserDto;
 import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Unit;
