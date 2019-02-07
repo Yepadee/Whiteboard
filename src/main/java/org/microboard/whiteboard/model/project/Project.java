@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.project;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import org.microboard.whiteboard.dto.project.NewProject;
+import org.microboard.whiteboard.dto.project.NewSoloProject;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 
@@ -36,6 +39,24 @@ public abstract class Project {
 	@ManyToOne
 	@JoinColumn(name="unit_id", nullable=false)
 	private Unit unit;
+	
+	public Project() {}
+	
+	public Project(NewProject project, UnitDirector creator) {
+		String name = project.getName();
+		String description = project.getDescription();
+		List<UnitDirector> helpers = new ArrayList<>();
+		Unit unit = project.getUnit();
+		
+		setName(name);
+		setDescription(description);
+		setHelpers(helpers);
+		setUnit(unit);
+		
+		/* TODO:
+		 * Add ability to add helpers.
+		 */
+	}
 	
 	public long getId() {
 		return id;

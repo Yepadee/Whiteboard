@@ -73,6 +73,9 @@ public class WhiteboardSpringApplication {
 			unit1.addUser(s);
 		}
 		
+		unit1.addUser(student);
+		unit1.addUser(unitDirector);
+		
 		
 		unitService.addUnit(unit1);
 		

@@ -4,59 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.microboard.whiteboard.dto.user.MarkerDto;
+import org.microboard.whiteboard.dto.user.MarkerUserDto;
 
-public class NewSoloAssessment {
-	private String name;
-	private String description;
-	private List<MarkerDto> markerDtos = new ArrayList<>();
-	private String errorMsg = "";
+public class NewSoloAssessment extends NewAssessment {
+	private List<MarkerUserDto> markerDtos = new ArrayList<>();
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public List<MarkerDto> getMarkerDtos() {
+	public NewSoloAssessment() {}
+	
+	public List<MarkerUserDto> getMarkerDtos() {
 		return markerDtos;
 	}
-	public void setMarkerDto(List<MarkerDto> markerDtos) {
+
+	public void setMarkerDtos(List<MarkerUserDto> markerDtos) {
 		this.markerDtos = markerDtos;
 	}
-	
-	public String getErrorMsg() {
-		return errorMsg;
-	}
 
-	public boolean validate() {
-		boolean valid = true;
-		
-		if (name == null) {
-			valid = false;
-			errorMsg += "Assessment name field cannot be empty.\n";
-		} else {
-			if (name.length() == 0)  {
-				valid = false;
-				errorMsg += "Assessment name field cannot be empty.\n";
-			}
-		}
-		
-		if (description == null) {
-			valid = false;
-			errorMsg += "Assessment description field cannot be empty.\n";
-		} else {
-			if (description.length() == 0)  {
-				valid = false;
-				errorMsg += "Assessment description field cannot be empty.\n";
-			}
-		}
-		
-		return valid;
+	@Override
+	protected boolean validateMarkers() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }
