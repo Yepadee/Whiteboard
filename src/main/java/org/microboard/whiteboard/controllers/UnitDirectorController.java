@@ -7,18 +7,18 @@ import java.util.List;
 import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
 import org.microboard.whiteboard.dto.project.NewProject;
 import org.microboard.whiteboard.dto.project.NewSoloProject;
-import org.microboard.whiteboard.dto.user.MarkerDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.dto.user.UserDto;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
-import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.SoloProject;
-import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
+import org.microboard.whiteboard.pojos.ProjectEditApplyer;
+import org.microboard.whiteboard.pojos.ProjectTemplateMaker;
 import org.microboard.whiteboard.services.project.ProjectService;
+import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
 import org.microboard.whiteboard.services.user.UnitService;
@@ -42,6 +42,8 @@ public class UnitDirectorController {
 	private Logger logger = LoggerFactory.getLogger(UnitDirectorController.class);
 	
 	private String newProjectForm = "unit_director/new_project";
+	private String newProjectPath = "unit_director/new_project";
+	private String editSoloProjectPath = "unit_director/edit_solo_project/";
 	
 	@Autowired
 	private UnitService unitService;
@@ -57,6 +59,9 @@ public class UnitDirectorController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private SoloProjectService soloProjectService;
 	
 	private void createSoloProjectUploadFolders(SoloProject project) {
 		String path = System.getProperty("user.dir") + "\\uploads\\";
@@ -75,12 +80,13 @@ public class UnitDirectorController {
 	
 	@GetMapping("/edit_solo_project/{id}")
 	public String editProjectPage(Model model, @PathVariable Long id) {
-		SoloProject soloProject = (SoloProject) projectService.getProject(id).get();
-		NewProject editProject = new NewSoloProject(soloProject);
+		SoloProject soloProject = soloProjectService.getProject(id).get();
+		ProjectTemplateMaker templateMaker = new ProjectTemplateMaker();
+		NewSoloProject editProject = templateMaker.getTemplate(soloProject);
 		model.addAttribute("newSoloProject", editProject);
+		model.addAttribute("path", editSoloProjectPath + id);
 		return newProjectForm;
 	}
-	
 	
 	@GetMapping("/new_project")
 	public String getNewSoloProjectPage(Model model) {
@@ -130,28 +136,47 @@ public class UnitDirectorController {
 	    return newProjectForm;
 	}
 	
-	@PostMapping(value="/new_solo_project", params={"addProject"})
+	@PostMapping(value="/new_solo_project", params= {"addProject"})
 	public String addProject(Model model, NewSoloProject project) {
 		if (! project.validate()) {
 			model.addAttribute("error", project.getErrorMsg());
 		} else {
+			ProjectEditApplyer editApplyer = new ProjectEditApplyer();
+			
+			SoloProject newProject = new SoloProject();
+			SoloProject soloProject = editApplyer.applyEdits(newProject, project);
+			
 			UnitDirector creator = unitDirectorService.getLoggedInUser();
-
-			SoloProject soloProject = new SoloProject(project, creator);	
+			creator.addProject(soloProject);
 			
 			createSoloProjectUploadFolders(soloProject);
-
+			
+			
 			projectService.addProject(soloProject);
-
 			unitDirectorService.updateUser(creator); 
 		}
 		return newProjectForm;
 		
 	}
 	
-	@GetMapping("/edit_project/{id}")
-	public String editProjectPage() {
-		return "edit_project";
+	@PostMapping(value="/new_solo_project", params= {"editProject"})
+	public String editProject(Model model, NewSoloProject edits) {
+		if (! edits.validate()) {
+			model.addAttribute("error", edits.getErrorMsg());
+		} else {
+			ProjectEditApplyer editApplyer = new ProjectEditApplyer();
+			
+			SoloProject project = soloProjectService.getProject(edits.getId()).get();
+			SoloProject soloProject = editApplyer.applyEdits(project, edits);
+			
+			UnitDirector creator = unitDirectorService.getLoggedInUser();
+			for (User u : project.getUnit().getCohort()) {
+				userService.updateUser(u);
+			}
+			projectService.addProject(soloProject);
+			unitDirectorService.updateUser(creator); 
+		}
+		return "redirect:/unit_director/edit_solo_project/" + edits.getId();
 	}
 	
 	@GetMapping("/projects")

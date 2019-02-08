@@ -115,6 +115,7 @@ public class WhiteboardSpringApplication {
 		st1.setStatus("new");
 		sa1.addTask(st1);
 		student.addTask(st1);
+		unitDirector.addTask(st1);
 		
 		st1.addMarker(assessor);
 		
@@ -187,8 +188,6 @@ public class WhiteboardSpringApplication {
 		userService.updateUser(student);
 		userService.updateUser(student);
 		userService.updateUser(student);
-		
-		
 		
 	}
 }
