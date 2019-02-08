@@ -1,17 +1,25 @@
-package org.microboard.whiteboard.model.project.dto;
+package org.microboard.whiteboard.dto.project;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.user.Unit;
 
-public class NewSoloProject {
+public abstract class NewProject {
 	private String name;
 	private String description;
-	private List<NewSoloAssessment> assessments = new ArrayList<>();
 	private Unit unit;
+	protected String errorMsg = "";
 	
-	private String errorMsg = "";
+	public NewProject() {}
+	
+	public NewProject(Project project) {
+		String name = project.getName();
+		String description = project.getDescription();
+		Unit unit = project.getUnit();
+		
+		setName(name);
+		setDescription(description);
+		setUnit(unit);
+	}
 	
 	public String getName() {
 		return name;
@@ -25,12 +33,6 @@ public class NewSoloProject {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<NewSoloAssessment> getAssessments() {
-		return assessments;
-	}
-	public void setAssessments(List<NewSoloAssessment> assessments) {
-		this.assessments = assessments;
-	}
 	public Unit getUnit() {
 		return unit;
 	}
@@ -38,13 +40,13 @@ public class NewSoloProject {
 		this.unit = unit;
 	}
 	
+	
 	public String getErrorMsg() {
 		return errorMsg;
 	}
-
 	public boolean validate() {
 		boolean valid = true;
-		
+		errorMsg += "Error creating new project:\n";
 		if (name == null) {
 			valid = false;
 			errorMsg += "Project name field cannot be empty.\n";
@@ -69,12 +71,8 @@ public class NewSoloProject {
 			valid = false;
 			errorMsg += "No unit selected.\n";
 		}
-		
-		for (NewSoloAssessment assessment : assessments) {
-			valid = valid && assessment.validate();
-			errorMsg += assessment.getErrorMsg();
-		}
-		
-		return valid;
+		boolean assessmentsValid = validateAssessments();
+		return valid && assessmentsValid;
 	}
+	protected abstract boolean validateAssessments();
 }

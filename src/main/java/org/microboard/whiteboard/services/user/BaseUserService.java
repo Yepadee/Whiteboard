@@ -53,7 +53,7 @@ public abstract class BaseUserService<T extends User> {
 	
 	public T getLoggedInUser() {
 		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		T loggedInUser = (T) userDetails.getUser();
-		return loggedInUser;
+		long userId = userDetails.getUser().getId();
+		return getUser(userId).get();
 	}
 }

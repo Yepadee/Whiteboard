@@ -1,13 +1,16 @@
-package org.microboard.whiteboard.model.project.dto;
+package org.microboard.whiteboard.dto.assessment;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-public class NewSoloAssessment {
+public abstract class NewAssessment {
 	private String name;
 	private String description;
-	private List<MarkerDto> markerDtos = new ArrayList<>();
-	private String errorMsg = "";
+	private Date studentDeadline;
+	private Date markerDeadline;
+	private int weight;
+
+	
+	protected String errorMsg = "";
 	
 	public String getName() {
 		return name;
@@ -21,17 +24,28 @@ public class NewSoloAssessment {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<MarkerDto> getMarkerDtos() {
-		return markerDtos;
+	public Date getStudentDeadline() {
+		return studentDeadline;
 	}
-	public void setMarkerDto(List<MarkerDto> markerDtos) {
-		this.markerDtos = markerDtos;
+	public void setStudentDeadline(Date studentDeadline) {
+		this.studentDeadline = studentDeadline;
+	}
+	public Date getMarkerDeadline() {
+		return markerDeadline;
+	}
+	public void setMarkerDeadline(Date markerDeadline) {
+		this.markerDeadline = markerDeadline;
+	}
+	public int getWeight() {
+		return weight;
+	}
+	public void setWeight(int weight) {
+		this.weight = weight;
 	}
 	
 	public String getErrorMsg() {
 		return errorMsg;
 	}
-
 	public boolean validate() {
 		boolean valid = true;
 		
@@ -57,4 +71,6 @@ public class NewSoloAssessment {
 		
 		return valid;
 	}
+	
+	abstract protected boolean validateMarkers();
 }

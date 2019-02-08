@@ -1,9 +1,6 @@
 package org.microboard.whiteboard.model.assessment;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -12,9 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
-
-import org.microboard.whiteboard.model.user.Assessor;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
@@ -30,9 +24,6 @@ public abstract class Assessment {
 	private Date markerDeadline;
 	
 	private int weight;
-	
-	@ManyToMany
-	private List<Assessor> markers = new ArrayList<>();
 
 	public long getId() {
 		return id;
@@ -80,14 +71,6 @@ public abstract class Assessment {
 
 	public void setWeight(int weight) {
 		this.weight = weight;
-	}
-
-	public List<Assessor> getMarkers() {
-		return markers;
-	}
-
-	public void setMarkers(List<Assessor> markers) {
-		this.markers = markers;
 	}
 	
 	

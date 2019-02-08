@@ -3,12 +3,16 @@ package org.microboard.whiteboard.controllers;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
+import org.microboard.whiteboard.dto.project.NewProject;
+import org.microboard.whiteboard.dto.project.NewSoloProject;
+import org.microboard.whiteboard.dto.user.MarkerDto;
+import org.microboard.whiteboard.dto.user.MarkerUserDto;
+import org.microboard.whiteboard.dto.user.UserDto;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
+import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.SoloProject;
-import org.microboard.whiteboard.model.project.dto.MarkerDto;
-import org.microboard.whiteboard.model.project.dto.NewSoloAssessment;
-import org.microboard.whiteboard.model.project.dto.NewSoloProject;
-import org.microboard.whiteboard.model.project.dto.UserDto;
 import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Unit;
@@ -26,6 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,6 +73,15 @@ public class UnitDirectorController {
 		}
 	}
 	
+	@GetMapping("/edit_solo_project/{id}")
+	public String editProjectPage(Model model, @PathVariable Long id) {
+		SoloProject soloProject = (SoloProject) projectService.getProject(id).get();
+		NewProject editProject = new NewSoloProject(soloProject);
+		model.addAttribute("newSoloProject", editProject);
+		return newProjectForm;
+	}
+	
+	
 	@GetMapping("/new_project")
 	public String getNewSoloProjectPage(Model model) {
 		NewSoloProject project = new NewSoloProject();
@@ -82,7 +96,7 @@ public class UnitDirectorController {
 		Unit unit = unitService.getUnit(unitId).get();
 		project.setUnit(unit);
 		for (NewSoloAssessment assessment : project.getAssessments()) {
-			for (MarkerDto markerDto : assessment.getMarkerDtos()) {
+			for (MarkerUserDto markerDto : assessment.getMarkerDtos()) {
 				markerDto.setToMark(new ArrayList<>());
 			}
 		}
@@ -104,7 +118,7 @@ public class UnitDirectorController {
 	@PostMapping(value="/new_solo_project", params={"addMarker"})
 	public String addMarker(Model model, NewSoloProject project, @RequestParam("addMarker") int addMarker) {
 		int assessmentIndex = addMarker;
-		project.getAssessments().get(assessmentIndex).getMarkerDtos().add(new MarkerDto());
+		project.getAssessments().get(assessmentIndex).getMarkerDtos().add(new MarkerUserDto());
 	    return newProjectForm;
 	}
 
@@ -121,46 +135,14 @@ public class UnitDirectorController {
 		if (! project.validate()) {
 			model.addAttribute("error", project.getErrorMsg());
 		} else {
-			SoloProject soloProject = new SoloProject();
-			String name = project.getName();
-			String description = project.getDescription();
-			List<UnitDirector> helpers = new ArrayList<>();
-			Unit unit = project.getUnit();
-			
-			soloProject.setName(name);
-			soloProject.setDescription(description);
-			soloProject.setHelpers(helpers);
-			soloProject.setUnit(unit);
-			
-			/* TODO:
-			 * Add ability to add helpers.
-			 */
-			
-			for (NewSoloAssessment newAssessment : project.getAssessments()) {
-				String assessmentName = newAssessment.getName();
-				String assessmentDesc = newAssessment.getDescription();
-				
-				SoloAssessment soloAssessment = new SoloAssessment();
-				soloAssessment.setName(assessmentName);
-				soloAssessment.setDescription(assessmentDesc);
-				
-				for (User user : project.getUnit().getCohort()) {
-					SoloTask soloTask = new SoloTask();
-					user.addTask(soloTask);
-					for (MarkerDto markerDto : newAssessment.getMarkerDtos()) {
-						Assessor marker = markerDto.getMarker();
-						if (markerDto.getToMark().contains(user)) {
-							soloTask.addMarker(marker);
-						}
-					}
-					soloAssessment.addTask(soloTask);
-				}
-				soloProject.addAssessment(soloAssessment);
-			}
-			projectService.addProject(soloProject);
 			UnitDirector creator = unitDirectorService.getLoggedInUser();
-			creator.addProject(soloProject);	
+
+			SoloProject soloProject = new SoloProject(project, creator);	
+			
 			createSoloProjectUploadFolders(soloProject);
+
+			projectService.addProject(soloProject);
+
 			unitDirectorService.updateUser(creator); 
 		}
 		return newProjectForm;
