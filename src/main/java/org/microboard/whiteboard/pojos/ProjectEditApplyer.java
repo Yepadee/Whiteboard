@@ -59,7 +59,6 @@ public class ProjectEditApplyer {
 		for (NewSoloAssessment editAssessment : edits.getAssessments()) {
 			long assessmentId = editAssessment.getId();
 			SoloAssessment assessment = new SoloAssessment();
-			
 			Optional<SoloAssessment> maybeAssessment = findById(oldAssessments, assessmentId);
 			if (maybeAssessment.isPresent()) {
 				//Editing an existing assessment

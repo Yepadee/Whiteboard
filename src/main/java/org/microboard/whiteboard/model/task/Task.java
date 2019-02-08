@@ -40,7 +40,7 @@ public abstract class Task {
 	@Column(name="fileName")
 	private List<String> fileNames= new ArrayList<>();
 	
-	private String status;
+	private String status = "new";
 	
 	
 	public long getId() {

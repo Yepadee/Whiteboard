@@ -65,6 +65,8 @@
 					</div>
 					
 					<div th:each="assessment, a: *{assessments}">
+						<input type="hidden" th:field="*{assessments[__${a.index}__].id}" th:value="*{assessments[__${a.index}__].id}">
+					
 						<div class="assignmentWrapper">
 							<div class="assignment-background">
 								<div class="form-group">
@@ -97,7 +99,7 @@
 								<div class="form-group">
 									<label class="control-label col-sm-3" for="weight">Weight:</label>
 									<div class="col-sm-8">
-										<input th:field="*{{assessments[__${a.index}__].weight}}" type="number" min="1" max="100" id="weight">
+										<input th:field="*{{assessments[__${a.index}__].weight}}" type="number" min="0" max="100" id="weight">
 										<span>%</span>
 									</div>	
 								</div>
