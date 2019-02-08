@@ -41,4 +41,6 @@ jobs:
           - run:
               name: Deploy Over SSH
               command: |
-                ssh -i C:\Users\James\.ssh\whiteboard 132.145.159.255 -l ubuntu
+                ssh -i C:\Users\James\.ssh\WhiteboardCI 129.213.52.63 -l ubuntu
+                git pull
+                mvn spring-boot:run

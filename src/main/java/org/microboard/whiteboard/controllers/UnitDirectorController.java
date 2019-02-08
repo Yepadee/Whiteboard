@@ -64,16 +64,14 @@ public class UnitDirectorController {
 	private SoloProjectService soloProjectService;
 	
 	private void createSoloProjectUploadFolders(SoloProject project) {
-		String path = System.getProperty("user.dir") + "\\uploads\\";
-		//System.out.println("Unit name: " + project.getUnit().getUnitName());
-		path += project.getUnit().getUnitCode()+"\\";
+		String path = System.getProperty("user.dir") + "/uploads/";
+		path += Long.toString(project.getUnit().getId())+"/";
 		List<User> users = project.getUnit().getCohort();
 		for (User user : users) {
-			String userPath = path + user.getUserName() + "\\";
-			//System.out.println("user path: " + userPath);
+			String userPath = path + user.getUserName() + "/";
 			for (SoloAssessment assessment : project.getAssessments()) {
-				//System.out.println("Assessment name: " + assessment.getName());
-				new File(userPath + assessment.getName() + "\\").mkdirs();
+				//System.out.println(userPath + assessment.getName() + "/");
+				new File(userPath + assessment.getName() + "/").mkdirs();
 			}
 		}
 	}

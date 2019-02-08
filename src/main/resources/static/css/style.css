@@ -195,7 +195,7 @@ body {
 .sidebar .nav-profile{
   display: flex;
   padding-left: 20px;
-  padding-bottom: 30px;
+  padding-bottom: 20px;
   padding-top: 20px;
   background: #f6f6f6;
 }
@@ -208,7 +208,7 @@ body {
   margin-left: 5px;
   padding-top: 5px;
 }
-.sidebar .nav-profile .text-wrapper .glyphicon{
+.sidebar .nav-profile .text-wrapper .glyphicon-asterisk{
   color: #00ce68;
   font-size: 9px;
 }
@@ -231,13 +231,34 @@ body {
 .sidebar a .sidebar-element{
   padding-left: 10px;
 }
-.sidebar a.newProject {
+.sidebar a:hover,
+.sidebar a:focus{
+	color: #308ee0;
+}
+.sidebar a.new_project {
     background-color: #00ce68;
     color: #fff;
-    padding-left: 40px;
+    padding-left: 30px;
+    font-weight: 600;
 }
-.sidebar a.newProject:hover {
+.sidebar a.new_project:hover {
   background-color: #039b50;
+}
+#new_project{
+	margin-top:-10px;
+}
+#new_project>li>a{
+	margin-bottom: 0;
+	margin-top: 0;
+	padding-left: 35px;
+	background: #00ce6814;
+}
+#new_project>li>a:hover,
+#new_project>li>a:focus{
+	color: #308ee0;
+}
+#new_project>li>a .glyphicon{
+	font-size: 11px;
 }
 .sidebar a.allProject{
     background-color: #308ee0;
@@ -254,6 +275,11 @@ body {
 .sidebar a:hover:not(.active,.newProject) {
   background-color: #f9f9f9;
   color:
+}
+.logout{
+	font-size: 13px;
+    color: #337ab7;
+    text-decoration: underline;
 }
 /* End Of the Sidebar*/
 
@@ -402,6 +428,10 @@ body {
 }
 
 /* New Project Section*/
+/*.project_selected{ /*intially hide the content until the Unit director click on (Group/Solo project)*/
+  /*  display:none;
+  }*/
+  
 .markerWrapperAdded{
   padding-top: 20px;
   padding-bottom: 20px;

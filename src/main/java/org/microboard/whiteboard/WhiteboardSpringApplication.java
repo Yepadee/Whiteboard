@@ -15,7 +15,7 @@ import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.UnitService;
 import org.microboard.whiteboard.services.user.UserService;
-import org.microboard.whiteboard.uploadDemo.FileUploadApp;
+import org.microboard.whiteboard.services.upload.FileUploadApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

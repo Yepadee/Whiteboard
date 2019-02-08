@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
+import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
 import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
@@ -108,7 +109,7 @@ public class UserController {
 		new File(path).mkdir();
 		StringBuilder fileNames = new StringBuilder();
 		for (MultipartFile file : files) {
-			task.addFile(file.getOriginalFilename());
+			task.addFile(path + file.getOriginalFilename());
 			Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
 			try {
@@ -117,22 +118,15 @@ public class UserController {
 				e.printStackTrace();
 			}
 		}
+		taskService.updateTask(task);
 		model.addAttribute("msg","Success: "+fileNames.toString());
-		return "user/uploadStatusView";
+		return "redirect:/user/tasks/";
 	}
 	
 	private String getPath(Task task, User user) {
-		String path = System.getProperty("user.dir") + "\\uploads\\";
-		
-		/*
-		 * Generate string file path here from:
-		 * The user accountable for the task
-		 * The assessment the task is for
-		 * The project the assessment is for
-		 * The unit the project is for
-		 */
-		
-		return path;
+		TaskUploadPathGen pathGen = new TaskUploadPathGen();
+		task.accept(pathGen);
+		return pathGen.getResult();
 	}
 	
 	@ModelAttribute("user")
