@@ -65,7 +65,7 @@ public class UnitDirectorController {
 		for (User user : users) {
 			String userPath = path + user.getUserName() + "/";
 			for (SoloAssessment assessment : project.getAssessments()) {
-				System.out.println(userPath + assessment.getName() + "/");
+				//System.out.println(userPath + assessment.getName() + "/");
 				new File(userPath + assessment.getName() + "/").mkdirs();
 			}
 		}
