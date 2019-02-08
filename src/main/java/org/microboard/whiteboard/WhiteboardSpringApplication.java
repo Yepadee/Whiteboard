@@ -54,12 +54,17 @@ public class WhiteboardSpringApplication {
 		unitDirector.setUserName("admin");
 		unitDirector.setPassword(en.encode("test"));
 		
+		UnitDirector aydin = new UnitDirector();
+		aydin.setUserName("Aydin");
+		aydin.setPassword(en.encode("test"));
+		
 		Assessor assessor = new Assessor();
 		assessor.setUserName("assessor");
 		assessor.setPassword(en.encode("test"));
 
 		userService.addUser(student);
 		userService.addUser(unitDirector);
+		userService.addUser(aydin);
 		userService.addUser(assessor);
 		
 		int numUsers = 5;

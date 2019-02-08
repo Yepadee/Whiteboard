@@ -8,7 +8,8 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav navbar-left">
-					<h3>Add New Project</h3>
+					<h3 th:if="${newSoloProject.id == 0}" >Add New Solo Project</h3>
+					<h3 th:if="${newSoloProject.id != 0}" >Edit Solo Project</h3>
 				</ul>
 			</div>
 		</nav>

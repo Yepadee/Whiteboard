@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.microboard.whiteboard.model.project.Project;
+import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.repositories.project.BaseProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,9 @@ public abstract class BaseProjectService<T extends Project> {
 	
 	public void deleteProject(long id) {
 		projectRepository.deleteById(id);
+	}
+	
+	public List<T> getByCreator(UnitDirector creator) {
+		return projectRepository.findByCreator(creator);
 	}
 }

@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import org.microboard.whiteboard.model.project.visitors.ProjectVisitor;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 
@@ -75,4 +76,5 @@ public abstract class Project {
 		this.unit = unit;
 	}
 	
+	public abstract void accept(ProjectVisitor v);
 }

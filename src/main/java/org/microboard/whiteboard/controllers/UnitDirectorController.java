@@ -21,6 +21,7 @@ import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.pojos.ProjectEditApplyer;
 import org.microboard.whiteboard.pojos.ProjectTemplateMaker;
+import org.microboard.whiteboard.services.project.GroupProjectService;
 import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
@@ -70,6 +71,9 @@ public class UnitDirectorController {
 	@Autowired
 	private SoloProjectService soloProjectService;
 	
+	@Autowired
+	private GroupProjectService groupProjectService;
+	
 	private void createSoloProjectUploadFolders(SoloProject project) {
 		String path = System.getProperty("user.dir") + "/uploads/";
 		path += Long.toString(project.getUnit().getId())+"/";
@@ -84,7 +88,7 @@ public class UnitDirectorController {
 	}
 	
 	@GetMapping("/edit_solo_project/{id}")
-	public String editProjectPage(Model model, @PathVariable Long id) {
+	public String editSoloProject(Model model, @PathVariable Long id) {
 		SoloProject soloProject = soloProjectService.getProject(id).get();
 		ProjectTemplateMaker templateMaker = new ProjectTemplateMaker();
 		NewSoloProject editProject = templateMaker.getTemplate(soloProject);
@@ -97,7 +101,7 @@ public class UnitDirectorController {
 	public String getNewSoloProjectPage(Model model) {
 		NewSoloProject project = new NewSoloProject();
 		model.addAttribute("newSoloProject", project);
-		model.addAttribute("cohort", new ArrayList<UserDto>());
+		//model.addAttribute("cohort", new ArrayList<UserDto>());
 		return newSoloProjectPath;
 	}
 
@@ -185,8 +189,11 @@ public class UnitDirectorController {
 	}
 	
 	@GetMapping("/projects")
-	public String viewProjectsPage() {
-		return "view_projects";
+	public String viewProjectsPage(Model model) {
+		UnitDirector unitDirector = unitDirectorService.getLoggedInUser();
+		model.addAttribute("soloProjects", soloProjectService.getByCreator(unitDirector));
+		model.addAttribute("groupProjects", groupProjectService.getByCreator(unitDirector));
+		return "unit_director/view_projects";
 	}
 	
 	@GetMapping("/manage_permissions")

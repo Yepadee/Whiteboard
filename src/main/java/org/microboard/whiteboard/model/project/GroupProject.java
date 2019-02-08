@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
+import org.microboard.whiteboard.model.project.visitors.ProjectVisitor;
 import org.microboard.whiteboard.model.user.Group;
 
 @Entity
@@ -45,5 +46,10 @@ public class GroupProject extends Project {
 	public void addGroup(Group group) {
 		group.setProject(this);
 		this.groups.add(group);
+	}
+
+	@Override
+	public void accept(ProjectVisitor v) {
+		v.visit(this);
 	}
 }

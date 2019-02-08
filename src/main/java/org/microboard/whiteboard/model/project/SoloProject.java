@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
+import org.microboard.whiteboard.model.project.visitors.ProjectVisitor;
 
 @Entity
 @DiscriminatorValue("solo")
@@ -29,4 +30,8 @@ public class SoloProject extends Project {
 		this.assessments.add(assessment);
 	}
 	
+	@Override
+	public void accept(ProjectVisitor v) {
+		v.visit(this);
+	}
 }
