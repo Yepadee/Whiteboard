@@ -119,7 +119,7 @@ public class UserController {
 		}
 		taskService.updateTask(task);
 		model.addAttribute("msg","Success: "+fileNames.toString());
-		return "/";
+		return "redirect:/user/tasks/";
 	}
 	
 	private String getPath(Task task, User user) {
