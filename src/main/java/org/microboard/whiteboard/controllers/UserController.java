@@ -108,7 +108,7 @@ public class UserController {
 		new File(path).mkdir();
 		StringBuilder fileNames = new StringBuilder();
 		for (MultipartFile file : files) {
-			task.addFile(file.getOriginalFilename());
+			task.addFile(path + file.getOriginalFilename());
 			Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
 			try {
@@ -117,12 +117,13 @@ public class UserController {
 				e.printStackTrace();
 			}
 		}
+		taskService.updateTask(task);
 		model.addAttribute("msg","Success: "+fileNames.toString());
-		return "user/uploadStatusView";
+		return "/";
 	}
 	
 	private String getPath(Task task, User user) {
-		String path = System.getProperty("user.dir") + "\\uploads\\";
+		String path = System.getProperty("user.dir") + "/uploads/";
 		
 		/*
 		 * Generate string file path here from:
