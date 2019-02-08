@@ -1,6 +1,7 @@
 package org.microboard.whiteboard.pojos;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +17,10 @@ import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
-import org.omg.Messaging.SyncScopeHelper;
 
 public class ProjectEditApplyer {
 	
-	private void applyCoreEdits(Project project, NewProject edits) {
+	private void applyCoreProjectEdits(Project project, NewProject edits) {
 		long id = project.getId();
 		String name = edits.getName();
 		String description = edits.getDescription();
@@ -34,8 +34,23 @@ public class ProjectEditApplyer {
 		project.setUnit(unit);
 	}
 	
+	private void applyCoreAssessmentEdits(SoloAssessment assessment, NewSoloAssessment edits) {
+		String name = edits.getName();
+		String description = edits.getDescription();
+		Date studentDeadline = edits.getStudentDeadline();
+		Date markerDeadline = edits.getMarkerDeadline();
+		int weight = edits.getWeight();
+		
+		assessment.setName(name);
+		assessment.setDescription(description);
+		assessment.setStudentDeadline(studentDeadline);
+		assessment.setMarkerDeadline(markerDeadline);
+		assessment.setStudentDeadline(studentDeadline);
+		assessment.setWeight(weight);
+	}
+	
 	public SoloProject applyEdits(SoloProject project, NewSoloProject edits) {
-		applyCoreEdits(project, edits);
+		applyCoreProjectEdits(project, edits);
 		
 		List<SoloAssessment> oldAssessments = new ArrayList<>(project.getAssessments());
 		List<SoloAssessment> presentAssessments = new ArrayList<>();
@@ -76,10 +91,7 @@ public class ProjectEditApplyer {
 				project.addAssessment(assessment);
 			}
 			
-			String assessmentName = editAssessment.getName();
-			String assessmentDesc = editAssessment.getDescription();
-			assessment.setName(assessmentName);
-			assessment.setDescription(assessmentDesc);
+			applyCoreAssessmentEdits(assessment, editAssessment);
 		}
 		
 		List<SoloAssessment> removed = new ArrayList<>(oldAssessments);

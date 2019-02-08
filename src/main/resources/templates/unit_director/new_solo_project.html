@@ -39,6 +39,7 @@
 							</select>
 						</div>
 					</div>
+					<input type="hidden" th:field="*{id}" th:value="*{id}">
 					<input type="hidden" th:field="*{unit.cohort}" th:value="*{unit.cohort}">
 					<button style="display: none;" type="submit" id="setUnit" name="setUnit">Set Unit</button>
 					
@@ -81,6 +82,26 @@
 										<textarea class="form-control" rows="3" placeholder="Add a description for the assignment" type="text" id="assessmentDesc" th:field="*{assessments[__${a.index}__].description}" name="assessmentDesc"></textarea>
 									</div>
 								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3" for="studentDeadline">Student Deadline:</label>
+									<div class="col-sm-8">
+										<input th:field="*{{assessments[__${a.index}__].studentDeadline}}" type="datetime-local" id="studentDeadline" name="studentDeadline">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3" for="markerDeadline">Marker Deadline:</label>
+									<div class="col-sm-8">
+										<input th:field="*{{assessments[__${a.index}__].markerDeadline}}" type="datetime-local" id="markerDeadline" name="markerDeadline">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-sm-3" for="weight">Weight:</label>
+									<div class="col-sm-8">
+										<input th:field="*{{assessments[__${a.index}__].weight}}" type="number" min="1" max="100" id="weight">
+										<span>%</span>
+									</div>	
+								</div>
+								
 								<div class="form-group">
 									<hr class="dottedLine col-sm-8 col-sm-push-2" />
 								</div>
@@ -138,7 +159,10 @@
 					<br><br><br>
 					<div class="form-group">
 						<div class="col-sm-10">
-							<button type="submit" class="btn btn-black" name="addProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button th:if="${newSoloProject.id == 0}" type="submit" class="btn btn-black" name="addProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
+							
+							<button th:if="${newSoloProject.id != 0}" type="submit" class="btn btn-black" name="addProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button th:if="${newSoloProject.id != 0}" type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
 						</div>
 					</div>
 				</form>

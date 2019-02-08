@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
@@ -20,7 +22,9 @@ public abstract class Assessment {
 	private String name;
 	private String description;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")
 	private Date studentDeadline;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm")
 	private Date markerDeadline;
 	
 	private int weight;
