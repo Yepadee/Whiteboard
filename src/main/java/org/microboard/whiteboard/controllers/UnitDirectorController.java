@@ -83,7 +83,7 @@ public class UnitDirectorController {
 			userPath += project.getName() + "/";
 			for (SoloAssessment assessment : project.getAssessments()) {
 				//System.out.println(userPath + assessment.getName() + "/");
-				new File(userPath + assessment.getName() + "/").mkdirs();
+				new File(userPath + assessment.getName() + "/feedback/").mkdirs();
 			}
 		}
 	}

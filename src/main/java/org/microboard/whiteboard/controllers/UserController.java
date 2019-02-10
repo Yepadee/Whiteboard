@@ -105,7 +105,7 @@ public class UserController {
 		User user = userService.getLoggedInUser();
 		Optional<Task> maybeTask = taskService.getTask(id);
 		Task task = maybeTask.get();
-		String path = getPath(task, user);
+		String path = getPath(task);
 		new File(path).mkdir();
 		StringBuilder fileNames = new StringBuilder();
 		for (MultipartFile file : files) {
@@ -123,7 +123,29 @@ public class UserController {
 		return "redirect:/user/tasks/";
 	}
 	
-	private String getPath(Task task, User user) {
+	@PostMapping("/feedbackUpload/{id}")
+	public String FeedbackUploadPage(@PathVariable long id, Model model, @RequestParam("files") MultipartFile[] files) {
+		Optional<Task> maybeTask = taskService.getTask(id);
+		Task task = maybeTask.get();
+		String path = getPath(task) + "feedback/";
+		new File(path).mkdir();
+		StringBuilder fileNames = new StringBuilder();
+		for (MultipartFile file : files) {
+			task.addFile(path + file.getOriginalFilename());
+			Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
+			fileNames.append(file.getOriginalFilename());
+			try {
+				Files.write(fileNameAndPath, file.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		taskService.updateTask(task);
+		model.addAttribute("msg","Success: "+fileNames.toString());
+		return "redirect:/user/tasks/";
+	}
+	
+	private String getPath(Task task) {
 		TaskUploadPathGen pathGen = new TaskUploadPathGen();
 		task.accept(pathGen);
 		return pathGen.getResult();
