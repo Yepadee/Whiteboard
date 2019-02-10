@@ -24,11 +24,30 @@
 						id="comments" name="comments" th:text="${task.txtSubmission}" form="submissionForm"></textarea>
 						<input type="submit" value="Submit" />
 					</form>
-						<form th:action="@{/user/testUpload/{taskId}(taskId=${task.id})}" method="post" enctype="multipart/form-data">
-							<input type="file" name="files" multiple>
-							<input type="submit" value="Upload Files"></input>
-						</form>
+					<form th:action="@{/user/testUpload/{taskId}(taskId=${task.id})}" method="post" enctype="multipart/form-data">
+						<input type="file" name="files" multiple>
+						<input type="submit" value="Upload Files"></input>
+					</form>
 				</div>
+				<div class="col-sm-8 table-wrapper">
+					<h2>Uploaded files:</h2>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>File</th>
+								<th>Deadline</th>
+								<th>Size</th>
+							</tr>
+						</thead>
+					<tbody>
+						<tr th:each="file: ${user.files}">
+							<td><a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}">View</a></td>
+							<td>Date</td>
+							<td>3.7MB</td>
+						</tr>
+				</tbody>
+			</table>
+			</div>
 			</div>
 		</div>
 	</div>
