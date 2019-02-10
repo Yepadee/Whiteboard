@@ -54,15 +54,20 @@ public class WhiteboardSpringApplication {
 		unitDirector.setUserName("admin");
 		unitDirector.setPassword(en.encode("test"));
 		
+		UnitDirector aydin = new UnitDirector();
+		aydin.setUserName("Aydin");
+		aydin.setPassword(en.encode("test"));
+		
 		Assessor assessor = new Assessor();
 		assessor.setUserName("assessor");
 		assessor.setPassword(en.encode("test"));
 
 		userService.addUser(student);
 		userService.addUser(unitDirector);
+		userService.addUser(aydin);
 		userService.addUser(assessor);
 		
-		int numUsers = 5;
+		int numUsers = 100;
 		Unit unit1 = new Unit();
 		unit1.setUnitName("Computer Science in Society");
 		unit1.setUnitCode("COMS20003");
@@ -115,6 +120,7 @@ public class WhiteboardSpringApplication {
 		st1.setStatus("new");
 		sa1.addTask(st1);
 		student.addTask(st1);
+		unitDirector.addTask(st1);
 		
 		st1.addMarker(assessor);
 		
@@ -187,8 +193,6 @@ public class WhiteboardSpringApplication {
 		userService.updateUser(student);
 		userService.updateUser(student);
 		userService.updateUser(student);
-		
-		
 		
 	}
 }

@@ -148,5 +148,15 @@ $(document).ready(function(){
 			selectAll: true
 	});
 	
+	/*/////////////////////////////*/
+
+	/* Show content when click on the radioButton(Solo/Group) in new_project.html */
+  /*$('input[type="radio"]').click(function(){
+    var radiobutton_value = $(this).val();
+    $(".project_selected").hide();
+    var content= "#show"+radiobutton_value;
+    $(content).show();
+  });*/  	
+	
 });
 
