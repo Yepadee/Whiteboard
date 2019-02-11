@@ -9,10 +9,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
-import org.microboard.whiteboard.dto.project.NewProject;
 import org.microboard.whiteboard.dto.project.NewSoloProject;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
-import org.microboard.whiteboard.dto.user.UserDto;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.SoloProject;
 import org.microboard.whiteboard.model.user.Assessor;

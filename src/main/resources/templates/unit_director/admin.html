@@ -1,0 +1,18 @@
+<div id="admin-div">
+		<table class="table panel panel-default" id="table">
+			<h5>Solo Projects</h5>
+			<thead>
+				<tr>
+					<th>Project</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="project: ${soloProjects}">
+					<td><span th:text="${project.name}"></span></td>
+					<td><a th:href="@{/unit_director/edit_solo_project/{projectId}(projectId=${project.id})}"
+						class="btn btn-primary btn-xs">Edit</a></td>
+				</tr>
+			</tbody>
+		</table>
+</div>
