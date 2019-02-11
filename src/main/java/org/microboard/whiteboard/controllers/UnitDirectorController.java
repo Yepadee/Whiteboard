@@ -78,9 +78,10 @@ public class UnitDirectorController {
 		List<User> users = project.getUnit().getCohort();
 		for (User user : users) {
 			String userPath = path + user.getUserName() + "/";
+			userPath += project.getName() + "/";
 			for (SoloAssessment assessment : project.getAssessments()) {
 				//System.out.println(userPath + assessment.getName() + "/");
-				new File(userPath + assessment.getName() + "/").mkdirs();
+				new File(userPath + assessment.getName() + "/feedback/").mkdirs();
 			}
 		}
 	}

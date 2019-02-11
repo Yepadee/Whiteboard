@@ -19,6 +19,7 @@ public class TaskUploadPathGen extends TaskVisitor {
 		String path = System.getProperty("user.dir") + "/uploads/";
 		path += soloTask.getSoloAssessment().getProject().getUnit().getId() + "/";
 		path += soloTask.getAccountable().getUserName() + "/";
+		path += soloTask.getSoloAssessment().getProject().getName() + "/";
 		path += soloTask.getAssessment().getName() + "/";
 		result=path;
 	}

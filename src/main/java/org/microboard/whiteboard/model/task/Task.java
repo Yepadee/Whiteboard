@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
+import org.microboard.whiteboard.model.user.Group;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
@@ -93,6 +94,12 @@ public abstract class Task {
 	public void addMarker(Assessor assessor) {
 		this.getMarkers().add(assessor);
 		assessor.getToMark().add(this);
+	}
+	
+	public List<String> getAllUploads() {
+		List<String> allUploads = new ArrayList<String>();
+		allUploads.addAll(fileNames);
+		return allUploads;
 	}
 	
 	public abstract void accept(TaskVisitor v);
