@@ -36,6 +36,4 @@ public class MarkingTask {
 		this.uploadedFiles = uploadedFiles;
 	}
 
-	
-	
 }
