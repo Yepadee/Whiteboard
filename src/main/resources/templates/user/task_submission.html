@@ -43,7 +43,8 @@
 						<tr th:each="file: ${fileinfo}">
 							<td><span th:text="${file.fileName}"></span></td>
 							<td><span th:text="${file.fileSize}"></span></td>
-							<td><a href="/" class="btn btn-danger btn-xs">Delete</a></td>
+							<td><a th:href="@{/user/tasks/delete/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}"
+								class="btn btn-danger btn-xs">Delete</a></td>
 						</tr>
 				</tbody>
 			</table>

@@ -80,6 +80,31 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/tasks/delete/{id}/{fn}")
+	public String getDeletePage(Model model, @PathVariable long id,  @PathVariable String fn) {
+		Optional<Task> maybeTask = taskService.getTask(id);
+		if (maybeTask.isPresent()) {
+			Task task = maybeTask.get();
+			List<String> filePaths = task.getFileNames();
+			for (String filePath : filePaths) {
+				String f = filePath.substring(filePath.lastIndexOf("/")+1);
+				try {
+					if (f.equals(fn)) {
+						List<String> newFileNames = task.getFileNames();
+						newFileNames.remove(filePath);
+						task.setFileNames(newFileNames);
+						File file = new File(filePath);
+						file.delete();
+					}
+				}
+				catch(Exception e) {
+					System.out.println(e);
+				}
+			}
+		}
+		return homePage;
+	}
+	
 	List<FileInfo> createFileInfoInstance(Task task) {
 		List<FileInfo> fileinfo = new ArrayList<>();
 
