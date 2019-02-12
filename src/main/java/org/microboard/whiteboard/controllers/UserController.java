@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.microboard.whiteboard.model.task.FileInfo;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
@@ -65,6 +68,8 @@ public class UserController {
 			TaskAccessValidator accessValidator = new TaskAccessValidator(user);
 			task.accept(accessValidator);
 			if (accessValidator.getResult()) {
+				List<FileInfo> fileinfo = createFileInfoInstance(task);
+				model.addAttribute(fileinfo);
 				model.addAttribute("task", task);
 				return taskSubmissionPage;
 			} else {
@@ -73,6 +78,21 @@ public class UserController {
 		} else {
 			return errorPage;
 		}
+	}
+	
+	List<FileInfo> createFileInfoInstance(Task task) {
+		List<FileInfo> fileinfo = new ArrayList<>();
+
+		for (String filepath : task.getFileNames()) {
+			FileInfo f = new FileInfo();
+			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
+			File file = new File(filepath);
+			f.setFileSize(Long.toString(file.length()/1024) + "KB");
+			f.setFilePath(filepath);
+			fileinfo.add(f);
+			System.out.println("|File added: "+f.getFileName());
+		}
+		return fileinfo;
 	}
 	
 	@PostMapping("/tasks/{id}")
@@ -102,24 +122,28 @@ public class UserController {
 	
 	@PostMapping("/testUpload/{id}")
 	public String UploadPage(@PathVariable long id, Model model, @RequestParam("files") MultipartFile[] files) {
-		User user = userService.getLoggedInUser();
 		Optional<Task> maybeTask = taskService.getTask(id);
 		Task task = maybeTask.get();
 		String path = getPath(task);
 		new File(path).mkdir();
 		StringBuilder fileNames = new StringBuilder();
 		for (MultipartFile file : files) {
-			task.addFile(path + file.getOriginalFilename());
-			Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
-			fileNames.append(file.getOriginalFilename());
-			try {
-				Files.write(fileNameAndPath, file.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (!file.isEmpty() && !file.equals(null)) {
+				try {
+					task.addFile(path + file.getOriginalFilename());
+					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
+					fileNames.append(file.getOriginalFilename());
+					Files.write(fileNameAndPath, file.getBytes());
+					model.addAttribute(fileNameAndPath);
+				} 
+				catch (IOException e) {
+					e.printStackTrace();
+				}	
 			}
+		
 		}
 		taskService.updateTask(task);
-		model.addAttribute("msg","Success: "+fileNames.toString());
+				
 		return "redirect:/user/tasks/";
 	}
 	

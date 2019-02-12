@@ -35,15 +35,16 @@
 						<thead>
 							<tr>
 								<th>File</th>
-								<th>Deadline</th>
 								<th>Size</th>
+								<th></th>
 							</tr>
 						</thead>
 					<tbody>
-						<tr>
-							<!-- <a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}"> --><td>View</td>
-							<td>Date</td>
-							<td>3.7MB</td>
+						<tr th:each="file: ${fileinfo}">
+							<td><span th:text="${file.fileName}"></span></td>
+							<td><span th:text="${file.fileSize}"></span></td>
+							<td><a th:href="/"
+									class="btn btn-danger btn-xs">Delete</a></td>
 						</tr>
 				</tbody>
 			</table>
