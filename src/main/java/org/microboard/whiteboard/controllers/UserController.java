@@ -93,8 +93,7 @@ public class UserController {
 						File file = new File(filePath);
 						file.delete();
 						task.removeFile(filePath);
-						List<FileInfo> fileinfo = createFileInfoInstance(task);
-						model.addAttribute("fileinfo", fileinfo);
+						taskService.updateTask(task);
 						return homePage;
 					}
 				}
@@ -108,15 +107,15 @@ public class UserController {
 	
 	List<FileInfo> createFileInfoInstance(Task task) {
 		List<FileInfo> fileinfo = new ArrayList<>();
-
 		for (String filepath : task.getFileNames()) {
+			//System.out.println("|File found in task: " + filepath);
 			FileInfo f = new FileInfo();
 			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
 			File file = new File(filepath);
 			f.setFileSize(Long.toString(file.length()/1024) + "KB");
 			f.setFilePath(filepath);
 			fileinfo.add(f);
-			System.out.println("|File loaded: " + f.getFileName());
+			
 		}
 		return fileinfo;
 	}
