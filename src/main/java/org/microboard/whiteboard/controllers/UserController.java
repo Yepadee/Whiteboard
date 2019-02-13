@@ -90,11 +90,12 @@ public class UserController {
 				String f = filePath.substring(filePath.lastIndexOf("/")+1);
 				try {
 					if (f.equals(fn)) {
-						List<String> newFileNames = task.getFileNames();
-						newFileNames.remove(filePath);
-						task.setFileNames(newFileNames);
 						File file = new File(filePath);
 						file.delete();
+						task.removeFile(filePath);
+						List<FileInfo> fileinfo = createFileInfoInstance(task);
+						model.addAttribute("fileinfo", fileinfo);
+						return homePage;
 					}
 				}
 				catch(Exception e) {
@@ -102,7 +103,7 @@ public class UserController {
 				}
 			}
 		}
-		return homePage;
+		return errorPage;
 	}
 	
 	List<FileInfo> createFileInfoInstance(Task task) {

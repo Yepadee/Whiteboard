@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.task;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,6 +101,11 @@ public abstract class Task {
 		List<String> allUploads = new ArrayList<String>();
 		allUploads.addAll(fileNames);
 		return allUploads;
+	}
+	public void removeFile(String filePath)
+	{
+		fileNames.remove(filePath);
+
 	}
 	
 	public abstract void accept(TaskVisitor v);
