@@ -272,7 +272,7 @@ body {
   color: #308ee0;
 }
 
-.sidebar a:hover:not(.active,.newProject) {
+.sidebar a:hover:not(.active,.newProject) {	
   background-color: #f9f9f9;
   color:
 }

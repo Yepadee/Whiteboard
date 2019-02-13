@@ -163,12 +163,34 @@
 					<br><br><br>
 					<div class="form-group">
 						<div class="col-sm-10">
-							<button th:if="${soloProjectDto.id == 0}" type="submit" class="btn btn-black" name="addProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button th:if="${soloProjectDto.id == 0}" type="submit" class="btn btn-black" name="addProject"   data-toggle="modal" data-target="#submitProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
 							
 							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="addProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
 							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
 						</div>
 					</div>
+					<div class="container">
+				  			
+				  <!-- Modal -->
+				  <div class="modal fade" id="myModal" role="dialog">
+				    <div class="modal-dialog">
+					<!-- Modal content-->
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				          <h4 class="modal-title">Submit Project</h4>
+				        </div>
+				        <div class="modal-body">
+				          <p>The Project has successful created ..</p>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				
+				    </div>
+				  </div>
+				</div>
 				</form>
 				<span th:if="${error != null}" th:text="${error}">Static summary</span>
 				<script type="text/javascript">
@@ -177,7 +199,8 @@
 				    $('.toMark').multiselect({
 				    	nonSelectedText: 'Add Users',
 				        includeSelectAllOption: true,
-				        enableFiltering: true
+				        enableFiltering: true,
+				        maxHeight: 300
 				    });
 				});
 				

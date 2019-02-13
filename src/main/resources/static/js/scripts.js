@@ -145,7 +145,8 @@ $(document).ready(function(){
 			columns: 1,
 			placeholder: 'Select Students',
 			search: true,
-			selectAll: true
+			selectAll: true,
+			maxHeight: 400
 	});
 	
 	/*/////////////////////////////*/
