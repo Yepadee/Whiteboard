@@ -37,7 +37,7 @@ public class UserController {
 	
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	
-	private String errorPage = "server/error";
+	private String errorPage = "error";
 	private String accessDeniedPage = "server/access_denied";
 	private String homePage = "user/main";
 	private String taskSubmissionPage = "user/task_submission";
