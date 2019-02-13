@@ -41,9 +41,6 @@ public class WhiteboardSpringApplication {
 	
 	@EventListener
 	public void appReady(ApplicationReadyEvent event) {
-		FileUploadApp f = new FileUploadApp();
-		f.addBaseUploadDirectory();
-		
 		BCryptPasswordEncoder en = new BCryptPasswordEncoder();
 
 		Student student = new Student();

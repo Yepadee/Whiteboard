@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.microboard.whiteboard.model.task.FileInfo;
+import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
@@ -62,119 +62,53 @@ public class UserController {
 	@GetMapping("/tasks/{id}")
 	public String getSubmissionPage(Model model, @PathVariable long id) {
 		User user = userService.getLoggedInUser();
-		Optional<Task> maybeTask = taskService.getTask(id);
-		if (maybeTask.isPresent()) {
-			Task task = maybeTask.get();
-			TaskAccessValidator accessValidator = new TaskAccessValidator(user);
-			task.accept(accessValidator);
-			if (accessValidator.getResult()) {
-				List<FileInfo> fileinfo = createFileInfoInstance(task);
-				model.addAttribute("fileinfo", fileinfo);
-				model.addAttribute("task", task);
-				return taskSubmissionPage;
-			} else {
-				return accessDeniedPage;
-			}
+		Task task = taskService.getTask(id);
+
+		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
+		task.accept(accessValidator);
+		if (accessValidator.getResult()) {
+			List<FileDto> fileinfo = taskService.createFileInfoInstance(task);
+			model.addAttribute("fileinfo", fileinfo);
+			model.addAttribute("task", task);
+			return taskSubmissionPage;
 		} else {
-			return errorPage;
+			return accessDeniedPage;
 		}
 	}
 	
-	@GetMapping("/tasks/delete/{id}/{fn}")
-	public String getDeletePage(Model model, @PathVariable long id,  @PathVariable String fn) {
-		Optional<Task> maybeTask = taskService.getTask(id);
-		if (maybeTask.isPresent()) {
-			Task task = maybeTask.get();
-			List<String> filePaths = task.getFileNames();
-			for (String filePath : filePaths) {
-				String f = filePath.substring(filePath.lastIndexOf("/")+1);
-				try {
-					if (f.equals(fn)) {
-						File file = new File(filePath);
-						file.delete();
-						task.removeFile(filePath);
-						taskService.updateTask(task);
-						return homePage;
-					}
-				}
-				catch(Exception e) {
-					System.out.println(e);
-				}
-			}
+	@GetMapping("/tasks/delete/{id}/{filename}")
+	public String getDeletePage(Model model, @PathVariable long id,  @PathVariable String filename) {
+		//TODO make dedicated query for task validation
+		User user = userService.getLoggedInUser();
+		Task task = taskService.getTask(id);
+		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
+		task.accept(accessValidator);
+		if (accessValidator.getResult()) {
+			taskService.deleteFile(id, filename);
+			return homePage;
+		} else {
+			return accessDeniedPage;
 		}
-		return errorPage;
-	}
-	
-	List<FileInfo> createFileInfoInstance(Task task) {
-		List<FileInfo> fileinfo = new ArrayList<>();
-		for (String filepath : task.getFileNames()) {
-			//System.out.println("|File found in task: " + filepath);
-			FileInfo f = new FileInfo();
-			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
-			File file = new File(filepath);
-			f.setFileSize(Long.toString(file.length()/1024) + "KB");
-			f.setFilePath(filepath);
-			fileinfo.add(f);
-			
-		}
-		return fileinfo;
 	}
 	
 	@PostMapping("/tasks/{id}")
 	public String submitTask(@PathVariable long id, @ModelAttribute(name = "comments") String comments) {
-		Optional<Task> maybeTask = taskService.getTask(id);
-		if (maybeTask.isPresent()) {
-			Task task = maybeTask.get();
-			User user = userService.getLoggedInUser();
-			TaskAccessValidator accessValidator = new TaskAccessValidator(user);
-			task.accept(accessValidator);
-			if (accessValidator.getResult()) {
-				task.setTxtSubmission(comments);
-				taskService.updateTask(task);
-				/*TODO:
-				 * Record date
-				 * Add action to log
-				 * Build file uploader/downloader
-				 */
-				return "redirect:/user/tasks/" + id;
-			} else {
-				return accessDeniedPage;
-			}
+		Task task = taskService.getTask(id);
+		User user = userService.getLoggedInUser();
+		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
+		task.accept(accessValidator);
+		if (accessValidator.getResult()) {
+			task.setTxtSubmission(comments);
+			taskService.updateTask(task);
+			return "redirect:/user/tasks/" + id;
 		} else {
-			return errorPage;
+			return accessDeniedPage;
 		}
-	}
-	
-	@PostMapping("/testUpload/{id}")
-	public String UploadPage(@PathVariable long id, Model model, @RequestParam("files") MultipartFile[] files) {
-		Optional<Task> maybeTask = taskService.getTask(id);
-		Task task = maybeTask.get();
-		String path = getPath(task);
-		new File(path).mkdir();
-		
-		for (MultipartFile file : files) {
-			if (!file.isEmpty() && !file.equals(null)) {
-				try {
-					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
-					Files.write(fileNameAndPath, file.getBytes());
-					task.addFile(path + file.getOriginalFilename());
-					model.addAttribute(fileNameAndPath);
-				} 
-				catch (IOException e) {
-				e.printStackTrace();
-				}	
-			}
-		
-		}
-		taskService.updateTask(task);
-				
-		return "redirect:/user/tasks/";
 	}
 	
 	@PostMapping("/feedbackUpload/{id}")
 	public String FeedbackUploadPage(@PathVariable long id, Model model, @RequestParam("files") MultipartFile[] files) {
-		Optional<Task> maybeTask = taskService.getTask(id);
-		Task task = maybeTask.get();
+		Task task = taskService.getTask(id);
 		String path = getPath(task) + "feedback/";
 		new File(path).mkdir();
 		StringBuilder fileNames = new StringBuilder();

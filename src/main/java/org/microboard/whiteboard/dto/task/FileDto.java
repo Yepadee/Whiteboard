@@ -1,6 +1,6 @@
-package org.microboard.whiteboard.model.task;
+package org.microboard.whiteboard.dto.task;
 
-public class FileInfo {
+public class FileDto {
 	private String fileName;
 	private String fileSize;
 	private String filePath;
