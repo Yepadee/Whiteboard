@@ -53,16 +53,6 @@ public abstract class ProjectDto {
 			}
 		}
 		
-		if (description == null) {
-			valid = false;
-			errorMsg += "Project description field cannot be empty.\n";
-		} else {
-			if (description.length() == 0)  {
-				valid = false;
-				errorMsg += "Project description field cannot be empty.\n";
-			}
-		}
-		
 		if (unit == null) {
 			valid = false;
 			errorMsg += "No unit selected.\n";

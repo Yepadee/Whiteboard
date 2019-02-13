@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
@@ -37,7 +34,6 @@ public class UserController {
 	
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	
-	private String errorPage = "error";
 	private String accessDeniedPage = "server/access_denied";
 	private String homePage = "user/main";
 	private String taskSubmissionPage = "user/task_submission";
@@ -92,14 +88,15 @@ public class UserController {
 	}
 	
 	@PostMapping("/tasks/{id}")
-	public String submitTask(@PathVariable long id, @ModelAttribute(name = "comments") String comments) {
+	public String submitTask(@PathVariable long id,
+			@ModelAttribute(name = "comments") String comments,
+			@RequestParam("files") MultipartFile[] files) throws IOException {
 		Task task = taskService.getTask(id);
 		User user = userService.getLoggedInUser();
 		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
-			task.setTxtSubmission(comments);
-			taskService.updateTask(task);
+			taskService.submitFiles(id, files, comments);
 			return "redirect:/user/tasks/" + id;
 		} else {
 			return accessDeniedPage;

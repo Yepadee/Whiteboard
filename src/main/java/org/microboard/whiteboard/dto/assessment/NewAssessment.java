@@ -66,16 +66,6 @@ public abstract class NewAssessment {
 			}
 		}
 		
-		if (description == null) {
-			valid = false;
-			errorMsg += "Assessment description field cannot be empty.\n";
-		} else {
-			if (description.length() == 0)  {
-				valid = false;
-				errorMsg += "Assessment description field cannot be empty.\n";
-			}
-		}
-		
 		return valid;
 	}
 	

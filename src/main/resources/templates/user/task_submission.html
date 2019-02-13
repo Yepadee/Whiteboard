@@ -19,14 +19,14 @@
 			<div class="row">
 				<div class="col-sm-8 table-wrapper">
 					<h1 th:text="${task.assessment.name}"></h1>
-					<form th:action="@{/user/tasks/{taskId}(taskId=${task.id})}" method="post" id="submissionForm">
-						<label for="comments">Comments</label> <textarea
-						id="comments" name="comments" th:text="${task.txtSubmission}" form="submissionForm"></textarea>
+					<form th:action="@{/user/tasks/{taskId}(taskId=${task.id})}" method="post" id="submissionForm" enctype="multipart/form-data">
+						<label for="comments">Comments</label>
+						<textarea id="comments" name="comments" th:text="${task.txtSubmission}" form="submissionForm"></textarea>
+						<input type="file" name="files" multiple>
 						<input type="submit" value="Submit" />
 					</form>
-					<form th:action="@{/user/testUpload/{taskId}(taskId=${task.id})}" method="post" enctype="multipart/form-data">
-						<input type="file" name="files" multiple>
-						<input type="submit" value="Upload Files"></input>
+					<form th:action="@{/user/testUpload/{taskId}(taskId=${task.id})}" method="post" >
+
 					</form>
 				</div>
 				<div class="col-sm-8 table-wrapper">

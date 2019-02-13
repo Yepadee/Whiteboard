@@ -46,7 +46,7 @@ public class TaskService {
 		return fileinfo;
 	}
 	
-	public void submitFiles(long id, MultipartFile[] files) throws IOException {
+	public void submitFiles(long id, MultipartFile[] files, String comments) throws IOException {
 		Task task = getTask(id);
 			
 		TaskUploadPathGen pathGen = new TaskUploadPathGen();
@@ -62,6 +62,8 @@ public class TaskService {
 			}
 		
 		}
+		
+		task.setTxtSubmission(comments);
 		updateTask(task);
 	}
 	
@@ -75,6 +77,7 @@ public class TaskService {
 				file.delete();
 				task.removeFile(filePath);
 				updateTask(task);
+				break;
 			}
 		}
 	}
