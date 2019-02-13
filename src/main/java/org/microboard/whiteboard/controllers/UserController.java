@@ -80,17 +80,42 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/tasks/delete/{id}/{fn}")
+	public String getDeletePage(Model model, @PathVariable long id,  @PathVariable String fn) {
+		Optional<Task> maybeTask = taskService.getTask(id);
+		if (maybeTask.isPresent()) {
+			Task task = maybeTask.get();
+			List<String> filePaths = task.getFileNames();
+			for (String filePath : filePaths) {
+				String f = filePath.substring(filePath.lastIndexOf("/")+1);
+				try {
+					if (f.equals(fn)) {
+						File file = new File(filePath);
+						file.delete();
+						task.removeFile(filePath);
+						taskService.updateTask(task);
+						return homePage;
+					}
+				}
+				catch(Exception e) {
+					System.out.println(e);
+				}
+			}
+		}
+		return errorPage;
+	}
+	
 	List<FileInfo> createFileInfoInstance(Task task) {
 		List<FileInfo> fileinfo = new ArrayList<>();
-
 		for (String filepath : task.getFileNames()) {
+			//System.out.println("|File found in task: " + filepath);
 			FileInfo f = new FileInfo();
 			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
 			File file = new File(filepath);
 			f.setFileSize(Long.toString(file.length()/1024) + "KB");
 			f.setFilePath(filepath);
 			fileinfo.add(f);
-			System.out.println("|File added: "+f.getFileName());
+			
 		}
 		return fileinfo;
 	}
@@ -126,18 +151,17 @@ public class UserController {
 		Task task = maybeTask.get();
 		String path = getPath(task);
 		new File(path).mkdir();
-		StringBuilder fileNames = new StringBuilder();
+		
 		for (MultipartFile file : files) {
 			if (!file.isEmpty() && !file.equals(null)) {
 				try {
-					task.addFile(path + file.getOriginalFilename());
 					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
-					fileNames.append(file.getOriginalFilename());
 					Files.write(fileNameAndPath, file.getBytes());
+					task.addFile(path + file.getOriginalFilename());
 					model.addAttribute(fileNameAndPath);
 				} 
 				catch (IOException e) {
-					e.printStackTrace();
+				e.printStackTrace();
 				}	
 			}
 		
