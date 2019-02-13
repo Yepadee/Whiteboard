@@ -26,9 +26,6 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 	private UnitService unitService;
 	
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
 	private UnitDirectorService unitDirectorService;
 	
 	public void setProjectDtoUnit(SoloProjectDto projectDto) {
@@ -55,22 +52,14 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 		UnitDirector creator = unitDirectorService.getLoggedInUser();
 		creator.addProject(soloProject);
 		addProject(soloProject);
-		unitDirectorService.updateUser(creator);
 		createSoloProjectUploadFolders(soloProject);
 	}
 	
 	public void updateProject(SoloProjectDto projectDto) {
 		ProjectEditApplyer editApplyer = new ProjectEditApplyer();
-		
 		SoloProject project = getProject(projectDto.getId());
 		SoloProject soloProject = editApplyer.applyEdits(project, projectDto);
-		
-		UnitDirector creator = unitDirectorService.getLoggedInUser();
-		for (User u : project.getUnit().getCohort()) {
-			userService.updateUser(u);
-		}
-		addProject(soloProject);
-		unitDirectorService.updateUser(creator);
+		updateProject(soloProject);	
 	}
 	
 	private void createSoloProjectUploadFolders(SoloProject project) {

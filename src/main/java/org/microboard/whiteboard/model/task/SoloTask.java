@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.task;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,7 +16,7 @@ import org.microboard.whiteboard.model.user.User;
 @DiscriminatorValue("solo")
 @SequenceGenerator(name = "default_gen", sequenceName = "role_seq", allocationSize = 1)
 public class SoloTask extends Task {
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.REFRESH})
 	private User accountable;
 	
 	@ManyToOne

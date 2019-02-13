@@ -2,6 +2,7 @@ package org.microboard.whiteboard.model.project;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public abstract class Project {
 	private String name;
 	private String description;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.REFRESH})
 	private UnitDirector creator;
 	@ManyToMany
 	private List<UnitDirector> helpers;

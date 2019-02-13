@@ -172,22 +172,11 @@ public class WhiteboardSpringApplication {
 		g.addTask(gt2);
 		ga2.addTask(gt2);
 		
-		
-		//TODO: Remove cascades from children
-		
-		projectService.addProject(gp);
 		unitDirector.addProject(gp);
-		
 		projectService.updateProject(gp);
 		projectService.updateProject(sp);
 		
-		userService.updateUser(unitDirector);
-		userService.updateUser(unitDirector);
-		userService.updateUser(unitDirector);
-
-		userService.updateUser(student);
-		userService.updateUser(student);
-		userService.updateUser(student);
+		//TODO: if constraint broken on user_solo_tasks then add cascade type back to tasks in user.
 		
 	}
 }

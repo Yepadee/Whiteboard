@@ -50,19 +50,34 @@ public class ProjectEditApplyer {
 	}
 	
 	public SoloProject applyEdits(SoloProject project, SoloProjectDto edits) {
-		applyCoreProjectEdits(project, edits);
-		
 		List<SoloAssessment> oldAssessments = new ArrayList<>(project.getAssessments());
 		List<SoloAssessment> presentAssessments = new ArrayList<>();
 		
+		boolean newUnit = false;
+		if (project.getUnit() != null) {
+			newUnit = project.getUnit().getId() != edits.getUnit().getId();
+		}
 		
+		applyCoreProjectEdits(project, edits);
 		for (NewSoloAssessment editAssessment : edits.getAssessments()) {
 			long assessmentId = editAssessment.getId();
 			SoloAssessment assessment = new SoloAssessment();
 			Optional<SoloAssessment> maybeAssessment = findById(oldAssessments, assessmentId);
+				
 			if (maybeAssessment.isPresent()) {
 				//Editing an existing assessment
 				assessment = maybeAssessment.get();
+				
+				//If new unit, remove all tasks and add new tasks for members of the new cohort.
+				if (newUnit) {
+					assessment.getTasks().removeAll(assessment.getTasks());
+					for (User user : project.getUnit().getCohort()) {
+						SoloTask newTask = new SoloTask();
+						user.addTask(newTask);
+						assessment.addTask(newTask);
+					}
+				}
+				//Add markers to each task
 				for (SoloTask soloTask : assessment.getTasks()) {
 					soloTask.setMarkers(new ArrayList<>());
 					User accountable = soloTask.getAccountable();

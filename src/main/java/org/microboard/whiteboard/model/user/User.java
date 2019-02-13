@@ -3,7 +3,6 @@ package org.microboard.whiteboard.model.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -35,7 +34,7 @@ public abstract class User {
 	@ManyToMany(mappedBy = "members")
 	private List<Group> groups = new ArrayList<>();
 	
-	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
+	@OneToMany(mappedBy = "accountable")
 	private List<SoloTask> soloTasks = new ArrayList<>();
 	
 	@ManyToMany(mappedBy = "cohort")
