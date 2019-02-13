@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
 
-public class NewSoloProject extends NewProject {
+public class SoloProjectDto extends ProjectDto {
 	private List<NewSoloAssessment> assessments = new ArrayList<>();
 	
 	public List<NewSoloAssessment> getAssessments() {

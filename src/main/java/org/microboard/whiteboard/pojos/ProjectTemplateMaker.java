@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.dto.assessment.NewAssessment;
 import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
-import org.microboard.whiteboard.dto.project.NewProject;
-import org.microboard.whiteboard.dto.project.NewSoloProject;
+import org.microboard.whiteboard.dto.project.ProjectDto;
+import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
@@ -19,7 +19,7 @@ import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Unit;
 
 public class ProjectTemplateMaker {
-	private void fillCoreProjectTemplate(Project project, NewProject template) {
+	private void fillCoreProjectTemplate(Project project, ProjectDto template) {
 		long id = project.getId();
 		String name = project.getName();
 		String description = project.getDescription();
@@ -47,8 +47,8 @@ public class ProjectTemplateMaker {
 		template.setWeight(weight);
 	}
 	
-	public NewSoloProject getTemplate(SoloProject soloProject) {
-		NewSoloProject template = new NewSoloProject();
+	public SoloProjectDto getTemplate(SoloProject soloProject) {
+		SoloProjectDto template = new SoloProjectDto();
 		fillCoreProjectTemplate(soloProject, template);
 		
 		for (SoloAssessment soloAssessment : soloProject.getAssessments()) {

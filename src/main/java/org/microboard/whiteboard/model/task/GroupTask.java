@@ -1,5 +1,7 @@
 package org.microboard.whiteboard.model.task;
 
+import java.util.List;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,6 +19,8 @@ import org.microboard.whiteboard.model.user.Group;
 public class GroupTask extends Task {
 	@ManyToOne
 	private Group accountable;
+	
+	//private List<Submission> submissions;
 	
 	@ManyToOne
 	@JoinColumn(name="assessment_id", nullable=false)

@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
-import org.microboard.whiteboard.dto.project.NewProject;
-import org.microboard.whiteboard.dto.project.NewSoloProject;
+import org.microboard.whiteboard.dto.project.ProjectDto;
+import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.Project;
@@ -20,7 +20,7 @@ import org.microboard.whiteboard.model.user.User;
 
 public class ProjectEditApplyer {
 	
-	private void applyCoreProjectEdits(Project project, NewProject edits) {
+	private void applyCoreProjectEdits(Project project, ProjectDto edits) {
 		long id = project.getId();
 		String name = edits.getName();
 		String description = edits.getDescription();
@@ -49,7 +49,7 @@ public class ProjectEditApplyer {
 		assessment.setWeight(weight);
 	}
 	
-	public SoloProject applyEdits(SoloProject project, NewSoloProject edits) {
+	public SoloProject applyEdits(SoloProject project, SoloProjectDto edits) {
 		applyCoreProjectEdits(project, edits);
 		
 		List<SoloAssessment> oldAssessments = new ArrayList<>(project.getAssessments());

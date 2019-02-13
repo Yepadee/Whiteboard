@@ -20,7 +20,7 @@ public class MainController {
 	
 	@GetMapping("/admin-reload")
 	public String reloadElementDiv(Model model) {       
-	    Project project = projectService.getProject(1).get();
+	    Project project = projectService.getProject(1);
 
 
 	    model.addAttribute("project", project);

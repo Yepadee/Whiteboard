@@ -19,8 +19,14 @@ public class UnitService {
 		repository.save(unit);
 	}
 	
-	public Optional<Unit> getUnit(Long id) {
-		return repository.findById(id);
+	public Unit getUnit(Long id) throws RuntimeException{
+		Optional<Unit> maybeUnit = repository.findById(id);
+		if (maybeUnit.isPresent()) {
+			return maybeUnit.get();
+		} else {
+			throw new RuntimeException("No unit found with id \'" + id + "\'.");
+		}
+		
 	}
 	
 	public Optional<Unit> getByUnitCode(String unitCode) {

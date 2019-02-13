@@ -69,7 +69,7 @@ public class UserController {
 			task.accept(accessValidator);
 			if (accessValidator.getResult()) {
 				List<FileInfo> fileinfo = createFileInfoInstance(task);
-				model.addAttribute(fileinfo);
+				model.addAttribute("fileinfo", fileinfo);
 				model.addAttribute("task", task);
 				return taskSubmissionPage;
 			} else {

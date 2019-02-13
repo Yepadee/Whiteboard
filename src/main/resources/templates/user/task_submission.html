@@ -43,8 +43,7 @@
 						<tr th:each="file: ${fileinfo}">
 							<td><span th:text="${file.fileName}"></span></td>
 							<td><span th:text="${file.fileSize}"></span></td>
-							<td><a th:href="/"
-									class="btn btn-danger btn-xs">Delete</a></td>
+							<td><a href="/" th:href="@{/}" class="btn btn-danger btn-xs">Delete</a></td>
 						</tr>
 				</tbody>
 			</table>

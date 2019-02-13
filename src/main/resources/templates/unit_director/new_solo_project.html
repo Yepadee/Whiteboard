@@ -8,8 +8,8 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav navbar-left">
-					<h3 th:if="${newSoloProject.id == 0}" >Add New Solo Project</h3>
-					<h3 th:if="${newSoloProject.id != 0}" >Edit Solo Project</h3>
+					<h3 th:if="${soloProjectDto.id == 0}" >Add New Solo Project</h3>
+					<h3 th:if="${soloProjectDto.id != 0}" >Edit Solo Project</h3>
 				</ul>
 			</div>
 		</nav>
@@ -31,7 +31,7 @@
 		<!-- <div id="showSolo" class="project_selected"> -->
 			<div class="row">
 			<div class="col-sm-12 table-wrapper">
-				<form name="newProject" class="form-horizontal" th:action="@{/unit_director/new_solo_project}" th:object="${newSoloProject}" method="post">
+				<form name="newProject" class="form-horizontal" th:action="@{/unit_director/new_solo_project}" th:object="${soloProjectDto}" method="post">
 					<div class="form-group">
 						<div class="col-sm-4 col-sm-push-2">
 							<label for="selectUnit">Select Unit: </label>
@@ -162,10 +162,10 @@
 					<br><br><br>
 					<div class="form-group">
 						<div class="col-sm-10">
-							<button th:if="${newSoloProject.id == 0}" type="submit" class="btn btn-black" name="addProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button th:if="${soloProjectDto.id == 0}" type="submit" class="btn btn-black" name="addProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
 							
-							<button th:if="${newSoloProject.id != 0}" type="submit" class="btn btn-black" name="addProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
-							<button th:if="${newSoloProject.id != 0}" type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="addProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
 						</div>
 					</div>
 				</form>

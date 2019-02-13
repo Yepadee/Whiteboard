@@ -1,9 +1,8 @@
 package org.microboard.whiteboard.dto.project;
 
-import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.user.Unit;
 
-public abstract class NewProject {
+public abstract class ProjectDto {
 	private long id;
 	private String name;
 	private String description;

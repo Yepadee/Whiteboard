@@ -16,8 +16,14 @@ public abstract class BaseProjectService<T extends Project> {
 	@Autowired
 	private BaseProjectRepository<T> projectRepository;
 	
-	public Optional<T> getProject(long id) {
-		return projectRepository.findById(id);
+	public T getProject(long id) throws RuntimeException {
+		Optional<T> maybeProject = projectRepository.findById(id);
+		if (maybeProject.isPresent()) {
+			return maybeProject.get();
+		} else {
+			throw new RuntimeException("Project not found with id \'" + id + "\'");
+		}
+		
 	}
 	
 	public List<T> getAllProjects() {

@@ -19,7 +19,6 @@ import javax.persistence.JoinColumn;
 
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
-import org.microboard.whiteboard.model.user.Group;
 
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
