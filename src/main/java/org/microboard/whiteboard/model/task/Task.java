@@ -1,7 +1,9 @@
 package org.microboard.whiteboard.model.task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -15,8 +17,12 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 
+import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
 
@@ -33,6 +39,11 @@ public abstract class Task {
 	@ManyToMany
 	private List<Assessor> markers = new ArrayList<>();
 	
+	@OneToMany
+	@JoinTable(name="task_feedback", joinColumns=@JoinColumn(name="task_id"))
+	@MapKeyColumn(name="assessor_id")
+	private Map<Assessor, Feedback> feedback = new HashMap<>();
+	
 	private String txtSubmission;
 	
 	@ElementCollection
@@ -41,6 +52,7 @@ public abstract class Task {
 	private List<String> fileNames= new ArrayList<>();
 	
 	private String status = "new";
+	
 	
 	
 	public long getId() {
@@ -85,7 +97,13 @@ public abstract class Task {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
+	public Map<Assessor, Feedback> getFeedback() {
+		return feedback;
+	}
+	public void setFeedback(Map<Assessor, Feedback> feedback) {
+		this.feedback = feedback;
+	}
 	public void addFile(String fileName) {
 		this.fileNames.add(fileName);
 	}

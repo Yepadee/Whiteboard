@@ -23,6 +23,7 @@ public class SoloTask extends Task {
 	@JoinColumn(name="assessment_id", nullable=false)
 	private SoloAssessment soloAssessment;
 
+
 	public User getAccountable() {
 		return accountable;
 	}
@@ -38,7 +39,7 @@ public class SoloTask extends Task {
 	public void setSoloAssessment(SoloAssessment assessment) {
 		this.soloAssessment = assessment;
 	}
-	
+
 	public Assessment getAssessment() {
 		return soloAssessment;
 	}
