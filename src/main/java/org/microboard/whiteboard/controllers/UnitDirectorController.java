@@ -12,6 +12,7 @@ import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
+import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.project.GroupProjectService;
 import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
