@@ -2,6 +2,7 @@ package org.microboard.whiteboard.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,6 +19,10 @@ import org.microboard.whiteboard.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,6 +75,19 @@ public class UserController {
 		} else {
 			return accessDeniedPage;
 		}
+	}
+	
+	@GetMapping("/tasks/download/{id}/{filename}")
+	public ResponseEntity<Resource> downloadFile(Model model, @PathVariable long id,  @PathVariable String filename) {
+		User user = userService.getLoggedInUser();
+		Task task = taskService.getTask(id);
+
+		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
+		task.accept(accessValidator);
+		if (accessValidator.getResult()) {
+			return taskService.downloadFile(id, filename);
+		}
+		return null;
 	}
 	
 	@GetMapping("/tasks/delete/{id}/{filename}")

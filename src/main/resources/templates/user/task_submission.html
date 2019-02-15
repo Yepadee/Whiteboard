@@ -41,8 +41,8 @@
 						</thead>
 					<tbody>
 						<tr th:each="file: ${fileinfo}">
-							<td><a th:href="${file.filePath}" download="test">
-							<span th:text="${file.fileName}"></span></a></td>
+							<td><a th:href="@{/user/tasks/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+								<span th:text="${file.fileName}"></span></a></td>
 							<td><span th:text="${file.fileSize}"></span></td>
 							<td><a th:href="@{/user/tasks/delete/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}"
 								class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>
