@@ -14,8 +14,7 @@
 			</div>
 		</nav>
 	</div>
-
-
+	
 	<div class="content">
 		<div class="container outstanding-tasks">
 		<div class="clearfix"></div> 
@@ -32,11 +31,20 @@
 		<!-- <div id="showSolo" class="project_selected"> -->
 			<div class="row">
 			<div class="col-sm-12 table-wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-12">
+							<p th:if="${error != null}" th:text="${error}" class="error_message">
+							</p>
+						</div>
+					</div>
+				</div>
 				<form name="newProject" class="form-horizontal" th:action="@{/unit_director/new_solo_project}" th:object="${soloProjectDto}" method="post">
 					<div class="form-group">
 						<div class="col-sm-4 col-sm-push-2">
 							<label for="selectUnit">Select Unit: </label>
 							<select id="selectUnit" th:field="*{unit.id}" onchange="setUnit.click()"  class="form-control">
+								<option th:value="0" text="Please Select" selected disabled hidden>Please Select</option>
 								<option th:each="unit : ${unitList}" th:value="${unit.id}" th:text=${unit.unitName}></option>
 							</select>
 						</div>
@@ -48,7 +56,7 @@
 					<div class="form-group">
 						<hr class="dottedLine col-sm-8 col-sm-push-2" />
 					</div>
-					
+
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="projectName">Project Name: </label>
 						<div class="col-sm-4">
@@ -61,7 +69,6 @@
 							<textarea class="form-control" rows="5" placeholder="Add a description to the project" id="projectDesc" type="text" th:field="*{description}"></textarea>
 						</div>
 					</div>
-					
 					<div class="form-group">
 						<hr class="dottedLine col-sm-8 col-sm-push-2" />
 					</div>
@@ -88,36 +95,44 @@
 								</div>
 								<div class="form-group">
 									<label class="control-label col-sm-3" for="studentDeadline">Student Deadline:</label>
-									<div class="col-sm-8">
-										<input th:field="*{{assessments[__${a.index}__].studentDeadline}}" type="datetime-local" id="studentDeadline" name="studentDeadline">
+									<div class="col-sm-3">
+										<input class="form-control" th:field="*{{assessments[__${a.index}__].studentDeadline}}" type="datetime-local" id="studentDeadline" name="studentDeadline">
 									</div>
 								</div>
+								
 								<div class="form-group">
 									<label class="control-label col-sm-3" for="markerDeadline">Marker Deadline:</label>
-									<div class="col-sm-8">
-										<input th:field="*{{assessments[__${a.index}__].markerDeadline}}" type="datetime-local" id="markerDeadline" name="markerDeadline">
+									<div class="col-sm-3">
+										<input class="form-control" th:field="*{{assessments[__${a.index}__].markerDeadline}}" type="datetime-local" id="markerDeadline" name="markerDeadline">
 									</div>
 								</div>
+								
+								<div class="control-label col-sm-3">
+									<label for="deadline">Weight:</label>
+								</div>
 								<div class="form-group">
-									<label class="control-label col-sm-3" for="weight">Weight:</label>
-									<div class="col-sm-8">
-										<input th:field="*{{assessments[__${a.index}__].weight}}" type="number" min="0" max="100" id="weight">
-										<span>%</span>
-									</div>	
+									<div class="col-sm-2">
+										<div class="input-group">
+											<span class="input-group-addon">%</span>
+											<input class="form-control" th:field="*{{assessments[__${a.index}__].weight}}" type="number" min="0" max="100" id="weight">
+										</div>
+									</div>
 								</div>
 								
 								<div class="form-group">
 									<hr class="dottedLine col-sm-8 col-sm-push-2" />
 								</div>
-								
+							
 								<div th:each="markerDto, m: *{assessments[__${a.index}__].markerDtos}">
 									<div class="markerWrapper">
 										<div class="form-group">
 											<div class="col-sm-4 col-sm-push-3">
 												<label for="selectMarker">Select a marker:</label>
-												<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}" class="form-control">
+												<input list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}" class="form-control"/>												
+												<datalist id="selectMarker">
+													
 													<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
-												</select> 
+												</datalist> 
 											</div>
 										
 											<div class="col-sm-4 col-sm-push-3" id="users">
@@ -163,36 +178,39 @@
 					<br><br><br>
 					<div class="form-group">
 						<div class="col-sm-10">
-							<button th:if="${soloProjectDto.id == 0}" type="submit" class="btn btn-black" name="addProject"   data-toggle="modal" data-target="#submitProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button th:if="${soloProjectDto.id == 0}" type="submit" class="btn btn-black" name="addProject" data-toggle="modal" data-target="#submitProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
 							
 							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="addProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
 							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
 						</div>
 					</div>
-					<div class="container">
-				  			
+				</form>
+				
+				<!-- Submitted Successful Message -->
+				<div class="container">
 				  <!-- Modal -->
-				  <div class="modal fade" id="myModal" role="dialog">
+				  <div class="modal fade" id="submitProject" role="dialog">
 				    <div class="modal-dialog">
-					<!-- Modal content-->
+				    
+				      <!-- Modal content-->
 				      <div class="modal-content">
 				        <div class="modal-header">
 				          <button type="button" class="close" data-dismiss="modal">&times;</button>
-				          <h4 class="modal-title">Submit Project</h4>
 				        </div>
-				        <div class="modal-body">
-				          <p>The Project has successful created ..</p>
+				        <div class="modal-body projectSubmitted">
+				        	<img  th:src="@{/img/successful.png}">
+				        	<p>Submitted Successful</p>
 				        </div>
 				        <div class="modal-footer">
 				          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 				        </div>
 				      </div>
-				
+				      
 				    </div>
 				  </div>
 				</div>
-				</form>
-				<span th:if="${error != null}" th:text="${error}">Static summary</span>
+				<!-- End of Submitted Successful Message -->
+				
 				<script type="text/javascript">
 				
 				$(function() {

@@ -1,9 +1,17 @@
+$('#example-single').multiselect({
+	nonSelectedText: 'Add Users',
+    includeSelectAllOption: true,
+    enableFiltering: true,
+    maxHeight: 300
+});
+
+
 $(document).ready(function(){
 	$("#flip1").click(function(){$("#panel1").slideToggle("slow");});
 	$("#flip2").click(function(){$("#panel2").slideToggle("slow");});
 	$("#flip3").click(function(){$("#panel3").slideToggle("slow");});
 
-
+/*
 	$('#forward').on('click',function(){
 			var $selected = $('option:selected','#sourceSelect');
 			$selected.each(function(i,e){
@@ -51,7 +59,7 @@ $(document).ready(function(){
 	});
 
 
-
+*/
 
 	/*
 	var seeMarker = $('.seeMarker'); //Add button selector
@@ -69,6 +77,7 @@ $(document).ready(function(){
 
 
 	/* /////////Add Multiple Marker///////// */
+	/*
 	var addMarker = $('.add_button1'); //Add button selector
 	var markerWrapper = $('.markerWrapper'); //Input field wrapper
 	var fieldHTML1 = '<div class="markerWrapperAdded"><div class="form-group"><div class="col-sm-4 col-sm-push-3">'; //New input field html
@@ -86,6 +95,7 @@ $(document).ready(function(){
 	fieldHTML1+= '</div></div>';
 	fieldHTML1+='<div class="form-group"><div class="col-sm-2 col-sm-push-3"><button type="button"  class="btn btn-danger addService removeMarker"><span class="glyphicon glyphicon-minus"></span> Marker</button></div></div>';
 	fieldHTML1+='</div>';
+	*/
 /*
 	var fieldHTML1 = '<div class="clearfix"></div>'; //New input field html
 	fieldHTML1 += '<div class="form-group"><div class="col-sm-3 col-sm-push-2"><select name="stuOpt[]" multiple class="stuOpt">';
@@ -97,6 +107,7 @@ $(document).ready(function(){
 */
 
 	//Once add button is clicked
+	/*
 	$(addMarker).click(function(){
 		$(markerWrapper).append(fieldHTML1); //Add field html
 		$('.stuOpt').multiselect({
@@ -106,15 +117,21 @@ $(document).ready(function(){
 				selectAll: true
 		});
 	});
+	*/
+	
 	
 	//Once remove button is clicked
+	/*
 	$(markerWrapper).on('click', '.removeMarker', function(e){
 			e.preventDefault(); //This method stops the default action of an element from happening.
 			$(this).parent().parent().parent().remove(); //Remove field html
 	});
+	*/
+	
 	/* /////////End of Add Multiple Markers///////// */
 
 	/* /////////Add Multiple Assignment///////// */
+	/*
 	var addButton = $('.add_button'); //Add button selector
 	var wrapper = $('.assignmentWrapper'); //Input field wrapper
 	var fieldHTML = '<div class="assignment-background remove">'; //New input field html
@@ -126,21 +143,24 @@ $(document).ready(function(){
 	fieldHTML+= '<div class="clearfix"></div>';
 	fieldHTML+='<div class="form-group"><div class="col-sm-2 col-sm-push-2"><button type="button" class="btn btn-danger addService removeAssignment">Remove</button></div></div>';
 	fieldHTML+='</div>';
-
+	*/
 
 	//Once add button is clicked
+	/*	
 	$(addButton).click(function(){
 
 	$(wrapper).append(fieldHTML); //Add field html
 	});
-
+	*/
 	//Once remove button is clicked
+	/*
 	$(wrapper).on('click', '.removeAssignment', function(e){
 			e.preventDefault(); //This method stops the default action of an element from happening.
 			$(this).parent().parent().parent().remove(); //Remove field html
 	});
+	*/
 	/* /////////End of Add Multiple Assignment///////// */
-
+	/*
 	$('.stuOpt').multiselect({
 			columns: 1,
 			placeholder: 'Select Students',
@@ -148,6 +168,7 @@ $(document).ready(function(){
 			selectAll: true,
 			maxHeight: 400
 	});
+	*/
 	
 	/*/////////////////////////////*/
 
@@ -157,7 +178,13 @@ $(document).ready(function(){
     $(".project_selected").hide();
     var content= "#show"+radiobutton_value;
     $(content).show();
-  });*/  	
+  });*/
+	/* toggle the arrow 90 degree*/
 	
+	$( ".toggle" ).click( function() {
+        $("#arrow").toggleClass('flip');
+    });
+	
+	//$('#example-single').multiselect();
 });
 
