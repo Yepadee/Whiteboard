@@ -110,4 +110,7 @@ public abstract class User {
 		unit.getCohort().add(this);
 	}
 	
+	public boolean equals(User user) {
+		return id == user.getId();
+	}
 }

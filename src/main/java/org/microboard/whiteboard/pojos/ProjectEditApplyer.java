@@ -100,7 +100,6 @@ public class ProjectEditApplyer {
 						Assessor marker = markerDto.getMarker();
 						if (markerDto.getToMark().contains(user)) {
 							soloTask.addMarker(marker);
-							System.out.println(user.getUserName());
 						}
 					}
 					soloTask.setAccountable(user);

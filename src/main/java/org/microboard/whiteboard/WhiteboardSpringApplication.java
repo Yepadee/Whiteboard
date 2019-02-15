@@ -62,7 +62,7 @@ public class WhiteboardSpringApplication {
 		userService.addUser(aydin);
 		userService.addUser(assessor);
 		
-		int numUsers = 100;
+		int numUsers = 5;
 		Unit unit1 = new Unit();
 		unit1.setUnitName("Computer Science in Society");
 		unit1.setUnitCode("COMS20003");
@@ -75,11 +75,10 @@ public class WhiteboardSpringApplication {
 		
 		unit1.addUser(student);
 		unit1.addUser(unitDirector);
+		unit1.addUser(aydin);
 		
 		
 		unitService.addUnit(unit1);
-		
-		unit1.addUser(student);
 		
 		Unit unit2 = new Unit();
 		unit2.setUnitName("Signals, Patterns and Symbols");
