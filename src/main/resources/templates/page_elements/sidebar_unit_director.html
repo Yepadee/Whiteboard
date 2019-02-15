@@ -5,26 +5,33 @@
 	      <img th:src="@{/img/no-profile-photo.jpg}" alt="profile image" class="img-circle">
 	    </div>
 	    <div class="text-wrapper">
-	      <p class="profile-name"><span th:text="${user.userName}"></span></p>
-	      <small class="designation text-muted">Unit Director</small>
-	      <span class="glyphicon glyphicon-asterisk"></span>
-	      <a class="logout" href="/logout">
-		    <span class="glyphicon glyphicon-log-out"></span>
-		    <span class="">Log Out</span>
-		  </a>
+	      <div class="profile">
+		      <p class="profile-name"><span th:text="${user.userName}"></span></p>
+		      <small class="designation text-muted">Unit Director</small>
+		      <span class="glyphicon glyphicon-asterisk"></span>
+	      </div>
 	    </div>
 	  </div>
-	  <!--<a th:href="@{/unit_director/new_project}" class="new_project">New Project </a>-->
-	  <a href="#new_project" data-toggle="collapse" aria-expanded="false" class="new_project">New Project <span class="glyphicon glyphicon-plus" style="font-size: 10px;"></span> </a>
+	  
+	  <a href="#new_project" data-toggle="collapse" aria-expanded="false" class="new_project toggle">New Project &nbsp;&nbsp; <span  class="glyphicon glyphicon-chevron-right" id="arrow"></span></a>
        <ul class="collapse list-unstyled" id="new_project">
-           <li class="sub_new_project"><a th:href="@{/unit_director/new_solo_project}">Solo Project</a></li>
-           <li class="sub_new_project"><a th:href="@{/unit_director/new_group_project}">Group Project</a></li>
+           <li class="sub_new_project"><a th:href="@{/unit_director/new_solo_project}"><span  class="glyphicon glyphicon-chevron-right"></span> Solo Project</a></li>
+           <li class="sub_new_project"><a th:href="@{/unit_director/new_group_project}"><span  class="glyphicon glyphicon-chevron-right"></span> Group Project</a></li>
        </ul>
-
+       <div class="clearfix"></div>
+       <div class="form-group">
+			<hr class="col-sm-12" />
+		</div>
+		<div class="clearfix"></div>
+		<a href="/" class="allProject"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp; Outstanding Tasks</a>
+	  <div class="clearfix"></div>
+       <div class="form-group">
+			<hr class="col-sm-12" />
+		</div>
+		<div class="clearfix"></div>
+		
 	  
-	  <a href="/" class="allProject">Outstanding Tasks</a>
-	  
-	  <a class="active" href="/unit_director/projects">
+	  <a href="/unit_director/projects">
 	    <span class="glyphicon glyphicon-globe"></span>
 	    <span class="sidebar-element">View Projects</span>
 	  </a>
@@ -42,5 +49,12 @@
 	  <a href="#controlPanel">
 	    <span class="glyphicon glyphicon-cog"></span>
 	    <span class="sidebar-element">Manage permissions</span>
+	  </a>
+	  <div class="form-group">
+			<hr class="col-sm-12"/>
+	  </div>
+	  <a class="logout" href="/logout">
+		  <span class="glyphicon glyphicon-log-out"></span>
+		    <span class="">Log Out</span>
 	  </a>
 </div>

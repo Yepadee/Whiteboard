@@ -183,6 +183,7 @@ body {
   position: fixed;
   height: 100%;
   overflow: auto;
+  font-family: 'Poppins', sans-serif;
 }
 
 .sidebar .logo{
@@ -219,6 +220,16 @@ body {
   color: rgba(133, 133, 133, 1);
 }
 
+#arrow {
+  -moz-transition: transform 1s;
+  -webkit-transition: transform 1s;
+  transition: transform 1s;
+}
+
+.flip {
+  transform: rotate(+90deg);
+}
+
 .sidebar a {
   display: block;
   color: #3d3d3d;
@@ -227,6 +238,7 @@ body {
   margin: 10px 30px;
   text-decoration: none;
   font-size: 14px;
+  margin-bottom: 0;
 }
 .sidebar a .sidebar-element{
   padding-left: 10px;
@@ -238,8 +250,9 @@ body {
 .sidebar a.new_project {
     background-color: #00ce68;
     color: #fff;
-    padding-left: 30px;
+    padding-left: 37px;
     font-weight: 600;
+    margin-top: 22px;
 }
 .sidebar a.new_project:hover {
   background-color: #039b50;
@@ -247,26 +260,28 @@ body {
 #new_project{
 	margin-top:-10px;
 }
+
 #new_project>li>a{
 	margin-bottom: 0;
+	padding-left: 20px;
+	font-size: 15px;
+}
+#new_project>li:last-child>a{
+	padding-top: 5px;
 	margin-top: 0;
-	padding-left: 35px;
-	background: #00ce6814;
 }
 #new_project>li>a:hover,
 #new_project>li>a:focus{
-	color: #308ee0;
+	color: #00ce68;
 }
 #new_project>li>a .glyphicon{
 	font-size: 11px;
 }
 .sidebar a.allProject{
-    background-color: #308ee0;
-    color: #fff;
-    padding-left: 40px;
-}
-.sidebar a.allProject:hover {
-  background-color: #0000db;
+	margin-bottom: 0;
+	margin-top: 0;
+	padding-bottom: 0;
+	padding-top: 0;
 }
 .sidebar a.active {
   color: #308ee0;
@@ -276,6 +291,7 @@ body {
   background-color: #f9f9f9;
   color:
 }
+
 .logout{
 	font-size: 13px;
     color: #337ab7;
@@ -505,3 +521,24 @@ body {
 	margin: 100px;	
 }
 /* The End of New Project Section*/
+
+/*Model*/
+.projectSubmitted{
+	left:39%;
+}
+.projectSubmitted>img{
+	height: 90px;
+}
+.projectSubmitted>p{
+	margin: 0 0 10px;
+    margin-left: -54px;
+    font-weight: bold;
+    font-size: 19px;
+}
+/**/
+
+.error_message{
+	background: #ffe0e0;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}

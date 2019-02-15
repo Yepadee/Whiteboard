@@ -108,7 +108,7 @@ public class UnitDirectorController {
 	@PostMapping(value="/new_solo_project", params= {"addProject"})
 	public String addProject(Model model, SoloProjectDto projectDto) {
 		if (! projectDto.validate()) {
-			model.addAttribute("error", projectDto.getErrorMsg());
+			model.addAttribute("error",projectDto.getErrorMsg());
 		} else {
 			soloProjectService.addProject(projectDto);
 		}
