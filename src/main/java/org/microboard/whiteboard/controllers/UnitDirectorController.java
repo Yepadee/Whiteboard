@@ -133,7 +133,7 @@ public class UnitDirectorController {
 	public String saveAsNewProject(Model model, SoloProjectDto projectDto) {
 		if (! projectDto.validate()) {
 			model.addAttribute("error",projectDto.getErrorMsg());
-			return "redirect:/unit_director/edit_solo_project/" + projectDto.getId();
+			return newSoloProjectPath;
 		} else {
 			Long newId = soloProjectService.addProject(projectDto);
 			return "redirect:/unit_director/edit_solo_project/" + newId;
@@ -148,7 +148,7 @@ public class UnitDirectorController {
 		} else {
 			soloProjectService.updateProject(projectDto);
 		}
-		return "redirect:/unit_director/edit_solo_project/" + projectDto.getId();
+		return newSoloProjectPath;
 	}
 	
 	@GetMapping("/projects")

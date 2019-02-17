@@ -42,7 +42,7 @@ public abstract class ProjectDto {
 	}
 	public boolean validate() {
 		boolean valid = true;
-		errorMsg += "Error creating new project:\n";
+		errorMsg += "Error in project form:\n";
 		
 		if (unit.getId() == 0) {
 			valid = false;
