@@ -45,14 +45,16 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 		return templateMaker.getTemplate(soloProject);
 	}
 	
-	public void addProject(SoloProjectDto projectDto) {
+	public Long addProject(SoloProjectDto projectDto) {
 		ProjectEditApplyer editApplyer = new ProjectEditApplyer();
 		SoloProject newProject = new SoloProject();
 		SoloProject soloProject = editApplyer.applyEdits(newProject, projectDto);
 		UnitDirector creator = unitDirectorService.getLoggedInUser();
 		creator.addProject(soloProject);
-		addProject(soloProject);
+		Long id = addProject(soloProject);
 		createSoloProjectUploadFolders(soloProject);
+		
+		return id;
 	}
 	
 	public void updateProject(SoloProjectDto projectDto) {

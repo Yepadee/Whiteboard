@@ -99,7 +99,7 @@ public class UnitDirectorController {
 	}
 
 	@PostMapping(value="/new_solo_project", params={"removeMarker"})
-	public String addMarker(Model model, SoloProjectDto project, @RequestParam("removeMarker") List<Integer> removeMarker) {
+	public String removeMarker(Model model, SoloProjectDto project, @RequestParam("removeMarker") List<Integer> removeMarker) {
 		int assessmentIndex = removeMarker.get(0);
 		int markerIndex = removeMarker.get(1);
 		project.getAssessments().get(assessmentIndex).getMarkerDtos().remove(markerIndex);
@@ -111,9 +111,22 @@ public class UnitDirectorController {
 		if (! projectDto.validate()) {
 			model.addAttribute("error",projectDto.getErrorMsg());
 		} else {
-			soloProjectService.addProject(projectDto);
+			Long newId = soloProjectService.addProject(projectDto);
+			return "redirect:/unit_director/edit_solo_project/" + newId;
 		}
 		return newSoloProjectPath;
+		
+	}
+	
+	@PostMapping(value="/new_solo_project", params= {"saveAsNewProject"})
+	public String saveAsNewProject(Model model, SoloProjectDto projectDto) {
+		if (! projectDto.validate()) {
+			model.addAttribute("error",projectDto.getErrorMsg());
+			return "redirect:/unit_director/edit_solo_project/" + projectDto.getId();
+		} else {
+			Long newId = soloProjectService.addProject(projectDto);
+			return "redirect:/unit_director/edit_solo_project/" + newId;
+		}
 		
 	}
 	
