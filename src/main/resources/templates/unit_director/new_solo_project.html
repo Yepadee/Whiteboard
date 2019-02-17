@@ -180,8 +180,12 @@
 						<div class="col-sm-10">
 							<button th:if="${soloProjectDto.id == 0}" type="submit" class="btn btn-black" name="addProject" data-toggle="modal" data-target="#submitProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
 							
-							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="saveAsNewProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
-							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
+							<!--  Buttons for the ediProject page -->
+							<div th:if="${soloProjectDto.id != 0}" >
+								<button type="submit" class="btn btn-black" name="saveAsNewProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
+								<button type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
+								<button type="submit" class="btn btn-lightred" name="deleteProject">Delete <span class="glyphicon glyphicon-remove"></span></button>
+							</div>
 						</div>
 					</div>
 				</form>

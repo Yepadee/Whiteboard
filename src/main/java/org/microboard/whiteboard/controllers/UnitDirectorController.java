@@ -118,6 +118,18 @@ public class UnitDirectorController {
 		
 	}
 	
+	@PostMapping(value="/new_solo_project", params= {"deleteProject"})
+	public String deleteProject(Model model, SoloProjectDto projectDto) {
+		if (! projectDto.canDelete()) {
+			model.addAttribute("error", "You must delete all of this project's assessments before deleting this project.");
+		} else {
+			soloProjectService.deleteProject(projectDto.getId());
+			return "redirect:/unit_director/projects";
+		}
+		return newSoloProjectPath;
+		
+	}
+	
 	@PostMapping(value="/new_solo_project", params= {"saveAsNewProject"})
 	public String saveAsNewProject(Model model, SoloProjectDto projectDto) {
 		if (! projectDto.validate()) {
