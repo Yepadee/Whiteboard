@@ -1,15 +1,11 @@
 package org.microboard.whiteboard.controllers;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
+import org.microboard.whiteboard.model.task.visitors.TaskFeedbackAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
@@ -21,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -58,11 +52,6 @@ public class UserController {
 		return otg.getResult();
 	}
 	
-	@GetMapping("/test")
-	public String UploadPage() {
-		return "user/uploadStatusView";
-	}
-	
 	@GetMapping("/tasks/{id}")
 	public String getSubmissionPage(Model model, @PathVariable long id) {
 		User user = userService.getLoggedInUser();
@@ -85,7 +74,7 @@ public class UserController {
 		User user = userService.getLoggedInUser();
 		Task task = taskService.getTask(id);
 
-		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
+		TaskFeedbackAccessValidator accessValidator = new TaskFeedbackAccessValidator(user);
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
 			return taskService.downloadFile(id, filename);
@@ -122,33 +111,6 @@ public class UserController {
 		} else {
 			return accessDeniedPage;
 		}
-	}
-	
-	@PostMapping("/feedbackUpload/{id}")
-	public String FeedbackUploadPage(@PathVariable long id, Model model, @RequestParam("files") MultipartFile[] files) {
-		Task task = taskService.getTask(id);
-		String path = getPath(task) + "feedback/";
-		new File(path).mkdir();
-		StringBuilder fileNames = new StringBuilder();
-		for (MultipartFile file : files) {
-			task.addFile(path + file.getOriginalFilename());
-			Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
-			fileNames.append(file.getOriginalFilename());
-			try {
-				Files.write(fileNameAndPath, file.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		taskService.updateTask(task);
-		model.addAttribute("msg","Success: "+fileNames.toString());
-		return "redirect:/user/tasks/";
-	}
-	
-	private String getPath(Task task) {
-		TaskUploadPathGen pathGen = new TaskUploadPathGen();
-		task.accept(pathGen);
-		return pathGen.getResult();
 	}
 	
 	@ModelAttribute("user")

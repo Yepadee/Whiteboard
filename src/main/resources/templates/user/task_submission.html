@@ -9,7 +9,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="nav navbar-nav navbar-left">
-					<h3>Outstanding Tasks</h3>
+					<h3>Task Submission</h3>
 				</div>
 			</div>
 		</nav>
@@ -24,9 +24,6 @@
 						<textarea id="comments" name="comments" th:text="${task.txtSubmission}" form="submissionForm"></textarea>
 						<input type="file" name="files" multiple>
 						<input type="submit" value="Submit" />
-					</form>
-					<form th:action="@{/user/testUpload/{taskId}(taskId=${task.id})}" method="post" >
-
 					</form>
 				</div>
 				<div class="col-sm-8 table-wrapper">

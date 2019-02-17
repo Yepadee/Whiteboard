@@ -38,7 +38,7 @@
 								<td><span th:text="${task.accountable.userName}"></span></td>
 								<td><span th:text="${task.assessment.studentDeadline}" class="warning"></span></td>
 								<td><span th:text="${task.status}"></span></td>
-								<td><a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}"
+								<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${task.id})}"
 									class="btn btn-primary btn-xs">View</a></td>
 							</tr>
 						</tbody>

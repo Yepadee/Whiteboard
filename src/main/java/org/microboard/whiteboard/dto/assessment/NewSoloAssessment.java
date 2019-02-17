@@ -25,7 +25,6 @@ public class NewSoloAssessment extends NewAssessment {
 	protected boolean validateMarkers() {
 		boolean valid = true;
 		Map<Assessor, Integer> markerCount = new HashMap<>();
-		System.out.println("TEST");
 		for (MarkerUserDto markerDto : markerDtos) {
 			Assessor assessor = markerDto.getMarker();
 			if (markerCount.containsKey(assessor)) {

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="${header}:: head"></head>
+<body>
+	<div th:replace="${sidebar}:: sidebar"></div>
+
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="nav navbar-nav navbar-left">
+					<h3>Feedback Submission</h3>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div class="content">
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h1 th:text="${task.assessment.name}"></h1>
+
+					<div th:if="${task.txtSubmission != null}">
+						<label for="comments">Student Comments</label>
+						<p id="comments" th:text="${task.txtSubmission}"></p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h2>Student Files:</h2>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>File</th>
+								<th>Size</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="file: ${fileinfo}">
+								<td><a
+									th:href="@{/user/tasks/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+										<span th:text="${file.fileName}"></span>
+								</a></td>
+								<td><span th:text="${file.fileSize}"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h1 th:text="Feedback"></h1>
+
+					<label for="comments">Comments</label>
+					<textarea id="comments" name="comments"></textarea>
+					<input type="file" name="files" multiple> <input
+						type="submit" value="Submit" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h2>Feedback Files:</h2>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>File</th>
+								<th>Size</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
