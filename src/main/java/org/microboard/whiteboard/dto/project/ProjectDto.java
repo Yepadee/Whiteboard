@@ -43,6 +43,12 @@ public abstract class ProjectDto {
 	public boolean validate() {
 		boolean valid = true;
 		errorMsg += "Error creating new project:\n";
+		
+		if (unit.getId() == 0) {
+			valid = false;
+			errorMsg += "No unit selected.\n";
+		}
+		
 		if (name == null) {
 			valid = false;
 			errorMsg += "Project name field cannot be empty.\n";
@@ -53,10 +59,6 @@ public abstract class ProjectDto {
 			}
 		}
 		
-		if (unit == null) {
-			valid = false;
-			errorMsg += "No unit selected.\n";
-		}
 		boolean assessmentsValid = validateAssessments();
 		return valid && assessmentsValid;
 	}

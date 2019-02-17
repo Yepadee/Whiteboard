@@ -93,7 +93,6 @@ public class WhiteboardSpringApplication {
 		
 		
 		unit2.addUser(student);
-		
 		unitService.addUnit(unit2);
 		
 

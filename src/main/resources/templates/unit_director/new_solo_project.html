@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="page_elements/header_unit_director:: head"></head>
 <body>
@@ -8,8 +8,8 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav navbar-left">
-					<h3 th:if="${soloProjectDto.id == 0}" >Add New Solo Project</h3>
-					<h3 th:if="${soloProjectDto.id != 0}" >Edit Solo Project</h3>
+					<li><h3 th:if="${soloProjectDto.id == 0}" >Add New Solo Project</h3></li>
+					<li><h3 th:if="${soloProjectDto.id != 0}" >Edit Solo Project</h3></li>
 				</ul>
 			</div>
 		</nav>
@@ -128,11 +128,16 @@
 										<div class="form-group">
 											<div class="col-sm-4 col-sm-push-3">
 												<label for="selectMarker">Select a marker:</label>
-												<input list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}" class="form-control"/>												
+												<input list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}" class="form-control"/>												
 												<datalist id="selectMarker">
-													
-													<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
-												</datalist> 
+													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
+												</datalist>
+												
+												<!--
+												<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}">
+													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
+												</select>
+												-->
 											</div>
 										
 											<div class="col-sm-4 col-sm-push-3" id="users">
@@ -214,7 +219,6 @@
 				  </div>
 				</div>
 				<!-- End of Submitted Successful Message -->
-				
 				<script type="text/javascript">
 				
 				$(function() {
@@ -229,8 +233,6 @@
 				</script>	
 			</div>
 		</div>
-		<!--</div> -->
 	</div>
-</div>
 </body>
 </html>

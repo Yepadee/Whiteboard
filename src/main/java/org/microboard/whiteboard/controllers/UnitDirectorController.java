@@ -39,7 +39,6 @@ public class UnitDirectorController {
 	
 	private Logger logger = LoggerFactory.getLogger(UnitDirectorController.class);
 	
-	private String newProjectForm = "unit_director/new_project";
 	private String newSoloProjectPath = "unit_director/new_solo_project";
 	private String editSoloProjectPath = "unit_director/edit_solo_project/";
 	
