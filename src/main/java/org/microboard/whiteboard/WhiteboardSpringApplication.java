@@ -96,7 +96,7 @@ public class WhiteboardSpringApplication {
 		unitService.addUnit(unit2);
 		
 
-		
+		/*
 		SoloProject sp = new SoloProject();
 		sp.setName("Test Solo Project 1");
 		sp.setDescription("Description for \"Test Solo Project 1\"");
@@ -178,7 +178,7 @@ public class WhiteboardSpringApplication {
 		unitDirector.addProject(gp);
 		projectService.updateProject(gp);
 		projectService.updateProject(sp);
-		
+		*/
 		//TODO: if constraint broken on user_solo_tasks then add cascade type back to tasks in user.
 		
 	}

@@ -13,6 +13,7 @@ import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
+import org.microboard.whiteboard.model.user.visitors.OutstandingTaskGetter;
 import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.UserService;
@@ -40,7 +41,6 @@ public class UserController {
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	private String accessDeniedPage = "server/access_denied";
-	private String homePage = "user/main";
 	private String taskSubmissionPage = "user/task_submission";
 	
 	@Autowired
@@ -52,7 +52,10 @@ public class UserController {
 	
 	@GetMapping("/tasks")
 	public String getOutstandingTaskPage(Model model) {
-		return homePage;
+		OutstandingTaskGetter otg = new OutstandingTaskGetter();
+		User user = userService.getLoggedInUser();
+		user.accept(otg);
+		return otg.getResult();
 	}
 	
 	@GetMapping("/test")
@@ -99,7 +102,7 @@ public class UserController {
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
 			taskService.deleteFile(id, filename);
-			return homePage;
+			return "redirect:user/tasks";
 		} else {
 			return accessDeniedPage;
 		}
@@ -107,8 +110,8 @@ public class UserController {
 	
 	@PostMapping("/tasks/{id}")
 	public String submitTask(@PathVariable long id,
-			@ModelAttribute(name = "comments") String comments,
-			@RequestParam("files") MultipartFile[] files) throws IOException {
+		@ModelAttribute(name = "comments") String comments,
+		@RequestParam("files") MultipartFile[] files) throws IOException {
 		Task task = taskService.getTask(id);
 		User user = userService.getLoggedInUser();
 		TaskAccessValidator accessValidator = new TaskAccessValidator(user);

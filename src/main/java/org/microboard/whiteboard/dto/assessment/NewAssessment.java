@@ -96,7 +96,7 @@ public abstract class NewAssessment {
 				errorMsg += "Marker deadline must be after student deadline.\n";
 			}
 		}
-		return valid;
+		return validateMarkers() && valid;
 	}
 	
 	abstract protected boolean validateMarkers();
