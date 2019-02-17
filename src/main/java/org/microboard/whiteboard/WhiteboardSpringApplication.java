@@ -73,9 +73,10 @@ public class WhiteboardSpringApplication {
 			unit1.addUser(s);
 		}
 		
+		//unit1.addUser(unitDirector);
+		//unit1.addUser(aydin);
 		unit1.addUser(student);
-		unit1.addUser(unitDirector);
-		unit1.addUser(aydin);
+
 		
 		
 		unitService.addUnit(unit1);
@@ -89,6 +90,10 @@ public class WhiteboardSpringApplication {
 			userService.addUser(s);
 			unit2.addUser(s);
 		}
+		
+		
+		unit2.addUser(student);
+		
 		unitService.addUnit(unit2);
 		
 
