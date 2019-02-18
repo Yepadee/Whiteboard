@@ -53,7 +53,7 @@
 							<label for="selectUnit">Select Unit: </label>
 							<select id="selectUnit" list="selectUnit" th:field="*{unit.id}" onchange="setUnit.click()"  class="chosen form-control">
 								<!--  <option th:value="0" text="Please Select" selected disabled hidden>Please Select</option>-->
-								<option value="0" disabled hidden>Please Select</option>
+								<option value="0" disabled hidden style="display: none;">Please Select</option>
 								<option th:each="unit : ${unitList}" th:value="${unit.id}" th:text=${unit.unitName}></option>
 							</select>
 						</div>
