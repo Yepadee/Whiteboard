@@ -25,9 +25,9 @@ public class Feedback {
 	private boolean visable;
 	
 	@ElementCollection
-	@CollectionTable(name="fileNames", joinColumns=@JoinColumn(name="marker_task_id"))
+	@CollectionTable(name="feedback_file_names", joinColumns=@JoinColumn(name="marker_task_id"))
 	@Column(name="fileName")
-	private List<String> fileNames= new ArrayList<>();
+	private List<String> fileNames = new ArrayList<>();
 	
 	
 	public long getId() {

@@ -2,6 +2,7 @@ package org.microboard.whiteboard.services.task;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,6 +15,10 @@ import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.repositories.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -80,6 +85,26 @@ public class TaskService {
 				break;
 			}
 		}
+	}
+	
+	public ResponseEntity<Resource> downloadFile(long id, String filename) {
+		Task task = getTask(id);
+		List<String> filePaths = task.getFileNames();
+		for (String filepath : filePaths) {
+			String filepathWithoutPath = filepath.substring(filepath.lastIndexOf("/")+1);
+			if (filepathWithoutPath.equals(filename)) {
+				try {
+					Path path = Paths.get(filepath);
+					Resource resource = new UrlResource(path.toUri());
+					return ResponseEntity.ok()
+							.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+							.body(resource);
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 	
 	public void updateTask(Task task) {

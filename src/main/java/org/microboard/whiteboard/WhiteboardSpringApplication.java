@@ -73,13 +73,13 @@ public class WhiteboardSpringApplication {
 			unit1.addUser(s);
 		}
 		
+		//unit1.addUser(unitDirector);
+		//unit1.addUser(aydin);
 		unit1.addUser(student);
-		unit1.addUser(unitDirector);
+
 		
 		
 		unitService.addUnit(unit1);
-		
-		unit1.addUser(student);
 		
 		Unit unit2 = new Unit();
 		unit2.setUnitName("Signals, Patterns and Symbols");
@@ -90,10 +90,13 @@ public class WhiteboardSpringApplication {
 			userService.addUser(s);
 			unit2.addUser(s);
 		}
+		
+		
+		unit2.addUser(student);
 		unitService.addUnit(unit2);
 		
 
-		
+		/*
 		SoloProject sp = new SoloProject();
 		sp.setName("Test Solo Project 1");
 		sp.setDescription("Description for \"Test Solo Project 1\"");
@@ -175,7 +178,7 @@ public class WhiteboardSpringApplication {
 		unitDirector.addProject(gp);
 		projectService.updateProject(gp);
 		projectService.updateProject(sp);
-		
+		*/
 		//TODO: if constraint broken on user_solo_tasks then add cascade type back to tasks in user.
 		
 	}

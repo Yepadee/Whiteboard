@@ -32,8 +32,8 @@ public abstract class BaseProjectService<T extends Project> {
 		return projects;
 	}
 		
-	public void addProject(T project) {
-		projectRepository.save(project);
+	public Long addProject(T project) {
+		return projectRepository.save(project).getId();
 	}
 	
 	public void updateProject(T project) {

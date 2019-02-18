@@ -25,4 +25,8 @@ public class SoloProjectDto extends ProjectDto {
 		
 		return valid;
 	}
+	
+	public boolean canDelete() {
+		return assessments.isEmpty();
+	}
 }

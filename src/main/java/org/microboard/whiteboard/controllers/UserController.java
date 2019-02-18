@@ -1,23 +1,23 @@
 package org.microboard.whiteboard.controllers;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
+import org.microboard.whiteboard.model.task.visitors.TaskFeedbackAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
+import org.microboard.whiteboard.model.user.visitors.OutstandingTaskGetter;
 import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +35,6 @@ public class UserController {
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	private String accessDeniedPage = "server/access_denied";
-	private String homePage = "user/main";
 	private String taskSubmissionPage = "user/task_submission";
 	
 	@Autowired
@@ -47,12 +46,10 @@ public class UserController {
 	
 	@GetMapping("/tasks")
 	public String getOutstandingTaskPage(Model model) {
-		return homePage;
-	}
-	
-	@GetMapping("/test")
-	public String UploadPage() {
-		return "user/uploadStatusView";
+		OutstandingTaskGetter otg = new OutstandingTaskGetter();
+		User user = userService.getLoggedInUser();
+		user.accept(otg);
+		return otg.getResult();
 	}
 	
 	@GetMapping("/tasks/{id}")
@@ -72,6 +69,19 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/tasks/download/{id}/{filename}")
+	public ResponseEntity<Resource> downloadFile(Model model, @PathVariable long id,  @PathVariable String filename) {
+		User user = userService.getLoggedInUser();
+		Task task = taskService.getTask(id);
+
+		TaskFeedbackAccessValidator accessValidator = new TaskFeedbackAccessValidator(user);
+		task.accept(accessValidator);
+		if (accessValidator.getResult()) {
+			return taskService.downloadFile(id, filename);
+		}
+		return null;
+	}
+	
 	@GetMapping("/tasks/delete/{id}/{filename}")
 	public String getDeletePage(Model model, @PathVariable long id,  @PathVariable String filename) {
 		//TODO make dedicated query for task validation
@@ -81,7 +91,7 @@ public class UserController {
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
 			taskService.deleteFile(id, filename);
-			return homePage;
+			return "redirect:user/tasks";
 		} else {
 			return accessDeniedPage;
 		}
@@ -89,8 +99,8 @@ public class UserController {
 	
 	@PostMapping("/tasks/{id}")
 	public String submitTask(@PathVariable long id,
-			@ModelAttribute(name = "comments") String comments,
-			@RequestParam("files") MultipartFile[] files) throws IOException {
+		@ModelAttribute(name = "comments") String comments,
+		@RequestParam("files") MultipartFile[] files) throws IOException {
 		Task task = taskService.getTask(id);
 		User user = userService.getLoggedInUser();
 		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
@@ -101,33 +111,6 @@ public class UserController {
 		} else {
 			return accessDeniedPage;
 		}
-	}
-	
-	@PostMapping("/feedbackUpload/{id}")
-	public String FeedbackUploadPage(@PathVariable long id, Model model, @RequestParam("files") MultipartFile[] files) {
-		Task task = taskService.getTask(id);
-		String path = getPath(task) + "feedback/";
-		new File(path).mkdir();
-		StringBuilder fileNames = new StringBuilder();
-		for (MultipartFile file : files) {
-			task.addFile(path + file.getOriginalFilename());
-			Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
-			fileNames.append(file.getOriginalFilename());
-			try {
-				Files.write(fileNameAndPath, file.getBytes());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		taskService.updateTask(task);
-		model.addAttribute("msg","Success: "+fileNames.toString());
-		return "redirect:/user/tasks/";
-	}
-	
-	private String getPath(Task task) {
-		TaskUploadPathGen pathGen = new TaskUploadPathGen();
-		task.accept(pathGen);
-		return pathGen.getResult();
 	}
 	
 	@ModelAttribute("user")

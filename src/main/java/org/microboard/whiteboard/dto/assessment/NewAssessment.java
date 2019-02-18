@@ -66,7 +66,37 @@ public abstract class NewAssessment {
 			}
 		}
 		
-		return valid;
+		
+		if (studentDeadline == null) {
+			valid = false;
+			errorMsg += "Student deadline not set.\n";
+		}
+		
+		if (markerDeadline == null) {
+			valid = false;
+			errorMsg += "Marker deadline not set.\n";
+		}
+		
+		
+		if (studentDeadline != null && markerDeadline != null) {
+
+			
+			if (markerDeadline.before(new Date())) {
+				valid = false;
+				errorMsg += "Marker deadline must be in the future.\n";
+			}
+			
+			if (studentDeadline.before(new Date())) {
+				valid = false;
+				errorMsg += "Student deadline must be in the future.\n";
+			}
+			
+			if (! markerDeadline.after(studentDeadline)) {
+				valid = false;
+				errorMsg += "Marker deadline must be after student deadline.\n";
+			}
+		}
+		return validateMarkers() && valid;
 	}
 	
 	abstract protected boolean validateMarkers();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
 <script type="text/javascript">
 
@@ -11,8 +11,8 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav navbar-left">
-					<h3 th:if="${soloProjectDto.id == 0}" >Add New Solo Project</h3>
-					<h3 th:if="${soloProjectDto.id != 0}" >Edit Solo Project</h3>
+					<li><h3 th:if="${soloProjectDto.id == 0}" >Add New Solo Project</h3></li>
+					<li><h3 th:if="${soloProjectDto.id != 0}" >Edit Solo Project</h3></li>
 				</ul>
 			</div>
 		</nav>
@@ -89,7 +89,7 @@
 						<div class="assignmentWrapper">
 							<div class="assignment-background">
 								<div class="form-group">
-									<h4 class="col-sm-2 col-sm-push-2 font-bold" for="assignmentName">New Assessment:</h4>
+									<h4 class="col-sm-2 col-sm-push-2 font-bold" for="assignmentName">Assessment <span th:text ="${a.index + 1}"></span>:</h4>
 								</div>
 								<div class="form-group">
 									<label class="control-label col-sm-3" for="assessmentName">Name:</label>
@@ -138,9 +138,22 @@
 										<div class="form-group">
 											<div class="col-sm-4 col-sm-push-3">
 												<label for="selectMarker">Select a marker:</label>
+<<<<<<< HEAD
 												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}" class="chosen form-control">
 													<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
 												</select> 
+=======
+												<input list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}" class="form-control"/>												
+												<datalist id="selectMarker">
+													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
+												</datalist>
+												
+												<!--
+												<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}">
+													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
+												</select>
+												-->
+>>>>>>> branch 'master' of https://github.com/Yepadee/Whiteboard.git
 											</div>
 										
 											<div class="col-sm-4 col-sm-push-3" id="users">
@@ -188,8 +201,12 @@
 						<div class="col-sm-10">
 							<button th:if="${soloProjectDto.id == 0}" type="submit" class="btn btn-black" name="addProject" data-toggle="modal" id="addProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
 							
-							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="addProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
-							<button th:if="${soloProjectDto.id != 0}" type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
+							<!--  Buttons for the ediProject page -->
+							<div th:if="${soloProjectDto.id != 0}" >
+								<button type="submit" class="btn btn-black" name="saveAsNewProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
+								<button type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
+								<button type="submit" class="btn btn-lightred" name="deleteProject">Delete <span class="glyphicon glyphicon-remove"></span></button>
+							</div>
 						</div>
 					</div>
 				</form>
@@ -219,7 +236,6 @@
 				</div>
 				<p class="wrap"></p>
 				<!-- End of Submitted Successful Message -->
-				
 				<script type="text/javascript">
 				
 				$(function() {
@@ -244,8 +260,6 @@
 				</span>
 			</div>
 		</div>
-		<!--</div> -->
 	</div>
-</div>
 </body>
 </html>

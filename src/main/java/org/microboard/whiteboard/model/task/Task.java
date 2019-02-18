@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -39,7 +40,7 @@ public abstract class Task {
 	@ManyToMany
 	private List<Assessor> markers = new ArrayList<>();
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
 	@JoinTable(name="task_feedback", joinColumns=@JoinColumn(name="task_id"))
 	@MapKeyColumn(name="assessor_id")
 	private Map<Assessor, Feedback> feedback = new HashMap<>();

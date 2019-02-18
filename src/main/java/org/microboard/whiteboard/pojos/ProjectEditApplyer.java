@@ -75,6 +75,7 @@ public class ProjectEditApplyer {
 						SoloTask newTask = new SoloTask();
 						user.addTask(newTask);
 						assessment.addTask(newTask);
+						
 					}
 				}
 				//Add markers to each task
@@ -94,6 +95,7 @@ public class ProjectEditApplyer {
 				for (User user : project.getUnit().getCohort()) {
 					SoloTask soloTask = new SoloTask();
 					assessment.addTask(soloTask);
+					
 					for (MarkerUserDto markerDto : editAssessment.getMarkerDtos()) {
 						Assessor marker = markerDto.getMarker();
 						if (markerDto.getToMark().contains(user)) {

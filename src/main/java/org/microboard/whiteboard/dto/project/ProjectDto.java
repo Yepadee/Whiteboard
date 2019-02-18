@@ -42,7 +42,17 @@ public abstract class ProjectDto {
 	}
 	public boolean validate() {
 		boolean valid = true;
+<<<<<<< HEAD
 		errorMsg += "> ";
+=======
+		errorMsg += "Error in project form:\n";
+		
+		if (unit.getId() == 0) {
+			valid = false;
+			errorMsg += "No unit selected.\n";
+		}
+		
+>>>>>>> branch 'master' of https://github.com/Yepadee/Whiteboard.git
 		if (name == null) {
 			valid = false;
 			errorMsg += "Project name field cannot be empty.\n";
@@ -52,10 +62,14 @@ public abstract class ProjectDto {
 				errorMsg += "Project name field cannot be empty.\n";
 			}
 		}
+<<<<<<< HEAD
 		if (unit == null) {
 			valid = false;
 			errorMsg += "No unit selected.\n";
 		}
+=======
+		
+>>>>>>> branch 'master' of https://github.com/Yepadee/Whiteboard.git
 		boolean assessmentsValid = validateAssessments();
 		return valid && assessmentsValid;
 	}

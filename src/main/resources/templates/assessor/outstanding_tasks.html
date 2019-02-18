@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="${header}:: head"></head>
+<body>
+	<div th:replace="${sidebar}:: sidebar"></div>
+
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-left">
+					<li><h3>Outstanding Tasks</h3></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="content">
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h5>Outstanding Tasks</h5>
+										
+					<h3>To Mark</h3>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>Project</th>
+								<th>Assessment</th>
+								<th>Student</th>
+								<th>Deadline</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="task: ${user.toMark}">
+								<td><span th:text="${task.assessment.project.name}"></span></td>
+								<td><span th:text="${task.assessment.name}"></span></td>
+								<td><span th:text="${task.accountable.userName}"></span></td>
+								<td><span th:text="${task.assessment.studentDeadline}" class="warning"></span></td>
+								<td><span th:text="${task.status}"></span></td>
+								<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${task.id})}"
+									class="btn btn-primary btn-xs">View</a></td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<h3>Submissions</h3>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>Project</th>
+								<th>Assessment</th>
+								<th>Deadline</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="task: ${user.allTasks}">
+								<td><span th:text="${task.assessment.project.name}"></span></td>
+								<td><span th:text="${task.assessment.name}"></span></td>
+								<td><span th:text="${task.assessment.studentDeadline}" class="warning"></span></td>
+								<td><span th:text="${task.status}"></span></td>
+								<td><a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}"
+									class="btn btn-primary btn-xs">View</a></td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
