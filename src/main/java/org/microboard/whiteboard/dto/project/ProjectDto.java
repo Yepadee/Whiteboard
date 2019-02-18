@@ -42,13 +42,14 @@ public abstract class ProjectDto {
 	}
 	public boolean validate() {
 		boolean valid = true;
-		errorMsg += "Error in project form:\n";
+		errorMsg += "> ";
 		
 		if (unit.getId() == null) {
 			valid = false;
 			errorMsg += "No unit selected.\n";
 		}
 		
+
 		if (name == null) {
 			valid = false;
 			errorMsg += "Project name field cannot be empty.\n";
@@ -58,7 +59,14 @@ public abstract class ProjectDto {
 				errorMsg += "Project name field cannot be empty.\n";
 			}
 		}
+
+		if (unit == null) {
+			valid = false;
+			errorMsg += "No unit selected.\n";
+		}
+
 		
+
 		boolean assessmentsValid = validateAssessments();
 		return valid && assessmentsValid;
 	}

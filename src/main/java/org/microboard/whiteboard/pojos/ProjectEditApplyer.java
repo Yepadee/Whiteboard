@@ -63,30 +63,52 @@ public class ProjectEditApplyer {
 			Long assessmentId = editAssessment.getId();
 			if (assessmentId != null) {
 				//Editing an existing assessment
-				SoloAssessment assessment = findById(oldAssessments, assessmentId).get();
-				//If new unit, remove all tasks and add new tasks for members of the new cohort.
-				if (newUnit) {
-					assessment.getTasks().removeAll(assessment.getTasks());
-					for (User user : project.getUnit().getCohort()) {
-						SoloTask newTask = new SoloTask();
-						user.addTask(newTask);
-						assessment.addTask(newTask);
-						
-					}
-				}
-				//Add markers to each task
-				for (SoloTask soloTask : assessment.getTasks()) {
-					soloTask.setMarkers(new ArrayList<>());
-					User accountable = soloTask.getAccountable();
-					for (MarkerUserDto markerDto : editAssessment.getMarkerDtos()) {
-						Assessor marker = markerDto.getMarker();
-						if (markerDto.getToMark().contains(accountable)) {
-							soloTask.addMarker(marker);
+				Optional<SoloAssessment> maybeAssessment = findById(oldAssessments, assessmentId);
+				
+				if (maybeAssessment.isPresent()) {
+					SoloAssessment assessment = findById(oldAssessments, assessmentId).get();
+					//If new unit, remove all tasks and add new tasks for members of the new cohort.
+					if (newUnit) {
+						assessment.getTasks().removeAll(assessment.getTasks());
+						for (User user : project.getUnit().getCohort()) {
+							SoloTask newTask = new SoloTask();
+							user.addTask(newTask);
+							assessment.addTask(newTask);
+							
 						}
 					}
+					//Add markers to each task
+					for (SoloTask soloTask : assessment.getTasks()) {
+						soloTask.setMarkers(new ArrayList<>());
+						User accountable = soloTask.getAccountable();
+						for (MarkerUserDto markerDto : editAssessment.getMarkerDtos()) {
+							Assessor marker = markerDto.getMarker();
+							if (markerDto.getToMark().contains(accountable)) {
+								soloTask.addMarker(marker);
+							}
+						}
+					}
+					presentAssessments.add(assessment);
+					applyCoreAssessmentEdits(assessment, editAssessment);
+				} else {
+					//Adding a new assessment
+					SoloAssessment assessment = new SoloAssessment();
+					for (User user : project.getUnit().getCohort()) {
+						SoloTask soloTask = new SoloTask();
+						assessment.addTask(soloTask);
+						
+						for (MarkerUserDto markerDto : editAssessment.getMarkerDtos()) {
+							Assessor marker = markerDto.getMarker();
+							if (markerDto.getToMark().contains(user)) {
+								soloTask.addMarker(marker);
+							}
+						}
+						soloTask.setAccountable(user);
+					}
+					project.addAssessment(assessment);
+					applyCoreAssessmentEdits(assessment, editAssessment);
 				}
-				presentAssessments.add(assessment);
-				applyCoreAssessmentEdits(assessment, editAssessment);
+				
 			} else {
 				//Adding a new assessment
 				SoloAssessment assessment = new SoloAssessment();
