@@ -54,6 +54,7 @@
 							<select id="selectUnit" list="selectUnit" th:field="*{unit.id}" onchange="setUnit.click()"  class="chosen form-control">
 								<!--  <option th:value="0" text="Please Select" selected disabled hidden>Please Select</option>-->
 								<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
+
 								<option th:each="unit : ${unitList}" th:value="${unit.id}" th:text=${unit.unitName}></option>
 							</select>
 						</div>
@@ -140,6 +141,7 @@
 												<label for="selectMarker">Select a marker:</label>
 
 												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}" class="chosen form-control">
+													<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
 													<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
 												</select> 
 
