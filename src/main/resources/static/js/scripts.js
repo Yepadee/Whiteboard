@@ -185,6 +185,8 @@ $(document).ready(function(){
         $("#arrow").toggleClass('flip');
     });
 	
+	//$(".chosen-single span").text("Select");
 	//$('#example-single').multiselect();
+	$(".chosen").chosen();
 });
 

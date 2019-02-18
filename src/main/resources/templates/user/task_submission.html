@@ -9,7 +9,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="nav navbar-nav navbar-left">
-					<h3>Outstanding Tasks</h3>
+					<h3>Outstanding Tasks - <small th:text="${task.assessment.name}"></small></h3>
 				</div>
 			</div>
 		</nav>
@@ -17,20 +17,36 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h1 th:text="${task.assessment.name}"></h1>
+				<div class="col-sm-10 col-sm-push-1 table-wrapper">
 					<form th:action="@{/user/tasks/{taskId}(taskId=${task.id})}" method="post" id="submissionForm" enctype="multipart/form-data">
-						<label for="comments">Comments</label>
-						<textarea id="comments" name="comments" th:text="${task.txtSubmission}" form="submissionForm"></textarea>
-						<input type="file" name="files" multiple>
-						<input type="submit" value="Submit" />
+						<div class="form-group">
+							<label class="col-sm-2" for="comments">Comment: </label>
+							<div class="col-sm-8">
+								<textarea class="form-control" id="comments" name="comments" th:text="${task.txtSubmission}" form="submissionForm" rows="5" placeholder="Add a comment"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<hr class="dottedLine col-sm-8 col-sm-push-2" />
+						</div>
+						<div class="form-group">
+							<div class="col-sm-4 col-sm-push-2">
+								<input type="file" name="files" class="" multiple>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+						<br>
+						<div class="form-group">
+							<div class="col-sm-4 col-sm-push-2">
+								<input type="submit" value="Submit" class="btn btn-blue">
+							</div>
+						</div>
 					</form>
 					<form th:action="@{/user/testUpload/{taskId}(taskId=${task.id})}" method="post" >
 
 					</form>
 				</div>
-				<div class="col-sm-8 table-wrapper">
-					<h2>Uploaded files:</h2>
+				<div class="col-sm-10 col-sm-push-1 table-wrapper">
+					<h4 class="font-bold">Uploaded files:</h4>
 					<table class="table panel panel-default" id="table">
 						<thead>
 							<tr>

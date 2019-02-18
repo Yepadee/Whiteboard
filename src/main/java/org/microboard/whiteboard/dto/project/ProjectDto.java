@@ -42,7 +42,7 @@ public abstract class ProjectDto {
 	}
 	public boolean validate() {
 		boolean valid = true;
-		errorMsg += "Error creating new project:\n";
+		errorMsg += "> ";
 		if (name == null) {
 			valid = false;
 			errorMsg += "Project name field cannot be empty.\n";
@@ -52,7 +52,6 @@ public abstract class ProjectDto {
 				errorMsg += "Project name field cannot be empty.\n";
 			}
 		}
-		
 		if (unit == null) {
 			valid = false;
 			errorMsg += "No unit selected.\n";

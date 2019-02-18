@@ -384,6 +384,9 @@ body {
 	color: #fff;
 	margin-left:20px;
 }
+.navbar-left small{
+	color: #fff;
+}
 /* End of the Top Navbar */
 
 /* Content */
@@ -401,7 +404,7 @@ body {
 }
 .outstanding-tasks .table-wrapper{
   padding: 10px;
-  background: #fff;
+  background: #ffffff87;
   border-radius: 5px;
   margin-top: 20px;
 }
@@ -540,5 +543,25 @@ body {
 .error_message{
 	background: #ffe0e0;
 	padding-top: 50px;
-	padding-bottom: 50px;
+	padding-bottom: 30px;
+	padding-left: 20px;
+	margin-bottom: 20px;
 }
+.error_message .glyphicon{
+	font-size: 32px;
+    color: #353535;
+}
+.error_message .messageHeader{
+	font-weight: bold;
+	font-size: 20px;
+}
+.error_message .message{
+	padding-left: 100px;
+}
+
+/*	Filter for search	*/
+.chosen-container-single .chosen-single{
+	height: 35px;
+	padding:3px 0 0 8px;
+}
+/*	End of Filter for search	*/
