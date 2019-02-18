@@ -138,22 +138,17 @@
 										<div class="form-group">
 											<div class="col-sm-4 col-sm-push-3">
 												<label for="selectMarker">Select a marker:</label>
-<<<<<<< HEAD
+
 												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}" class="chosen form-control">
 													<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
 												</select> 
-=======
-												<input list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}" class="form-control"/>												
-												<datalist id="selectMarker">
-													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
-												</datalist>
+
 												
 												<!--
 												<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}">
 													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
 												</select>
 												-->
->>>>>>> branch 'master' of https://github.com/Yepadee/Whiteboard.git
 											</div>
 										
 											<div class="col-sm-4 col-sm-push-3" id="users">

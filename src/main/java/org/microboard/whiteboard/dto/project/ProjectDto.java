@@ -43,8 +43,6 @@ public abstract class ProjectDto {
 	public boolean validate() {
 		boolean valid = true;
 		errorMsg += "> ";
-
-		errorMsg += "Error in project form:\n";
 		
 		if (unit.getId() == 0) {
 			valid = false;
