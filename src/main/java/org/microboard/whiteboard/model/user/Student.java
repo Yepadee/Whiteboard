@@ -9,6 +9,11 @@ import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 @Entity
 public class Student extends User {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4005774783951106434L;
+
 	public Student() {
 		
 	}

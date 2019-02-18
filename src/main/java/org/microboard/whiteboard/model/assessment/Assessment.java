@@ -17,7 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Assessment {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
-	private long id;
+	private Long id;
 	
 	private String name;
 	private String description;
@@ -29,11 +29,11 @@ public abstract class Assessment {
 	
 	private int weight;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
+import org.microboard.whiteboard.dto.assessment.SoloAssessmentDto;
 import org.microboard.whiteboard.dto.project.ProjectDto;
 import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
@@ -21,7 +21,7 @@ import org.microboard.whiteboard.model.user.User;
 public class ProjectEditApplyer {
 	
 	private void applyCoreProjectEdits(Project project, ProjectDto edits) {
-		long id = project.getId();
+		Long id = project.getId();
 		String name = edits.getName();
 		String description = edits.getDescription();
 		List<UnitDirector> helpers = new ArrayList<>(); //TODO
@@ -34,7 +34,7 @@ public class ProjectEditApplyer {
 		project.setUnit(unit);
 	}
 	
-	private void applyCoreAssessmentEdits(SoloAssessment assessment, NewSoloAssessment edits) {
+	private void applyCoreAssessmentEdits(SoloAssessment assessment, SoloAssessmentDto edits) {
 		String name = edits.getName();
 		String description = edits.getDescription();
 		Date studentDeadline = edits.getStudentDeadline();
@@ -59,15 +59,11 @@ public class ProjectEditApplyer {
 		}
 		
 		applyCoreProjectEdits(project, edits);
-		for (NewSoloAssessment editAssessment : edits.getAssessments()) {
-			long assessmentId = editAssessment.getId();
-			SoloAssessment assessment = new SoloAssessment();
-			Optional<SoloAssessment> maybeAssessment = findById(oldAssessments, assessmentId);
-				
-			if (maybeAssessment.isPresent()) {
+		for (SoloAssessmentDto editAssessment : edits.getAssessments()) {
+			Long assessmentId = editAssessment.getId();
+			if (assessmentId != null) {
 				//Editing an existing assessment
-				assessment = maybeAssessment.get();
-				
+				SoloAssessment assessment = findById(oldAssessments, assessmentId).get();
 				//If new unit, remove all tasks and add new tasks for members of the new cohort.
 				if (newUnit) {
 					assessment.getTasks().removeAll(assessment.getTasks());
@@ -90,8 +86,10 @@ public class ProjectEditApplyer {
 					}
 				}
 				presentAssessments.add(assessment);
+				applyCoreAssessmentEdits(assessment, editAssessment);
 			} else {
 				//Adding a new assessment
+				SoloAssessment assessment = new SoloAssessment();
 				for (User user : project.getUnit().getCohort()) {
 					SoloTask soloTask = new SoloTask();
 					assessment.addTask(soloTask);
@@ -105,9 +103,8 @@ public class ProjectEditApplyer {
 					soloTask.setAccountable(user);
 				}
 				project.addAssessment(assessment);
+				applyCoreAssessmentEdits(assessment, editAssessment);
 			}
-			
-			applyCoreAssessmentEdits(assessment, editAssessment);
 		}
 		
 		List<SoloAssessment> removed = new ArrayList<>(oldAssessments);
@@ -117,7 +114,7 @@ public class ProjectEditApplyer {
 		return project;
 	}
 	
-	private Optional<SoloAssessment> findById(List<SoloAssessment> soloAssessments, long id) {
+	private Optional<SoloAssessment> findById(List<SoloAssessment> soloAssessments, Long id) {
 		return soloAssessments.stream().filter(a -> a.getId() == id).findFirst();
 	}
 }

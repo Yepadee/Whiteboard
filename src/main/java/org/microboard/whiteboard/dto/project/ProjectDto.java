@@ -3,17 +3,17 @@ package org.microboard.whiteboard.dto.project;
 import org.microboard.whiteboard.model.user.Unit;
 
 public abstract class ProjectDto {
-	private long id;
+	private Long id;
 	private String name;
 	private String description;
 	private Unit unit;
 	protected String errorMsg = "";
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -44,7 +44,7 @@ public abstract class ProjectDto {
 		boolean valid = true;
 		errorMsg += "Error in project form:\n";
 		
-		if (unit.getId() == 0) {
+		if (unit.getId() == null) {
 			valid = false;
 			errorMsg += "No unit selected.\n";
 		}

@@ -1,8 +1,8 @@
 package org.microboard.whiteboard.model.user;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -24,10 +24,15 @@ import javax.persistence.OneToMany;
 @Table(name = "Users")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="perms", discriminatorType=DiscriminatorType.STRING)
-public abstract class User {
+public abstract class User implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6187306015251367488L;
 	
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String userName;
 	private String password;
 	
@@ -41,11 +46,11 @@ public abstract class User {
 	private List<Unit> units = new ArrayList<>();
 	
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -110,7 +115,20 @@ public abstract class User {
 		unit.getCohort().add(this);
 	}
 	
-	public boolean equals(User user) {
-		return id == user.getId();
-	}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        return id != null && id.equals(other.getId());
+    }
+
+    public int hashCode() {
+        return 13;
+    }
 }

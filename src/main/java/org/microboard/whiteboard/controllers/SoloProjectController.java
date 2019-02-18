@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
+import org.microboard.whiteboard.dto.assessment.SoloAssessmentDto;
 import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.model.user.Assessor;
@@ -76,7 +76,7 @@ public class SoloProjectController {
 	
 	@PostMapping(value="/new_solo_project", params={"addAssessment"})
 	public String addAssessment(Model model, SoloProjectDto project) {
-		project.getAssessments().add(new NewSoloAssessment());
+		project.getAssessments().add(new SoloAssessmentDto());
 	    return newSoloProjectPath;
 	}
 	

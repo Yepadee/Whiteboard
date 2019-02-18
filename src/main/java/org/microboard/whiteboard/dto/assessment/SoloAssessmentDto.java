@@ -8,10 +8,10 @@ import java.util.Map;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.model.user.Assessor;
 
-public class NewSoloAssessment extends NewAssessment {
+public class SoloAssessmentDto extends AssessmentDto {
 	private List<MarkerUserDto> markerDtos = new ArrayList<>();
 	
-	public NewSoloAssessment() {}
+	public SoloAssessmentDto() {}
 	
 	public List<MarkerUserDto> getMarkerDtos() {
 		return markerDtos;

@@ -14,6 +14,10 @@ import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 @Entity
 public class Assessor extends User {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2844404820575452793L;
 	@ManyToMany(mappedBy="markers")
 	private List<Task> toMark = new ArrayList<>();
 	

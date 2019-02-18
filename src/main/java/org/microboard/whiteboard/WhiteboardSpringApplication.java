@@ -77,8 +77,6 @@ public class WhiteboardSpringApplication {
 		//unit1.addUser(aydin);
 		unit1.addUser(student);
 
-		
-		
 		unitService.addUnit(unit1);
 		
 		Unit unit2 = new Unit();

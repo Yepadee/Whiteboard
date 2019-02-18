@@ -8,8 +8,8 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav navbar-left">
-					<li><h3 th:if="${soloProjectDto.id == 0}" >Add New Solo Project</h3></li>
-					<li><h3 th:if="${soloProjectDto.id != 0}" >Edit Solo Project</h3></li>
+					<li><h3 th:if="${soloProjectDto.id == null}" >Add New Solo Project</h3></li>
+					<li><h3 th:if="${soloProjectDto.id != null}" >Edit Solo Project</h3></li>
 				</ul>
 			</div>
 		</nav>
@@ -44,7 +44,7 @@
 						<div class="col-sm-4 col-sm-push-2">
 							<label for="selectUnit">Select Unit: </label>
 							<select id="selectUnit" th:field="*{unit.id}" onchange="setUnit.click()"  class="form-control">
-								<option th:value="0" text="Please Select" selected disabled hidden>Please Select</option>
+								<option th:value="null" text="Please Select" selected hidden="hidden">Please Select</option>
 								<option th:each="unit : ${unitList}" th:value="${unit.id}" th:text=${unit.unitName}></option>
 							</select>
 						</div>
@@ -183,10 +183,10 @@
 					<br><br><br>
 					<div class="form-group">
 						<div class="col-sm-10">
-							<button th:if="${soloProjectDto.id == 0}" type="submit" class="btn btn-black" name="addProject" data-toggle="modal" data-target="#submitProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
+							<button th:if="${soloProjectDto.id == null}" type="submit" class="btn btn-black" name="addProject" data-toggle="modal" data-target="#submitProject">Submit Project  <span class="glyphicon glyphicon-chevron-right"></span></button>
 							
 							<!--  Buttons for the ediProject page -->
-							<div th:if="${soloProjectDto.id != 0}" >
+							<div th:if="${soloProjectDto.id != null}" >
 								<button type="submit" class="btn btn-black" name="saveAsNewProject">Save as New<span class="glyphicon glyphicon-chevron-right"></span></button>
 								<button type="submit" class="btn btn-black" name="editProject">Save Changes<span class="glyphicon glyphicon-chevron-right"></span></button>
 								<button type="submit" class="btn btn-lightred" name="deleteProject">Delete <span class="glyphicon glyphicon-remove"></span></button>
