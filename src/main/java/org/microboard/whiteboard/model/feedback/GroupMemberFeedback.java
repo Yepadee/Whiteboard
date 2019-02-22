@@ -25,7 +25,7 @@ public class GroupMemberFeedback {
 	private User groupMember;
 
 	@OneToMany
-	@JoinTable(name="group_member_feedback_feedback", joinColumns=@JoinColumn(name="group_member_feedback_id"))
+	@JoinTable(name="group_member_feedback_feedback", joinColumns=@JoinColumn(name="assessor_id"))
 	@MapKeyColumn(name="assessor_id")
 	private Map<Assessor, Feedback> feedback = new HashMap<>();
 

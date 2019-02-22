@@ -13,15 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.Assessor;
 
 @Entity
 public class Feedback {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
 	private Long id;
+	
+	@ManyToOne
+	private Task task;
+	
 	@ManyToOne
 	private Assessor marker;
+	
 	private String txtFeedback;
+	private String status;
 	private boolean visable;
 	
 	@ElementCollection
@@ -35,6 +42,12 @@ public class Feedback {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public Task getTask() {
+		return task;
+	}
+	public void setTask(Task task) {
+		this.task = task;
 	}
 	public Assessor getMarker() {
 		return marker;
@@ -59,5 +72,11 @@ public class Feedback {
 	}
 	public void setVisable(boolean visable) {
 		this.visable = visable;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

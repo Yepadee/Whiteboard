@@ -2,8 +2,10 @@ package org.microboard.whiteboard.pojos;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.microboard.whiteboard.dto.assessment.SoloAssessmentDto;
 import org.microboard.whiteboard.dto.project.ProjectDto;
@@ -79,15 +81,30 @@ public class ProjectEditApplyer {
 					}
 					//Add markers to each task
 					for (SoloTask soloTask : assessment.getTasks()) {
-						soloTask.setMarkers(new ArrayList<>());
+						Set<Assessor> oldMarkers = soloTask.getMarkers();
+						List<Assessor> presentMarkers = new ArrayList<>();
+						
+						
+						
+						//soloTask.setFeedback(new HashMap<>());
 						User accountable = soloTask.getAccountable();
 						for (MarkerUserDto markerDto : editAssessment.getMarkerDtos()) {
 							Assessor marker = markerDto.getMarker();
 							if (markerDto.getToMark().contains(accountable)) {
 								soloTask.addMarker(marker);
+								presentMarkers.add(marker);
 							}
 						}
+						
+						List<Assessor> removedMarkers = new ArrayList<>(oldMarkers);
+						removedMarkers.removeAll(presentMarkers);
+						for (Assessor assessor : removedMarkers) {
+							soloTask.removeMarker(assessor);
+						}
 					}
+					
+					
+					
 					presentAssessments.add(assessment);
 					applyCoreAssessmentEdits(assessment, editAssessment);
 				} else {

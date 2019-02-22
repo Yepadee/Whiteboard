@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -17,12 +18,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 
+import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
@@ -32,16 +33,13 @@ import org.microboard.whiteboard.model.user.Assessor;
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Task {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
-	private long id;
+	private Long id;
 	
 	private int studentExtension;
 	private int markerExtension;
 	
-	@ManyToMany
-	private List<Assessor> markers = new ArrayList<>();
-	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
-	@JoinTable(name="task_feedback", joinColumns=@JoinColumn(name="task_id"))
+	@JoinTable(name="assessor_feedback", joinColumns=@JoinColumn(name="assessor_id"))
 	@MapKeyColumn(name="assessor_id")
 	private Map<Assessor, Feedback> feedback = new HashMap<>();
 	
@@ -56,10 +54,10 @@ public abstract class Task {
 	
 	
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public int getStudentExtension() {
@@ -73,12 +71,6 @@ public abstract class Task {
 	}
 	public void setMarkerExtension(int markerExtension) {
 		this.markerExtension = markerExtension;
-	}
-	public List<Assessor> getMarkers() {
-		return markers;
-	}
-	public void setMarkers(List<Assessor> markers) {
-		this.markers = markers;
 	}
 	public String getTxtSubmission() {
 		return txtSubmission;
@@ -108,12 +100,7 @@ public abstract class Task {
 	public void addFile(String fileName) {
 		this.fileNames.add(fileName);
 	}
-	
-	public void addMarker(Assessor assessor) {
-		this.getMarkers().add(assessor);
-		assessor.getToMark().add(this);
-	}
-	
+
 	public List<String> getAllUploads() {
 		List<String> allUploads = new ArrayList<String>();
 		allUploads.addAll(fileNames);
@@ -124,6 +111,28 @@ public abstract class Task {
 		fileNames.remove(filePath);
 
 	}
+	
+	public Feedback getIndividualFeedback(Assessor assessor) {
+		return feedback.get(assessor);
+	}
+	
+	public void addMarker(Assessor assessor) {
+		Feedback feedbackTask = new Feedback();
+		feedbackTask.setTask(this);
+		assessor.addTaskFeedback(feedbackTask);
+		feedback.put(assessor, feedbackTask);
+	}
+	
+	public void removeMarker(Assessor assessor) {
+		feedback.remove(assessor);
+		assessor.removeTaskFeedack(feedback.get(assessor));		
+	}
+	
+	public Set<Assessor> getMarkers() {
+		return feedback.keySet();
+	}
+	
+	public abstract Assessment getAssessment();
 	
 	public abstract void accept(TaskVisitor v);
 }

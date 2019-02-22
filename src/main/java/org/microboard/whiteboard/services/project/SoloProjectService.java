@@ -49,6 +49,7 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 		SoloProject newProject = new SoloProject();
 		SoloProject soloProject = editApplyer.applyEdits(newProject, projectDto);
 		UnitDirector creator = unitDirectorService.getLoggedInUser();
+		addProject(newProject);
 		creator.addProject(soloProject);
 		Long id = addProject(soloProject);
 		createSoloProjectUploadFolders(soloProject);

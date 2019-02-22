@@ -58,7 +58,7 @@ public class ProjectTemplateMaker {
 			List<MarkerUserDto> markerDtos = new ArrayList<>();
 			for (SoloTask task : soloAssessment.getTasks()) {
 				
-				for (Assessor marker : task.getMarkers()) {
+				for (Assessor marker : task.getFeedback().keySet()) {
 					MarkerUserDto markerDto;
 					Optional<MarkerUserDto> maybeMarkerDto = findMarker(markerDtos, marker);
 					if (maybeMarkerDto.isPresent()) {

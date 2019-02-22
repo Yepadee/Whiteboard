@@ -32,12 +32,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="task: ${user.toMark}">
-								<td><span th:text="${task.assessment.project.name}"></span></td>
-								<td><span th:text="${task.assessment.name}"></span></td>
-								<td><span th:text="${task.accountable.userName}"></span></td>
-								<td><span th:text="${task.assessment.studentDeadline}" class="warning"></span></td>
-								<td><span th:text="${task.status}"></span></td>
+							<tr th:each="task: ${user.taskFeedback}">
+								<td><span th:text="${taskFeedback.task.assessment.project.name}"></span></td>
+								<td><span th:text="${taskFeedback.task.assessment.name}"></span></td>
+								<td><span th:text="${taskFeedback.task.accountable.userName}"></span></td>
+								<td><span th:text="${taskFeedback.task.assessment.studentDeadline}" class="warning"></span></td>
+								<td><span th:text="${taskFeedback.task.status}"></span></td>
 								<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${task.id})}"
 									class="btn btn-primary btn-xs">View</a></td>
 							</tr>

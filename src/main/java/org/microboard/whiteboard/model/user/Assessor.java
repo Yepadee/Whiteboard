@@ -6,37 +6,40 @@ import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
+import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 
 @DiscriminatorValue("assessor")
 @Entity
 public class Assessor extends User {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2844404820575452793L;
-	@ManyToMany(mappedBy="markers")
-	private List<Task> toMark = new ArrayList<>();
 	
-	public List<Task> getToMark() {
-		return toMark;
+	@OneToMany(mappedBy="marker")
+	private List<Feedback> taskFeedback = new ArrayList<>();
+	
+	
+	public List<Feedback> getTaskFeedback() {
+		return taskFeedback;
 	}
 
-	public void setToMark(List<Task> toMark) {
-		this.toMark = toMark;
+	public void setTaskFeedback(List<Feedback> taskFeedback) {
+		this.taskFeedback = taskFeedback;
 	}
 
-	public void addTaskToMark(Task task) {
-		toMark.add(task);
-		task.getMarkers().add(this);
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void addTaskFeedback(Feedback feedback) {
+		feedback.setMarker(this);
+		taskFeedback.add(feedback);
 	}
 	
-	public void removeTaskToMark(Task task) {
-		task.getMarkers().remove(this);
-		toMark.remove(task);
+	public void removeTaskFeedack(Feedback feedback) {
+		taskFeedback.remove(feedback);
 	}
 	
 	@Override
