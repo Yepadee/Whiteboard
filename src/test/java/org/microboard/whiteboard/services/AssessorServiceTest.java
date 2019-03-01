@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.service_tests;
+package org.microboard.whiteboard.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;

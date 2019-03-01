@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.service_tests;
+package org.microboard.whiteboard.services;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertTrue;
@@ -28,7 +28,7 @@ public class UserServiceTest {
 	private UserService userService;
 	
 	@Test
-	public void getUser_returnsUser() {
+	public void getUserbyName_returnsUser() {
 		User mockUser = new UnitDirector();
 		mockUser.setUserName("admin");
 		

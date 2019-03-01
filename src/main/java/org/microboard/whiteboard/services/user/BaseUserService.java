@@ -35,10 +35,6 @@ public abstract class BaseUserService<T extends User> {
 		return repository.findById(id);
 	}
 
-	public void DeleteAll() {
-		repository.deleteAll();
-	}
-
 	public void updateUser(T newUser) {
 		repository.save(newUser);
 	}
