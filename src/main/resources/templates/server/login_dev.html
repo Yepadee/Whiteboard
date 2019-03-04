@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+<script type="text/javascript" th:src="@{/js/scripts.js}"></script>
+</head>
+<body>
+	<header>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="jumbotron text-center">
+					<h1>Whiteboard</h1>
+					<p>
+						<img th:src="@{/img/login/logo.png}" width="40px" height="40px">
+						The University of Bristol
+					</p>
+				</div>
+				<br>
+			</div>
+		</div>
+	</header>
+
+	<div class="container loginForm col-sm-4 col-sm-push-4">
+		<h2>DEV MODE USER SELECT</h2>
+		<form th:action="@{/login_dev}" method="post" class="form-horizontal">
+			<input type="hidden" class="form-control" id="username" value="admin"
+				name="username"> <input type="hidden" class="form-control"
+				id="password" value="test" name="password"> <input
+				type="submit" value="Admin" class="btn btn-danger" />
+		</form>
+
+		<form th:action="@{/login_dev}" method="post" class="form-horizontal">
+			<input type="hidden" class="form-control" id="username" value="assessor"
+				name="username"> <input type="hidden" class="form-control"
+				id="password" value="test" name="password"> <input
+				type="submit" value="Assessor" class="btn btn-danger" />
+		</form>
+
+		<form th:action="@{/login_dev}" method="post" class="form-horizontal">
+			<input type="hidden" class="form-control" id="username" value="student"
+				name="username"> <input type="hidden" class="form-control"
+				id="password" value="test" name="password"> <input
+				type="submit" value="Student" class="btn btn-danger" />
+		</form>
+	</div>
+</body>
+</html>
