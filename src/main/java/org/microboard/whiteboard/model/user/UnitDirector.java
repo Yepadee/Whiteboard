@@ -13,6 +13,12 @@ import org.microboard.whiteboard.model.user.visitors.UserVisitor;
 @DiscriminatorValue("unit director")
 @Entity
 public class UnitDirector extends Assessor {
+	public UnitDirector() {}
+	
+	public UnitDirector(User user) {
+		super(user);
+	}
+
 	/**
 	 * 
 	 */

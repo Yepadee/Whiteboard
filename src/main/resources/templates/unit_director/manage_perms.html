@@ -11,8 +11,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<ul class="nav navbar-nav navbar-left">
-					<li><h3 th:if="${soloProjectDto.id == null}" >Add New Solo Project</h3></li>
-					<li><h3 th:if="${soloProjectDto.id != null}" >Edit Solo Project</h3></li>
+					<li><h3>Manage Permissions</h3></li>
 				</ul>
 			</div>
 		</nav>
@@ -37,13 +36,13 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-12">
-							<span th:if="${error != null}">
+							<div th:if="${error != null}">
 								<div class="error_message">
 									<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
 									<span class="messageHeader">Error creating new project: </span>
 									<p class="message" th:text="${error}"></p>
 								</div>
-							</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -51,17 +50,16 @@
 					<div class="form-group">
 						<div class="col-sm-4 col-sm-push-2">
 							<label for="selectUnit">Select Unit: </label>
-							<select id="selectUnit" list="selectUnit" th:field="*{unit}" onchange="setUnit.click()"  class="chosen form-control">
+							<select id="selectUnit" list="selectUnit" th:field="*{unit.id}" onchange="setUnit.click()"  class="chosen form-control">
 								<!--  <option th:value="0" text="Please Select" selected disabled hidden>Please Select</option>-->
 								<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
-
-								<option th:each="unit : ${unitList}" th:value="${{unit}}" th:id="${{unit}}" th:text=${unit.unitName}></option>
+								<option th:each="user : ${users}" th:value="${unit.id}" th:text=${unit.unitName}></option>
 							</select>
 						</div>
 					</div>
 										
 					<input type="hidden" th:field="*{id}" th:value="*{id}">
-					<input type="hidden" th:field="*{unit}" th:value="*{unit}">
+					<input type="hidden" th:field="*{unit.cohort}" th:value="*{unit.cohort}">
 					<button style="display: none;" type="submit" id="setUnit" name="setUnit">Set Unit</button>
 					
 					<div class="form-group">
@@ -140,9 +138,9 @@
 											<div class="col-sm-4 col-sm-push-3">
 												<label for="selectMarker">Select a marker:</label>
 
-												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}" class="chosen form-control">
+												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker.id}" class="chosen form-control">
 													<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
-													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
+													<option th:each="assessor : ${assessorList}" th:value="${assessor.id}" th:text=${assessor.userName}></option>
 												</select> 
 
 												

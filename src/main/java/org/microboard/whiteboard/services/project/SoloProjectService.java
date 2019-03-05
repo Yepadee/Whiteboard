@@ -28,9 +28,6 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 	private UnitDirectorService unitDirectorService;
 	
 	public void setProjectDtoUnit(SoloProjectDto projectDto) {
-		long unitId = projectDto.getUnit().getId();
-		Unit unit = unitService.getUnit(unitId);
-		projectDto.setUnit(unit);
 		for (SoloAssessmentDto assessment : projectDto.getAssessments()) {
 			for (MarkerUserDto markerDto : assessment.getMarkerDtos()) {
 				markerDto.setToMark(new ArrayList<>());

@@ -69,18 +69,7 @@ class SecurityConfigurationProd extends WebSecurityConfigurerAdapter  {
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = CustomUserDetailsService.class)
 @Profile("dev")
-class SecurityConfigurationDev extends WebSecurityConfigurerAdapter  {
-
-	@Autowired
-	private UserDetailsService userDetialsService;
-	
-	@Autowired
-	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-		.userDetailsService(userDetialsService)
-		.passwordEncoder(passwordencoder());
-	}
-	
+class SecurityConfigurationDev extends SecurityConfigurationProd  {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -101,15 +90,5 @@ class SecurityConfigurationDev extends WebSecurityConfigurerAdapter  {
 	    .and().csrf().ignoringAntMatchers("/h2-console/**");
 		
 		http.headers().frameOptions().disable();
-	}
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-	    web.ignoring().antMatchers("/javax.faces.resource/**");
-	}
-	
-	@Bean(name="passwordEncoder")
-	public PasswordEncoder passwordencoder() {
-		return new BCryptPasswordEncoder();
 	}
 }

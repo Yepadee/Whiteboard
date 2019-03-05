@@ -14,8 +14,10 @@ public class Student extends User {
 	 */
 	private static final long serialVersionUID = -4005774783951106434L;
 
-	public Student() {
-		
+	public Student() {}
+	
+	public Student(User user) {
+		super(user);
 	}
 	
 	public Student(String name, String password) {

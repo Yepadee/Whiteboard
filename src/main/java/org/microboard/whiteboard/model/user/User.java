@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
 import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.task.Task;
@@ -36,15 +37,25 @@ public abstract class User implements Serializable {
 	private String userName;
 	private String password;
 	
-	@ManyToMany(mappedBy = "members")
+	@ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
 	private List<Group> groups = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "accountable")
+	@OneToMany(mappedBy = "accountable", fetch = FetchType.LAZY)
 	private List<SoloTask> soloTasks = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "cohort")
+	@ManyToMany(mappedBy = "cohort", fetch = FetchType.LAZY)
 	private List<Unit> units = new ArrayList<>();
 	
+	public User() {}
+	
+	public User(User user) {
+		setId(user.getId());
+		setUserName(user.getUserName());
+		setPassword(user.getPassword());
+		setGroups(user.getGroups());
+		setSoloTasks(user.getSoloTasks());
+		setUnits(user.getUnits());
+	}
 	
 	public Long getId() {
 		return id;
@@ -115,20 +126,4 @@ public abstract class User implements Serializable {
 		unit.getCohort().add(this);
 	}
 	
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        User other = (User) obj;
-        return id != null && id.equals(other.getId());
-    }
-
-    public int hashCode() {
-        return 13;
-    }
 }

@@ -113,6 +113,15 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/log")
+	public String getLogPage(Model model) {
+		OutstandingTaskGetter otg = new OutstandingTaskGetter();
+		User user = userService.getLoggedInUser();
+		user.accept(otg);
+		return otg.getResult();
+	}
+	
+	
 	@ModelAttribute("user")
 	public User getUnitDirector() {
 	   return userService.getLoggedInUser();
