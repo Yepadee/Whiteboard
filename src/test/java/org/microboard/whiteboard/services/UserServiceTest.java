@@ -34,9 +34,8 @@ public class UserServiceTest {
 		
 		given(userRepository.findByUserName("admin")).willReturn(Optional.ofNullable(mockUser));
 		
-		Optional<User> maybeUser = userService.getByUserName("admin");
-		assertTrue(maybeUser.isPresent());
-		assertThat(maybeUser.get().getUserName()).isEqualTo("admin");
+		User user = userService.getByUserName("admin");
+		assertThat(user.getUserName()).isEqualTo("admin");
 	}
 	
 	@Test
@@ -52,17 +51,14 @@ public class UserServiceTest {
 		given(userRepository.findByUserName("assessor")).willReturn(Optional.ofNullable(mockAssessor));
 		given(userRepository.findByUserName("student")).willReturn(Optional.ofNullable(mockStudent));
 
-		Optional<User> maybeUser = userService.getByUserName("admin");
-		assertTrue(maybeUser.isPresent());
-		assertThat(maybeUser.get().getClass()).isEqualTo(UnitDirector.class);
+		User user = userService.getByUserName("admin");
+		assertThat(user.getClass()).isEqualTo(UnitDirector.class);
 		
-		maybeUser = userService.getByUserName("assessor");
-		assertTrue(maybeUser.isPresent());
-		assertThat(maybeUser.get().getClass()).isEqualTo(Assessor.class);
+		user = userService.getByUserName("assessor");
+		assertThat(user.getClass()).isEqualTo(Assessor.class);
 		
-		maybeUser = userService.getByUserName("student");
-		assertTrue(maybeUser.isPresent());
-		assertThat(maybeUser.get().getClass()).isEqualTo(Student.class);
+		user = userService.getByUserName("student");
+		assertThat(user.getClass()).isEqualTo(Student.class);
 	}
 
 }

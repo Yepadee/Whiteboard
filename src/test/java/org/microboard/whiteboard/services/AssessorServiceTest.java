@@ -32,10 +32,9 @@ public class AssessorServiceTest {
 		
 		given(assessorRepository.findByUserName("assessor")).willReturn(Optional.ofNullable(mockAssessor));
 		
-		Optional<Assessor> maybeAssessor = assessorService.getByUserName("assessor");
+		Assessor assessor = assessorService.getByUserName("assessor");
 		
-		assertTrue(maybeAssessor.isPresent());
-		assertThat(maybeAssessor.get().getUserName()).isEqualTo("assessor");
+		assertThat(assessor.getUserName()).isEqualTo("assessor");
 	}
 
 }

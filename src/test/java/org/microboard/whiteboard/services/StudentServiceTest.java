@@ -31,10 +31,9 @@ public class StudentServiceTest {
 		
 		given(studentRepository.findByUserName("student")).willReturn(Optional.ofNullable(mockStudent));
 		
-		Optional<Student> maybeStudent = studentService.getByUserName("student");
-		
-		assertTrue(maybeStudent.isPresent());
-		assertThat(maybeStudent.get().getUserName()).isEqualTo("student");
+		Student student = studentService.getByUserName("student");
+
+		assertThat(student.getUserName()).isEqualTo("student");
 	}
 
 }
