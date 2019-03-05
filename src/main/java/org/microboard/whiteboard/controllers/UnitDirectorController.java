@@ -1,6 +1,10 @@
 package org.microboard.whiteboard.controllers;
 
+import java.util.List;
+
 import org.microboard.whiteboard.dto.project.SoloProjectDto;
+import org.microboard.whiteboard.model.user.Assessor;
+import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.project.GroupProjectService;
@@ -17,7 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/unit_director")
@@ -53,13 +59,24 @@ public class UnitDirectorController {
 	
 	@GetMapping("/manage_perms")
 	public String managePermissionsPage(Model model) {
-		model.addAttribute("users", userService.getAllUsers());
+		model.addAttribute("unitDirectors", unitDirectorService.getAllUsers());
+		model.addAttribute("assessors", assessorService.getAllUsers());
+		model.addAttribute("students", studentService.getAllUsers());
 		return "unit_director/manage_perms";
 	}
 	
-	@PostMapping(value="/manage_perms", params={"assessor"})
-	public String setAssessor(Model model, User user) {
-		assessorService.changePerms(user);
+	@PostMapping(value="/manage_perms", params={"setAssessor"})
+	public String setAssessor(Model model, @RequestParam List<Assessor> selectedAssessors, @RequestParam List<Student> selectedStudents) {
+		/*for (UnitDirector unitDirector : selectedUnitDirectors) {
+			assessorService.changePerms(unitDirector);
+		}*/
+		for (Assessor assessor : selectedAssessors) {
+			assessorService.changePerms(assessor);
+		}
+		for (Student student : selectedStudents) {
+			assessorService.changePerms(student);
+		}
+		
 	    return "unit_director/manage_perms";
 	}
 	
