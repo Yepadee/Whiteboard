@@ -30,6 +30,13 @@ public class SoloProject extends Project {
 		this.assessments.add(assessment);
 	}
 	
+	public boolean equals(SoloProject project) {
+		boolean equals = super.equals(project);
+		equals = equals && assessments.equals(project.getAssessments());
+		
+		return equals;
+	}
+	
 	@Override
 	public void accept(ProjectVisitor v) {
 		v.visit(this);

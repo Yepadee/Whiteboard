@@ -128,8 +128,8 @@ public abstract class Task {
 		assessor.removeTaskFeedack(feedback.get(assessor));		
 	}
 	
-	public Set<Assessor> getMarkers() {
-		return feedback.keySet();
+	public List<Assessor> getMarkers() {
+		return new ArrayList<>(feedback.keySet());
 	}
 	
 	public abstract Assessment getAssessment();

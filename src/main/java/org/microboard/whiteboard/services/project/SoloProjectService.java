@@ -44,12 +44,12 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 	public Long addProject(SoloProjectDto projectDto) {
 		ProjectEditApplyer editApplyer = new ProjectEditApplyer();
 		SoloProject newProject = new SoloProject();
-		SoloProject soloProject = editApplyer.applyEdits(newProject, projectDto);
+		editApplyer.applyEdits(newProject, projectDto);
 		UnitDirector creator = unitDirectorService.getLoggedInUser();
 		
-		creator.addProject(soloProject);
-		Long id = addProject(soloProject);
-		createSoloProjectUploadFolders(soloProject);
+		creator.addProject(newProject);
+		Long id = addProject(newProject);
+		createSoloProjectUploadFolders(newProject);
 		
 		return id;
 	}
@@ -57,8 +57,8 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 	public void updateProject(SoloProjectDto projectDto) {
 		ProjectEditApplyer editApplyer = new ProjectEditApplyer();
 		SoloProject project = getProject(projectDto.getId());
-		SoloProject soloProject = editApplyer.applyEdits(project, projectDto);
-		updateProject(soloProject);	
+		editApplyer.applyEdits(project, projectDto);
+		updateProject(project);	
 	}
 	
 	private void createSoloProjectUploadFolders(SoloProject project) {

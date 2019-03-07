@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.project;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -26,24 +27,24 @@ import javax.persistence.DiscriminatorType;
 public abstract class Project {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String name;
 	private String description;
 	
 	@ManyToOne(cascade = {CascadeType.REFRESH})
 	private UnitDirector creator;
 	@ManyToMany
-	private List<UnitDirector> helpers;
+	private List<UnitDirector> helpers = new ArrayList<>();
 	
 	@ManyToOne
 	@JoinColumn(name="unit_id", nullable=false)
 	private Unit unit;
 	
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -75,6 +76,19 @@ public abstract class Project {
 	}
 	public void setUnit(Unit unit) {
 		this.unit = unit;
+	}
+	
+	public boolean equals(Project project) {
+		boolean equal = true;
+		
+		equal = equal && id == project.getId();
+		equal = equal && name == project.getName();
+		equal = equal && description == project.getDescription();
+		equal = equal && creator.getId() == project.getCreator().getId();
+		equal = equal && helpers.equals(project.getHelpers());
+		equal = equal && unit.equals(project.getUnit());
+		
+		return equal;
 	}
 	
 	public abstract void accept(ProjectVisitor v);

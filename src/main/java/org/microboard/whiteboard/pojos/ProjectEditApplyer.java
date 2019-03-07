@@ -50,7 +50,7 @@ public class ProjectEditApplyer {
 		assessment.setWeight(weight);
 	}
 	
-	public SoloProject applyEdits(SoloProject project, SoloProjectDto edits) {
+	public void applyEdits(SoloProject project, SoloProjectDto edits) {
 		List<SoloAssessment> oldAssessments = new ArrayList<>(project.getAssessments());
 		List<SoloAssessment> presentAssessments = new ArrayList<>();
 		
@@ -81,7 +81,7 @@ public class ProjectEditApplyer {
 					
 					//Add markers to each task
 					for (SoloTask soloTask : assessment.getTasks()) {
-						Set<Assessor> oldMarkers = soloTask.getMarkers();
+						List<Assessor> oldMarkers = soloTask.getMarkers();
 						List<Assessor> presentMarkers = new ArrayList<>();
 						
 						User accountable = soloTask.getAccountable();
@@ -143,8 +143,6 @@ public class ProjectEditApplyer {
 		List<SoloAssessment> removed = new ArrayList<>(oldAssessments);
 		removed.removeAll(presentAssessments);
 		project.getAssessments().removeAll(removed);
-		
-		return project;
 	}
 	
 	private Optional<SoloAssessment> findById(List<SoloAssessment> soloAssessments, Long id) {
