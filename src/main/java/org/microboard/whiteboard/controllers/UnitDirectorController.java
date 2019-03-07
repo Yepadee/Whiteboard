@@ -3,10 +3,12 @@ package org.microboard.whiteboard.controllers;
 import java.util.List;
 
 import org.microboard.whiteboard.dto.project.SoloProjectDto;
+import org.microboard.whiteboard.dto.user.SelectedUsersDto;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
+import org.microboard.whiteboard.model.user.visitors.UserSetAssessorValidator;
 import org.microboard.whiteboard.services.project.GroupProjectService;
 import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
@@ -59,22 +61,29 @@ public class UnitDirectorController {
 	
 	@GetMapping("/manage_perms")
 	public String managePermissionsPage(Model model) {
-		model.addAttribute("unitDirectors", unitDirectorService.getAllUsers());
-		model.addAttribute("assessors", assessorService.getAllUsers());
-		model.addAttribute("students", studentService.getAllUsers());
+		model.addAttribute("selectedUsersDto", new SelectedUsersDto());
+		model.addAttribute("users", userService.getAllUsers());
 		return "unit_director/manage_perms";
 	}
 	
 	@PostMapping(value="/manage_perms", params={"setAssessor"})
-	public String setAssessor(Model model, @RequestParam List<Assessor> selectedAssessors, @RequestParam List<Student> selectedStudents) {
+	public String setAssessor(Model model, SelectedUsersDto selectedUsersDto) {
 		/*for (UnitDirector unitDirector : selectedUnitDirectors) {
 			assessorService.changePerms(unitDirector);
 		}*/
-		for (Assessor assessor : selectedAssessors) {
-			assessorService.changePerms(assessor);
-		}
-		for (Student student : selectedStudents) {
-			assessorService.changePerms(student);
+		UserSetAssessorValidator validator = new UserSetAssessorValidator();
+		for (User user : selectedUsersDto.getSelectedUsers()) {
+			user.accept(validator);
+			
+			boolean valid = validator.getResult();
+			
+			if (valid) {
+				//assessorService.changePerms(user);
+				//userService.deleteUser(user.getId());
+			} else {
+				System.out.println("Error setting assessor");
+			}
+			
 		}
 		
 	    return "unit_director/manage_perms";

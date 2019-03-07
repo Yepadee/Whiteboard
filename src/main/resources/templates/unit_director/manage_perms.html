@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <script type="text/javascript">
-
+	
 </script>
 <head th:replace="page_elements/header_unit_director:: head"></head>
 <body>
@@ -16,42 +16,42 @@
 			</div>
 		</nav>
 	</div>
-	
+
 	<div class="content">
 		<!-- <div id="showSolo" class="project_selected"> -->
-			<div class="row">
-				<form name="newProject" class="form-horizontal" th:action="@{/unit_director/manage_perms}" method="post">
-						<!--<select class="toMark" id="selectedUnitDirectors" multiple="multiple">
-							<option th:each="unitDirector : ${unitDirectors}" th:value="${{unitDirector}}" th:id="${{unitDirector}}" th:text="${unitDirector.userName}"></option>
-						</select>  -->
-						
-						<select class="toMark" id="selectedAssessors" name="selectedAssessors" multiple="multiple">
-							<option th:each="assessor : ${assessors}" th:value="${{assessor}}" th:id="${{assessor}}" th:text="${assessor.userName}"></option>
-						</select>
-						
-						<select class="toMark" id="selectedStudents" name="selectedStudents" multiple="multiple">
-							<option th:each="student : ${students}" th:value="${{student}}" th:id="${{student}}" th:text="${student.userName}"></option>
-						</select>
-						
-						<button type="submit" class="btn btn-black" name="setStudent">Set Student</button>
-						<button type="submit" class="btn btn-black" name="setAssessor">Set Assessor</button>
-						<button type="submit" class="btn btn-black" name="setUnitDirector">Set UnitDirector</button>
-						
-				</form>
-			</div>
+		<div class="row">
+			<form name="newProject" class="form-horizontal"
+				th:action="@{/unit_director/manage_perms}"
+				th:object="${selectedUsersDto}" method="post">
+				<select id="selectUnit" list="selectUnit" th:field="*{selectedUsers}"
+				 class="chosen form-control">
+					<option th:value="null" hidden="hidden" style="display: none;"
+						selected>Please Select</option>
+					<option th:each="user : ${users}" th:value="${{user}}"
+						th:id="${{user}}" th:text=${user.userName}></option>
+				</select>
+
+
+				<button type="submit" class="btn btn-black" name="setStudent">Set
+					Student</button>
+				<button type="submit" class="btn btn-black" name="setAssessor">Set
+					Assessor</button>
+				<button type="submit" class="btn btn-black" name="setUnitDirector">Set
+					UnitDirector</button>
+
+			</form>
 		</div>
-		
-		<script type="text/javascript">
-				
-				$(function() {
-				    $('.toMark').multiselect({
-				    	nonSelectedText: 'Add Users',
-				        includeSelectAllOption: true,
-				        enableFiltering: true,
-				        maxHeight: 300
-				    });
-				});
-				
-		</script>
+	</div>
+
+	<script type="text/javascript">
+		$(function() {
+			$('.toMark').multiselect({
+				nonSelectedText : 'Add Users',
+				includeSelectAllOption : true,
+				enableFiltering : true,
+				maxHeight : 300
+			});
+		});
+	</script>
 </body>
 </html>
