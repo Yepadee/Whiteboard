@@ -1,11 +1,12 @@
 package org.microboard.whiteboard.services;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,13 +29,13 @@ public class UnitServiceTest {
 	@Test
 	public void addUnit_addsUnit() {
 		Unit mockUnit = new Unit();
-		mockUnit.setId((long)1);
+		mockUnit.setId(1L);
 		mockUnit.setUnitName("Test Unit");
 		
 		unitService.addUnit(mockUnit);
-		given(unitRepository.findById((long)1)).willReturn(Optional.ofNullable(mockUnit));
+		given(unitRepository.findById(1L)).willReturn(Optional.ofNullable(mockUnit));
 		
-		Unit unit = unitService.getUnit((long)1);
+		Unit unit = unitService.getUnit(1L);
 		assertThat(unit).isEqualTo(mockUnit);
 	}
 	
@@ -53,30 +54,33 @@ public class UnitServiceTest {
 	@Test
 	public void getUnit_returnsUnit() {
 		Unit mockUnit = new Unit();
-		mockUnit.setId((long)2);
+		mockUnit.setId(2L);
 		mockUnit.setUnitName("Test Unit");
 		
-		given(unitRepository.findById((long)2)).willReturn(Optional.ofNullable(mockUnit));
+		given(unitRepository.findById(2L)).willReturn(Optional.ofNullable(mockUnit));
 
-		Unit unit = unitService.getUnit((long)2);
+		Unit unit = unitService.getUnit(2L);
 		assertThat(unit).isEqualTo(mockUnit);
 	}
 	
 	@Test
 	public void getAllUnits_returnsUnits() {
 		Unit mockUnit1 = new Unit();
-		mockUnit1.setId((long)1);
+		mockUnit1.setId(1L);
 		Unit mockUnit2 = new Unit();
-		mockUnit2.setId((long)2);
+		mockUnit2.setId(2L);
 		Unit mockUnit3 = new Unit();
-		mockUnit3.setId((long)3);
+		mockUnit3.setId(3L);
 		
-		given(unitRepository.findById((long)1)).willReturn(Optional.ofNullable(mockUnit1));
-		given(unitRepository.findById((long)2)).willReturn(Optional.ofNullable(mockUnit2));
-		given(unitRepository.findById((long)3)).willReturn(Optional.ofNullable(mockUnit3));
+		Set<Unit> mockUnits = new HashSet<>();
+		mockUnits.add(mockUnit1);
+		mockUnits.add(mockUnit2);
+		mockUnits.add(mockUnit3);
 		
+		given(unitRepository.findAll()).willReturn(mockUnits);
+		
+
 		List<Unit> units = unitService.getAllUnits();
-		//getallunits returns empty list; is the repository connected properly?
 		assertThat(units.size()).isEqualTo(3);
 		assertThat(units.get(0)).isEqualTo(mockUnit1);
 	}
