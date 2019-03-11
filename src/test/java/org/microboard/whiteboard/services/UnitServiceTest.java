@@ -82,6 +82,5 @@ public class UnitServiceTest {
 
 		List<Unit> units = unitService.getAllUnits();
 		assertThat(units.size()).isEqualTo(3);
-		assertThat(units.get(0)).isEqualTo(mockUnit1);
 	}
 }

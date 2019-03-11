@@ -129,28 +129,20 @@ public class UserServiceTest {
 		assertTrue(mockUsers.contains(mockStudent3));
 		}
 	
-	/*
-	@Test
+	
+	@Test(expected = RuntimeException.class)
 	public void deleteUser_removesFromRepository() {
-		User deleteUser = new Student();
-		deleteUser.setUserName("delete");
-		deleteUser.setId(10L);
-		userService.addUser(deleteUser);
-		User remainUser = new Student();
-		remainUser.setUserName("remain");
-		remainUser.setId(2L);
-		userService.addUser(remainUser);
+		User mockStudent = new Student();
+		mockStudent.setId(1L);
+		mockStudent.setUserName("student");
 		
-		given(userRepository.findByUserName("delete")).willReturn(Optional.ofNullable(deleteUser));
-		given(userRepository.findByUserName("remain")).willReturn(Optional.ofNullable(remainUser));
-
-		userService.deleteUser(10L);
-
-		Optional<User> deletedUser = userRepository.findByUserName("delete");
-		//test fails; is the repository connected properly?
-		assertThat(deletedUser.isPresent()).isEqualTo(false);
+		userService.addUser(mockStudent);
+		
+		userService.deleteUser(1L);
+		
+		User deletedUser = userService.getByUserName("student");
 	}
-	*/
+	
 	
 	@Test
 	public void updateUser_overwritesIfUserExists() {
