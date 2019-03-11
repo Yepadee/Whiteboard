@@ -66,15 +66,18 @@ public class UnitDirectorController {
 		for (User user : selectedUsersDto.getSelectedUsers()) {
 			user.accept(validator);
 			boolean valid = validator.getResult();
-			if (valid && getUnitDirector().getId() != user.getId()) {
-				userService.detachUser(user);
-				userService.changePerms(user.getId(), newPerms);
-				User assessor = userService.getUser(user.getId());
-				userService.persistUser(assessor);	
-
+			if (valid) {
+				if (getUnitDirector().getId() != user.getId()) {
+					userService.detachUser(user);
+					userService.changePerms(user.getId(), newPerms);
+					User assessor = userService.getUser(user.getId());
+					userService.persistUser(assessor);	
+				} else {
+					error = true;
+					errorMsg += "You may not change your own permissions.";
+				}
 			} else {
 				error = true;
-				errorMsg += "You may not change your own permissions.";
 			}
 		}
 		if (error) {
