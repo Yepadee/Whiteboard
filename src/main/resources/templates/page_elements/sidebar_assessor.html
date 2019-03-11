@@ -1,0 +1,49 @@
+<div class="sidebar" th:fragment="sidebar">
+
+	<img th:src="@{/img/logo.png}" src="./img/logo.png" class="logo">
+	<div class="nav-profile">
+		<div class="profile-image">
+			<img th:src="@{/img/no-profile-photo.jpg}"
+				src="./img/no-profile-photo.jpg" alt="profile image"
+				class="img-circle">
+		</div>
+		<div class="text-wrapper">
+			<p class="profile-name">
+				<span th:text="${user.userName}"></span>
+			</p>
+			<small class="designation text-muted">Assessor</small> <span
+				class="glyphicon glyphicon-asterisk"></span>
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+	<div class="form-group">
+		<hr class="col-sm-12" />
+	</div>
+	<div class="clearfix"></div>
+	<a href="/" class="allProject"><span
+		class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp; Outstanding
+		Tasks</a>
+	<div class="clearfix"></div>
+	<div class="form-group">
+		<hr class="col-sm-12" />
+	</div>
+	<div class="clearfix"></div>
+    <br>
+
+	<a href="/"> <span class="glyphicon glyphicon-briefcase"></span> <span
+		class="sidebar-element">Completed Tasks</span>
+	</a> <a href="/unit_director/log"> <span
+		class="glyphicon glyphicon-edit"></span> <span class="sidebar-element">View
+			Log</span>
+	</a>
+
+	<div class="form-group">
+		<hr class="col-sm-12" />
+	</div>
+	<a class="logout" href="/logout"> <span
+		class="glyphicon glyphicon-log-out"></span> <span class="">Log
+			Out</span>
+	</a>
+
+</div>

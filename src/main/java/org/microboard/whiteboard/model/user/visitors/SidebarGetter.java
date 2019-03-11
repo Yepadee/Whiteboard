@@ -19,7 +19,7 @@ public class SidebarGetter extends UserVisitor {
 
 	@Override
 	public void visit(Assessor assessor) {
-		result = "page_elements/sidebar_student"; //TODO
+		result = "page_elements/sidebar_assessor"; //TODO
 	}
 
 	@Override

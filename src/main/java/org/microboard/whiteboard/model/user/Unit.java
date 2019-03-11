@@ -3,6 +3,7 @@ package org.microboard.whiteboard.model.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +17,7 @@ public class Unit {
 	private String unitName;
 	private String unitCode;
 	
-	@ManyToMany
+	@ManyToMany()
 	private List<User> cohort = new ArrayList<>();
 
 	public Long getId() {
@@ -54,6 +55,11 @@ public class Unit {
 	public void addUser(User user) {
 		user.getUnits().add(this);
 		cohort.add(user);
+	}
+	
+	public void removeUser(User user) {
+		user.getUnits().remove(this);
+		cohort.remove(user);	
 	}
 	
 }

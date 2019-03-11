@@ -7,16 +7,42 @@ import org.microboard.whiteboard.model.user.User;
 
 public class SelectedUsersDto {
 	
-	private List<User> selectedUsers = new ArrayList<>();
+	private String newPerms;
+	private List<User> selectedStudents = new ArrayList<>();
+	private List<User> selectedAssessors = new ArrayList<>();
+	private List<User> selectedUnitDirectors = new ArrayList<>();
+	
+	public String getNewPerms() {
+		return newPerms;
+	}
+	public void setNewPerms(String newPerms) {
+		this.newPerms = newPerms;
+	}
+	public List<User> getSelectedStudents() {
+		return selectedStudents;
+	}
+	public void setSelectedStudents(List<User> selectedStudents) {
+		this.selectedStudents = selectedStudents;
+	}
+	public List<User> getSelectedAssessors() {
+		return selectedAssessors;
+	}
+	public void setSelectedAssessors(List<User> selectedAssessors) {
+		this.selectedAssessors = selectedAssessors;
+	}
+	public List<User> getSelectedUnitDirectors() {
+		return selectedUnitDirectors;
+	}
+	public void setSelectedUnitDirectors(List<User> selectedUnitDirectors) {
+		this.selectedUnitDirectors = selectedUnitDirectors;
+	}
 
 	public List<User> getSelectedUsers() {
-		return selectedUsers;
-	}
+		List<User> selected = new ArrayList<>();
+		selected.addAll(selectedStudents);
+		selected.addAll(selectedAssessors);
+		selected.addAll(selectedUnitDirectors);
 
-	public void setSelectedUsers(List<User> selectedUsers) {
-		this.selectedUsers = selectedUsers;
+		return selected;
 	}
-	
-	
-	
 }

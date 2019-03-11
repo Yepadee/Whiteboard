@@ -38,5 +38,9 @@ public class UnitService {
 		repository.findAll().forEach(units::add);
 		return units;
 	}
+
+	public void update(Unit unit) {
+		repository.save(unit);
+	}
 	
 }
