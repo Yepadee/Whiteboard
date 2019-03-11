@@ -1,42 +1,26 @@
 package org.microboard.whiteboard.controllers;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
-import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.dto.user.SelectedUsersDto;
-import org.microboard.whiteboard.model.user.Assessor;
-import org.microboard.whiteboard.model.user.Student;
-import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
-import org.microboard.whiteboard.model.user.visitors.UserSetAssessorValidator;
+import org.microboard.whiteboard.model.user.visitors.UserPermChangeValidator;
 import org.microboard.whiteboard.services.project.GroupProjectService;
 import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.StudentService;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
-import org.microboard.whiteboard.services.user.UnitService;
 import org.microboard.whiteboard.services.user.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/unit_director")
 public class UnitDirectorController {
-	private Logger logger = LoggerFactory.getLogger(UnitDirectorController.class);
-
 	@Autowired
 	private UserService userService;
 	
@@ -54,9 +38,6 @@ public class UnitDirectorController {
 	
 	@Autowired
 	private GroupProjectService groupProjectService;
-	
-	@Autowired
-	private UnitService unitService;
 	
 	
 	@GetMapping("/projects")
@@ -78,25 +59,34 @@ public class UnitDirectorController {
 	
 	@PostMapping(value="/manage_perms")
 	public String setAssessor(Model model, SelectedUsersDto selectedUsersDto) {
-		UserSetAssessorValidator validator = new UserSetAssessorValidator();
+		String newPerms = selectedUsersDto.getNewPerms();
+		UserPermChangeValidator validator = new UserPermChangeValidator(newPerms);
+		boolean error = false;
+		String errorMsg = "";
 		for (User user : selectedUsersDto.getSelectedUsers()) {
 			user.accept(validator);
-			
 			boolean valid = validator.getResult();
-			
-			if (valid) {
+			if (valid && getUnitDirector().getId() != user.getId()) {
 				userService.detachUser(user);
-				userService.changePerms(user.getId(), selectedUsersDto.getNewPerms());
+				userService.changePerms(user.getId(), newPerms);
 				User assessor = userService.getUser(user.getId());
-				userService.persistUser(assessor);
-				
+				userService.persistUser(assessor);	
+
 			} else {
-				System.out.println("Error setting " +  selectedUsersDto.getNewPerms() + ".");
+				error = true;
+				errorMsg += "You may not change your own permissions.";
 			}
-			
+		}
+		if (error) {
+			errorMsg += validator.getErrorMsg();
+			model.addAttribute("errorMsg", errorMsg);
 		}
 		
-	    return "redirect:manage_perms";
+		model.addAttribute("selectedUsersDto", new SelectedUsersDto());
+		model.addAttribute("students", studentService.getAllUsers());
+		model.addAttribute("assessors", assessorService.getAllUsers());
+		model.addAttribute("unitDirectors", unitDirectorService.getAllUsers());
+	    return "unit_director/manage_perms";
 	}
 	
 	

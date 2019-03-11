@@ -23,46 +23,45 @@
 			<form name="newProject" class="form-horizontal"
 				th:action="@{/unit_director/manage_perms}"
 				th:object="${selectedUsersDto}" method="post">
-				
-				<label for="selectStudents">Students: </label>
-				<select class="toMark" id="selectStudents"
-					th:field="*{selectedStudents}"
+
+				<label for="selectStudents">Students: </label> <select
+					class="toMark" id="selectStudents" th:field="*{selectedStudents}"
 					multiple="multiple">
 					<option th:value="null" hidden="hidden" style="display: none;"
 						selected>Please Select</option>
 					<option th:each="student : ${students}" th:value="${{student}}"
 						th:id="${{student}}" th:text=${student.userName}></option>
-				</select> 
-				<label for="selectAssessors">Assessors: </label>	
-					
-				<select class="toMark" id="selectAssessors"
-					th:field="*{selectedAssessors}"
+				</select> <label for="selectAssessors">Assessors: </label> <select
+					class="toMark" id="selectAssessors" th:field="*{selectedAssessors}"
 					multiple="multiple">
 					<option th:value="null" hidden="hidden" style="display: none;"
 						selected>Please Select</option>
 					<option th:each="assessor : ${assessors}" th:value="${{assessor}}"
 						th:id="${{assessor}}" th:text=${assessor.userName}></option>
-				</select>
-				
-				<label for="selectUnitDirectors">Unit Directors: </label>		
-				<select class="toMark" id="selectUnitDirectors"
-					th:field="*{selectedUnitDirectors}"
-					multiple="multiple">
+				</select> <label for="selectUnitDirectors">Unit Directors: </label> <select
+					class="toMark" id="selectUnitDirectors"
+					th:field="*{selectedUnitDirectors}" multiple="multiple">
 					<option th:value="null" hidden="hidden" style="display: none;"
 						selected>Please Select</option>
-					<option th:each="unitDirector : ${unitDirectors}" th:value="${{unitDirector}}"
-						th:id="${{unitDirector}}" th:text=${unitDirector.userName}></option>
-						
-				</select>
-				
-				<label for="selectPerms">New Permissions: </label>
-				<select class="chosen form-control" id="selectPerms" th:field="*{newPerms}">
+					<option th:each="unitDirector : ${unitDirectors}"
+						th:value="${{unitDirector}}" th:id="${{unitDirector}}"
+						th:text=${unitDirector.userName}></option>
+
+				</select> <label for="selectPerms">New Permissions: </label> <select
+					class="chosen form-control" id="selectPerms" th:field="*{newPerms}">
 					<option th:value="student">Student</option>
 					<option th:value="assessor">Assessor</option>
 					<option th:value="unit_director">Unit Director</option>
 				</select>
-
-				<button type="submit" class="btn btn-black">Change Permissions</button>
+				<div th:if="${errorMsg != null}">
+					<div class="error_message">
+						<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp; <span
+							class="messageHeader">Error changing permissions: </span>
+						<p class="message" th:text="${errorMsg}"></p>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-black">Change
+					Permissions</button>
 
 			</form>
 		</div>

@@ -16,8 +16,6 @@ import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
 import org.microboard.whiteboard.services.user.UnitService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -34,9 +32,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/unit_director")
 public class SoloProjectController {
-	
-	private Logger logger = LoggerFactory.getLogger(SoloProjectController.class);
-	
 	private String newSoloProjectPath = "unit_director/new_solo_project";
 	private String editSoloProjectPath = "unit_director/edit_solo_project/";
 	

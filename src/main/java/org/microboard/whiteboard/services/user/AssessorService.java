@@ -1,8 +1,6 @@
 package org.microboard.whiteboard.services.user;
 
 import org.microboard.whiteboard.model.user.Assessor;
-import org.microboard.whiteboard.model.user.Unit;
-import org.microboard.whiteboard.model.user.User;
 import org.springframework.stereotype.Service;
 
 @Service

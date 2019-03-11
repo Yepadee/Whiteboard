@@ -6,15 +6,12 @@ import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskFeedbackAccessValidator;
-import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
 import org.microboard.whiteboard.model.user.visitors.OutstandingTaskGetter;
 import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +28,6 @@ import org.springframework.ui.Model;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
-	private Logger logger = LoggerFactory.getLogger(UserController.class);
-	
 	private String accessDeniedPage = "server/access_denied";
 	private String taskSubmissionPage = "user/task_submission";
 	

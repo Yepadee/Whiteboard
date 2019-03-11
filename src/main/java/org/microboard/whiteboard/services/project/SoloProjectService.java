@@ -9,21 +9,16 @@ import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.SoloProject;
-import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.pojos.ProjectEditApplyer;
 import org.microboard.whiteboard.pojos.ProjectTemplateMaker;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
-import org.microboard.whiteboard.services.user.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SoloProjectService extends BaseProjectService<SoloProject> {
-	@Autowired
-	private UnitService unitService;
-	
 	@Autowired
 	private UnitDirectorService unitDirectorService;
 	

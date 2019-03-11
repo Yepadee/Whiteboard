@@ -8,7 +8,6 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Table;
 import javax.persistence.Version;
 
 import org.microboard.whiteboard.model.task.SoloTask;

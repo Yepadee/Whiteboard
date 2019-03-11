@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import org.microboard.whiteboard.dto.assessment.SoloAssessmentDto;
 import org.microboard.whiteboard.dto.project.ProjectDto;
 import org.microboard.whiteboard.dto.project.SoloProjectDto;

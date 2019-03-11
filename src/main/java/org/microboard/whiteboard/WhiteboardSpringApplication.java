@@ -1,18 +1,10 @@
 package org.microboard.whiteboard;
 
-import org.microboard.whiteboard.model.assessment.GroupAssessment;
-import org.microboard.whiteboard.model.assessment.SoloAssessment;
-import org.microboard.whiteboard.model.project.GroupProject;
-import org.microboard.whiteboard.model.project.SoloProject;
-import org.microboard.whiteboard.model.task.GroupTask;
-import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
-import org.microboard.whiteboard.model.user.Group;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
-import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.UnitService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -32,9 +23,6 @@ public class WhiteboardSpringApplication {
 	}
 	@Autowired
     private UserService userService;
-	
-	@Autowired
-    private ProjectService projectService;
 	
 	@Autowired
     private UnitService unitService;

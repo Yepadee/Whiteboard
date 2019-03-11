@@ -37,13 +37,13 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm-12">
-							<span th:if="${error != null}">
+							<div th:if="${error != null}">
 								<div class="error_message">
 									<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
 									<span class="messageHeader">Error creating new project: </span>
 									<p class="message" th:text="${error}"></p>
 								</div>
-							</span>
+							</div>
 						</div>
 					</div>
 				</div>
