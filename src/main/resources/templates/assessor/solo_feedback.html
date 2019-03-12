@@ -48,6 +48,7 @@
 					</table>
 				</div>
 			</div>
+			<form th:action="@{/assessor/feedback/{taskId}(taskId=${task.id})}" method="post" id="feedbackSubmissionForm" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-sm-8 table-wrapper">
 					<h1 th:text="Feedback"></h1>
@@ -58,6 +59,7 @@
 						type="submit" value="Submit" />
 				</div>
 			</div>
+			</form>
 			<div class="row">
 				<div class="col-sm-8 table-wrapper">
 					<h2>Feedback Files:</h2>
