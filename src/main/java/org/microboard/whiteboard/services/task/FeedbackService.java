@@ -71,13 +71,17 @@ public class FeedbackService {
 		
 		for (MultipartFile file : files) {
 			if (!file.isEmpty() && !file.equals(null)) {
-				Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
-				Files.write(fileNameAndPath, file.getBytes());
-				feedback.addFile(path + file.getOriginalFilename());
+				if (file.getSize() < 524288000) {
+					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
+					Files.write(fileNameAndPath, file.getBytes());
+					feedback.addFile(path + file.getOriginalFilename());
+				}
+				else {
+					System.out.println("File size exceeded for file " + path + file.getOriginalFilename());
+					System.out.println("This file has size " + file.getSize());
+				}
 			}
-		
 		}
-		
 		feedback.setTxtFeedback(comments);
 		updateFeedback(feedback);
 	}
