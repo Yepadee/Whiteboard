@@ -159,13 +159,13 @@ public class ProjectTemplateTest {
 		gp.addAssessment(ga2);
 		
 		
-		GroupTask gt1 = new GroupTask();
+		GroupTask gt1 = new GroupTask(g);
 		gt1.setStatus("new");
 		g.addTask(gt1);
 		ga1.addTask(gt1);
 		
 		
-		GroupTask gt2 = new GroupTask();
+		GroupTask gt2 = new GroupTask(g);
 		gt2.setStatus("new");
 		g.addTask(gt2);
 		ga2.addTask(gt2);

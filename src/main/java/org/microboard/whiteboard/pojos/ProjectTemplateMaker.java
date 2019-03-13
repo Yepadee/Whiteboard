@@ -6,14 +6,20 @@ import java.util.List;
 import java.util.Optional;
 
 import org.microboard.whiteboard.dto.assessment.AssessmentDto;
+import org.microboard.whiteboard.dto.assessment.GroupAssessmentDto;
 import org.microboard.whiteboard.dto.assessment.SoloAssessmentDto;
+import org.microboard.whiteboard.dto.project.GroupProjectDto;
 import org.microboard.whiteboard.dto.project.ProjectDto;
 import org.microboard.whiteboard.dto.project.SoloProjectDto;
+import org.microboard.whiteboard.dto.user.MarkerGroupDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.model.assessment.Assessment;
+import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
+import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.SoloProject;
+import org.microboard.whiteboard.model.task.GroupTask;
 import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Unit;
@@ -60,7 +66,7 @@ public class ProjectTemplateMaker {
 				
 				for (Assessor marker : task.getFeedback().keySet()) {
 					MarkerUserDto markerDto;
-					Optional<MarkerUserDto> maybeMarkerDto = findMarker(markerDtos, marker);
+					Optional<MarkerUserDto> maybeMarkerDto = findSoloMarker(markerDtos, marker);
 					if (maybeMarkerDto.isPresent()) {
 						markerDto = maybeMarkerDto.get();
 					} else {
@@ -71,14 +77,52 @@ public class ProjectTemplateMaker {
 					markerDto.getToMark().add(task.getAccountable());
 				}
 			}
-			assessmentTemplate.setMarkerDtos(markerDtos);
+			assessmentTemplate.setSoloMarkerDtos(markerDtos);
 			template.getAssessments().add(assessmentTemplate);
 		}
 		
 		return template;
 	}
 		
-	private Optional<MarkerUserDto> findMarker(final List<MarkerUserDto> markerDtos, final Assessor marker){
+	private Optional<MarkerUserDto> findSoloMarker(final List<MarkerUserDto> markerDtos, final Assessor marker){
+		return markerDtos.stream().filter(mDto -> mDto.getMarker().equals(marker)).findFirst();
+	}
+	
+	public GroupProjectDto getTemplate(GroupProject groupProject) {
+		GroupProjectDto template = new GroupProjectDto();
+		
+		template.setGroups(groupProject.getGroups());
+		
+		fillCoreProjectTemplate(groupProject, template);
+		
+		for (GroupAssessment soloAssessment : groupProject.getAssessments()) {
+			GroupAssessmentDto assessmentTemplate = new GroupAssessmentDto();
+			fillCoreAssessmentTemplate(soloAssessment, assessmentTemplate);
+			
+			List<MarkerGroupDto> markerDtos = new ArrayList<>();
+			for (GroupTask task : soloAssessment.getTasks()) {
+				
+				for (Assessor marker : task.getFeedback().keySet()) {
+					MarkerGroupDto markerDto;
+					Optional<MarkerGroupDto> maybeMarkerDto = findGroupMarker(markerDtos, marker);
+					if (maybeMarkerDto.isPresent()) {
+						markerDto = maybeMarkerDto.get();
+					} else {
+						markerDto = new MarkerGroupDto();
+						markerDto.setMarker(marker);
+						markerDtos.add(markerDto);
+					}
+					markerDto.getToMark().add(task.getAccountable());
+				}
+			}
+			assessmentTemplate.setGroupMarkerDtos(markerDtos);
+			template.getAssessments().add(assessmentTemplate);
+		}
+		
+		return template;
+	}
+		
+	private Optional<MarkerGroupDto> findGroupMarker(final List<MarkerGroupDto> markerDtos, final Assessor marker){
 		return markerDtos.stream().filter(mDto -> mDto.getMarker().equals(marker)).findFirst();
 	}
 }

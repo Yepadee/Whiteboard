@@ -1,6 +1,12 @@
 package org.microboard.whiteboard.dto.assessment;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.microboard.whiteboard.dto.user.MarkerDto;
+import org.microboard.whiteboard.model.user.Assessor;
 
 public abstract class AssessmentDto {
 	private Long id;
@@ -99,5 +105,30 @@ public abstract class AssessmentDto {
 		return validateMarkers() && valid;
 	}
 	
-	abstract protected boolean validateMarkers();
+	protected boolean validateMarkers() {
+		boolean valid = true;
+		Map<Assessor, Integer> markerCount = new HashMap<>();
+		for (MarkerDto markerDto : getMarkerDtos()) {
+			Assessor assessor = markerDto.getMarker();
+			if (markerCount.containsKey(assessor)) {
+				int count = markerCount.get(assessor);
+				markerCount.put(assessor, count + 1);
+			} else {
+				markerCount.put(assessor, 1);
+			}
+			
+		}
+		
+		for (Assessor assessor : markerCount.keySet()) {
+			if (markerCount.get(assessor) > 1) {
+				valid = false;
+				errorMsg += assessor.getUserName() + " is assigned as a marker more than once.";
+			}
+		}
+		
+		
+		return valid;
+	}
+	
+	protected abstract List<MarkerDto> getMarkerDtos();
 }

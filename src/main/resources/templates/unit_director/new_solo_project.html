@@ -39,7 +39,7 @@
 							<div th:if="${error != null}">
 								<div class="error_message">
 									<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
-									<span class="messageHeader">Error creating new project: </span>
+									<span class="messageHeader">Error: </span>
 									<p class="message" th:text="${error}"></p>
 								</div>
 							</div>
@@ -132,15 +132,16 @@
 								<div class="form-group">
 									<hr class="dottedLine col-sm-8 col-sm-push-2" />
 								</div>
-							
-								<div th:each="markerDto, m: *{assessments[__${a.index}__].markerDtos}">
+								<div th:each="markerDto, m: *{assessments[__${a.index}__].soloMarkerDtos}">
 									<div class="markerWrapper">
 									<div class="form-group">
 										</div>
 										<div class="form-group">
 											<div class="col-sm-4 col-sm-push-3">
+
 												<label for="selectMarker">Select a marker:</label>
-												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}" class="chosen form-control">
+												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].soloMarkerDtos[__${m.index}__].marker}" class="chosen form-control">
+
 													<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
 													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
 
@@ -156,10 +157,19 @@
 											<div class="col-sm-4 col-sm-push-3" id="users">
 												<label for="toMark">Select student/s:</label>
 												<br>
-												<select class="toMark" id="toMark" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" multiple="multiple">
-												    	<option class="users" th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}" th:text="${user.userName}"></option>
+
+												<div th:if="*{unit != null}">
+												<select class="toMark" id="toMark" th:field="*{assessments[__${a.index}__].soloMarkerDtos[__${m.index}__].toMark}" multiple="multiple">
+													<option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}" th:text="${user.userName}"></option>
 												</select>
 												<br>
+												</div>
+												<div th:if="*{unit == null}">
+													<div class="error_message">
+														<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
+														<span class="messageHeader">No unit selected</span>
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="form-group">
