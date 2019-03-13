@@ -24,13 +24,13 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 	
 	public void setProjectDtoUnit(SoloProjectDto projectDto) {
 		for (SoloAssessmentDto assessment : projectDto.getAssessments()) {
-			for (MarkerUserDto markerDto : assessment.getMarkerDtos()) {
+			for (MarkerUserDto markerDto : assessment.getSoloMarkerDtos()) {
 				markerDto.setToMark(new ArrayList<>());
 			}
 		}
 	}
 	
-	public SoloProjectDto getSoloProjectDto(long id) {
+	public SoloProjectDto getSoloProjectDto(Long id) {
 		SoloProject soloProject = getProject(id);
 		ProjectTemplateMaker templateMaker = new ProjectTemplateMaker();
 		return templateMaker.getTemplate(soloProject);
@@ -64,7 +64,6 @@ public class SoloProjectService extends BaseProjectService<SoloProject> {
 			String userPath = path + user.getUserName() + "/";
 			userPath += project.getName() + "/";
 			for (SoloAssessment assessment : project.getAssessments()) {
-				//System.out.println(userPath + assessment.getName() + "/");
 				new File(userPath + assessment.getName() + "/feedback/").mkdirs();
 			}
 		}

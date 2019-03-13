@@ -84,7 +84,7 @@ public class SoloProjectController {
 	@PostMapping(value="/new_solo_project", params={"addMarker"})
 	public String addMarker(Model model, SoloProjectDto project, @RequestParam("addMarker") int addMarker) {
 		int assessmentIndex = addMarker;
-		project.getAssessments().get(assessmentIndex).getMarkerDtos().add(new MarkerUserDto());
+		project.getAssessments().get(assessmentIndex).getSoloMarkerDtos().add(new MarkerUserDto());
 	    return newSoloProjectPath;
 	}
 
@@ -92,7 +92,7 @@ public class SoloProjectController {
 	public String removeMarker(Model model, SoloProjectDto project, @RequestParam("removeMarker") List<Integer> removeMarker) {
 		int assessmentIndex = removeMarker.get(0);
 		int markerIndex = removeMarker.get(1);
-		project.getAssessments().get(assessmentIndex).getMarkerDtos().remove(markerIndex);
+		project.getAssessments().get(assessmentIndex).getSoloMarkerDtos().remove(markerIndex);
 	    return newSoloProjectPath;
 	}
 	

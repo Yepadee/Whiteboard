@@ -11,8 +11,8 @@ import org.microboard.whiteboard.model.task.GroupTask;
 @Entity
 @Table(name="ProjectGroup")
 public class Group {
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
+	private Long id;
 	private String name;
 	
 	@OneToMany
@@ -29,10 +29,10 @@ public class Group {
 	@ManyToOne
 	private GroupProject project;
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {

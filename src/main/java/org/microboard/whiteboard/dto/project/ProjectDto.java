@@ -43,12 +43,6 @@ public abstract class ProjectDto {
 	public boolean validate() {
 		boolean valid = true;
 		errorMsg += "> ";
-		
-		if (unit.getId() == null) {
-			valid = false;
-			errorMsg += "No unit selected.\n";
-		}
-		
 
 		if (name == null) {
 			valid = false;
@@ -61,6 +55,9 @@ public abstract class ProjectDto {
 		}
 
 		if (unit == null) {
+			valid = false;
+			errorMsg += "No unit selected.\n";
+		} else if (unit.getId() == null) {
 			valid = false;
 			errorMsg += "No unit selected.\n";
 		}

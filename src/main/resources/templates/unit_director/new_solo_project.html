@@ -17,7 +17,6 @@
 			</div>
 		</nav>
 	</div>
-	
 	<div class="content">
 		<div class="container outstanding-tasks">
 		<div class="clearfix"></div> 
@@ -40,7 +39,7 @@
 							<div th:if="${error != null}">
 								<div class="error_message">
 									<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
-									<span class="messageHeader">Error creating new project: </span>
+									<span class="messageHeader">Error: </span>
 									<p class="message" th:text="${error}"></p>
 								</div>
 							</div>
@@ -133,33 +132,44 @@
 								<div class="form-group">
 									<hr class="dottedLine col-sm-8 col-sm-push-2" />
 								</div>
-							
-								<div th:each="markerDto, m: *{assessments[__${a.index}__].markerDtos}">
+								<div th:each="markerDto, m: *{assessments[__${a.index}__].soloMarkerDtos}">
 									<div class="markerWrapper">
+									<div class="form-group">
+										</div>
 										<div class="form-group">
 											<div class="col-sm-4 col-sm-push-3">
-												<label for="selectMarker">Select a marker:</label>
 
-												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}" class="chosen form-control">
+												<label for="selectMarker">Select a marker:</label>
+												<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].soloMarkerDtos[__${m.index}__].marker}" class="chosen form-control">
+
 													<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
 													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
-												</select> 
 
-												
+												</select> 
+												<div ></div>
+																								
 												<!--
 												<select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}">
 													<option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
 												</select>
 												-->
 											</div>
-										
 											<div class="col-sm-4 col-sm-push-3" id="users">
 												<label for="toMark">Select student/s:</label>
 												<br>
-												<select class="toMark" id="toMark" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].toMark}" multiple="multiple">
+
+												<div th:if="*{unit != null}">
+												<select class="toMark" id="toMark" th:field="*{assessments[__${a.index}__].soloMarkerDtos[__${m.index}__].toMark}" multiple="multiple">
 													<option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}" th:text="${user.userName}"></option>
 												</select>
 												<br>
+												</div>
+												<div th:if="*{unit == null}">
+													<div class="error_message">
+														<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
+														<span class="messageHeader">No unit selected</span>
+													</div>
+												</div>
 											</div>
 										</div>
 										<div class="form-group">
@@ -174,9 +184,59 @@
 								</div>
 								<div class="form-group">
 									<div class="col-sm-2 col-sm-push-3">
-										<button type="submit" id="addMarker" name="addMarker" th:value="${a.index}" class="border-radius btn btn-green"><span class="glyphicon glyphicon-plus"></span> Marker</button>
+										<button type="submit" id="addMarker" name="addMarker" th:value="${a.index}" class="addMarker border-radius btn btn-green"><span class="glyphicon glyphicon-plus"></span> Marker</button>
 									</div>
 								</div>
+								<script type="text/javascript">
+													$(function() {
+												    	$('.toMark').multiselect({
+													    	nonSelectedText: 'Add Users',
+													        includeSelectAllOption: true,
+													        enableFiltering: true,
+													        maxHeight: 300
+													    });
+												    	
+													    $(".multiselect-container .checkbox>input").attr('name', 'users');
+													});
+													
+													
+													$(document).ready(function(){
+														// Fill a list of array (of a value and number) of each input checked
+														
+														var usersSelectedArray= [];
+													    $.each($("input[name='users']:checked"), function(){
+											            	var currentValue = $(this).val();
+											            	usersSelectedArray.push({value:currentValue,numberOfSelected:0});
+											            });
+													    var count = 0;
+													    for(var k in usersSelectedArray) {
+													      if(usersSelectedArray.hasOwnProperty(k)) {
+													    	usersSelectedArray[count]["numberOfSelected"]++;
+													    	//alert(usersSelectedArray[count]["numberOfSelected"]);
+													        count++;
+													      }
+													    }
+													    //alert(count);
+													    
+													    // Colour the selected input to silver to show the user that it is selected before 
+														$.each( usersSelectedArray, function( key) {
+											            	$("input[name='users']").each(function () {
+											            	  if(usersSelectedArray[key]["value"] == $(this).val()){
+											            		  $(this).parent().addClass("selectedUser");
+											            	  }
+											            	});
+											            	
+											            	$("input[name='users']").each(function () {
+												            	  if(usersSelectedArray[key]["value"] == $(this).val()){
+												            		  var currentText=$(this).parent().text();
+												            		  numberOfSelected = usersSelectedArray[key]["numberOfSelected"];
+												            		  var htmlText=currentText+' <small class="smaller">(selected '+numberOfSelected+' times)</small>'
+												            		  //$(this).parent().html('<input type="checkbox" value="'+$(this).val()+'" name="users">'+ htmlText);
+												            	  }
+												            });
+													    });
+													});
+													</script>
 								<br><br>
 								<div class="form-group">
 									<div class="col-sm-2 col-sm-push-3">
@@ -233,18 +293,7 @@
 				</div>
 				<p class="wrap"></p>
 				<!-- End of Submitted Successful Message -->
-				<script type="text/javascript">
 				
-				$(function() {
-				    $('.toMark').multiselect({
-				    	nonSelectedText: 'Add Users',
-				        includeSelectAllOption: true,
-				        enableFiltering: true,
-				        maxHeight: 300
-				    });
-				});
-				
-				</script>
 				
 				<!-- <input type="hidden" th:value="${error}" id="error"/> -->
 				

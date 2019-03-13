@@ -573,3 +573,12 @@ body {
 .small{
 	font-size: 12px;
 }
+.multiselect-container .active a label{
+	color: #ccc;
+}
+.selectedUser{
+	color: #ccc
+}
+.smaller{
+	font-size: 12px;
+}
