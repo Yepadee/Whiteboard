@@ -37,7 +37,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="file: ${fileinfo}">
+							<tr th:each="file: ${taskfileinfo}">
 								<td><a
 									th:href="@{/user/tasks/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
 										<span th:text="${file.fileName}"></span>
@@ -54,7 +54,7 @@
 					<h1 th:text="Feedback"></h1>
 
 					<label for="comments">Comments</label>
-					<textarea id="comments" name="comments"></textarea>
+					<textarea id="comments" name="comments" th:text="${feedback.txtFeedback}" rows="3" placeholder="Add a comment"></textarea>
 					<input type="file" name="files" multiple> <input
 						type="submit" value="Submit" />
 				</div>
@@ -72,7 +72,14 @@
 							</tr>
 						</thead>
 						<tbody>
-						</tbody>
+						<tr th:each="file: ${feedbackfileinfo}">
+							<td><a th:href="@{/assessor/feedback/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+								<span th:text="${file.fileName}"></span></a></td>
+							<td><span th:text="${file.fileSize}"></span></td>
+							<td><a th:href="@{/assessor/feedback/delete/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}"
+								class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>
+						</tr>
+				</tbody>
 					</table>
 				</div>
 			</div>

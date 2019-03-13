@@ -1,10 +1,13 @@
 package org.microboard.whiteboard.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
+import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
+import org.microboard.whiteboard.model.task.visitors.TaskFeedbackAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskFeedbackPageGetter;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.User;
@@ -15,6 +18,8 @@ import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,9 +48,14 @@ public class AssessorController {
 		Task task = taskService.getTask(task_id);
 		TaskFeedbackPageGetter feedbackGetter = new TaskFeedbackPageGetter(model);
 		task.accept(feedbackGetter);
-		model.addAttribute("fileinfo", taskService.createFileInfoInstance(task));
-		model.addAttribute("task", task);
 		
+		Assessor assessor = assessorService.getLoggedInUser();
+		Feedback feedback = task.getIndividualFeedback(assessor);
+		List<FileDto> fileinfo = feedbackService.createFileInfoInstance(feedback);
+		model.addAttribute("feedbackfileinfo", fileinfo);
+		model.addAttribute("task", task);
+		model.addAttribute("feedback", feedback);
+		model.addAttribute("taskfileinfo", taskService.createFileInfoInstance(task));
 		return feedbackGetter.getResult();
 	}
 	
@@ -58,6 +68,24 @@ public class AssessorController {
 		
 		//--------------------------------------
 		//NO ACCESS VALIDATION- TODO!
+	}
+	
+	@GetMapping("/feedback/download/{id}/{filename}")
+	public ResponseEntity<Resource> downloadFile(Model model, @PathVariable long id,  @PathVariable String filename) {
+		Assessor assessor = assessorService.getLoggedInUser();
+		Task task = taskService.getTask(id);
+		Feedback feedback = task.getIndividualFeedback(assessor);
+		return feedbackService.downloadFile(feedback, filename);
+	}
+	
+	@GetMapping("/feedback/delete/{id}/{filename}")
+	public String getDeletePage(Model model, @PathVariable long id,  @PathVariable String filename) {
+		Assessor assessor = assessorService.getLoggedInUser();
+		Task task = taskService.getTask(id);
+		Feedback feedback = task.getIndividualFeedback(assessor);
+		
+		feedbackService.deleteFile(feedback, filename);
+		return "redirect:/assessor/feedback/" + id;
 	}
 	
 	@ModelAttribute("user")

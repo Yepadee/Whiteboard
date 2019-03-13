@@ -85,7 +85,7 @@ public class UserController {
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
 			taskService.deleteFile(id, filename);
-			return "redirect:user/tasks";
+			return "/user/tasks/" + id;
 		} else {
 			return accessDeniedPage;
 		}
