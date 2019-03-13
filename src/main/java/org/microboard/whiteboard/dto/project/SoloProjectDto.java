@@ -20,7 +20,7 @@ public class SoloProjectDto extends ProjectDto {
 		int i = 1;
 		for (SoloAssessmentDto assessment : assessments) {
 			valid = valid && assessment.validate();
-			errorMsg += "Assessment " + i + ": {" + assessment.getErrorMsg() + "}";
+			errorMsg += "Assessment " + i + ": {" + assessment.getErrorMsg() + "} ";
 			i ++;
 		}
 		

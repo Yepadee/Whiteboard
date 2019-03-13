@@ -1,10 +1,18 @@
 package org.microboard.whiteboard;
 
+import org.microboard.whiteboard.model.assessment.GroupAssessment;
+import org.microboard.whiteboard.model.assessment.SoloAssessment;
+import org.microboard.whiteboard.model.project.GroupProject;
+import org.microboard.whiteboard.model.project.SoloProject;
+import org.microboard.whiteboard.model.task.GroupTask;
+import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
+import org.microboard.whiteboard.model.user.Group;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
+import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.user.UnitService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +34,9 @@ public class WhiteboardSpringApplication {
 	
 	@Autowired
     private UnitService unitService;
+	
+	@Autowired
+    private ProjectService projectService;
 	
 	@Value("${spring.profiles.active:unknown}")
 	private String activeProfile;
@@ -127,8 +138,8 @@ public class WhiteboardSpringApplication {
 			
 			
 			
-			projectService.addProject(sp);
 			unitDirector.addProject(sp);
+			
 			
 			
 			
@@ -156,18 +167,17 @@ public class WhiteboardSpringApplication {
 			gp.addAssessment(ga2);
 			
 			
-			GroupTask gt1 = new GroupTask();
+			GroupTask gt1 = new GroupTask(g);
 			gt1.setStatus("new");
-			g.addTask(gt1);
 			ga1.addTask(gt1);
 			
 			
-			GroupTask gt2 = new GroupTask();
+			GroupTask gt2 = new GroupTask(g);
 			gt2.setStatus("new");
-			g.addTask(gt2);
 			ga2.addTask(gt2);
 			
 			unitDirector.addProject(gp);
+			
 			projectService.updateProject(gp);
 			projectService.updateProject(sp);
 			*/
