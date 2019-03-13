@@ -25,7 +25,7 @@
 							<tr>
 								<th>Project</th>
 								<th>Assessment</th>
-								<th>Student</th>
+								<th>For</th>
 								<th>Deadline</th>
 								<th>Status</th>
 								<th></th>
@@ -35,7 +35,7 @@
 							<tr th:each="feedback: ${user.taskFeedback}">
 								<td><span th:text="${feedback.task.assessment.project.name}"></span></td>
 								<td><span th:text="${feedback.task.assessment.name}"></span></td>
-								<td><span th:text="${feedback.task.accountable.userName}"></span></td>
+								<td><span th:text="${feedback.task.accountable.name}"></span></td>
 								<td><span th:text="${feedback.task.assessment.studentDeadline}" class="warning"></span></td>
 								<td><span th:text="${feedback.task.status}"></span></td>
 								<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${feedback.task.id})}"

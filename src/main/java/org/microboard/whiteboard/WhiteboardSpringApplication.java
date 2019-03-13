@@ -99,7 +99,7 @@ public class WhiteboardSpringApplication {
 			unitService.addUnit(unit2);
 			
 	
-			/*
+			
 			SoloProject sp = new SoloProject();
 			sp.setName("Test Solo Project 1");
 			sp.setDescription("Description for \"Test Solo Project 1\"");
@@ -149,10 +149,29 @@ public class WhiteboardSpringApplication {
 			gp.setUnit(unit1);
 			
 			
+			GroupProject gp2 = new GroupProject();
+			gp2.setName("Test Group Project 2");
+			gp2.setDescription("Description for \"Test Group Project 2\"");
+			gp2.setUnit(unit1);
+			
+			unitDirector.addProject(gp2);
+			
+			
+			Group g0 = new Group();
+			g0.setName("Test group 1");
+			g0.addMember(student);
+			gp2.addGroup(g0);
+			
 			Group g = new Group();
 			g.setName("Test group 1");
 			g.addMember(student);
 			gp.addGroup(g);
+			
+			
+			Group g1 = new Group();
+			g1.setName("Test group 2");
+			g1.addMember(student);
+			gp.addGroup(g1);
 			
 			
 			GroupAssessment ga1 = new GroupAssessment();
@@ -178,9 +197,12 @@ public class WhiteboardSpringApplication {
 			
 			unitDirector.addProject(gp);
 			
-			projectService.updateProject(gp);
-			projectService.updateProject(sp);
-			*/
+			//userService.updateUser(unitDirector);
+			userService.updateUser(student);
+			projectService.addProject(gp);
+			projectService.addProject(gp2);
+			projectService.addProject(sp);
+			
 			//TODO: if constraint broken on user_solo_tasks then add cascade type back to tasks in user.
 		}
 	}

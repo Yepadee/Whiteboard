@@ -168,6 +168,12 @@ public class ProjectEditApplyer {
 			project.getGroups().removeAll(project.getGroups());
 		}
 		
+		if (project.getId() == null) {
+			for (Group group : edits.getGroups()) {
+				group.setId(null);
+			}
+		}
+		
 		for (Group group : edits.getGroups()) {
 			if (! project.getGroups().contains(group)) {
 				group.setProject(project);

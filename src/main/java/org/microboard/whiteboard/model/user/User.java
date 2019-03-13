@@ -83,6 +83,10 @@ public abstract class User implements Serializable {
 		return userName;
 	}
 	
+	public String getName() {
+		return userName;
+	}
+	
 	public void setUserName(String name) {
 		this.userName = name;
 	}
@@ -138,6 +142,10 @@ public abstract class User implements Serializable {
 	public void addUnit(Unit unit) {
 		units.add(unit);
 		unit.getCohort().add(this);
+	}
+	
+	public String toString() {
+		return getUserName();
 	}
 	
 }
