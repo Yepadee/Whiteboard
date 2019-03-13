@@ -2,11 +2,15 @@ package org.microboard.whiteboard.services.task;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.feedback.visitors.FeedbackUploadPathGen;
 import org.microboard.whiteboard.model.task.Task;
@@ -16,6 +20,10 @@ import org.microboard.whiteboard.repositories.task.FeedbackRepository;
 import org.microboard.whiteboard.repositories.task.TaskRepository;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +47,19 @@ public class FeedbackService {
 		}
 	}
 	
+	public List<FileDto> createFileInfoInstance(Feedback feedback) {
+		List<FileDto> fileinfo = new ArrayList<>();
+		for (String filepath : feedback.getFileNames()) {
+			FileDto f = new FileDto();
+			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
+			File file = new File(filepath);
+			f.setFileSize(Long.toString(file.length()/1024) + "KB");
+			f.setFilePath(filepath);
+			fileinfo.add(f);	
+		}
+		return fileinfo;
+	}
+	
 	public void submitFiles(long id, MultipartFile[] files, String comments) throws IOException {
 		Task task = getTask(id);
 		Assessor assessor = assessorService.getLoggedInUser();
@@ -58,10 +79,43 @@ public class FeedbackService {
 		}
 		
 		feedback.setTxtFeedback(comments);
-		updateTask(feedback);
+		updateFeedback(feedback);
 	}
 	
-	public void updateTask(Feedback feedback) {
+	public void deleteFile(Feedback feedback, String filename) {
+		List<String> filePaths = feedback.getFileNames();
+		for (String filePath : filePaths) {
+			String f = filePath.substring(filePath.lastIndexOf("/")+1);
+			if (f.equals(filename)) {
+				File file = new File(filePath);
+				file.delete();
+				feedback.deleteFile(filePath);
+				updateFeedback(feedback);
+				break;
+			}
+		}
+	}
+	
+	public ResponseEntity<Resource> downloadFile(Feedback feedback, String filename) {
+		List<String> filePaths = feedback.getFileNames();
+		for (String filepath : filePaths) {
+			String filepathWithoutPath = filepath.substring(filepath.lastIndexOf("/")+1);
+			if (filepathWithoutPath.equals(filename)) {
+				try {
+					Path path = Paths.get(filepath);
+					Resource resource = new UrlResource(path.toUri());
+					return ResponseEntity.ok()
+							.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+							.body(resource);
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void updateFeedback(Feedback feedback) {
 		feedbackRepository.save(feedback);
 	}
 }

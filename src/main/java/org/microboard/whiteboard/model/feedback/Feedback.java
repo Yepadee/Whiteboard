@@ -69,6 +69,9 @@ public class Feedback {
 	public void setFileNames(List<String> fileNames) {
 		this.fileNames = fileNames;
 	}
+	public void deleteFile(String filePath) {
+		fileNames.remove(filePath);
+	}
 	public void addFile(String fileName) {
 		this.fileNames.add(fileName);
 	}
