@@ -8,5 +8,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface BaseUserRepository<T extends User> extends CrudRepository<T, Long> {
-	Optional<T> findByUserName(String userName);	
+	Optional<T> findByUserName(String userName);
 }

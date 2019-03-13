@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.service_tests;
+package org.microboard.whiteboard.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
@@ -31,10 +31,9 @@ public class UnitDirectorServiceTest {
 		
 		given(unitDirectorRepository.findByUserName("unitDirector")).willReturn(Optional.ofNullable(mockUnitDirector));
 		
-		Optional<UnitDirector> maybeUnitDirector = unitDirectorService.getByUserName("unitDirector");
+		UnitDirector unitDirector = unitDirectorService.getByUserName("unitDirector");
 		
-		assertTrue(maybeUnitDirector.isPresent());
-		assertThat(maybeUnitDirector.get().getUserName()).isEqualTo("unitDirector");
+		assertThat(unitDirector.getUserName()).isEqualTo("unitDirector");
 	}
 	
 	

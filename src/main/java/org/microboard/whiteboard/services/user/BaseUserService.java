@@ -27,16 +27,16 @@ public abstract class BaseUserService<T extends User> {
 	public List<T> getAllUsers() {
 		List<T> users = new ArrayList<>();
 		repository.findAll().forEach(users::add);
-
 		return users;
 	}
 
-	public Optional<T> getUser(Long id) {
-		return repository.findById(id);
-	}
-
-	public void DeleteAll() {
-		repository.deleteAll();
+	public T getUser(Long id) {
+		Optional<T> maybeUser = repository.findById(id);
+		if (maybeUser.isPresent()) {
+			return maybeUser.get();
+		} else {
+			throw new RuntimeException("No user found with id \'" + id + "\'.");
+		}
 	}
 
 	public void updateUser(T newUser) {
@@ -47,13 +47,18 @@ public abstract class BaseUserService<T extends User> {
 		repository.deleteById(id);
 	}
 
-	public Optional<T> getByUserName(String name) {
-		return repository.findByUserName(name);
+	public T getByUserName(String name) {
+		Optional<T> maybeUser = repository.findByUserName(name);
+		if (maybeUser.isPresent()) {
+			return maybeUser.get();
+		} else {
+			throw new RuntimeException("No user found with name \'" + name + "\'.");
+		}
 	}
 	
 	public T getLoggedInUser() {
 		CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		long userId = userDetails.getUser().getId();
-		return getUser(userId).get();
+		return getUser(userId);
 	}
 }

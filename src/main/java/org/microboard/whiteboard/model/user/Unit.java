@@ -12,18 +12,18 @@ import javax.persistence.ManyToMany;
 @Entity
 public class Unit {
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	private String unitName;
 	private String unitCode;
 	
-	@ManyToMany
+	@ManyToMany()
 	private List<User> cohort = new ArrayList<>();
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -54,6 +54,11 @@ public class Unit {
 	public void addUser(User user) {
 		user.getUnits().add(this);
 		cohort.add(user);
+	}
+	
+	public void removeUser(User user) {
+		user.getUnits().remove(this);
+		cohort.remove(user);	
 	}
 	
 }

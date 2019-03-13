@@ -1,4 +1,4 @@
-package org.microboard.whiteboard.service_tests;
+package org.microboard.whiteboard.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
@@ -31,10 +31,9 @@ public class StudentServiceTest {
 		
 		given(studentRepository.findByUserName("student")).willReturn(Optional.ofNullable(mockStudent));
 		
-		Optional<Student> maybeStudent = studentService.getByUserName("student");
-		
-		assertTrue(maybeStudent.isPresent());
-		assertThat(maybeStudent.get().getUserName()).isEqualTo("student");
+		Student student = studentService.getByUserName("student");
+
+		assertThat(student.getUserName()).isEqualTo("student");
 	}
 
 }

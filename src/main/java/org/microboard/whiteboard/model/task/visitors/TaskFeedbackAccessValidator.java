@@ -20,7 +20,7 @@ public class TaskFeedbackAccessValidator extends TaskVisitor {
 	
 	@Override
 	public void visit(SoloTask soloTask) {
-		result = soloTask.getAccountable().getId() == user.getId() || soloTask.getMarkers().contains(user);
+		result = soloTask.getAccountable().getId() == user.getId() || soloTask.getFeedback().containsKey(user);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class TaskFeedbackAccessValidator extends TaskVisitor {
 				break;
 			}
 		}
-		 result = result || groupTask.getMarkers().contains(user);
+		 result = result || groupTask.getFeedback().containsKey(user);
 	}
 
 }

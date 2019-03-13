@@ -1,20 +1,29 @@
 package org.microboard.whiteboard.controllers;
 
+import java.io.IOException;
+
+import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.task.Task;
+import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskFeedbackPageGetter;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
 import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
+import org.microboard.whiteboard.services.task.FeedbackService;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.AssessorService;
+import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/assessor")
@@ -26,13 +35,29 @@ public class AssessorController {
 	@Autowired
 	private TaskService taskService;
 	
+	@Autowired
+	private FeedbackService feedbackService;
+	
 	@GetMapping("/feedback/{task_id}")
 	public String FeedbackUploadPage(@PathVariable long task_id, Model model) {
 		Task task = taskService.getTask(task_id);
 		TaskFeedbackPageGetter feedbackGetter = new TaskFeedbackPageGetter(model);
 		task.accept(feedbackGetter);
 		model.addAttribute("fileinfo", taskService.createFileInfoInstance(task));
+		model.addAttribute("task", task);
+		
 		return feedbackGetter.getResult();
+	}
+	
+	@PostMapping("/feedback/{id}")
+	public String submitFeedback(@PathVariable long id,
+		@ModelAttribute(name = "comments") String comments,
+		@RequestParam("files") MultipartFile[] files) throws IOException {
+		feedbackService.submitFiles(id, files, comments);
+		return "redirect:/assessor/feedback/" + id;
+		
+		//--------------------------------------
+		//NO ACCESS VALIDATION- TODO!
 	}
 	
 	@ModelAttribute("user")

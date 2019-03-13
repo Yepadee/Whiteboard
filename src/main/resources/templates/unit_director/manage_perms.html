@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<script type="text/javascript">
+	
+</script>
+<head th:replace="page_elements/header_unit_director:: head"></head>
+<body>
+	<div th:replace="page_elements/sidebar_unit_director:: sidebar"></div>
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-left">
+					<li><h3>Manage Permissions</h3></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+	<div class="content">
+		<!-- <div id="showSolo" class="project_selected"> -->
+		<div class="row">
+			<form name="newProject" class="form-horizontal"
+				th:action="@{/unit_director/manage_perms}"
+				th:object="${selectedUsersDto}" method="post">
+
+				<label for="selectStudents">Students: </label> <select
+					class="toMark" id="selectStudents" th:field="*{selectedStudents}"
+					multiple="multiple">
+					<option th:value="null" hidden="hidden" style="display: none;"
+						selected>Please Select</option>
+					<option th:each="student : ${students}" th:value="${{student}}"
+						th:id="${{student}}" th:text=${student.userName}></option>
+				</select> <label for="selectAssessors">Assessors: </label> <select
+					class="toMark" id="selectAssessors" th:field="*{selectedAssessors}"
+					multiple="multiple">
+					<option th:value="null" hidden="hidden" style="display: none;"
+						selected>Please Select</option>
+					<option th:each="assessor : ${assessors}" th:value="${{assessor}}"
+						th:id="${{assessor}}" th:text=${assessor.userName}></option>
+				</select> <label for="selectUnitDirectors">Unit Directors: </label> <select
+					class="toMark" id="selectUnitDirectors"
+					th:field="*{selectedUnitDirectors}" multiple="multiple">
+					<option th:value="null" hidden="hidden" style="display: none;"
+						selected>Please Select</option>
+					<option th:each="unitDirector : ${unitDirectors}"
+						th:value="${{unitDirector}}" th:id="${{unitDirector}}"
+						th:text=${unitDirector.userName}></option>
+
+				</select> <label for="selectPerms">New Permissions: </label> <select
+					class="chosen form-control" id="selectPerms" th:field="*{newPerms}">
+					<option th:value="student">Student</option>
+					<option th:value="assessor">Assessor</option>
+					<option th:value="unit_director">Unit Director</option>
+				</select>
+				<div th:if="${errorMsg != null}">
+					<div class="error_message">
+						<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp; <span
+							class="messageHeader">Error changing permissions: </span>
+						<p class="message" th:text="${errorMsg}"></p>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-black">Change
+					Permissions</button>
+
+			</form>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(function() {
+			$('.toMark').multiselect({
+				nonSelectedText : 'Add Users',
+				includeSelectAllOption : true,
+				enableFiltering : true,
+				maxHeight : 300
+			});
+		});
+	</script>
+</body>
+</html>

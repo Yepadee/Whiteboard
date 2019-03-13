@@ -3,7 +3,6 @@ package org.microboard.whiteboard.model.user.visitors;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.model.user.UnitDirector;
-import org.springframework.ui.Model;
 
 public class SidebarGetter extends UserVisitor {
 	private String result;
@@ -19,7 +18,7 @@ public class SidebarGetter extends UserVisitor {
 
 	@Override
 	public void visit(Assessor assessor) {
-		result = "page_elements/sidebar_student"; //TODO
+		result = "page_elements/sidebar_assessor"; //TODO
 	}
 
 	@Override

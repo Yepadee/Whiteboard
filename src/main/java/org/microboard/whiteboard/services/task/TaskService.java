@@ -38,6 +38,7 @@ public class TaskService {
 	}
 	
 	public List<FileDto> createFileInfoInstance(Task task) {
+		//Look into making a mock file to test this
 		List<FileDto> fileinfo = new ArrayList<>();
 		for (String filepath : task.getFileNames()) {
 			FileDto f = new FileDto();
@@ -45,13 +46,13 @@ public class TaskService {
 			File file = new File(filepath);
 			f.setFileSize(Long.toString(file.length()/1024) + "KB");
 			f.setFilePath(filepath);
-			fileinfo.add(f);
-			
+			fileinfo.add(f);	
 		}
 		return fileinfo;
 	}
 	
 	public void submitFiles(long id, MultipartFile[] files, String comments) throws IOException {
+		//Look into making a mock file to test this
 		Task task = getTask(id);
 			
 		TaskUploadPathGen pathGen = new TaskUploadPathGen();

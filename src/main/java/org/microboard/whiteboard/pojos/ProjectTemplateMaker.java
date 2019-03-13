@@ -5,8 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.microboard.whiteboard.dto.assessment.NewAssessment;
-import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
+import org.microboard.whiteboard.dto.assessment.AssessmentDto;
+import org.microboard.whiteboard.dto.assessment.SoloAssessmentDto;
 import org.microboard.whiteboard.dto.project.ProjectDto;
 import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
@@ -31,7 +31,7 @@ public class ProjectTemplateMaker {
 		template.setUnit(unit);
 	}
 	
-	private void fillCoreAssessmentTemplate(Assessment assessment, NewAssessment template) {
+	private void fillCoreAssessmentTemplate(Assessment assessment, AssessmentDto template) {
 		long assessmentId = assessment.getId();
 		String assessmentName = assessment.getName();
 		String assessmentDesc = assessment.getDescription();
@@ -52,13 +52,13 @@ public class ProjectTemplateMaker {
 		fillCoreProjectTemplate(soloProject, template);
 		
 		for (SoloAssessment soloAssessment : soloProject.getAssessments()) {
-			NewSoloAssessment assessmentTemplate = new NewSoloAssessment();
+			SoloAssessmentDto assessmentTemplate = new SoloAssessmentDto();
 			fillCoreAssessmentTemplate(soloAssessment, assessmentTemplate);
 			
 			List<MarkerUserDto> markerDtos = new ArrayList<>();
 			for (SoloTask task : soloAssessment.getTasks()) {
 				
-				for (Assessor marker : task.getMarkers()) {
+				for (Assessor marker : task.getFeedback().keySet()) {
 					MarkerUserDto markerDto;
 					Optional<MarkerUserDto> maybeMarkerDto = findMarker(markerDtos, marker);
 					if (maybeMarkerDto.isPresent()) {

@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.microboard.whiteboard.dto.assessment.NewSoloAssessment;
+import org.microboard.whiteboard.dto.assessment.SoloAssessmentDto;
 import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerUserDto;
 import org.microboard.whiteboard.model.user.Assessor;
@@ -16,8 +16,6 @@ import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
 import org.microboard.whiteboard.services.user.UnitService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -34,9 +32,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/unit_director")
 public class SoloProjectController {
-	
-	private Logger logger = LoggerFactory.getLogger(SoloProjectController.class);
-	
 	private String newSoloProjectPath = "unit_director/new_solo_project";
 	private String editSoloProjectPath = "unit_director/edit_solo_project/";
 	
@@ -76,7 +71,7 @@ public class SoloProjectController {
 	
 	@PostMapping(value="/new_solo_project", params={"addAssessment"})
 	public String addAssessment(Model model, SoloProjectDto project) {
-		project.getAssessments().add(new NewSoloAssessment());
+		project.getAssessments().add(new SoloAssessmentDto());
 	    return newSoloProjectPath;
 	}
 	

@@ -9,11 +9,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="nav navbar-nav navbar-left">
-<<<<<<< HEAD
 					<h3>Outstanding Tasks - <small th:text="${task.assessment.name}"></small></h3>
-=======
-					<h3>Task Submission</h3>
->>>>>>> branch 'master' of https://github.com/Yepadee/Whiteboard.git
 				</div>
 			</div>
 		</nav>
@@ -21,7 +17,7 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-10 col-sm-push-1 table-wrapper">
+				<div class="col-sm-11 table-wrapper">
 					<form th:action="@{/user/tasks/{taskId}(taskId=${task.id})}" method="post" id="submissionForm" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="col-sm-2" for="comments">Comment: </label>
@@ -46,7 +42,7 @@
 						</div>
 					</form>
 				</div>
-				<div class="col-sm-10 col-sm-push-1 table-wrapper">
+				<div class="col-sm-11 table-wrapper">
 					<h4 class="font-bold">Uploaded files:</h4>
 					<table class="table panel panel-default" id="table">
 						<thead>
