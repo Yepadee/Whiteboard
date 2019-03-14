@@ -68,6 +68,23 @@
 					</div>
 
 					<div class="form-group">
+						<div class="col-sm-4 col-sm-push-2">
+							<label for="selectHelpers">Select Helpers: </label>
+							<select id="toMark" th:field="*{helpers}" class="chosen form-control" multiple="multiple">
+
+								<option th:value="null" hidden="hidden" style="display: none;"
+									selected>Please Select</option>
+								<option th:each="unitDirector : ${unitDirectorList}" th:value="${{unitDirector}}" th:id="${{unitDirector}}" th:text=${unitDirector.userName}></option>
+
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+					</div>
+
+					<div class="form-group">
 						<label class="control-label col-sm-2" for="projectName">Project Name: </label>
 						<div class="col-sm-4">
 							<input class="form-control" id="projectName" type="text" th:field="*{name}" placeholder="Enter a project name"/>

@@ -33,7 +33,7 @@ public class ProjectEditApplyer {
 		Long id = project.getId();
 		String name = edits.getName();
 		String description = edits.getDescription();
-		List<UnitDirector> helpers = new ArrayList<>(); //TODO
+		List<UnitDirector> helpers = edits.getHelpers();
 		Unit unit = edits.getUnit();
 		
 		project.setId(id);
