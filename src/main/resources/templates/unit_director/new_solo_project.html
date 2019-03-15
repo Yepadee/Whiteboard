@@ -199,24 +199,61 @@
 													    $(".multiselect-container .checkbox>input").attr('name', 'users');
 													});
 													
-													
 													$(document).ready(function(){
 														// Fill a list of array (of a value and number) of each input checked
-														
 														var usersSelectedArray= [];
 													    $.each($("input[name='users']:checked"), function(){
+													    	$(this).addClass("userChecked");
 											            	var currentValue = $(this).val();
-											            	usersSelectedArray.push({value:currentValue,numberOfSelected:0});
+											            	usersSelectedArray.push({value:currentValue,numberOfSelected:1});
 											            });
-													    var count = 0;
-													    for(var k in usersSelectedArray) {
-													      if(usersSelectedArray.hasOwnProperty(k)) {
-													    	usersSelectedArray[count]["numberOfSelected"]++;
-													    	//alert(usersSelectedArray[count]["numberOfSelected"]);
-													        count++;
+													    
+													    usersCheckArray=[];
+													    for(var i in usersSelectedArray) {
+													    	var checkboxValue = usersSelectedArray[i]["value"];
+													    	//alert("[i:"+i+"], CurrentValue:"+checkboxValue+ ", NumberOfSelected:" + usersSelectedArray[i]["numberOfSelected"]);											    	
+													    					
+													    	if(jQuery.inArray(checkboxValue, usersCheckArray) !== -1) {
+													    		//alert(checkboxValue + " is in array");
+													    		var count=0;
+													    		var x=0;
+													    		for(var j in usersCheckArray) {
+													    			if(checkboxValue == usersCheckArray[j]){
+													    				usersSelectedArray[j]["numberOfSelected"]++;
+													    				x=usersSelectedArray[j]["numberOfSelected"];
+													    				//alert(usersSelectedArray[j]["value"]  +" "+x);
+													    			}
+													    			count++;
+														    	}
+													    		usersSelectedArray[count]["numberOfSelected"]=x;
+													    		//alert(usersSelectedArray[count]["value"]  +" "+usersSelectedArray[count]["numberOfSelected"]);
+															}else{
+																//alert(checkboxValue + " is not in array");
+															}
+													    	usersCheckArray.push(checkboxValue);
+													    	//alert(checkboxValue+" is added, the current array is: ["+usersCheckArray+"]");
 													      }
-													    }
-													    //alert(count);
+													    /*alert("===================");
+													    for(var i in usersSelectedArray) {
+													    	alert("[i:"+i+"], "+"Value:"+usersSelectedArray[i]["value"]  +", numberOfSelected:" + usersSelectedArray[i]["numberOfSelected"]);
+													    }*/
+													    
+													    //alert(usersSelectedArray);
+													    
+													    
+													    /*
+											            usersCheckedArray=[];
+													    $( ".userChecked").each(function() {
+													    	var checkboxValue = $(this).val();
+													    	//var checkboxText = $(this).parent().text();
+													    	//alert("value: "+checkboxValue + " Array: " + usersCheckedArray);
+													    	if(jQuery.inArray(checkboxValue, usersCheckedArray)==0) {
+													    		//alert("is in array");
+															    //alert(checkboxValue);
+															}
+													    	//alert("DONE");
+													    	usersCheckedArray.push(checkboxValue);
+													    });*/
 													    
 													    // Colour the selected input to silver to show the user that it is selected before 
 														$.each( usersSelectedArray, function( key) {
@@ -225,16 +262,17 @@
 											            		  $(this).parent().addClass("selectedUser");
 											            	  }
 											            	});
-											            	
-											            	$("input[name='users']").each(function () {
-												            	  if(usersSelectedArray[key]["value"] == $(this).val()){
-												            		  var currentText=$(this).parent().text();
-												            		  numberOfSelected = usersSelectedArray[key]["numberOfSelected"];
-												            		  var htmlText=currentText+' <small class="smaller">(selected '+numberOfSelected+' times)</small>'
-												            		  //$(this).parent().html('<input type="checkbox" value="'+$(this).val()+'" name="users">'+ htmlText);
-												            	  }
-												            });
-													    });
+														});
+													    var i=0;
+										            	$("input[name='users']").each(function (c) {
+										            		for(var key in usersSelectedArray){
+											            		if(usersSelectedArray[key]["value"] == $(this).val()){
+												            	  	numberOfSelected = usersSelectedArray[key]["numberOfSelected"];
+												            	  	$(this).parent().append(' <small class="smaller">(selected '+numberOfSelected+' times)</small>');
+												            	  	break;
+												            	}
+										            		}
+											            });
 													});
 													</script>
 								<br><br>
