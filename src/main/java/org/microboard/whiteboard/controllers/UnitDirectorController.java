@@ -1,10 +1,13 @@
 package org.microboard.whiteboard.controllers;
 
 import org.microboard.whiteboard.dto.user.SelectedUsersDto;
+import org.microboard.whiteboard.model.project.Project;
+import org.microboard.whiteboard.model.project.visitors.EditPathGetter;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.UserPermChangeValidator;
 import org.microboard.whiteboard.services.project.GroupProjectService;
+import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.StudentService;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,18 +38,25 @@ public class UnitDirectorController {
 	private UnitDirectorService unitDirectorService;
 	
 	@Autowired
-	private SoloProjectService soloProjectService;
-	
-	@Autowired
-	private GroupProjectService groupProjectService;
+	private ProjectService projectService;
 	
 	
 	@GetMapping("/projects")
 	public String viewProjectsPage(Model model) {
 		UnitDirector unitDirector = unitDirectorService.getLoggedInUser();
-		model.addAttribute("soloProjects", soloProjectService.getByCreator(unitDirector));
-		model.addAttribute("groupProjects", groupProjectService.getByCreator(unitDirector));
+		model.addAttribute("projects", unitDirector.getMyProjects());
+		model.addAttribute("assignedProjects", unitDirector.getAssignedProjects());
 		return "unit_director/view_projects";
+	}
+	
+	@GetMapping("/edit_project/{id}")
+	public String editProject(@PathVariable Long id) {
+		Project project = projectService.getProject(id);
+		EditPathGetter epg = new EditPathGetter();
+		
+		project.accept(epg);
+		
+		return "redirect:" + epg.getResult() + "/" + id;
 	}
 	
 	@GetMapping("/manage_perms")

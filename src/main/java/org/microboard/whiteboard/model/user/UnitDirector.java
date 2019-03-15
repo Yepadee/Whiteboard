@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.microboard.whiteboard.model.project.Project;
@@ -26,6 +27,9 @@ public class UnitDirector extends Assessor {
 	@OneToMany(mappedBy= "creator")
 	private List<Project> myProjects = new ArrayList<>();
 	
+	@ManyToMany(mappedBy= "helpers")
+	private List<Project> assignedProjects = new ArrayList<>();
+	
 	public List<Project> getMyProjects() {
 		return myProjects;
 	}
@@ -34,10 +38,23 @@ public class UnitDirector extends Assessor {
 		this.myProjects = myProjects;
 	}
 	
+	public List<Project> getAssignedProjects() {
+		return assignedProjects;
+	}
+
+	public void setAssignedProjects(List<Project> assignedProjects) {
+		this.assignedProjects = assignedProjects;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public void addProject(Project project) {
 		project.setCreator(this);
 		myProjects.add(project);
 	}
+	
 	
 	@Override
 	public void accept(UserVisitor v) {

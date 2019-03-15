@@ -29,18 +29,31 @@ import org.microboard.whiteboard.model.user.User;
 
 public class ProjectEditApplyer {
 	
-	private void applyCoreProjectEdits(Project project, ProjectDto edits) {
+	private void applyCoreProjectEdits(Project project, ProjectDto<?> edits) {
 		Long id = project.getId();
 		String name = edits.getName();
 		String description = edits.getDescription();
-		List<UnitDirector> helpers = edits.getHelpers();
 		Unit unit = edits.getUnit();
 		
 		project.setId(id);
 		project.setName(name);
 		project.setDescription(description);
-		project.setHelpers(helpers);
+		//project.setHelpers(helpers);
 		project.setUnit(unit);
+		
+		
+		List<UnitDirector> removed = new ArrayList<>(project.getHelpers());
+		removed.removeAll(edits.getHelpers());
+		
+		project.getHelpers().removeAll(removed);
+		
+		
+		List<UnitDirector> added = new ArrayList<>(edits.getHelpers());
+		added.removeAll(project.getHelpers());
+		
+		for (UnitDirector helper : added) {
+			project.addHelper(helper);
+		}
 	}
 	
 	private void applyCoreAssessmentEdits(Assessment assessment, AssessmentDto edits) {
