@@ -75,8 +75,8 @@ public class AssessorController {
 		return feedbackService.downloadFile(feedback, filename);
 	}
 	
-	@GetMapping("/feedback/delete/{id}/{filename}")
-	public String getDeletePage(Model model, @PathVariable long id,  @PathVariable String filename) {
+	@PostMapping(value = "/feedback/delete/{id}" , params={"deleteFeedback"})
+	public String getDeletePage(@PathVariable Long id,  @RequestParam("deleteFeedback") String filename) {
 		Assessor assessor = assessorService.getLoggedInUser();
 		Task task = taskService.getTask(id);
 		Feedback feedback = task.getIndividualFeedback(assessor);

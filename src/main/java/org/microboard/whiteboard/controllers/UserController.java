@@ -76,17 +76,22 @@ public class UserController {
 		return null;
 	}
 	
-	@GetMapping("/tasks/delete/{id}/{filename}")
-	public String getDeletePage(Model model, @PathVariable long id,  @PathVariable String filename) {
+	@PostMapping(value="/tasks/delete/{id}" , params={"deleteFile"})
+	public String getDeletePage(@PathVariable Long id,  @RequestParam("deleteFile") String filename) {
 		//TODO make dedicated query for task validation
 		User user = userService.getLoggedInUser();
+//		System.out.println("if");
+
 		Task task = taskService.getTask(id);
 		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
+//			System.out.println("if");
+
 			taskService.deleteFile(id, filename);
-			return "/user/tasks/" + id;
+			return "redirect:/user/tasks/" + id;
 		} else {
+//			System.out.println("Acess denied");
 			return accessDeniedPage;
 		}
 	}

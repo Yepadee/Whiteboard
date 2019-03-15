@@ -43,6 +43,8 @@
 					</form>
 				</div>
 				<div class="col-sm-11 table-wrapper">
+				<form name="deleteFile" class="form-horizontal" th:action="@{/user/tasks/delete/{id}(id=${task.id})}" method="post">
+				
 					<h4 class="font-bold">Uploaded files:</h4>
 					<table class="table panel panel-default" id="table">
 						<thead>
@@ -53,15 +55,19 @@
 							</tr>
 						</thead>
 					<tbody>
+					
 						<tr th:each="file: ${fileinfo}">
 							<td><a th:href="@{/user/tasks/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
 								<span th:text="${file.fileName}"></span></a></td>
 							<td><span th:text="${file.fileSize}"></span></td>
-							<td><a th:href="@{/user/tasks/delete/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}"
-								class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>
+							<!-- <td><a th:href="@{/user/tasks/delete/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}"
+							 class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>-->	
+							<td><button type="submit" name="deleteFile" th:value="${file.fileName}"  class="btn btn-lightred" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button><td/>
+								
 						</tr>
 				</tbody>
 			</table>
+			</form>
 			</div>
 			</div>
 		</div>
