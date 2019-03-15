@@ -17,7 +17,7 @@
 		<div class="container outstanding-tasks">
 			<div class="row">
 				<div class="col-sm-8 table-wrapper">
-					<h5>Solo Projects</h5>
+					<h5>My Projects</h5>
 					<table class="table panel panel-default" id="table">
 						<thead>
 							<tr>
@@ -27,16 +27,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="project: ${soloProjects}">
+							<tr th:each="project: ${user.myProjects}">
 								<td><span th:text="${project.id}"></span></td>
 								<td><span th:text="${project.name}"></span></td>
 								<td><a
-									th:href="@{/unit_director/edit_solo_project/{projectId}(projectId=${project.id})}"
+									th:href="@{/unit_director/edit_project/{projectId}(projectId=${project.id})}"
 									class="btn btn-primary btn-xs">Edit</a></td>
 							</tr>
 						</tbody>
 					</table>
-					<h5>Group Projects</h5>
+					
+					<h5>Assigned Projects</h5>
 					<table class="table panel panel-default" id="table">
 						<thead>
 							<tr>
@@ -46,11 +47,11 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="project: ${groupProjects}">
+							<tr th:each="project: ${user.assignedProjects}">
 								<td><span th:text="${project.id}"></span></td>
 								<td><span th:text="${project.name}"></span></td>
 								<td><a
-									th:href="@{/unit_director/edit_group_project/{projectId}(projectId=${project.id})}"
+									th:href="@{/unit_director/edit_project/{projectId}(projectId=${project.id})}"
 									class="btn btn-primary btn-xs">Edit</a></td>
 							</tr>
 						</tbody>
