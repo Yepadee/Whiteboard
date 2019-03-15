@@ -9,18 +9,17 @@ import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.task.GroupTask;
 
 @Entity
-@Table(name="ProjectGroup")
+@Table(name="ProjectGroup") //"Group" is a reserved keyword.
 public class Group {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
 	private Long id;
 	private String name;
 	
-	@OneToMany
+	@ManyToMany
     @JoinTable(
             name = "Groups_Members", 
             joinColumns = { @JoinColumn(name = "group_id") }, 
-            inverseJoinColumns = { @JoinColumn(name = "user_id") }
-        )
+            inverseJoinColumns = { @JoinColumn(name = "user_id") })
 	private List<User> members = new ArrayList<>();
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy= "accountable")
@@ -66,7 +65,7 @@ public class Group {
 	}
 	
 	public void addMember(User user) {
-		user.getGroups().add(this);
 		members.add(user);
+		user.getGroups().add(this);
 	}
 }

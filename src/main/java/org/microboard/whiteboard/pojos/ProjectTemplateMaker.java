@@ -23,6 +23,7 @@ import org.microboard.whiteboard.model.task.GroupTask;
 import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.Unit;
+import org.microboard.whiteboard.model.user.UnitDirector;
 
 public class ProjectTemplateMaker {
 	private void fillCoreProjectTemplate(Project project, ProjectDto template) {
@@ -30,11 +31,13 @@ public class ProjectTemplateMaker {
 		String name = project.getName();
 		String description = project.getDescription();
 		Unit unit = project.getUnit();
+		List<UnitDirector> helpers = project.getHelpers();
 		
 		template.setId(id);
 		template.setName(name);
 		template.setDescription(description);
 		template.setUnit(unit);
+		template.setHelpers(helpers);
 	}
 	
 	private void fillCoreAssessmentTemplate(Assessment assessment, AssessmentDto template) {

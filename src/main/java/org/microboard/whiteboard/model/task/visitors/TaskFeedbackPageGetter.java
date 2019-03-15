@@ -25,7 +25,7 @@ public class TaskFeedbackPageGetter extends TaskVisitor {
 
 	@Override
 	public void visit(GroupTask groupTask) {
-		result = "assesspr/group_feedback";
+		result = "assessor/group_feedback";
 		model.addAttribute("task", groupTask);
 	}
 

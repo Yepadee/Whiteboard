@@ -33,7 +33,7 @@ public class ProjectEditApplyer {
 		Long id = project.getId();
 		String name = edits.getName();
 		String description = edits.getDescription();
-		List<UnitDirector> helpers = new ArrayList<>(); //TODO
+		List<UnitDirector> helpers = edits.getHelpers();
 		Unit unit = edits.getUnit();
 		
 		project.setId(id);
@@ -166,6 +166,12 @@ public class ProjectEditApplyer {
 		//If new unit, remove all groups.
 		if (newUnit) {
 			project.getGroups().removeAll(project.getGroups());
+		}
+		
+		if (project.getId() == null) {
+			for (Group group : edits.getGroups()) {
+				group.setId(null);
+			}
 		}
 		
 		for (Group group : edits.getGroups()) {

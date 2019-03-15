@@ -1,13 +1,20 @@
 package org.microboard.whiteboard.dto.project;
 
-import org.microboard.whiteboard.model.user.Unit;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class ProjectDto {
+import org.microboard.whiteboard.dto.project.visitors.ProjectDtoVisitor;
+import org.microboard.whiteboard.model.project.Project;
+import org.microboard.whiteboard.model.user.Unit;
+import org.microboard.whiteboard.model.user.UnitDirector;
+
+public abstract class ProjectDto<T extends Project> {
 	private Long id;
 	private String name;
 	private String description;
 	private Unit unit;
 	protected String errorMsg = "";
+	private List<UnitDirector> helpers = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -35,6 +42,8 @@ public abstract class ProjectDto {
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
+	
+	public abstract void changeUnit();
 	
 	
 	public String getErrorMsg() {
@@ -69,4 +78,25 @@ public abstract class ProjectDto {
 	}
 	protected abstract boolean validateAssessments();
 
+	public List<UnitDirector> getHelpers() {
+		return helpers;
+	}
+
+	public void setHelpers(List<UnitDirector> helpers) {
+		this.helpers = helpers;
+	}
+	
+	public abstract void accept(ProjectDtoVisitor v);
+
+	public abstract void addAssessment();
+	
+	public abstract void removeAssessment(int index);
+	
+	public abstract void addMarker(int index);
+	
+	public abstract void removeMarker(int assessmentIndex, int markerIndex);
+
+	public abstract boolean canDelete();
+	
+	public abstract T toProject();
 }
