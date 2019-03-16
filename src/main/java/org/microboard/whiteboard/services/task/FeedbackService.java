@@ -60,7 +60,7 @@ public class FeedbackService {
 		return fileinfo;
 	}
 	
-	public void submitFiles(long id, MultipartFile[] files, String comments) throws IOException {
+	public void submitFiles(long id, MultipartFile[] files, String comments, Integer marks) throws IOException {
 		Task task = getTask(id);
 		Assessor assessor = assessorService.getLoggedInUser();
 		Feedback feedback = task.getIndividualFeedback(assessor);
@@ -83,6 +83,7 @@ public class FeedbackService {
 			}
 		}
 		feedback.setTxtFeedback(comments);
+		feedback.setMarks(marks);
 		updateFeedback(feedback);
 	}
 	

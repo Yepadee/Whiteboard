@@ -59,8 +59,9 @@ public class AssessorController {
 	@PostMapping("/feedback/{id}")
 	public String submitFeedback(@PathVariable long id,
 		@ModelAttribute(name = "comments") String comments,
+		@ModelAttribute(name = "marks") Integer marks,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
-		feedbackService.submitFiles(id, files, comments);
+		feedbackService.submitFiles(id, files, comments, marks);
 		return "redirect:/assessor/feedback/" + id;
 		
 		//--------------------------------------
