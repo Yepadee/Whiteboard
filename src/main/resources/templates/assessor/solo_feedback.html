@@ -55,13 +55,15 @@
 
 					<label for="comments">Comments</label>
 					<textarea id="comments" name="comments" th:text="${feedback.txtFeedback}" rows="3" placeholder="Add a comment"></textarea>
+					<label for="marks">Marks</label>
+					<textarea id="marks" name="marks" th:text="${feedback.marks}" rows="1" placeholder="Add a mark"></textarea>
 					<input type="file" name="files" multiple> <input
 						type="submit" value="Submit" />
 				</div>
 			</div>
 			</form>
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
+				<div class="col-sm-8 table-wrapper"> 
 				<form name="deleteFeedback" class="form-horizontal" th:action="@{/assessor/feedback/delete/{id}(id=${task.id})}" method="post">
 					<h2>Feedback Files:</h2>
 					<table class="table panel panel-default" id="table">
