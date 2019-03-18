@@ -1,5 +1,13 @@
 $(document).ready(function() {
 	/*enable multiselection for Helpers*/
+    $('.myMultiselect-selectOptions').multiselect({
+    	
+        includeSelectAllOption: true,
+        enableFiltering: true,
+        maxHeight: 300
+    });
+	
+	/*enable multiselection for Helpers*/
     $('.select-user-group').multiselect({
     	nonSelectedText: 'Select Students',
         includeSelectAllOption: true,
