@@ -31,6 +31,7 @@ public class Feedback {
 	
 	private String txtFeedback;
 	private String status;
+	private Integer mark;
 	private boolean visable;
 	
 	@ElementCollection
@@ -90,5 +91,11 @@ public class Feedback {
 	
 	public void accept(FeedbackVisitor v) {
 		v.visit(this);
+	}
+	public Integer getMark() {
+		return mark;
+	}
+	public void setMark(Integer mark) {
+		this.mark = mark;
 	}
 }
