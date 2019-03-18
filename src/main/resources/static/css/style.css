@@ -143,6 +143,9 @@ body {
 /* End of Dropdown Menu */
 
 /* General style*/
+.silver{
+	color: #ccc;
+}
 .text-middle{
 	text-align: center;
 }
@@ -447,9 +450,6 @@ body {
 }
 
 /* New Project Section*/
-/*.project_selected{ /*intially hide the content until the Unit director click on (Group/Solo project)*/
-  /*  display:none;
-  }*/
   
 .markerWrapperAdded{
   padding-top: 20px;
@@ -461,64 +461,7 @@ body {
 #addMarker{
 	margin-top:25px;
 }
-#users .multiselect-selected-text{
-	color: #000;
-	
-}
-#users .btn-default.active.focus,
-#users .btn-default.active:focus,
-#users .btn-default.active:hover,
-#users .btn-default:active.focus,
-#users .btn-default:active:focus,
-#users .btn-default:active:hover,
-#users .open>.dropdown-toggle.btn-default.focus,
-#users .open>.dropdown-toggle.btn-default:focus,
-#users .open>.dropdown-toggle.btn-default:hover,
-#users .btn-group>.btn:first-child{
-    background-image: none;
-    color: #000;
-    background-color: #fff;
-    border-color: #d1d1d1;
-}
 
-#users .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
-    background: #0696b7;
-    color: #fff;
-}
-#users .dropdown-menu>.active>a,
-#users .dropdown-menu>.active>a:focus,
-#users .dropdown-menu>.active>a:hover {
-    color: #fff;
-    text-decoration: none;
-    background-color: #0696b7;
-    outline: 0;
-}
-#users .multiselect-container>li>a>label.checkbox,
-#users .multiselect-container>li>a>label.radio {
-    margin: 0;
-    margin-left: 0;
-    margin-bottom: 1px;
-    font-size: 14px;
-    padding-left: 30px;
-}
-#users .input-group .form-control:not(:first-child):not(:last-child),
-#users .input-group-addon:not(:first-child):not(:last-child),
-#users .input-group-btn:not(:first-child):not(:last-child) {
-    border-radius: 0;
-    height: 34px;
-    width: 150px;
-}
-#users .glyphicon-remove-circle{
-	color: #000;
-}
-#users .dropdown-menu>.active>a,
-#users .dropdown-menu>.active>a:focus,
-#users .dropdown-menu>.active>a:hover{
-	background-image:none;
-}
-#users .multiselect-container>li>a>label {
-  padding: 4px 20px 3px 20px;
-}
 #selectMarker>option{
 	padding-top: 100px;
 	margin: 100px;	
@@ -566,10 +509,68 @@ body {
 }
 /*	End of Filter for search	*/
 
-/**/
-.silver{
-	color: #ccc;
+/*	multiselect */
+.myMultiselect .multiselect-selected-text{
+	color: #333030;
+	font-size:13px;
 }
+.myMultiselect .btn-default.active.focus,
+.myMultiselect .btn-default.active:focus,
+.myMultiselect .btn-default.active:hover,
+.myMultiselect .btn-default:active.focus,
+.myMultiselect .btn-default:active:focus,
+.myMultiselect .btn-default:active:hover,
+.myMultiselect .open>.dropdown-toggle.btn-default.focus,
+.myMultiselect .open>.dropdown-toggle.btn-default:focus,
+.myMultiselect .open>.dropdown-toggle.btn-default:hover,
+.myMultiselect .btn-group>.btn:first-child{
+    background-image: none;
+    color: #000;
+    background-color: #fff;
+    border-color: #d1d1d1;
+}
+
+.myMultiselect .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background: #0696b7;
+    color: #fff;
+}
+.myMultiselect .dropdown-menu>.active>a,
+.myMultiselect .dropdown-menu>.active>a:focus,
+.myMultiselect .dropdown-menu>.active>a:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #0696b7;
+    outline: 0;
+}
+.myMultiselect .multiselect-container>li>a>label.checkbox,
+.myMultiselect .multiselect-container>li>a>label.radio {
+    margin: 0;
+    margin-left: 0;
+    margin-bottom: 1px;
+    font-size: 14px;
+    padding-left: 30px;
+}
+.myMultiselect .input-group .form-control:not(:first-child):not(:last-child),
+.myMultiselect .input-group-addon:not(:first-child):not(:last-child),
+.myMultiselect .input-group-btn:not(:first-child):not(:last-child) {
+    border-radius: 0;
+    height: 34px;
+    width: 150px;
+}
+.myMultiselect .glyphicon-remove-circle{
+	color: #000;
+}
+.myMultiselect .dropdown-menu>.active>a,
+.myMultiselect .dropdown-menu>.active>a:focus,
+.myMultiselect .dropdown-menu>.active>a:hover{
+	background-image:none;
+}
+.myMultiselect .multiselect-container>li>a>label {
+  padding: 4px 20px 3px 20px;
+}
+/*	End of multiselect */
+
+/* number of user selected */
 .small{
 	font-size: 12px;
 }
@@ -585,3 +586,4 @@ body {
 .smaller{
 	font-size: 12px;
 }
+/* End of number of user selected */
