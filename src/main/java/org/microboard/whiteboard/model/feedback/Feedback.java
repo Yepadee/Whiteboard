@@ -32,7 +32,7 @@ public class Feedback {
 	private String txtFeedback;
 	private String status;
 	private boolean visable;
-	
+	private Integer marks;
 	@ElementCollection
 	@CollectionTable(name="feedback_file_names", joinColumns=@JoinColumn(name="marker_task_id"))
 	@Column(name="fileName")
@@ -90,5 +90,11 @@ public class Feedback {
 	
 	public void accept(FeedbackVisitor v) {
 		v.visit(this);
+	}
+	public Integer getMarks() {
+		return marks;
+	}
+	public void setMarks(Integer marks) {
+		this.marks = marks;
 	}
 }

@@ -35,6 +35,7 @@ public abstract class Project {
 	
 	@ManyToOne(cascade = {CascadeType.REFRESH})
 	private UnitDirector creator;
+	
 	@ManyToMany
 	private List<UnitDirector> helpers = new ArrayList<>();
 	
@@ -78,6 +79,11 @@ public abstract class Project {
 	}
 	public void setUnit(Unit unit) {
 		this.unit = unit;
+	}
+	
+	public void addHelper(UnitDirector unitDirector) {
+		helpers.add(unitDirector);
+		unitDirector.getAssignedProjects().add(this);
 	}
 	
 	public boolean equals(Project project) {

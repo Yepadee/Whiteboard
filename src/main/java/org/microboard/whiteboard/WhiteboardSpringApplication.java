@@ -1,5 +1,7 @@
 package org.microboard.whiteboard;
 
+import org.microboard.whiteboard.dto.assessment.SoloAssessmentDto;
+import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.model.assessment.GroupAssessment;
 import org.microboard.whiteboard.model.assessment.SoloAssessment;
 import org.microboard.whiteboard.model.project.GroupProject;
@@ -13,6 +15,7 @@ import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.services.project.ProjectService;
+import org.microboard.whiteboard.services.project.SoloProjectService;
 import org.microboard.whiteboard.services.user.UnitService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,9 @@ public class WhiteboardSpringApplication {
 	
 	@Autowired
     private ProjectService projectService;
+	
+	@Autowired
+    private SoloProjectService soloProjectService;
 	
 	@Value("${spring.profiles.active:unknown}")
 	private String activeProfile;
@@ -202,6 +208,22 @@ public class WhiteboardSpringApplication {
 			projectService.addProject(gp);
 			projectService.addProject(gp2);
 			projectService.addProject(sp);
+			
+			SoloProjectDto spd = new SoloProjectDto();
+			spd.setName("Solo Project 1 Test");
+			spd.setUnit(unit1);
+			SoloAssessmentDto ad = new SoloAssessmentDto();
+			
+			ad.setName("Test");
+			
+			spd.getAssessments().add(ad);
+			
+			SoloProject sp3 = spd.toProject();
+			unitDirector.addProject(sp3);
+			
+			soloProjectService.addProject(sp3);
+			
+			
 			
 			//TODO: if constraint broken on user_solo_tasks then add cascade type back to tasks in user.
 		}
