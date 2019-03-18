@@ -95,33 +95,16 @@ $(document).ready(function() {
     $.each($("input[name='groupUsers']:checked"), function(){
     	$(this).addClass("userChecked");
     	var currentValue = $(this).val();
-    	groupUsersSelectedArray.push({value:currentValue,numberOfSelected:1});
+    	groupUsersSelectedArray.push(currentValue);
     });
-    
-    groupUsersCheckArray=[];
-    for(var i in groupUsersSelectedArray) {
-    	var checkboxValue = groupUsersSelectedArray[i]["value"];    					
-    	if(jQuery.inArray(checkboxValue, groupUsersCheckArray) !== -1) {
-    		var count=0;
-    		var x=0;
-    		for(var j in groupUsersCheckArray) {
-    			if(checkboxValue == groupUsersCheckArray[j]){
-    				groupUsersSelectedArray[j]["numberOfSelected"]++;
-    				x=groupUsersSelectedArray[j]["numberOfSelected"];
-    			}
-    			count++;
-	    	}
-    		groupUsersSelectedArray[count]["numberOfSelected"]=x;
-    	}else{
-		}
-    	groupUsersCheckArray.push(checkboxValue);
-      }
     
     // Colour the selected input to silver to show the user that it is selected before 
 	$.each( groupUsersSelectedArray, function( key) {
     	$("input[name='groupUsers']").each(function () {
-    	  if(groupUsersSelectedArray[key]["value"] == $(this).val()){
-    		 $(this).parent().addClass("selectedUser");
+    	  if(groupUsersSelectedArray[key] == $(this).val()){
+    		  if ($(this).prop('checked')!=true){ 
+    			  $(this).parent().parent().parent().remove();
+    		  }
     	  }
     	});
 	});
