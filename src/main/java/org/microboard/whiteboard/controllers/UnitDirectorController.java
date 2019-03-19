@@ -1,12 +1,21 @@
 package org.microboard.whiteboard.controllers;
 
+import java.util.List;
+
+import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.dto.user.SelectedUsersDto;
+import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.visitors.EditPathGetter;
+import org.microboard.whiteboard.model.task.Task;
+import org.microboard.whiteboard.model.task.visitors.ReconciliationPageGetter;
+import org.microboard.whiteboard.model.task.visitors.TaskFeedbackPageGetter;
+import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.UserPermChangeValidator;
 import org.microboard.whiteboard.services.project.ProjectService;
+import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.AssessorService;
 import org.microboard.whiteboard.services.user.StudentService;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
@@ -38,6 +47,9 @@ public class UnitDirectorController {
 	@Autowired
 	private ProjectService projectService;
 	
+	@Autowired
+	private TaskService taskService;
+	
 	
 	@GetMapping("/projects")
 	public String viewProjectsPage(Model model) {
@@ -55,6 +67,14 @@ public class UnitDirectorController {
 		project.accept(epg);
 		
 		return "redirect:" + epg.getResult() + "/" + id;
+	}
+	
+	@GetMapping("/reconciliation/{id}")
+	public String reconciliation(Model model, @PathVariable Long id) {
+		Task task = taskService.getTask(id);
+		ReconciliationPageGetter rcg = new ReconciliationPageGetter(model);
+		task.accept(rcg);
+		return rcg.getResult();
 	}
 	
 	@GetMapping("/manage_perms")

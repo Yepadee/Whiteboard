@@ -29,8 +29,8 @@ public class Feedback {
 	@ManyToOne
 	private Assessor marker;
 	
-	private String txtFeedback;
-	private String status;
+	private String txtFeedback = "";
+	private String status = "new";
 	private boolean visable;
 	private Integer marks;
 	@ElementCollection
@@ -88,6 +88,10 @@ public class Feedback {
 		this.status = status;
 	}
 	
+	public boolean notEmpty() {
+		return marks != null;
+	}
+	
 	public void accept(FeedbackVisitor v) {
 		v.visit(this);
 	}
@@ -96,5 +100,10 @@ public class Feedback {
 	}
 	public void setMarks(Integer marks) {
 		this.marks = marks;
+	}
+	public void setValues(String comments, Integer marks) {
+		setTxtFeedback(comments);
+		setMarks(marks);
+		setStatus("marked");
 	}
 }

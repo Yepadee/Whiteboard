@@ -82,8 +82,7 @@ public class FeedbackService {
 				}
 			}
 		}
-		feedback.setTxtFeedback(comments);
-		feedback.setMarks(marks);
+		feedback.setValues(comments, marks);
 		updateFeedback(feedback);
 	}
 	

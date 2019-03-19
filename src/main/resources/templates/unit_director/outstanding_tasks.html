@@ -36,40 +36,72 @@
 								<td><span th:text="${feedback.task.assessment.project.name}"></span></td>
 								<td><span th:text="${feedback.task.assessment.name}"></span></td>
 								<td><span th:text="${feedback.task.accountable.name}"></span></td>
-								<td><span th:text="${feedback.task.assessment.studentDeadline}" class="warning"></span></td>
-								<td><span th:text="${feedback.task.status}"></span></td>
+								<td><span th:text="${feedback.task.assessment.markerDeadline}" class="warning"></span></td>
+								<td><span th:text="${feedback.status}"></span></td>
 								<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${feedback.task.id})}"
 									class="btn btn-primary btn-xs">View</a></td>
 							</tr>
 						</tbody>
 					</table>
-					
-					<h3>Reconciliation (COMING SOON)</h3>
-					<table class="table panel panel-default" id="table">
-						<thead>
-							<tr>
-								<th>Project</th>
-								<th>Assessment</th>
-								<th>Student</th>
-								<th>Deadline</th>
-								<th>Status</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-						<!--  
-							<tr th:each="task: ${user.allTasks}">
-								<td><span th:text="${task.assessment.project.name}"></span></td>
-								<td><span th:text="${task.assessment.name}"></span></td>
-								<td><span th:text="${task.assessment.studentDeadline}" class="warning"></span></td>
-								<td><span th:text="${task.status}"></span></td>
-								<td><a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}"
-									class="btn btn-primary btn-xs">View</a></td>
-							</tr>
-							-->
-						</tbody>
-					</table>
-					
+				</div>
+				<div class="col-sm-8 table-wrapper">
+					<h3>Reconciliation</h3>
+					<h4>My Projects</h4>
+					<div th:each="project : ${user.myProjects}">
+						<h4 th:text="${project.name}"></h4>
+						<table class="table panel panel-default" id="table">
+							<thead>
+								<tr>
+									<th>Assessment</th>
+									<th>For</th>
+									<th>Status</th>
+									<th>Feedback</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<div th:each="assessment : ${project.assessments}">
+								<tr th:each="task : ${assessment.tasks}">
+									<td><span th:text="${assessment.name}"></span></td>
+									<td><span th:text="${task.accountable.name}"></span></td>
+									<td><span th:text="${task.status}"></span></td>
+									<td><span th:text="${task.feedbackSubmitted}"></span>/<span th:text="${task.numMarkers}"></span></td>
+									<td><a th:href="@{/unit_director/reconciliation/{taskId}(taskId=${task.id})}"
+										class="btn btn-primary btn-xs">View</a></td>
+								</tr>
+								</div>
+							</tbody>
+						</table>
+					</div>
+					<h4>Assigned Projects</h4>
+					<div th:each="project : ${user.assignedProjects}">
+						<h4 th:text="${project.name}"></h4>
+						<table class="table panel panel-default" id="table">
+							<thead>
+								<tr>
+									<th>Assessment</th>
+									<th>For</th>
+									<th>Status</th>
+									<th>Feedback</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<div th:each="assessment : ${project.assessments}">
+								<tr th:each="task : ${assessment.tasks}">
+									<td><span th:text="${assessment.name}"></span></td>
+									<td><span th:text="${task.accountable.name}"></span></td>
+									<td><span th:text="${task.status}"></span></td>
+									<td><span th:text="${task.feedbackSubmitted}"></span>/<span th:text="${task.numMarkers}"></span></td>
+									<td><a th:href="@{/unit_director/reconciliation/{id}(id=${task.id})}"
+										class="btn btn-primary btn-xs">View</a></td>
+								</tr>
+								</div>
+							</tbody>
+						</table>
+					</div>
+					</div>
+					<div class="col-sm-8 table-wrapper">
 					<h3>Submissions</h3>
 					<table class="table panel panel-default" id="table">
 						<thead>
@@ -92,9 +124,9 @@
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 </html>

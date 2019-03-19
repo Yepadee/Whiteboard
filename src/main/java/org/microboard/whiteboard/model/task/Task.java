@@ -18,6 +18,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 
@@ -36,6 +37,9 @@ public abstract class Task {
 	private int studentExtension;
 	private int markerExtension;
 	
+	@OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
+	private Feedback reconciledFeedback = new Feedback();
+	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
 	@JoinTable(name="assessor_feedback", joinColumns=@JoinColumn(name="assessor_id"))
 	@MapKeyColumn(name="assessor_id")
@@ -49,8 +53,6 @@ public abstract class Task {
 	private List<String> fileNames= new ArrayList<>();
 	
 	private String status = "new";
-	
-	
 	
 	public Long getId() {
 		return id;
@@ -95,6 +97,14 @@ public abstract class Task {
 	public void setFeedback(Map<Assessor, Feedback> feedback) {
 		this.feedback = feedback;
 	}
+	public Feedback getReconciledFeedback() {
+		return reconciledFeedback;
+	}
+	public void setReconciledFeedback(Feedback reconciledFeedback) {
+		this.reconciledFeedback = reconciledFeedback;
+	}
+	
+	
 	public void addFile(String fileName) {
 		this.fileNames.add(fileName);
 	}
@@ -104,8 +114,8 @@ public abstract class Task {
 		allUploads.addAll(fileNames);
 		return allUploads;
 	}
-	public void removeFile(String filePath)
-	{
+	
+	public void removeFile(String filePath) {
 		fileNames.remove(filePath);
 
 	}
@@ -128,6 +138,20 @@ public abstract class Task {
 	
 	public List<Assessor> getMarkers() {
 		return new ArrayList<>(feedback.keySet());
+	}
+	
+	public Integer getNumMarkers() {
+		return feedback.size();
+	}
+	
+	public Integer getFeedbackSubmitted() {
+		int feedbackSubmitted = 0;
+		for (Feedback feedback : feedback.values()) {
+			if (feedback.notEmpty()) {
+				feedbackSubmitted ++;
+			}
+		}
+		return feedbackSubmitted;
 	}
 	
 	public abstract Assessment getAssessment();
