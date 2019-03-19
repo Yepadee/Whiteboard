@@ -48,6 +48,39 @@
 					</table>
 				</div>
 			</div>
+			
+			<div th:each="feedback : ${task.feedback}">
+				
+				<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h1 th:text="Feedback"></h1>
+					<h2 th:text="${feedback.key.userName}"></h2>
+					<label for="comments">Comments</label>
+					<span th:text="${feedback.value.txtFeedback}"></span>
+					<label th:value="${feedback.value.marks}"></label>
+				<div class="form-horizontal">
+					<h2>Feedback Files:</h2>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>File</th>
+								<th>Size</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						<!--  -->
+						<tr th:each="file: ${feedbackfileinfo}">
+							<td><a th:href="@{/assessor/feedback/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+								<span th:text="${file.fileName}"></span></a></td>
+							<td><span th:text="${file.fileSize}"></span></td>
+						</tr>
+				</tbody>
+					</table>
+				</div>
+			</div>
+			</div>
+			
 			<form th:action="@{/unit_director/reconciliation/{taskId}(taskId=${task.id})}" method="post" id="reconciliationSubmissionForm" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-sm-8 table-wrapper">
@@ -90,6 +123,7 @@
 				</div>
 			</div>
 			 -->
+		</div>
 		</div>
 	</div>
 </body>

@@ -54,7 +54,7 @@ public class TaskService {
 	public void submitFiles(long id, MultipartFile[] files, String comments) throws IOException {
 		//Look into making a mock file to test this
 		Task task = getTask(id);
-			
+		task.setStatus("submitted");
 		TaskUploadPathGen pathGen = new TaskUploadPathGen();
 		task.accept(pathGen);
 		String path = pathGen.getResult();
