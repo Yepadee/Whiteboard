@@ -63,7 +63,7 @@ public class UnitDirectorController {
 	public String managePermissionsPage(Model model) {
 		model.addAttribute("selectedUsersDto", new SelectedUsersDto());
 		model.addAttribute("students", studentService.getAllUsers());
-		model.addAttribute("assessors", assessorService.getAllUsers());
+		model.addAttribute("assessors", assessorService.getOnlyAssessors());
 		model.addAttribute("unitDirectors", unitDirectorService.getAllUsers());
 		return "unit_director/manage_perms";
 	}
@@ -98,7 +98,7 @@ public class UnitDirectorController {
 		
 		model.addAttribute("selectedUsersDto", new SelectedUsersDto());
 		model.addAttribute("students", studentService.getAllUsers());
-		model.addAttribute("assessors", assessorService.getAllUsers());
+		model.addAttribute("assessors", assessorService.getOnlyAssessors());
 		model.addAttribute("unitDirectors", unitDirectorService.getAllUsers());
 	    return "unit_director/manage_perms";
 	}

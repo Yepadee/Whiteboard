@@ -68,6 +68,18 @@ public class AssessorController {
 		//NO ACCESS VALIDATION- TODO!
 	}
 	
+	@PostMapping("/group_feedback/{id}")
+	public String submitGroupFeedback(@PathVariable long id,
+		@ModelAttribute(name = "comments") String comments,
+		@ModelAttribute(name = "marks") Integer marks,
+		@RequestParam("files") MultipartFile[] files) throws IOException {
+		feedbackService.submitFiles(id, files, comments, marks);
+		return "redirect:/assessor/feedback/" + id;
+		
+		//--------------------------------------
+		//NO ACCESS VALIDATION- TODO!
+	}
+	
 	@GetMapping("/feedback/download/{id}/{filename}")
 	public ResponseEntity<Resource> downloadFile(Model model, @PathVariable long id,  @PathVariable String filename) {
 		Assessor assessor = assessorService.getLoggedInUser();

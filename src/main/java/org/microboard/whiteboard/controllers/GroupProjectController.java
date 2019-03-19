@@ -44,7 +44,10 @@ public class GroupProjectController extends ProjectController<GroupProjectDto> {
 	
 	@PostMapping(value="/new_group_project", params={"addAssessment"})
 	public String addAssessment(GroupProjectDto project) {
+		System.out.println("TEST");
+		System.out.println(project.getAssessments().size());
 		project.addAssessment();
+		System.out.println(project.getAssessments().size());
 	    return newGroupProjectPath;
 	}
 	

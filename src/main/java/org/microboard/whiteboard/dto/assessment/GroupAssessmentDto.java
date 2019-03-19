@@ -9,7 +9,6 @@ public class GroupAssessmentDto extends AssessmentDto {
 	private List<MarkerGroupDto> groupMarkerDtos = new ArrayList<>();
 	
 	
-
 	public List<MarkerGroupDto> getGroupMarkerDtos() {
 		return groupMarkerDtos;
 	}
