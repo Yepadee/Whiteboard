@@ -22,7 +22,6 @@
 						<div class="col-sm-4 col-sm-push-2">
 							<label for="selectStudents">Students: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<select class="myMultiselect-selectOptions" id="selectStudents" th:field="*{selectedStudents}" multiple="multiple">
-								<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
 								<option th:each="student : ${students}" th:value="${{student}}" th:id="${{student}}" th:text=${student.userName}></option>
 							</select> 
 						</div>
@@ -34,7 +33,6 @@
 						<div class="col-sm-4 col-sm-push-2">
 							<label for="selectAssessors">Assessors: </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<select class="myMultiselect-selectOptions" id="selectAssessors" th:field="*{selectedAssessors}" multiple="multiple">
-								<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
 								<option th:each="assessor : ${assessors}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
 							</select>
 						</div>
@@ -46,7 +44,6 @@
 						<div class="col-sm-4 col-sm-push-2">
 							<label for="selectUnitDirectors">Unit Directors: </label>&nbsp;
 							<select class="myMultiselect-selectOptions" id="selectUnitDirectors" th:field="*{selectedUnitDirectors}" multiple="multiple">
-								<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
 								<option th:each="unitDirector : ${unitDirectors}" th:value="${{unitDirector}}" th:id="${{unitDirector}}" th:text=${unitDirector.userName}></option>
 							</select>
 						</div>

@@ -16,9 +16,7 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h5>Outstanding Tasks</h5>
-					
+				<div class="col-sm-12 table-wrapper">
 					<h3>To Mark</h3>
 					<table class="table panel panel-default" id="table">
 						<thead>
@@ -44,7 +42,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="col-sm-8 table-wrapper">
+				<div class="col-sm-12 table-wrapper">
 					<h3>Reconciliation</h3>
 					<h4>My Projects</h4>
 					<div th:each="project : ${user.myProjects}">
@@ -101,7 +99,8 @@
 						</table>
 					</div>
 					</div>
-					<div class="col-sm-8 table-wrapper">
+					<div class="col-sm-12 table-wrapper">
+
 					<h3>Submissions</h3>
 					<table class="table panel panel-default" id="table">
 						<thead>
