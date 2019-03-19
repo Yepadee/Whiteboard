@@ -1,10 +1,13 @@
 package org.microboard.whiteboard.services.project;
 
+import java.io.File;
 import java.util.ArrayList;
 import org.microboard.whiteboard.dto.assessment.GroupAssessmentDto;
 import org.microboard.whiteboard.dto.project.GroupProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerGroupDto;
 import org.microboard.whiteboard.model.project.GroupProject;
+import org.microboard.whiteboard.model.project.visitors.ProjectFolderCreator;
+import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.pojos.ProjectEditApplyer;
 import org.microboard.whiteboard.pojos.ProjectTemplateMaker;
@@ -39,7 +42,7 @@ public class GroupProjectService extends BaseProjectService<GroupProject> {
 		
 		creator.addProject(newProject);
 		Long id = addProject(newProject);
-		createGroupProjectUploadFolders(newProject);
+		
 		
 		return id;
 	}
@@ -48,21 +51,19 @@ public class GroupProjectService extends BaseProjectService<GroupProject> {
 		ProjectEditApplyer editApplyer = new ProjectEditApplyer();
 		GroupProject project = getProject(projectDto.getId());
 		editApplyer.applyEdits(project, projectDto);
-		updateProject(project);	
+		updateProject(project);
+		createGroupProjectUploadFolders(project);
 	}
 	
 	private void createGroupProjectUploadFolders(GroupProject project) {
-		/*
 		String path = System.getProperty("user.dir") + "/uploads/";
-		path += Long.toString(project.getUnit().getId())+"/";
-		List<User> users = project.getUnit().getCohort();
-		for (User user : users) {
-			String userPath = path + user.getUserName() + "/";
-			userPath += project.getName() + "/";
-			for (SoloAssessment assessment : project.getAssessments()) {
-				new File(userPath + assessment.getName() + "/feedback/").mkdirs();
-			}
+		path += project.getUnit().getUnitCode() + "/";
+		path += project.getName() + "/";
+		
+		File f = new File(path);
+		if(!f.exists()) { 
+			ProjectFolderCreator folderCreater = new ProjectFolderCreator();
+			project.accept(folderCreater);
 		}
-		*/
 	}
 } 
