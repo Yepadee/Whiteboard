@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.microboard.whiteboard.model.feedback.visitors.FeedbackVisitor;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
@@ -92,9 +91,6 @@ public class Feedback {
 		return marks != null;
 	}
 	
-	public void accept(FeedbackVisitor v) {
-		v.visit(this);
-	}
 	public Integer getMarks() {
 		return marks;
 	}
