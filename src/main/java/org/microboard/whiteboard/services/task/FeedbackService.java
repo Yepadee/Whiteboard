@@ -12,9 +12,8 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.feedback.Feedback;
-import org.microboard.whiteboard.model.feedback.visitors.FeedbackUploadPathGen;
+import org.microboard.whiteboard.model.feedback.FeedbackUploadPathGen;
 import org.microboard.whiteboard.model.task.Task;
-import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.repositories.task.FeedbackRepository;
 import org.microboard.whiteboard.repositories.task.TaskRepository;
@@ -65,8 +64,7 @@ public class FeedbackService {
 		Assessor assessor = assessorService.getLoggedInUser();
 		Feedback feedback = task.getIndividualFeedback(assessor);
 		FeedbackUploadPathGen pathGen = new FeedbackUploadPathGen();
-		feedback.accept(pathGen);
-		String path = pathGen.getResult();
+		String path = pathGen.getFeedbackPath(feedback);
 		new File(path).mkdir();
 		
 		for (MultipartFile file : files) {
