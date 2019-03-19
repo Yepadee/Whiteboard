@@ -218,9 +218,8 @@
 							</div>
 						</div>
 					</div>
-
-					<div th:if="${groupProjectDto.id != null}" class="form-group">
-						<div class="col-sm-2 col-sm-push-1">
+					<div class="form-group">
+						<div class="col-sm-2 col-sm-push-1" th:if="${groupProjectDto.id != null}" >
 							<input th:if="${groupProjectDto.id != null}" type="submit" name="addAssessment" class="btn btn-blue" value="Add Assessment"></input>
 						</div>
 					</div>
