@@ -34,306 +34,204 @@
 						</div>
 					</div>
 				</div>
-				<form name="newProject" class="form-horizontal"
-                                        th:action="@{/unit_director/new_group_project}"
-                                        th:object="${groupProjectDto}" method="post">
+				<form name="newProject" class="form-horizontal" th:action="@{/unit_director/new_group_project}" th:object="${groupProjectDto}" method="post">
+                	<div class="form-group">
+                    	<div class="col-sm-4 col-sm-push-2">
+                        	<label for="selectUnit">Select Unit: </label>
+                        	<select id="selectUnit" list="selectUnit" th:field="*{unit}" onchange="setUnit.click()" class="chosen form-control">
+								<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
+								<option th:each="unit : ${unitList}" th:value="${{unit}}" th:id="${{unit}}" th:text=${unit.unitName}></option>
+							</select>
+                        </div>
+                    </div>
+                    <input type="hidden" th:field="*{id}" th:value="*{id}">
+                    <input type="hidden" th:field="*{unit}" th:value="*{unit}">
+                    <button style="display: none;" type="submit" id="setUnit" name="setUnit">Set Unit</button>
 
-                                        <div class="form-group">
-                                                <div class="col-sm-4 col-sm-push-2">
-                                                        <label for="selectUnit">Select Unit: </label> <select
-                                                                id="selectUnit" list="selectUnit" th:field="*{unit}"
-                                                                onchange="setUnit.click()" class="chosen form-control">
-                                                                <!--  <option th:value="0" text="Please Select" selected disabled hidden>Please Select</option>-->
-                                                                <option th:value="null" hidden="hidden" style="display: none;"
-                                                                        selected>Please Select</option>
+                    <div class="form-group">
+                    	<hr class="dottedLine col-sm-8 col-sm-push-2" />
+                    </div>
+					<div class="form-group myMultiselect">
+						<div class="col-sm-4 col-sm-push-2">
+							<select id="select-helper" th:field="*{helpers}" class="form-control" multiple="multiple">
+								<option th:each="unitDirector : ${unitDirectorList}" th:value="${{unitDirector}}" th:id="${{unitDirector}}" th:text=${unitDirector.userName}></option>
+							</select>
+						</div>
+					</div>
+                    <div class="form-group">
+                            <hr class="dottedLine col-sm-8 col-sm-push-2" />
+                    </div>
 
-                                                                <option th:each="unit : ${unitList}" th:value="${{unit}}"
-                                                                        th:id="${{unit}}" th:text=${unit.unitName}></option>
-                                                        </select>
+                    <div class="form-group">
+                     <label class="control-label col-sm-2" for="projectName">Project Name: </label>
+                     <div class="col-sm-4">
+                     	<input class="form-control" id="projectName" type="text" th:field="*{name}" placeholder="Enter a project name" />                                               
+                     </div>
+                    </div>
+                    <div class="form-group">
+	                     <label class="control-label col-sm-2" for="projectDesc">Description:</label>
+	                     <div class="col-sm-8">
+	                     	<textarea class="form-control" rows="5" placeholder="Add a description to the project" id="projectDesc" type="text" th:field="*{description}"></textarea>
+	                     </div>
+                    </div>
+                  	<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+                    </div>
+                    <div class="form-group">
+						<div th:each="group, g: *{groups}">
+	                    	<input type="hidden" th:field="*{groups[__${g.index}__].id}" th:value="*{groups[__${g.index}__].id}">
+	                        <div class="markerWrapper">
+	                        	<div class="form-group">
+                                	<div class="col-sm-3 col-sm-push-2">
+                                    	<div class="form-group">
+                                        	<label class="control-label" for="groupName">Name:</label>
+											<input class="form-control" placeholder="Group Name" type="text" id="groupName" th:field="*{groups[__${g.index}__].name}" name="groupName">
+                                        </div>
+                                        <div class="form-group myMultiselect" id="user-group">
+											<label for="groupMembers">Select student/s:</label> <br>
+											<div th:if="*{unit != null}">
+												<select class="groupMembers select-user-group" id="select-user-group" th:field="*{groups[__${g.index}__].members}" multiple="multiple">
+													<option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}" th:text="${user.userName}"></option>
+												</select>
+											</div>
+											<div th:if="*{unit == null}">
+												<div class="error_message">
+													<span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
+													<span class="messageHeader">No unit selected</span>
+												</div>
+											</div>
+										</div>
+                                 	</div>
+	                              </div>
+	                              <div class="form-group">
+	                              	<div class="col-sm-2 col-sm-push-3">
+	                                	<button type="submit" name="removeGroup" th:value="${g.index}" class="btn btn-lightred">Remove Group</button>
+	                                </div>
+	                              </div>
+	                           </div>
+	
+                               <div class="form-group">
+                               		<hr class="dottedLine col-sm-8 col-sm-push-2" />
+                               </div>
+                           </div>
+                        </div>
+                        <div class="form-group">
+							<div class="col-sm-2 col-sm-push-1">
+								<input type="submit" id="addGroup" name="addGroup" class="btn btn-blue" value="Add Group"></input>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-black" name="addProject" data-toggle="modal" id="addProject"> Save Groups <span class="glyphicon glyphicon-chevron-right"></span> </button>
+                        <div th:each="assessment, a: *{assessments}">
+                        	<input type="hidden" th:field="*{assessments[__${a.index}__].id}" th:value="*{assessments[__${a.index}__].id}">
+                            <div class="assignmentWrapper">
+                            	<div class="assignment-background">
+                                	<div class="form-group">
+                                    	<h4 class="col-sm-2 col-sm-push-2 font-bold" for="assignmentName"> Assessment <span th:text="${a.index + 1}"></span>: </h4>
+                                    </div>
+                                     <div class="form-group">
+	                                     <label class="control-label col-sm-3" for="assessmentName">Name:</label>
+	                                     <div class="col-sm-3">
+	                                     	<input class="form-control" placeholder="Assignment Name" type="text" id="assessmentName" th:field="*{assessments[__${a.index}__].name}" name="assessmentName">
+	                                     </div>
+                                     </div>
+                                     <div class="form-group">
+                                     	<label class="control-label col-sm-3" for="assessmentDesc">Description:</label>
+                                        	<div class="col-sm-8">
+                                            	<textarea class="form-control" rows="3" placeholder="Add a description for the assignment" type="text" id="assessmentDesc" th:field="*{assessments[__${a.index}__].description}" name="assessmentDesc"></textarea>
+                                            </div>
+                                     </div>
+                                     <div class="form-group">
+                                     	<label class="control-label col-sm-3" for="studentDeadline">Student Deadline:</label>
+                                        <div class="col-sm-3">
+                                        	<input class="form-control" th:field="*{{assessments[__${a.index}__].studentDeadline}}" type="datetime-local" id="studentDeadline" name="studentDeadline">
+                                        </div>
+                                     </div>
+
+                                     <div class="form-group">
+                                     	<label class="control-label col-sm-3" for="markerDeadline">Marker Deadline:</label>
+                                    	<div class="col-sm-3">
+                                        	<input class="form-control" th:field="*{{assessments[__${a.index}__].markerDeadline}}" type="datetime-local" id="markerDeadline" name="markerDeadline">
+                                        </div>
+                                     </div>
+
+                                     <div class="control-label col-sm-3">
+                                     	<label for="deadline">Weight:</label>
+                                     </div>
+                                     <div class="form-group">
+                                        <div class="col-sm-2">
+                                        	<div class="input-group">
+	                                            <span class="input-group-addon">%</span>
+	                                            <input class="form-control" th:field="*{{assessments[__${a.index}__].weight}}" type="number" min="0" max="100" id="weight">
+                                            </div>
+                                        </div>
+                                     </div>
+
+                                     <div class="form-group">
+                                        <hr class="dottedLine col-sm-8 col-sm-push-2" />
+                                     </div>
+                                     
+                                     <div th:each="markerDto, m: *{assessments[__${a.index}__].groupMarkerDtos}">
+                                     	<div class="markerWrapper">
+                                        	<div class="form-group">
+                                            	<div class="col-sm-4 col-sm-push-3">
+	                                            	<label for="selectMarker">Select a marker:</label>
+	                                                	<select id="selectMarker" list="selectMarker" th:field="*{assessments[__${a.index}__].groupMarkerDtos[__${m.index}__].marker}" class="chosen form-control">
+	                                                    	<option th:value="null" hidden="hidden" style="display: none;" selected>Please Select</option>
+	                                                        <option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
+	                                                    </select>
                                                 </div>
-                                        </div>
 
-
-                                        <input type="hidden" th:field="*{id}" th:value="*{id}"> <input
-                                                type="hidden" th:field="*{unit}" th:value="*{unit}">
-                                        <button style="display: none;" type="submit" id="setUnit"
-                                                name="setUnit">Set Unit</button>
-
-                                        <div class="form-group">
-                                                <hr class="dottedLine col-sm-8 col-sm-push-2" />
-                                        </div>
-
-                                        <div class="form-group">
-                                                <div class="col-sm-4 col-sm-push-2">
-                                                        <label for="selectHelpers">Select Helpers: </label> <select
-                                                                id="toMark" th:field="*{helpers}" class="chosen form-control"
-                                                                multiple="multiple">
-
-                                                                <option th:value="null" hidden="hidden" style="display: none;"
-                                                                        selected>Please Select</option>
-                                                                <option th:each="unitDirector : ${unitDirectorList}"
-                                                                        th:value="${{unitDirector}}" th:id="${{unitDirector}}"
-                                                                        th:text=${unitDirector.userName}></option>
-
-                                                        </select>
+                                                <div class="col-sm-4 col-sm-push-3 myMultiselect" id="users">
+                                                	<label for="toMark">Select group/s:</label> <br>
+                                                	<select class="toMark" id="toMark" th:field="*{assessments[__${a.index}__].groupMarkerDtos[__${m.index}__].toMark}" multiple="multiple">
+                                                    	<option th:if="*{unit != null}" th:each="group : *{groups}" th:value="${{group}}" th:id="${{group}}" th:text="${group.name}"></option>
+                                                    </select> <br>
                                                 </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                                <hr class="dottedLine col-sm-8 col-sm-push-2" />
-                                        </div>
-
-
-                                        <div class="form-group">
-                                                <label class="control-label col-sm-2" for="projectName">Project
-                                                        Name: </label>
-                                                <div class="col-sm-4">
-                                                        <input class="form-control" id="projectName" type="text"
-                                                                th:field="*{name}" placeholder="Enter a project name" />                                                </div>
-                                        </div>
-                                        <div class="form-group">
-                                                <label class="control-label col-sm-2" for="projectDesc">Description:</label>
-                                                <div class="col-sm-8">
-                                                        <textarea class="form-control" rows="5"
-                                                                placeholder="Add a description to the project" id="projectDesc"
-                                                                type="text" th:field="*{description}"></textarea>
+                                             </div>
+                                             <div class="form-group">
+                                             	<div class="col-sm-4 col-sm-push-3">
+                                                    <button type="submit" name="removeMarker" th:value="${'__${a.index}__, __${m.index}__'}" class="border-radius btn btn-danger">
+                                                    	<span class="glyphicon glyphicon-minus"></span> Marker
+                                                    </button>
                                                 </div>
+                                             </div>
+                                             <div class="form-group">
+                                             	<hr class="dottedLine col-sm-8 col-sm-push-2" />
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="form-group">
+                                     	<div class="col-sm-2 col-sm-push-3">
+                                        	<button type="submit" id="addMarker" name="addMarker" th:value="${a.index}" class="border-radius btn btn-green"> <span class="glyphicon glyphicon-plus"></span> Marker </button>
                                         </div>
-                                        <div class="form-group">
-                                                <hr class="dottedLine col-sm-8 col-sm-push-2" />
+                                     </div>
+                                     <br> <br>
+                                     <div class="form-group">
+                                     	<div class="col-sm-2 col-sm-push-3">
+                                        	<button type="submit" name="removeAssessment" th:value="${a.index}" class="btn btn-lightred">Remove Assessment</button>
                                         </div>
-
-                                        <div class="form-group">
-                                                <div th:each="group, g: *{groups}">
-                                                        <input type="hidden" th:field="*{groups[__${g.index}__].id}" th:value="*{groups[__${g.index}__].id}">
-                                                        <div class="markerWrapper">
-                                                                <div class="form-group">
-                                                                        <div class="col-sm-4 col-sm-push-3">
-                                                                                <div class="col-sm-4 col-sm-push-3" id="users">
-                                                                                        <div class="form-group">
-                                                                                                <label class="control-label col-sm-3" for="groupName">Name:</label>
-                                                                                                        <input class="form-control" placeholder="Group Name"
-                                                                                                                type="text" id="groupName"
-                                                                                                                th:field="*{groups[__${g.index}__].name}"
-                                                                                                                name="groupName">
-                                                                                        </div>
-                                                                                        <label for="groupMembers">Select student/s:</label> <br>
-                                                                                        <div th:if="*{unit != null}">
-                                                                                                <select class="groupMembers" id="toMark"
-                                                                                                        th:field="*{groups[__${g.index}__].members}"
-                                                                                                        multiple="multiple">
-                                                                                                        <option th:each="user : *{unit.cohort}" th:value="${{user}}" th:id="${{user}}" th:text="${user.userName}"></option>
-                                                                                                </select> <br>
-                                                                                        </div>
-                                                                                        <div th:if="*{unit == null}">
-                                                                                                <div class="error_message">
-                                                                                                        <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
-                                                                                                        <span class="messageHeader">No unit selected</span>
-                                                                                                </div>
-                                                                                        </div>
-                                                                                </div>
-                                                                        </div>
-
-
-                                                                </div>
-                                                                <div class="form-group">
-                                                                        <div class="col-sm-2 col-sm-push-3">
-                                                                                <button type="submit" name="removeGroup" th:value="${g.index}"
-                                                                                        class="btn btn-lightred">Remove Group</button>
-                                                                        </div>
-                                                                </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                                <hr class="dottedLine col-sm-8 col-sm-push-2" />
-                                                        </div>
-                                                </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                                <div class="col-sm-2 col-sm-push-2">
-                                                        <button type="submit" id="addGroup" name="addGroup"
-                                                                class="border-radius btn btn-green">
-                                                                <span class="glyphicon glyphicon-plus"></span> Group
-                                                        </button>
-                                                </div>
-                                        </div>
-
-                                        <button type="submit" class="btn btn-black" name="addProject"
-                                                data-toggle="modal" id="addProject">
-                                                Save Groups <span class="glyphicon glyphicon-chevron-right"></span>
-                                        </button>
-
-                                        <div th:each="assessment, a: *{assessments}">
-                                                <input type="hidden" th:field="*{assessments[__${a.index}__].id}"
-                                                        th:value="*{assessments[__${a.index}__].id}">
-
-                                                <div class="assignmentWrapper">
-                                                        <div class="assignment-background">
-                                                                <div class="form-group">
-                                                                        <h4 class="col-sm-2 col-sm-push-2 font-bold"
-                                                                                for="assignmentName">
-                                                                                Assessment <span th:text="${a.index + 1}"></span>:
-                                                                        </h4>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                        <label class="control-label col-sm-3" for="assessmentName">Name:</label>
-                                                                        <div class="col-sm-3">
-                                                                                <input class="form-control" placeholder="Assignment Name"
-                                                                                        type="text" id="assessmentName"
-                                                                                        th:field="*{assessments[__${a.index}__].name}"
-                                                                                        name="assessmentName">
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                        <label class="control-label col-sm-3" for="assessmentDesc">Description:</label>
-                                                                        <div class="col-sm-8">
-                                                                                <textarea class="form-control" rows="3"
-                                                                                        placeholder="Add a description for the assignment"
-                                                                                        type="text" id="assessmentDesc"
-                                                                                        th:field="*{assessments[__${a.index}__].description}"
-                                                                                        name="assessmentDesc"></textarea>
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                        <label class="control-label col-sm-3" for="studentDeadline">Student
-                                                                                Deadline:</label>
-                                                                        <div class="col-sm-3">
-                                                                                <input class="form-control"
-                                                                                        th:field="*{{assessments[__${a.index}__].studentDeadline}}"
-                                                                                        type="datetime-local" id="studentDeadline"
-                                                                                        name="studentDeadline">
-                                                                        </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                        <label class="control-label col-sm-3" for="markerDeadline">Marker
-                                                                                Deadline:</label>
-                                                                        <div class="col-sm-3">
-                                                                                <input class="form-control"
-                                                                                        th:field="*{{assessments[__${a.index}__].markerDeadline}}"
-                                                                                        type="datetime-local" id="markerDeadline"
-                                                                                        name="markerDeadline">
-                                                                        </div>
-                                                                </div>
-
-                                                                <div class="control-label col-sm-3">
-                                                                        <label for="deadline">Weight:</label>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                        <div class="col-sm-2">
-                                                                                <div class="input-group">
-                                                                                        <span class="input-group-addon">%</span> <input
-                                                                                                class="form-control"
-                                                                                                th:field="*{{assessments[__${a.index}__].weight}}"
-                                                                                                type="number" min="0" max="100" id="weight">
-                                                                                </div>
-                                                                        </div>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                        <hr class="dottedLine col-sm-8 col-sm-push-2" />                                                                </div>
-
-                                                                <div
-                                                                        th:each="markerDto, m: *{assessments[__${a.index}__].groupMarkerDtos}">
-                                                                        <div class="markerWrapper">
-                                                                                <div class="form-group">
-                                                                                        <div class="col-sm-4 col-sm-push-3">
-                                                                                                <label for="selectMarker">Select a marker:</label> <select
-                                                                                                        id="selectMarker" list="selectMarker"
-                                                                                                        th:field="*{assessments[__${a.index}__].groupMarkerDtos[__${m.index}__].marker}"
-                                                                                                        class="chosen form-control">
-                                                                                                        <option th:value="null" hidden="hidden"
-                                                                                                                style="display: none;" selected>Please Select</option>
-                                                                                                        <option th:each="assessor : ${assessorList}"
-                                                                                                                th:value="${{assessor}}" th:id="${{assessor}}"
-                                                                                                                th:text=${assessor.userName}></option>
-                                                                                                </select>
-
-
-                                                                                                <!--
-                                                                                                <select id="selectMarker" th:field="*{assessments[__${a.index}__].markerDtos[__${m.index}__].marker}">
-                                                                                                        <option th:each="assessor : ${assessorList}" th:value="${{assessor}}" th:id="${{assessor}}" th:text=${assessor.userName}></option>
-                                                                                                </select>
-                                                                                                -->
-                                                                                        </div>
-
-                                                                                        <div class="col-sm-4 col-sm-push-3" id="users">
-                                                                                                <label for="toMark">Select group/s:</label> <br> <select
-                                                                                                        class="toMark" id="toMark"
-                                                                                                        th:field="*{assessments[__${a.index}__].groupMarkerDtos[__${m.index}__].toMark}"
-                                                                                                        multiple="multiple">
-
-                                                                                                        <option th:if="*{unit != null}" th:each="group : *{groups}"
-                                                                                                                th:value="${{group}}" th:id="${{group}}"
-                                                                                                                th:text="${group.name}"></option>
-                                                                                                </select> <br>
-                                                                                        </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                        <div class="col-sm-4 col-sm-push-3">
-                                                                                                <button type="submit" name="removeMarker"
-                                                                                                        th:value="${'__${a.index}__, __${m.index}__'}"
-                                                                                                        class="border-radius btn btn-danger">
-                                                                                                        <span class="glyphicon glyphicon-minus"></span> Marker
-                                                                                                </button>
-                                                                                        </div>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                        <hr class="dottedLine col-sm-8 col-sm-push-2" />
-                                                                                </div>
-                                                                        </div>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                        <div class="col-sm-2 col-sm-push-3">
-                                                                                <button type="submit" id="addMarker" name="addMarker"
-                                                                                        th:value="${a.index}" class="border-radius btn btn-green">
-                                                                                        <span class="glyphicon glyphicon-plus"></span> Marker
-                                                                                </button>
-                                                                        </div>
-                                                                </div>
-                                                                <br>
-                                                                <br>
-                                                                <div class="form-group">
-                                                                        <div class="col-sm-2 col-sm-push-3">
-                                                                                <button type="submit" name="removeAssessment"
-                                                                                        th:value="${a.index}" class="btn btn-lightred">Remove
-                                                                                        Assessment</button>
-                                                                        </div>
-                                                                </div>
-                                                        </div>
-                                                </div>
-                                        </div>
-
-                                        <div th:if="${groupProjectDto.id != null}" class="form-group">
-                                                <div class="col-sm-2 col-sm-push-1">
-                                                        <input th:if="${groupProjectDto.id != null}" type="submit" name="addAssessment" class="btn btn-blue"
-                                                                value="Add Assessment"></input>
-                                                </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <div class="form-group">
-                                                <div class="col-sm-10">
-                                                        <!--  Buttons for the ediProject page -->
-                                                        <div th:if="${groupProjectDto.id != null}">
-                                                                <button type="submit" class="btn btn-black"
-                                                                        name="saveAsNewProject">
-                                                                        Save as New<span class="glyphicon glyphicon-chevron-right"></span>
-                                                                </button>
-                                                                <button type="submit" class="btn btn-black" name="editProject">
-                                                                        Save Changes<span class="glyphicon glyphicon-chevron-right"></span>
-                                                                </button>
-                                                                <button type="submit" class="btn btn-lightred"
-                                                                        name="deleteProject">
-                                                                        Delete <span class="glyphicon glyphicon-remove"></span>
-                                                                </button>
-                                                        </div>
-                                                </div>
-                                        </div>
-                                </form>
+                                     </div>
+                                  </div>
+                              </div>
+                          	</div>
+                            <div th:if="${groupProjectDto.id != null}" class="form-group">
+                                <div class="col-sm-2 col-sm-push-1">
+                                	<input th:if="${groupProjectDto.id != null}" type="submit" name="addAssessment" class="btn btn-blue" value="Add Assessment"></input>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <br><br><br>
+                            <div class="form-group">
+                            	<div class="col-sm-10">
+                                	<!--  Buttons for the ediProject page -->
+                                    <div th:if="${groupProjectDto.id != null}">
+	                                    <button type="submit" class="btn btn-black" name="saveAsNewProject"> Save as New<span class="glyphicon glyphicon-chevron-right"></span> </button>
+	                                    <button type="submit" class="btn btn-black" name="editProject"> Save Changes<span class="glyphicon glyphicon-chevron-right"></span> </button>
+	                                    <button type="submit" class="btn btn-lightred" name="deleteProject"> Delete <span class="glyphicon glyphicon-remove"></span> </button>
+                                    </div>
+                                 </div>
+                            </div>
+                        </form>
 
 				<!-- Submitted Successful Message -->
 				<div class="container">
@@ -360,10 +258,6 @@
 					</div>
 				</div>
 				<p class="wrap"></p>
-				<!-- End of Submitted Successful Message -->
-				
-
-				<!-- <input type="hidden" th:value="${error}" id="error"/> -->
 
 				<span th:if="${error == null}">
 				</span>

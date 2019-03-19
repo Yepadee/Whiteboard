@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	/*enable multiselection for Helpers*/
     $('.myMultiselect-selectOptions').multiselect({
-    	
+    	nonSelectedText: 'Please Select',
         includeSelectAllOption: true,
         enableFiltering: true,
         maxHeight: 300

@@ -16,9 +16,7 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h5>Outstanding Tasks</h5>
-					
+				<div class="col-sm-12 table-wrapper">
 					<h3>To Mark</h3>
 					<table class="table panel panel-default" id="table">
 						<thead>
@@ -43,7 +41,12 @@
 							</tr>
 						</tbody>
 					</table>
-					
+				</div>
+			</div>
+		</div>
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-12 table-wrapper">
 					<h3>Reconciliation (COMING SOON)</h3>
 					<table class="table panel panel-default" id="table">
 						<thead>
@@ -56,20 +59,14 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody>
-						<!--  
-							<tr th:each="task: ${user.allTasks}">
-								<td><span th:text="${task.assessment.project.name}"></span></td>
-								<td><span th:text="${task.assessment.name}"></span></td>
-								<td><span th:text="${task.assessment.studentDeadline}" class="warning"></span></td>
-								<td><span th:text="${task.status}"></span></td>
-								<td><a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}"
-									class="btn btn-primary btn-xs">View</a></td>
-							</tr>
-							-->
-						</tbody>
 					</table>
+				</div>
+			</div>
+		</div>
 					
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-12 table-wrapper">
 					<h3>Submissions</h3>
 					<table class="table panel panel-default" id="table">
 						<thead>
