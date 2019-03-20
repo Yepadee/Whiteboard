@@ -25,7 +25,8 @@
 								<th>Assessment</th>
 								<th>For</th>
 								<th>Deadline</th>
-								<th>Status</th>
+								<th>Submission Status</th>
+								<th>Feedback Status</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -35,6 +36,7 @@
 								<td><span th:text="${feedback.task.assessment.name}"></span></td>
 								<td><span th:text="${feedback.task.accountable.name}"></span></td>
 								<td><span th:text="${feedback.task.assessment.markerDeadline}" class="warning"></span></td>
+								<td><span th:text="${feedback.task.status}"></span></td>
 								<td><span th:text="${feedback.status}"></span></td>
 								<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${feedback.task.id})}"
 									class="btn btn-primary btn-xs">View</a></td>
@@ -52,8 +54,9 @@
 								<tr>
 									<th>Assessment</th>
 									<th>For</th>
-									<th>Status</th>
-									<th>Feedback</th>
+									<th>Submission Status</th>
+									<th>Reconciliation Status</th>
+									<th>Feedback Submitted</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -63,6 +66,7 @@
 									<td><span th:text="${assessment.name}"></span></td>
 									<td><span th:text="${task.accountable.name}"></span></td>
 									<td><span th:text="${task.status}"></span></td>
+									<td><span th:text="${task.reconciledFeedback.status}"></span></td>
 									<td><span th:text="${task.feedbackSubmitted}"></span>/<span th:text="${task.numMarkers}"></span></td>
 									<td><a th:href="@{/unit_director/reconciliation/{taskId}(taskId=${task.id})}"
 										class="btn btn-primary btn-xs">View</a></td>

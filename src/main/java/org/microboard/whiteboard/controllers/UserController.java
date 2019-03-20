@@ -54,7 +54,7 @@ public class UserController {
 		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
-			List<FileDto> fileinfo = taskService.createFileInfoInstance(task);
+			List<FileDto> fileinfo = task.getFileInfo();
 			model.addAttribute("fileinfo", fileinfo);
 			model.addAttribute("task", task);
 			return taskSubmissionPage;

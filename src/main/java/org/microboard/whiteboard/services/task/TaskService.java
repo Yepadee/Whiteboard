@@ -37,24 +37,10 @@ public class TaskService {
 		
 	}
 	
-	public List<FileDto> createFileInfoInstance(Task task) {
-		//Look into making a mock file to test this
-		List<FileDto> fileinfo = new ArrayList<>();
-		for (String filepath : task.getFileNames()) {
-			FileDto f = new FileDto();
-			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
-			File file = new File(filepath);
-			f.setFileSize(Long.toString(file.length()/1024) + "KB");
-			f.setFilePath(filepath);
-			fileinfo.add(f);	
-		}
-		return fileinfo;
-	}
-	
 	public void submitFiles(long id, MultipartFile[] files, String comments) throws IOException {
 		//Look into making a mock file to test this
 		Task task = getTask(id);
-		task.setStatus("submitted");
+		task.setStatus("completed");
 		TaskUploadPathGen pathGen = new TaskUploadPathGen();
 		task.accept(pathGen);
 		String path = pathGen.getResult();

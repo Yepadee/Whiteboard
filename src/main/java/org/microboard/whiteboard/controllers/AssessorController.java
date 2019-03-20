@@ -48,32 +48,33 @@ public class AssessorController {
 		
 		Assessor assessor = assessorService.getLoggedInUser();
 		Feedback feedback = task.getIndividualFeedback(assessor);
-		List<FileDto> fileinfo = feedbackService.createFileInfoInstance(feedback);
+		List<FileDto> fileinfo = feedback.getFileInfo();
 		model.addAttribute("feedbackfileinfo", fileinfo);
-		model.addAttribute("task", task);
 		model.addAttribute("feedback", feedback);
-		model.addAttribute("taskfileinfo", taskService.createFileInfoInstance(task));
+		model.addAttribute("taskfileinfo", task.getFileInfo());
 		return feedbackGetter.getResult();
 	}
 	
-	@PostMapping("/feedback/{id}")
-	public String submitFeedback(@PathVariable long id,
+	@PostMapping("/feedback/{task_id}")
+	public String submitFeedback(@PathVariable long task_id,
 		@ModelAttribute(name = "comments") String comments,
 		@ModelAttribute(name = "marks") Integer marks,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
-		feedbackService.submitFiles(id, files, comments, marks);
-		return "redirect:/assessor/feedback/" + id;
+		Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
+		feedbackService.submitFiles(feedbackId, files, comments, marks);
+		return "redirect:/assessor/feedback/" + task_id;
 		
 		//--------------------------------------
 		//NO ACCESS VALIDATION- TODO!
 	}
 	
 	@PostMapping("/group_feedback/{id}")
-	public String submitGroupFeedback(@PathVariable long id,
+	public String submitGroupFeedback(@PathVariable Long id,
 		@ModelAttribute(name = "comments") String comments,
 		@ModelAttribute(name = "marks") Integer marks,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
-		feedbackService.submitFiles(id, files, comments, marks);
+		Long feedbackId = taskService.getTask(id).getFeedback().get(assessorService.getLoggedInUser()).getId();
+		feedbackService.submitFiles(feedbackId, files, comments, marks);
 		return "redirect:/assessor/feedback/" + id;
 		
 		//--------------------------------------

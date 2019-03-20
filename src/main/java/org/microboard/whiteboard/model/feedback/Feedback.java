@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.feedback;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.task.Task;
-import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
 
 @Entity
@@ -37,6 +38,11 @@ public class Feedback {
 	@Column(name="fileName")
 	private List<String> fileNames = new ArrayList<>();
 	
+	Feedback() {}
+	
+	public Feedback(Task task) {
+		setTask(task);
+	}
 	
 	public Long getId() {
 		return id;
@@ -96,5 +102,18 @@ public class Feedback {
 	}
 	public void setMarks(Integer marks) {
 		this.marks = marks;
+	}
+	
+	public List<FileDto> getFileInfo() {
+		List<FileDto> fileinfo = new ArrayList<>();
+		for (String filepath : getFileNames()) {
+			FileDto f = new FileDto();
+			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
+			File file = new File(filepath);
+			f.setFileSize(Long.toString(file.length()/1024) + "KB");
+			f.setFilePath(filepath);
+			fileinfo.add(f);	
+		}
+		return fileinfo;
 	}
 }
