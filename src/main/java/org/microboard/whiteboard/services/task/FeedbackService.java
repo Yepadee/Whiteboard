@@ -57,7 +57,7 @@ public class FeedbackService {
 		feedback.setStatus("completed");
 		feedback.setTxtFeedback(comments);
 		feedback.setMarks(marks);
-		feedback.setVisable(visable);
+		feedback.setVisible(visable);
 		updateFeedback(feedback);
 	}
 	

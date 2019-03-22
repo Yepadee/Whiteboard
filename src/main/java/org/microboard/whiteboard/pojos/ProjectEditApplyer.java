@@ -206,20 +206,15 @@ public class ProjectEditApplyer {
 		
 		List<GroupAssessment> oldAssessments = new ArrayList<>(project.getAssessments());
 		List<GroupAssessment> presentAssessments = new ArrayList<>();
-		
 
-		
 		applyCoreProjectEdits(project, edits);
 		for (GroupAssessmentDto editAssessment : edits.getAssessments()) {
 			Long assessmentId = editAssessment.getId();
 			if (assessmentId != null) {
 				//Editing an existing assessment
 				Optional<GroupAssessment> maybeAssessment = findByGroupAssessmentId(oldAssessments, assessmentId);
-				
 				if (maybeAssessment.isPresent()) {
 					GroupAssessment assessment = findByGroupAssessmentId(oldAssessments, assessmentId).get();
-
-					
 					//Add markers to each task
 					for (GroupTask groupTask : assessment.getTasks()) {
 						List<Assessor> oldMarkers = groupTask.getMarkers();
@@ -228,7 +223,6 @@ public class ProjectEditApplyer {
 						Group accountable = groupTask.getAccountable();
 						for (MarkerGroupDto markerDto : editAssessment.getGroupMarkerDtos()) {
 							Assessor marker = markerDto.getMarker();
-							
 							if (markerDto.getToMark().contains(accountable) ) {
 								if (! groupTask.getMarkers().contains(marker)) {
 									groupTask.addMarker(marker);
@@ -242,7 +236,7 @@ public class ProjectEditApplyer {
 					}
 					presentAssessments.add(assessment);
 					applyCoreAssessmentEdits(assessment, editAssessment);
-				} else {
+				} else {	
 					//Adding a new assessment
 					GroupAssessment assessment = new GroupAssessment();
 					for (Group group : project.getGroups()) {
@@ -266,15 +260,17 @@ public class ProjectEditApplyer {
 				for (Group group : project.getGroups()) {
 					GroupTask groupTask = new GroupTask(group);
 					assessment.addTask(groupTask);
-					
 					for (MarkerGroupDto markerDto : editAssessment.getGroupMarkerDtos()) {
 						Assessor marker = markerDto.getMarker();
-						if (markerDto.getToMark().contains(group)) {
-							System.out.println("Added marker to task");
-							groupTask.addMarker(marker);
+						System.out.println(markerDto.getToMark().size());
+						for (Group toMark : markerDto.getToMark()) {
+							if (toMark.getId() == group.getId()) {
+								groupTask.addMarker(marker);
+							}
 						}
 					}
 				}
+				
 				project.addAssessment(assessment);
 				applyCoreAssessmentEdits(assessment, editAssessment);
 			}

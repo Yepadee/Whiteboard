@@ -2,6 +2,7 @@ package org.microboard.whiteboard.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.feedback.Feedback;
@@ -57,12 +58,12 @@ public class AssessorController {
 	
 	@PostMapping("/feedback/{task_id}")
 	public String submitFeedback(@PathVariable Long task_id,
-		@ModelAttribute(name = "comments") String comments,
-		@ModelAttribute(name = "marks") Integer marks,
-		@ModelAttribute(name = "visable") Boolean visable,
+		@RequestParam(name = "comments") String comments,
+		@RequestParam(name = "marks") Integer marks,
+		@RequestParam(name = "visible") Optional<?> visible,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
 		Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
-		feedbackService.submitFiles(feedbackId, files, comments, marks, visable);
+		feedbackService.submitFiles(feedbackId, files, comments, marks, visible.isPresent());
 		return "redirect:/assessor/feedback/" + task_id;
 		
 		//--------------------------------------

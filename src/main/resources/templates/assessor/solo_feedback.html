@@ -58,8 +58,8 @@
 					<label for="marks">Marks</label>
 					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${feedback.marks}" placeholder="Mark" required></input>
 					<br>
-					<label for="private">Visable to Student?</label>
-					<input id="private" type="checkbox" name="private" th:value="${feedback.visable}">
+					<label for="visible">Visible to Student?</label>
+					<input id="visible" type="checkbox" name="visible" th:checked="${feedback.visible}">
 					<br>
 					<input type="file" name="files" multiple>
 					<input type="submit" value="Submit" />
