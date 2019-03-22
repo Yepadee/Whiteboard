@@ -104,7 +104,7 @@
                                  	</div>
 	                              </div>
 	                              <div class="form-group">
-	                              	<div class="col-sm-2 col-sm-push-3">
+	                              	<div class="col-sm-2 col-sm-push-2">
 	                                	<button type="submit" name="removeGroup" th:value="${g.index}" class="btn btn-lightred">Remove Group</button>
 	                                </div>
 	                              </div>
@@ -116,11 +116,15 @@
                            </div>
                         </div>
                         <div class="form-group">
-							<div class="col-sm-2 col-sm-push-1">
+							<div class="col-sm-6 col-sm-push-2">
 								<input type="submit" id="addGroup" name="addGroup" class="btn btn-blue" value="Add Group"></input>
+								<button type="submit" class="btn btn-black" name="addProject" data-toggle="modal" id="addProject"> Save Groups <span class="glyphicon glyphicon-chevron-right"></span> </button>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-black" name="addProject" data-toggle="modal" id="addProject"> Save Groups <span class="glyphicon glyphicon-chevron-right"></span> </button>
+						<br>
+						<div class="form-group">
+                        	<hr class="dottedLine col-sm-8 col-sm-push-2" />
+                        </div>
                         <div th:each="assessment, a: *{assessments}">
                         	<input type="hidden" th:field="*{assessments[__${a.index}__].id}" th:value="*{assessments[__${a.index}__].id}">
                             <div class="assignmentWrapper">
@@ -181,7 +185,7 @@
 	                                                    </select>
                                                 </div>
 
-                                                <div class="col-sm-4 col-sm-push-3 myMultiselect" id="users">
+                                                <div class="col-sm-4 col-sm-push-3 myMultiselect" id="groupUsers">
                                                 	<label for="toMark">Select group/s:</label> <br>
                                                 	<select class="toMark" id="toMark" th:field="*{assessments[__${a.index}__].groupMarkerDtos[__${m.index}__].toMark}" multiple="multiple">
                                                     	<option th:if="*{unit != null}" th:each="group : *{groups}" th:value="${{group}}" th:id="${{group}}" th:text="${group.name}"></option>
@@ -207,7 +211,7 @@
                                      </div>
                                      <br> <br>
                                      <div class="form-group">
-                                     	<div class="col-sm-2 col-sm-push-3">
+                                     	<div class="col-sm-2 col-sm-push-1">
                                         	<button type="submit" name="removeAssessment" th:value="${a.index}" class="btn btn-lightred">Remove Assessment</button>
                                         </div>
                                      </div>
