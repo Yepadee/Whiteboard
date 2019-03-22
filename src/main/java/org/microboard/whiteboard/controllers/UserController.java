@@ -37,7 +37,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	
 	@GetMapping("/tasks")
 	public String getOutstandingTaskPage(Model model) {
 		OutstandingTaskGetter otg = new OutstandingTaskGetter();

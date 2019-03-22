@@ -10,8 +10,6 @@ import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.visitors.EditPathGetter;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.ReconciliationPageGetter;
-import org.microboard.whiteboard.model.task.visitors.TaskFeedbackPageGetter;
-import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.UserPermChangeValidator;

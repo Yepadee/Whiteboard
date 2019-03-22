@@ -6,11 +6,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.feedback.FeedbackUploadPathGen;
 import org.microboard.whiteboard.repositories.task.FeedbackRepository;

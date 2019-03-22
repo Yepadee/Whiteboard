@@ -54,9 +54,11 @@
 					<div class="col-sm-8 table-wrapper">
 						<h1 th:text="Feedback"></h1>
 						<h2 th:text="${feedback.key.userName}"></h2>
-						<label for="comments">Comments</label> <span
-							th:text="${feedback.value.txtFeedback}"></span> <label
-							th:value="${feedback.value.marks}"></label>
+						<label for="comments">Comments</label>
+						<span id="comments" th:text="${feedback.value.txtFeedback}"></span>
+						<br>
+						<label for="mark">Mark</label>
+						<span if="marks" th:text="${feedback.value.marks}"></span>
 						<div class="form-horizontal">
 							<h2>Feedback Files:</h2>
 							<table class="table panel panel-default" id="table">
