@@ -6,18 +6,12 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.feedback.FeedbackUploadPathGen;
-import org.microboard.whiteboard.model.task.Task;
-import org.microboard.whiteboard.model.user.Assessor;
 import org.microboard.whiteboard.repositories.task.FeedbackRepository;
-import org.microboard.whiteboard.repositories.task.TaskRepository;
-import org.microboard.whiteboard.services.user.AssessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -31,38 +25,17 @@ public class FeedbackService {
 	@Autowired
 	private FeedbackRepository feedbackRepository;
 	
-	@Autowired
-	private TaskRepository taskRepository;
-	
-	@Autowired
-	private AssessorService assessorService;
-	
-	public Task getTask(long id) throws RuntimeException{
-		Optional<Task> maybeTask = taskRepository.findById(id);
-		if (maybeTask.isPresent()) {
-			return maybeTask.get();
+	public Feedback getFeedback(long id) throws RuntimeException{
+		Optional<Feedback> maybeFeedback = feedbackRepository.findById(id);
+		if (maybeFeedback.isPresent()) {
+			return maybeFeedback.get();
 		} else {
-			throw new RuntimeException("No task exists with id \'" + id + "\'." );
+			throw new RuntimeException("No feedback exists with id \'" + id + "\'." );
 		}
 	}
 	
-	public List<FileDto> createFileInfoInstance(Feedback feedback) {
-		List<FileDto> fileinfo = new ArrayList<>();
-		for (String filepath : feedback.getFileNames()) {
-			FileDto f = new FileDto();
-			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
-			File file = new File(filepath);
-			f.setFileSize(Long.toString(file.length()/1024) + "KB");
-			f.setFilePath(filepath);
-			fileinfo.add(f);	
-		}
-		return fileinfo;
-	}
-	
-	public void submitFiles(long id, MultipartFile[] files, String comments, Integer marks) throws IOException {
-		Task task = getTask(id);
-		Assessor assessor = assessorService.getLoggedInUser();
-		Feedback feedback = task.getIndividualFeedback(assessor);
+	public void submitFiles(Long id, MultipartFile[] files, String comments, Integer marks, Boolean visable) throws IOException {
+		Feedback feedback = getFeedback(id);
 		FeedbackUploadPathGen pathGen = new FeedbackUploadPathGen();
 		String path = pathGen.getFeedbackPath(feedback);
 		new File(path).mkdir();
@@ -80,7 +53,11 @@ public class FeedbackService {
 				}
 			}
 		}
-		feedback.setValues(comments, marks);
+		
+		feedback.setStatus("completed");
+		feedback.setTxtFeedback(comments);
+		feedback.setMarks(marks);
+		feedback.setVisable(visable);
 		updateFeedback(feedback);
 	}
 	

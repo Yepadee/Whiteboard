@@ -7,7 +7,6 @@ import org.microboard.whiteboard.dto.project.GroupProjectDto;
 import org.microboard.whiteboard.dto.user.MarkerGroupDto;
 import org.microboard.whiteboard.model.project.GroupProject;
 import org.microboard.whiteboard.model.project.visitors.ProjectFolderCreator;
-import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.pojos.ProjectEditApplyer;
 import org.microboard.whiteboard.pojos.ProjectTemplateMaker;

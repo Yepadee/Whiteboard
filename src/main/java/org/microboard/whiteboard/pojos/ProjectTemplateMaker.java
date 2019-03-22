@@ -26,7 +26,7 @@ import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
 
 public class ProjectTemplateMaker {
-	private void fillCoreProjectTemplate(Project project, ProjectDto template) {
+	private void fillCoreProjectTemplate(Project project, ProjectDto<?> template) {
 		long id = project.getId();
 		String name = project.getName();
 		String description = project.getDescription();

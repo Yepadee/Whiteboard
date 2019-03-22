@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.task;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 
+import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
@@ -38,7 +40,7 @@ public abstract class Task {
 	private int markerExtension;
 	
 	@OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
-	private Feedback reconciledFeedback = new Feedback();
+	private Feedback reconciledFeedback = new Feedback(this);
 	
 	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true)
 	@JoinTable(name="assessor_feedback", joinColumns=@JoinColumn(name="assessor_id"))
@@ -50,7 +52,8 @@ public abstract class Task {
 	@ElementCollection
 	@CollectionTable(name="fileNames", joinColumns=@JoinColumn(name="task_id"))
 	@Column(name="fileName")
-	private List<String> fileNames= new ArrayList<>();
+	private List<String> fileNames = new ArrayList<>();
+	
 	
 	private String status = "new";
 	
@@ -125,8 +128,7 @@ public abstract class Task {
 	}
 	
 	public void addMarker(Assessor assessor) {
-		Feedback feedbackTask = new Feedback();
-		feedbackTask.setTask(this);
+		Feedback feedbackTask = new Feedback(this);
 		assessor.addTaskFeedback(feedbackTask);
 		feedback.put(assessor, feedbackTask);
 	}
@@ -152,6 +154,21 @@ public abstract class Task {
 			}
 		}
 		return feedbackSubmitted;
+	}
+	
+	
+	public List<FileDto> getFileInfo() {
+		//Look into making a mock file to test this
+		List<FileDto> fileinfo = new ArrayList<>();
+		for (String filepath : getFileNames()) {
+			FileDto f = new FileDto();
+			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
+			File file = new File(filepath);
+			f.setFileSize(Long.toString(file.length()/1024) + "KB");
+			f.setFilePath(filepath);
+			fileinfo.add(f);	
+		}
+		return fileinfo;
 	}
 	
 	public abstract Assessment getAssessment();

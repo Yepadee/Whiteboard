@@ -2,9 +2,7 @@ package org.microboard.whiteboard.controllers;
 
 import java.util.List;
 
-import org.microboard.whiteboard.dto.assessment.GroupAssessmentDto;
 import org.microboard.whiteboard.dto.project.GroupProjectDto;
-import org.microboard.whiteboard.dto.user.MarkerGroupDto;
 import org.microboard.whiteboard.services.project.GroupProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,10 +42,7 @@ public class GroupProjectController extends ProjectController<GroupProjectDto> {
 	
 	@PostMapping(value="/new_group_project", params={"addAssessment"})
 	public String addAssessment(GroupProjectDto project) {
-		System.out.println("TEST");
-		System.out.println(project.getAssessments().size());
 		project.addAssessment();
-		System.out.println(project.getAssessments().size());
 	    return newGroupProjectPath;
 	}
 	

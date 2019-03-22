@@ -27,7 +27,8 @@
 								<th>Assessment</th>
 								<th>For</th>
 								<th>Deadline</th>
-								<th>Status</th>
+								<th>Submission Status</th>
+								<th>Feedback Status</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -37,6 +38,7 @@
 								<td><span th:text="${feedback.task.assessment.name}"></span></td>
 								<td><span th:text="${feedback.task.accountable.name}"></span></td>
 								<td><span th:text="${feedback.task.assessment.markerDeadline}" class="warning"></span></td>
+								<td><span th:text="${feedback.task.status}"></span></td>
 								<td><span th:text="${feedback.status}"></span></td>
 								<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${feedback.task.id})}"
 									class="btn btn-primary btn-xs">View</a></td>

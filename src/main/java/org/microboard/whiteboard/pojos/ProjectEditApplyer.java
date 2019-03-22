@@ -270,6 +270,7 @@ public class ProjectEditApplyer {
 					for (MarkerGroupDto markerDto : editAssessment.getGroupMarkerDtos()) {
 						Assessor marker = markerDto.getMarker();
 						if (markerDto.getToMark().contains(group)) {
+							System.out.println("Added marker to task");
 							groupTask.addMarker(marker);
 						}
 					}

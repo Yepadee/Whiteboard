@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.feedback;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.task.Task;
-import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
 
 @Entity
@@ -28,15 +29,20 @@ public class Feedback {
 	@ManyToOne
 	private Assessor marker;
 	
-	private String txtFeedback = "";
+	private String txtFeedback;
 	private String status = "new";
-	private boolean visable;
+	private Boolean visable = false;
 	private Integer marks;
 	@ElementCollection
 	@CollectionTable(name="feedback_file_names", joinColumns=@JoinColumn(name="marker_task_id"))
 	@Column(name="fileName")
 	private List<String> fileNames = new ArrayList<>();
 	
+	Feedback() {}
+	
+	public Feedback(Task task) {
+		setTask(task);
+	}
 	
 	public Long getId() {
 		return id;
@@ -74,10 +80,10 @@ public class Feedback {
 	public void addFile(String fileName) {
 		this.fileNames.add(fileName);
 	}
-	public boolean isVisable() {
+	public Boolean getVisable() {
 		return visable;
 	}
-	public void setVisable(boolean visable) {
+	public void setVisable(Boolean visable) {
 		this.visable = visable;
 	}
 	public String getStatus() {
@@ -97,9 +103,17 @@ public class Feedback {
 	public void setMarks(Integer marks) {
 		this.marks = marks;
 	}
-	public void setValues(String comments, Integer marks) {
-		setTxtFeedback(comments);
-		setMarks(marks);
-		setStatus("marked");
+	
+	public List<FileDto> getFileInfo() {
+		List<FileDto> fileinfo = new ArrayList<>();
+		for (String filepath : getFileNames()) {
+			FileDto f = new FileDto();
+			f.setFileName(filepath.substring(filepath.lastIndexOf("/")+1));
+			File file = new File(filepath);
+			f.setFileSize(Long.toString(file.length()/1024) + "KB");
+			f.setFilePath(filepath);
+			fileinfo.add(f);	
+		}
+		return fileinfo;
 	}
 }

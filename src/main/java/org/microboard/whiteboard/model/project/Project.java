@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
-import org.microboard.whiteboard.dto.project.ProjectDto;
 import org.microboard.whiteboard.model.project.visitors.ProjectVisitor;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;

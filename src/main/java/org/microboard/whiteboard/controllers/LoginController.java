@@ -2,8 +2,6 @@ package org.microboard.whiteboard.controllers;
 
 import org.microboard.whiteboard.model.user.Student;
 import org.microboard.whiteboard.services.user.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
@@ -15,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class LoginController {
-	Logger logger = LoggerFactory.getLogger(LoginController.class);
-
+	
 	@Autowired
 	private UserService userService;
 
+	@GetMapping("/")
+	private String getMainPage() {
+		return "redirect:user/tasks";
+	}
+	
 	@GetMapping("/signup")
 	public String getSignupForm() {
 		return "server/signUp";

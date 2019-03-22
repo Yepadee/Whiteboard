@@ -37,7 +37,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	
 	@GetMapping("/tasks")
 	public String getOutstandingTaskPage(Model model) {
 		OutstandingTaskGetter otg = new OutstandingTaskGetter();
@@ -54,7 +53,7 @@ public class UserController {
 		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
-			List<FileDto> fileinfo = taskService.createFileInfoInstance(task);
+			List<FileDto> fileinfo = task.getFileInfo();
 			model.addAttribute("fileinfo", fileinfo);
 			model.addAttribute("task", task);
 			return taskSubmissionPage;
