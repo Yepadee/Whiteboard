@@ -34,7 +34,7 @@ public class FeedbackService {
 		}
 	}
 	
-	public void submitFiles(Long id, MultipartFile[] files, String comments, Integer marks) throws IOException {
+	public void submitFiles(Long id, MultipartFile[] files, String comments, Integer marks, Boolean visable) throws IOException {
 		Feedback feedback = getFeedback(id);
 		FeedbackUploadPathGen pathGen = new FeedbackUploadPathGen();
 		String path = pathGen.getFeedbackPath(feedback);
@@ -57,6 +57,7 @@ public class FeedbackService {
 		feedback.setStatus("completed");
 		feedback.setTxtFeedback(comments);
 		feedback.setMarks(marks);
+		feedback.setVisable(visable);
 		updateFeedback(feedback);
 	}
 	

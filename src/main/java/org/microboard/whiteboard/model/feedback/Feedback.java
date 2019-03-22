@@ -31,7 +31,7 @@ public class Feedback {
 	
 	private String txtFeedback;
 	private String status = "new";
-	private Boolean visable;
+	private Boolean visable = false;
 	private Integer marks;
 	@ElementCollection
 	@CollectionTable(name="feedback_file_names", joinColumns=@JoinColumn(name="marker_task_id"))
@@ -80,7 +80,7 @@ public class Feedback {
 	public void addFile(String fileName) {
 		this.fileNames.add(fileName);
 	}
-	public boolean isVisable() {
+	public Boolean getVisable() {
 		return visable;
 	}
 	public void setVisable(Boolean visable) {

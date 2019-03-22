@@ -41,7 +41,7 @@ public class AssessorController {
 	private FeedbackService feedbackService;
 	
 	@GetMapping("/feedback/{task_id}")
-	public String FeedbackUploadPage(@PathVariable long task_id, Model model) {
+	public String FeedbackUploadPage(@PathVariable Long task_id, Model model) {
 		Task task = taskService.getTask(task_id);
 		TaskFeedbackPageGetter feedbackGetter = new TaskFeedbackPageGetter(model);
 		task.accept(feedbackGetter);
@@ -56,12 +56,13 @@ public class AssessorController {
 	}
 	
 	@PostMapping("/feedback/{task_id}")
-	public String submitFeedback(@PathVariable long task_id,
+	public String submitFeedback(@PathVariable Long task_id,
 		@ModelAttribute(name = "comments") String comments,
 		@ModelAttribute(name = "marks") Integer marks,
+		@ModelAttribute(name = "visable") Boolean visable,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
 		Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
-		feedbackService.submitFiles(feedbackId, files, comments, marks);
+		feedbackService.submitFiles(feedbackId, files, comments, marks, visable);
 		return "redirect:/assessor/feedback/" + task_id;
 		
 		//--------------------------------------
@@ -72,9 +73,10 @@ public class AssessorController {
 	public String submitGroupFeedback(@PathVariable Long id,
 		@ModelAttribute(name = "comments") String comments,
 		@ModelAttribute(name = "marks") Integer marks,
+		@ModelAttribute(name = "visable") Boolean visable,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
 		Long feedbackId = taskService.getTask(id).getFeedback().get(assessorService.getLoggedInUser()).getId();
-		feedbackService.submitFiles(feedbackId, files, comments, marks);
+		feedbackService.submitFiles(feedbackId, files, comments, marks, visable);
 		return "redirect:/assessor/feedback/" + id;
 		
 		//--------------------------------------

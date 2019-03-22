@@ -57,11 +57,12 @@
 					<textarea id="comments" name="comments" th:text="${feedback.txtFeedback}" rows="3" placeholder="Add a comment"></textarea>
 					<label for="marks">Marks</label>
 					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${feedback.marks}" placeholder="Mark" required></input>
-					
-					<label for="private">Private?</label>
-					<input id="private" type="checkbox" name="private" th:value="${feedback.private}"> I have a bike<br>
-					<input type="file" name="files" multiple> <input
-						type="submit" value="Submit" />
+					<br>
+					<label for="private">Visable to Student?</label>
+					<input id="private" type="checkbox" name="private" th:value="${feedback.visable}">
+					<br>
+					<input type="file" name="files" multiple>
+					<input type="submit" value="Submit" />
 				</div>
 			</div>
 			</form>
