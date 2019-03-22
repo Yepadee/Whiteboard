@@ -9,7 +9,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="nav navbar-nav navbar-left">
-					<h3>Feedback Submission:</h3>
+					<h3>Feedback Submission - <small th:text="${task.assessment.name}"></small></h3>
 				</div>
 			</div>
 		</nav>
@@ -17,32 +17,30 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h1 th:text="${task.assessment.name}"></h1>
-
-					<div th:if="${task.txtSubmission != null}">
-						<label for="comments">Student Comments</label>
-						<p id="comments" th:text="${task.txtSubmission}"></p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h2>Student Files:</h2>
+				<div class="col-sm-11 table-wrapper table-orange">
+					<p class="font-bold" >Student Files:</p>
 					<table class="table panel panel-default" id="table">
 						<thead>
 							<tr>
-								<th>File</th>
+								<th>File Name</th>
 								<th>Size</th>
+								<th>Comment</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="file: ${taskfileinfo}">
-								<td><a
-									th:href="@{/user/tasks/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+								<td>
+									<a th:href="@{/user/tasks/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
 										<span th:text="${file.fileName}"></span>
-								</a></td>
-								<td><span th:text="${file.fileSize}"></span></td>
+									</a>
+								</td>
+								<td>
+									<span th:text="${file.fileSize}"></span>
+								</td>
+								<td th:if="${task.txtSubmission != null}">
+									<span th:text="${task.txtSubmission}"></span>
+								</td>
+								
 							</tr>
 						</tbody>
 					</table>
@@ -50,26 +48,55 @@
 			</div>
 			<form th:action="@{/assessor/feedback/{taskId}(taskId=${task.id})}" method="post" id="feedbackSubmissionForm" enctype="multipart/form-data">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h1 th:text="Feedback"></h1>
-
-					<label for="comments">Comments</label>
-					<textarea id="comments" name="comments" th:text="${feedback.txtFeedback}" rows="3" placeholder="Add a comment"></textarea>
-					<label for="marks">Marks</label>
-					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${feedback.marks}" placeholder="Mark" required></input>
-					<br>
-					<label for="visible">Visible to Student?</label>
-					<input id="visible" type="checkbox" name="visible" th:checked="${feedback.visible}">
-					<br>
-					<input type="file" name="files" multiple>
-					<input type="submit" value="Submit" />
+				<div class="col-sm-11 table-wrapper">
+					<div class="form-group">
+							<label class="col-sm-2" for="comments">Feedback: </label>
+							<div class="col-sm-8">
+								<textarea class="form-control" id="comments" name="comments" th:text="${feedback.txtFeedback}" form="feedbackSubmissionForm" rows="5" placeholder="Feedback"></textarea>
+							</div>
+						</div>
+						<div class="clearfix"></div><br>
+						
+						<div class="form-group">
+							<div class="col-sm-4 col-sm-push-2">
+								<input type="file" name="files" class="" multiple>
+							</div>
+						</div>
+					
+					
+						<br>
+						<div class="clearfix"></div>
+						<div class="form-group">
+							<hr class="dottedLine col-sm-8 col-sm-push-2" />
+						</div>
+						<br><br>
+						<label for="visible">Visible to Student?</label> <input
+							id="visible" type="checkbox" name="visible"
+							th:checked="${feedback.visible}"> <br> <label class="col-sm-2" for="marks">Marks: </label>
+						<div class="col-sm-8">
+							<input type="number" min="0" max="21" id="marks" name="marks" th:value="${feedback.marks}" placeholder="Mark" required></input>
+							<span>out of 21</span>
+						</div>
+						
+						<div class="clearfix"></div>
+						<br>
+						
+						<div class="form-group">
+							<hr class="dottedLine col-sm-8 col-sm-push-2" />
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-4 col-sm-push-2">
+								<input type="submit" value="Submit" class="btn btn-blue">
+							</div>
+						</div>
 				</div>
 			</div>
 			</form>
 			<div class="row">
-				<div class="col-sm-8 table-wrapper"> 
+				<div class="col-sm-11 table-wrapper"> 
 				<form name="deleteFeedback" class="form-horizontal" th:action="@{/assessor/feedback/delete/{id}(id=${task.id})}" method="post">
-					<h2>Feedback Files:</h2>
+				<h4 class="font-bold">Uploaded files:</h4>
 					<table class="table panel panel-default" id="table">
 						<thead>
 							<tr>

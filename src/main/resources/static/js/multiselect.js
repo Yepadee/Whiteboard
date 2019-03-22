@@ -48,7 +48,7 @@ $(document).ready(function() {
      * then show the value.
      * */
 	var usersSelectedArray= [];
-    $.each($("input[name='groupUsersToMark']:checked"), function(){
+    $.each($("input[name='users']:checked"), function(){
     	$(this).addClass("userChecked");
     	var currentValue = $(this).val();
     	usersSelectedArray.push({value:currentValue,numberOfSelected:1});
