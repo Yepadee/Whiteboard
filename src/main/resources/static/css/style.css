@@ -411,6 +411,10 @@ body {
   border-radius: 5px;
   margin-top: 20px;
 }
+
+.outstanding-tasks .table-orange{
+  background: #0400ff08;
+}
 .outstanding-tasks .table-wrapper h5{
   color: #570000;
   font-weight: bold;
