@@ -70,18 +70,15 @@ public class AssessorController {
 		//NO ACCESS VALIDATION- TODO!
 	}
 	
-	@PostMapping("/group_feedback/{id}")
-	public String submitGroupFeedback(@PathVariable Long id,
-		@ModelAttribute(name = "comments") String comments,
-		@ModelAttribute(name = "marks") Integer marks,
-		@ModelAttribute(name = "visable") Boolean visable,
+	@PostMapping("/group_feedback/{task_id}")
+	public String submitGroupFeedback(@PathVariable Long task_id,
+		@RequestParam(name = "comments") String comments,
+		@RequestParam(name = "marks") Integer marks,
+		@RequestParam(name = "visible") Optional<?> visible,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
-		Long feedbackId = taskService.getTask(id).getFeedback().get(assessorService.getLoggedInUser()).getId();
-		feedbackService.submitFiles(feedbackId, files, comments, marks, visable);
-		return "redirect:/assessor/feedback/" + id;
-		
-		//--------------------------------------
-		//NO ACCESS VALIDATION- TODO!
+		Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
+		feedbackService.submitFiles(feedbackId, files, comments, marks, visible.isPresent());
+		return "redirect:/assessor/feedback/" + task_id;
 	}
 	
 	@GetMapping("/feedback/download/{id}/{filename}")
