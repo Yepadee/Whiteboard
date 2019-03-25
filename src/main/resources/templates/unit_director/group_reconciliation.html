@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="page_elements/header_unit_director:: head"></head>
+<body>
+	<div th:replace="page_elements/sidebar_unit_director:: sidebar"></div>
+	
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="nav navbar-nav navbar-left">
+					<h3>Reconciliation</h3>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div class="content">
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h1 th:text="${task.assessment.name}"></h1>
+					<h2 th:text="${task.accountable.name}"></h2>
+					<div th:if="${task.txtSubmission != null}">
+						<label for="comments">Student Comments</label>
+						<p id="comments" th:text="${task.txtSubmission}"></p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h2>Student Files:</h2>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>File</th>
+								<th>Size</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="file: ${task.fileInfo}">
+								<td><a
+									th:href="@{/user/tasks/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+										<span th:text="${file.fileName}"></span>
+								</a></td>
+								<td><span th:text="${file.fileSize}"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div th:each="feedback : ${task.feedback}">
+				<div class="row">
+					<div class="col-sm-8 table-wrapper">
+						<h1 th:text="Feedback"></h1>
+						<h2 th:text="${feedback.key.userName}"></h2>
+						<label for="comments">Comments</label>
+						<span id="comments" th:text="${feedback.value.txtFeedback}"></span>
+						<br>
+						<label for="mark">Mark</label>
+						<span if="marks" th:text="${feedback.value.marks}"></span>
+						<div class="form-horizontal">
+							<h2>Feedback Files:</h2>
+							<table class="table panel panel-default" id="table">
+								<thead>
+									<tr>
+										<th>File</th>
+										<th>Size</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<!--  -->
+									<tr th:each="file: ${feedback.value.fileInfo}">
+										<td><a
+											th:href="@{/assessor/feedback/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+												<span th:text="${file.fileName}"></span>
+										</a></td>
+										<td><span th:text="${file.fileSize}"></span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<form th:action="@{/unit_director/reconciliation/{taskId}(taskId=${task.id})}" method="post" id="reconciliationSubmissionForm" enctype="multipart/form-data">
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+					<h1>Reconciliation</h1>
+
+					<label for="comments">Comments</label>
+					<textarea id="comments" name="comments" th:text="${task.reconciledFeedback.txtFeedback}" rows="3" placeholder="Add a comment"></textarea>
+					<label for="marks">Marks</label>
+					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${task.reconciledFeedback.marks}" placeholder="Mark" required></input>
+					<input type="file" name="files" multiple> <input
+						type="submit" value="Submit" />
+				</div>
+			</div>
+			</form>
+			<div class="row">
+				<div class="col-sm-8 table-wrapper"> 
+				<form name="deleteFeedback" class="form-horizontal" th:action="@{/unit_director/reconciliation/delete/{id}(id=${task.id})}" method="post">
+					<h2>Reconciliation Files:</h2>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>File</th>
+								<th>Size</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr th:each="file: ${task.reconciledFeedback.fileInfo}">
+							<td><a th:href="@{/assessor/feedback/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+								<span th:text="${file.fileName}"></span></a></td>
+							<td><span th:text="${file.fileSize}"></span></td>
+							<td><button type="submit" th:value="${file.fileName}" name="deleteFeedback" class="btn btn-lightred" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button><td/>
+						</tr>
+						</tbody>
+					</table>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = CustomUserDetailsService.class)
-@Profile("prod")
+@Profile("dev")
 class SecurityConfigurationProd extends WebSecurityConfigurerAdapter  {
 
 	@Autowired
@@ -68,15 +68,15 @@ class SecurityConfigurationProd extends WebSecurityConfigurerAdapter  {
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = CustomUserDetailsService.class)
-@Profile("dev")
+@Profile("disabled")
 class SecurityConfigurationDev extends SecurityConfigurationProd  {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 		.authorizeRequests()
-		.antMatchers("/css/**","/icons/**","/img/**","/js/**","/layer/**").permitAll()
+		.antMatchers("/css/**","/icons/**","/img/**","/js/**","/layer/**", "/h2-console/**").permitAll()
 		.antMatchers("/").permitAll()
-        .antMatchers("/unit_director/**", "/h2-console/**").hasAuthority(UserRoleGetter.ROLE_UNIT_DIRECTOR)
+        .antMatchers("/unit_director/**").hasAuthority(UserRoleGetter.ROLE_UNIT_DIRECTOR)
         .anyRequest().fullyAuthenticated()
 	    .and()
 	    .formLogin().loginPage("/login_dev").failureUrl("/login_dev?error").usernameParameter("username").passwordParameter("password")

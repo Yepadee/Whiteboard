@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="${header}:: head"></head>
+<body>
+	<div th:replace="${sidebar}:: sidebar"></div>
+
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-left">
+					<li><h3>Outstanding Tasks</h3></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="content">
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-12 table-wrapper">
+					<h3>User Submissions</h3>
+					<div th:each="${assessment : project.assessments}">
+						<table class="table panel panel-default" id="table">
+							<thead>
+								<tr>
+									<th>User</th>
+									<th>Submission Status</th>
+									<th>Feedback Status</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="task : ${assessment.tasks}">
+									<td><span th:text="${task.accountable.name}"></span></td>
+									<td><span th:text="${task.status}"></span></td>
+									<td><span th:text="${task.feedback.status}"></span></td>
+									<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${feedback.task.id})}"
+										class="btn btn-primary btn-xs">View</a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

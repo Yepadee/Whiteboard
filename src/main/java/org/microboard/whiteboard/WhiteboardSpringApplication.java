@@ -73,7 +73,7 @@ public class WhiteboardSpringApplication {
 			userService.addUser(aydin);
 			userService.addUser(assessor);
 			
-			int numUsers = 5;
+			int numUsers = 200;
 			Unit unit1 = new Unit();
 			unit1.setUnitName("Computer Science in Society");
 			unit1.setUnitCode("COMS20003");
