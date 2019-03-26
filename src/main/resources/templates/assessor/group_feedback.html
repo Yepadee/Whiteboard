@@ -90,19 +90,21 @@
 					</form>
 				</div>
 			</div>
+			
 			<div class="row">
 				<h1>Individual member feedback</h1>
 				<div class="col-sm-8 table-wrapper" th:each="member: ${task.accountable.members}">
 					<h3 th:text= "${member.name}"></h3>
 					
 					<label for="comments">Comments</label>
-					<textarea id="comments" name="comments" th:text="${task.groupMemberFeedback.get(member)}" rows="3" placeholder="Add a comment"></textarea>
+					<textarea id="comments" name="comments" th:text="${individualFeedbacks.get(member.id)}" rows="3" placeholder="Add a comment"></textarea>
 					<label for="marks">Marks</label>
 					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${feedback.marks}" placeholder="Mark" required></input>
-					<br>
+					
 					<label for="private">Visible to Student?</label>
 					<input id="private" type="checkbox" name="private" th:value="${feedback.visible}">
-					
+					<input type="file" name="files" multiple>
+					<input type="submit" value="Submit" />
 				</div>
 			</div>
 		</div>

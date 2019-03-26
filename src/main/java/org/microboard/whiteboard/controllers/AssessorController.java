@@ -1,11 +1,15 @@
 package org.microboard.whiteboard.controllers;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.feedback.Feedback;
+import org.microboard.whiteboard.model.feedback.GroupMemberFeedback;
+import org.microboard.whiteboard.model.task.GroupTask;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskFeedbackPageGetter;
 import org.microboard.whiteboard.model.user.Assessor;
@@ -50,10 +54,29 @@ public class AssessorController {
 		Assessor assessor = assessorService.getLoggedInUser();
 		Feedback feedback = task.getIndividualFeedback(assessor);
 		List<FileDto> fileinfo = feedback.getFileInfo();
+		getFeedbackHashMap(task,assessor, model);
 		model.addAttribute("feedbackfileinfo", fileinfo);
 		model.addAttribute("feedback", feedback);
 		model.addAttribute("taskfileinfo", task.getFileInfo());
 		return feedbackGetter.getResult();
+	}
+	
+	public void getFeedbackHashMap(Task task, Assessor assessor, Model model) {
+		GroupTask groupTask = null;
+		if (task instanceof GroupTask) {
+			groupTask = (GroupTask) task;
+			Map<Long,Optional<Feedback>> individualFeedbacks = new HashMap<>();
+			Map<User, GroupMemberFeedback> groupMemberFeedback = groupTask.getGroupMemberFeedback();
+		
+			for (User members : groupTask.getAccountable().getMembers()) {
+				Map<Assessor,Feedback> assessorFeedbacks = groupMemberFeedback.get(members).getFeedback();
+				Optional<Feedback> opFeedback = Optional.empty();
+				if (assessorFeedbacks.containsKey(assessor)) opFeedback = Optional.of(assessorFeedbacks.get(assessor));
+					individualFeedbacks.put(members.getId(), opFeedback);
+					System.out.println("Optional Feedback with user " + members.getName() + " : " + opFeedback);
+				}
+			model.addAttribute("individualFeedbacks", individualFeedbacks);
+		}
 	}
 	
 	@PostMapping("/feedback/{task_id}")
