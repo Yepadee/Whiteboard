@@ -16,13 +16,13 @@ public class ProjectFolderCreator extends ProjectVisitor {
 	public void visit(SoloProject project) {
 		String path = System.getProperty("user.dir") + "/uploads/";
 		path += project.getUnit().getUnitCode()+"/";
-		path += project.getName() + "/";
+		path += project.getId() + "/";
 		
 		List<User> users = project.getUnit().getCohort();
 		for (User user : users) {
 			String userPath = path + user.getUserName() + "/";
 			for (SoloAssessment assessment : project.getAssessments()) {
-				new File(userPath + assessment.getName() + "/feedback/").mkdirs();
+				new File(userPath + assessment.getId() + "/feedback/").mkdirs();
 			}
 		}
 	}
@@ -32,12 +32,12 @@ public class ProjectFolderCreator extends ProjectVisitor {
 		System.out.println("Called on project " + project.getName());
 		String path = System.getProperty("user.dir") + "/uploads/";
 		path += project.getUnit().getUnitCode()+"/";
-		path += project.getName() + "/";
+		path += project.getId() + "/";
 		List<Group> groups = project.getGroups();
 		for (Group group : groups) {
 			String groupPath = path + group.getName() + "/";
 			for (GroupAssessment assessment : project.getAssessments()) {
-				String feedbackPath = groupPath + assessment.getName() + "/feedback/";
+				String feedbackPath = groupPath + assessment.getId() + "/feedback/";
 				for (User user : group.getMembers()) {
 					System.out.println("Created folder " + feedbackPath + user.getName());
 					new File(feedbackPath + user.getName() + "/").mkdirs();

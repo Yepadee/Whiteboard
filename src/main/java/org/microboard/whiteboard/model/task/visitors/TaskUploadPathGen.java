@@ -18,9 +18,9 @@ public class TaskUploadPathGen extends TaskVisitor {
 	public void visit(SoloTask soloTask) {
 		String path = System.getProperty("user.dir") + "/uploads/";
 		path += soloTask.getSoloAssessment().getProject().getUnit().getUnitCode() + "/";
-		path += soloTask.getSoloAssessment().getProject().getName() + "/";
+		path += soloTask.getSoloAssessment().getProject().getId() + "/";
 		path += soloTask.getAccountable().getUserName() + "/";
-		path += soloTask.getAssessment().getName() + "/";
+		path += soloTask.getAssessment().getId() + "/";
 		result=path;
 	}
 
@@ -28,9 +28,9 @@ public class TaskUploadPathGen extends TaskVisitor {
 	public void visit(GroupTask groupTask) {
 		String path = System.getProperty("user.dir") + "/uploads/";
 		path += groupTask.getGroupAssessment().getProject().getUnit().getUnitCode() + "/";
-		path += groupTask.getGroupAssessment().getProject().getName() + "/";
+		path += groupTask.getGroupAssessment().getProject().getId() + "/";
 		path += groupTask.getAccountable().getName() + "/";
-		path += groupTask.getAssessment().getName() + "/";
+		path += groupTask.getAssessment().getId() + "/";
 		result=path;
 	}
 

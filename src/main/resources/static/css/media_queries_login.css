@@ -1,0 +1,43 @@
+/* Media Queries for Responsive */
+@media (min-width: 1200px){
+	.loginForm>form>div>div{
+	    left: 11.5%;
+	}
+}
+@media screen and (max-width: 767px) {
+	.loginForm {
+	    padding: 10px 52px;
+	    margin: 0 150px;
+	}
+}
+@media screen and (max-width: 700px) {
+   .jumbotron {
+  	padding: 1px;
+   }
+  .loginForm {
+    padding: 10px 24px;
+    margin:0  100px;
+   }
+   .loginForm h2 {
+    padding-bottom: 17px;
+   }
+}
+@media screen and (max-width: 640px) {
+	.loginForm {
+    margin: 30px;
+	}
+}
+@media screen and (max-width: 480px) {
+  .jumbotron {
+  	padding: 1px;
+  }
+  .loginForm {
+    padding: 10px 24px;
+    margin: 4px;
+    margin-top: 0;
+   }
+   .loginForm h2 {
+    padding-bottom: 17px;
+    font-size: 28px;
+   }
+}
