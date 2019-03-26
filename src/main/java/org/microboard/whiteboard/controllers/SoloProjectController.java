@@ -113,7 +113,7 @@ public class SoloProjectController extends ProjectController<SoloProjectDto> {
 		} else {
 			projectService.updateProject(projectDto);
 		}
-		return newSoloProjectPath;
+		return "redirect:" + "/" + editSoloProjectPath + "/" + projectDto.getId();
 	}
 	
 }

@@ -109,7 +109,7 @@ public class GroupProjectController extends ProjectController<GroupProjectDto> {
 		} else {
 			groupProjectService.updateProject(projectDto);
 		}
-		return newGroupProjectPath;
+		return "redirect:" + "/" + editGroupProjectPath + "/" + projectDto.getId();
 	}
 	
 	

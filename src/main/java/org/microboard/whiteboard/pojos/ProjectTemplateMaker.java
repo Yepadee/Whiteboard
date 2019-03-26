@@ -41,7 +41,7 @@ public class ProjectTemplateMaker {
 	}
 	
 	private void fillCoreAssessmentTemplate(Assessment assessment, AssessmentDto template) {
-		long assessmentId = assessment.getId();
+		Long assessmentId = assessment.getId();
 		String assessmentName = assessment.getName();
 		String assessmentDesc = assessment.getDescription();
 		Date studentDeadline = assessment.getStudentDeadline();
@@ -101,7 +101,6 @@ public class ProjectTemplateMaker {
 		for (GroupAssessment soloAssessment : groupProject.getAssessments()) {
 			GroupAssessmentDto assessmentTemplate = new GroupAssessmentDto();
 			fillCoreAssessmentTemplate(soloAssessment, assessmentTemplate);
-			
 			List<MarkerGroupDto> markerDtos = new ArrayList<>();
 			for (GroupTask task : soloAssessment.getTasks()) {
 				

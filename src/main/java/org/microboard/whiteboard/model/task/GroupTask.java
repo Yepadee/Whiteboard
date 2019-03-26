@@ -36,16 +36,6 @@ public class GroupTask extends Task {
 	@JoinTable(name="group_task_member_feedback", joinColumns=@JoinColumn(name="group_task_id"))
 	@MapKeyColumn(name="user_id")
 	private Map<User, GroupMemberFeedback> groupMemberFeedback = new HashMap<>();
-
-	GroupTask() {}
-	
-	public GroupTask(Group group) {
-		setAccountable(group);
-		for (User user : group.getMembers()) {
-			addIndividualFeedback(user);
-		}
-		group.addTask(this);
-	}
 	
 	public Group getAccountable() {
 		return accountable;
@@ -81,7 +71,7 @@ public class GroupTask extends Task {
 		groupMemberFeedback.put(user, feedback);
 	}
 	
-	public void removeMember(User user) {
+	public void removeIndividualFeedback(User user) {
 		groupMemberFeedback.remove(user);
 	}
 
