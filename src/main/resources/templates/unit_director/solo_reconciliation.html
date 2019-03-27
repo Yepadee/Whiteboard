@@ -17,9 +17,9 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h1 th:text="${task.assessment.name}"></h1>
-					<h2 th:text="${task.accountable.name}"></h2>
+				<div class="col-sm-8 table-wrapper table-orange">
+					<p>Assessment Name: <span  class="font-bold" th:text="${task.assessment.name}"></span></p>
+					<p>Student Name: <span class="font-bold" th:text="${task.accountable.name}"></span></p>
 					<div th:if="${task.txtSubmission != null}">
 						<label for="comments">Student Comments</label>
 						<p id="comments" th:text="${task.txtSubmission}"></p>
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
+				<div class="col-sm-8 table-wrapper table-orange">
 					<h2>Student Files:</h2>
 					<table class="table panel panel-default" id="table">
 						<thead>

@@ -161,6 +161,22 @@ body {
 .dottedLine{
   border-top: dotted 1px;
 }
+.sub-title{
+	font-size: 20px;
+	margin-left: 0px;
+	color: #570000;
+	font-weight: bold;
+}
+.sub-sub-title{
+	font-size: 17px;
+	font-weight: bold;
+	color: #570000;
+}
+.sub-sub-sub-title{
+	font-size: 15px;
+	margin-left: 5px;
+	font-weight: normal;
+}
 /* End of General style*/
 
 /* Table */
@@ -175,7 +191,22 @@ body {
   padding: 0;
   margin: 0;
 }
-/*End of Table*/
+/*	End of Table */
+
+/* Tasks Status */
+.task-not-completed{
+	background-color: #f2dede;
+}
+.task-completed{
+	background-color: #dff0d8;
+}
+.task-under-process{
+	background-color: #fcf8e3;
+}
+.task-defult{
+	background-color: #f5f5f5;
+}
+/* End of Tasks Status */
 
 /* Sidebar*/
 .sidebar {
@@ -454,7 +485,6 @@ body {
 }
 
 /* New Project Section*/
-  
 .markerWrapperAdded{
   padding-top: 20px;
   padding-bottom: 20px;
