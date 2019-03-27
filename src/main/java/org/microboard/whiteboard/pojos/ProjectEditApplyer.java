@@ -173,7 +173,7 @@ public class ProjectEditApplyer {
 	}
 	
 	private Optional<SoloAssessment> findSoloAssessmentById(List<SoloAssessment> soloAssessments, Long id) {
-		return soloAssessments.stream().filter(a -> a.getId() == id).findFirst();
+		return soloAssessments.stream().filter(a -> a.getId().equals(id)).findFirst();
 	}
 	
 	public void applyEdits(GroupProject project, GroupProjectDto edits) {
@@ -247,9 +247,12 @@ public class ProjectEditApplyer {
 		for (GroupAssessmentDto editAssessment : edits.getAssessments()) {
 			Long assessmentId = editAssessment.getId();
 			if (assessmentId != null) {
+				System.out.println("¬null");
 				//Editing an existing assessment
 				Optional<GroupAssessment> maybeAssessment = findByGroupAssessmentId(oldAssessments, assessmentId);
+				
 				if (maybeAssessment.isPresent()) {
+					System.out.println("present");
 					GroupAssessment assessment = findByGroupAssessmentId(oldAssessments, assessmentId).get();
 					//Add markers to each task
 					for (GroupTask groupTask : assessment.getTasks()) {
@@ -258,6 +261,7 @@ public class ProjectEditApplyer {
 						
 						Group accountable = groupTask.getAccountable();
 						for (MarkerGroupDto markerDto : editAssessment.getGroupMarkerDtos()) {
+							System.out.println("MarkerDto");
 							Assessor marker = markerDto.getMarker();
 							for (Group group : markerDto.getToMark()) {
 								System.out.println(group.getId());
@@ -282,7 +286,10 @@ public class ProjectEditApplyer {
 					}
 					presentAssessments.add(assessment);
 					applyCoreAssessmentEdits(assessment, editAssessment);			
-				} else {	
+				} else {
+					System.out.println("¬present");
+					System.out.println(oldAssessments.get(0).getId());
+					System.out.println(assessmentId);
 					//Adding a new assessment
 					GroupAssessment assessment = new GroupAssessment();
 					for (Group group : project.getGroups()) {
@@ -306,6 +313,7 @@ public class ProjectEditApplyer {
 				}
 				
 			} else {
+				System.out.println("null");
 				//Adding a new assessment
 				GroupAssessment assessment = new GroupAssessment();
 				for (Group group : project.getGroups()) {
@@ -341,10 +349,10 @@ public class ProjectEditApplyer {
 	}
 	
 	private Optional<GroupAssessment> findByGroupAssessmentId(List<GroupAssessment> groupAssessments, Long id) {
-		return groupAssessments.stream().filter(a -> a.getId() == id).findFirst();
+		return groupAssessments.stream().filter(a -> a.getId().equals(id)).findFirst();
 	}
 	
 	private Optional<Group> findByGroupId(List<Group> group, Long id) {
-		return group.stream().filter(a -> a.getId() == id).findFirst();
+		return group.stream().filter(a -> a.getId().equals(id)).findFirst();
 	}
 }
