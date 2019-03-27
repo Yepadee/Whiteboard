@@ -2,6 +2,7 @@ package org.microboard.whiteboard.model.task;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +37,7 @@ public abstract class Task {
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
 	private Long id;
 	
-	private int studentExtension;
-	private int markerExtension;
+	private Date studentExtension;
 	
 	@OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
 	private Feedback reconciledFeedback = new Feedback(this);
@@ -63,17 +63,12 @@ public abstract class Task {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getStudentExtension() {
+
+	public Date getStudentExtension() {
 		return studentExtension;
 	}
-	public void setStudentExtension(int studentExtension) {
+	public void setStudentExtension(Date studentExtension) {
 		this.studentExtension = studentExtension;
-	}
-	public int getMarkerExtension() {
-		return markerExtension;
-	}
-	public void setMarkerExtension(int markerExtension) {
-		this.markerExtension = markerExtension;
 	}
 	public String getTxtSubmission() {
 		return txtSubmission;

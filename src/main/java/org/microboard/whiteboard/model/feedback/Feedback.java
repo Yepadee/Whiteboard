@@ -2,6 +2,7 @@ package org.microboard.whiteboard.model.feedback;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -28,6 +29,8 @@ public class Feedback {
 	
 	@ManyToOne
 	private Assessor marker;
+	
+	private Date markerExtension;
 	
 	private String txtFeedback;
 	private String status = "new";
@@ -115,5 +118,13 @@ public class Feedback {
 			fileinfo.add(f);	
 		}
 		return fileinfo;
+	}
+
+	public Date getMarkerExtension() {
+		return markerExtension;
+	}
+
+	public void setMarkerExtension(Date markerExtension) {
+		this.markerExtension = markerExtension;
 	}
 }
