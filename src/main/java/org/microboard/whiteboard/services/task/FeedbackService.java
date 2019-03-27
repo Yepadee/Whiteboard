@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.feedback.FeedbackUploadPathGen;
+import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.task.FeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -34,12 +35,20 @@ public class FeedbackService {
 		}
 	}
 	
-	public void submitFiles(Long id, MultipartFile[] files, String comments, Integer marks, Boolean visable) throws IOException {
-		Feedback feedback = getFeedback(id);
+	public void submitFeedback(Feedback feedback, MultipartFile[] files, String comments, Integer marks, Boolean visible) throws IOException {
 		FeedbackUploadPathGen pathGen = new FeedbackUploadPathGen();
 		String path = pathGen.getFeedbackPath(feedback);
+		submitFiles(feedback,path,files,comments,marks,visible);
+	}
+	
+	public void submitIndividualFeedback(Feedback feedback, User user,MultipartFile[] files, String comments, Integer marks, Boolean visible) throws IOException {
+		FeedbackUploadPathGen pathGen = new FeedbackUploadPathGen();
+		String path = pathGen.getIndividualFeedbackPath(feedback, user);
+		submitFiles(feedback,path,files,comments,marks,visible);
+	}
+	
+	public void submitFiles(Feedback feedback, String path, MultipartFile[] files, String comments, Integer marks, Boolean visible) throws IOException {
 		new File(path).mkdir();
-		
 		for (MultipartFile file : files) {
 			if (!file.isEmpty() && !file.equals(null)) {
 				if (file.getSize() < 524288000) {
@@ -57,7 +66,7 @@ public class FeedbackService {
 		feedback.setStatus("completed");
 		feedback.setTxtFeedback(comments);
 		feedback.setMarks(marks);
-		feedback.setVisible(visable);
+		feedback.setVisible(visible);
 		updateFeedback(feedback);
 	}
 	

@@ -41,7 +41,7 @@ public class Feedback {
 	@Column(name="fileName")
 	private List<String> fileNames = new ArrayList<>();
 	
-	Feedback() {}
+	public Feedback() {}
 	
 	public Feedback(Task task) {
 		setTask(task);

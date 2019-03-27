@@ -19,6 +19,7 @@ import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
 import org.microboard.whiteboard.services.task.FeedbackService;
 import org.microboard.whiteboard.services.task.TaskService;
 import org.microboard.whiteboard.services.user.AssessorService;
+import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,9 @@ public class AssessorController {
 	
 	@Autowired
 	private AssessorService assessorService;
+
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private TaskService taskService;
@@ -65,16 +69,20 @@ public class AssessorController {
 		GroupTask groupTask = null;
 		if (task instanceof GroupTask) {
 			groupTask = (GroupTask) task;
-			Map<Long,Optional<Feedback>> individualFeedbacks = new HashMap<>();
+			Map<Long,Feedback> individualFeedbacks = new HashMap<>();
 			Map<User, GroupMemberFeedback> groupMemberFeedback = groupTask.getGroupMemberFeedback();
 		
 			for (User members : groupTask.getAccountable().getMembers()) {
 				Map<Assessor,Feedback> assessorFeedbacks = groupMemberFeedback.get(members).getFeedback();
-				Optional<Feedback> opFeedback = Optional.empty();
-				if (assessorFeedbacks.containsKey(assessor)) opFeedback = Optional.of(assessorFeedbacks.get(assessor));
-					individualFeedbacks.put(members.getId(), opFeedback);
-					System.out.println("Optional Feedback with user " + members.getName() + " : " + opFeedback);
+				if (assessorFeedbacks.containsKey(assessor)) {
+					Feedback feedback = assessorFeedbacks.get(assessor);
+					individualFeedbacks.put(members.getId(), feedback);
+					System.out.println("Optional Feedback with user " + members.getName() + " : " + feedback);
 				}
+				else {
+					individualFeedbacks.put(members.getId(), new Feedback());
+				}
+			}
 			model.addAttribute("individualFeedbacks", individualFeedbacks);
 		}
 	}
@@ -85,23 +93,34 @@ public class AssessorController {
 		@RequestParam(name = "marks") Integer marks,
 		@RequestParam(name = "visible") Optional<?> visible,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
-		Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
-		feedbackService.submitFiles(feedbackId, files, comments, marks, visible.isPresent());
+		Feedback feedback = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser());
+		//Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
+		feedbackService.submitFeedback(feedback, files, comments, marks, visible.isPresent());
 		return "redirect:/assessor/feedback/" + task_id;
 		
 		//--------------------------------------
 		//NO ACCESS VALIDATION- TODO!
 	}
-	
-	@PostMapping("/group_feedback/{task_id}")
-	public String submitGroupFeedback(@PathVariable Long task_id,
+
+	@PostMapping("/group_feedback/{task_id}/{member_id}")
+	public String submitIndividualFeedback(@PathVariable Long task_id, @PathVariable Long member_id,
 		@RequestParam(name = "comments") String comments,
 		@RequestParam(name = "marks") Integer marks,
 		@RequestParam(name = "visible") Optional<?> visible,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
-		Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
-		feedbackService.submitFiles(feedbackId, files, comments, marks, visible.isPresent());
+		GroupTask task = (GroupTask) taskService.getTask(task_id);
+		User member = userService.getUser(member_id);
+		GroupMemberFeedback groupMemberFeedback = task.getGroupMemberFeedback().get(member);
+		Map<Assessor, Feedback> feedbackMap = groupMemberFeedback.getFeedback();
+		Feedback feedback = new Feedback(task);
+		feedbackMap.put(assessorService.getLoggedInUser(), feedback);
+		
+		//Long feedbackId = task.getFeedback().get(assessorService.getLoggedInUser()).getId();
+		feedbackService.submitIndividualFeedback(feedback, member, files, comments, marks, visible.isPresent());
 		return "redirect:/assessor/feedback/" + task_id;
+		
+		//--------------------------------------
+		//NO ACCESS VALIDATION- TODO!
 	}
 	
 	@GetMapping("/feedback/download/{id}/{filename}")
