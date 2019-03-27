@@ -103,7 +103,7 @@ public class ProjectTemplateTest {
 		
 		for (int j = 0; j < numAssessments; j ++) {
 			SoloAssessment a = new SoloAssessment();
-			a.setId(1L);
+			//a.setId(1L);
 			a.setName("Test Solo Assessment " + j);
 			a.setDescription("Description for \"Test Solo Assessment " + j + "\"");
 			sp.addAssessment(a);
