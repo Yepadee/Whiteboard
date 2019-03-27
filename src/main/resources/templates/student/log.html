@@ -19,7 +19,7 @@
 				<div class="col-sm-8 table-wrapper">
 				<h5>Task Actions</h5>
 				<div th:each="task: ${user.allTasks}">
-				<h3 th:text="${task.assessment.name}"></h3>
+				<h3><span th:text="${task.assessment.project.name}"></span>: <span th:text="${task.assessment.name}"></span></h3>
 					<table class="table panel panel-default" id="table" >
 						<thead>
 							<tr>

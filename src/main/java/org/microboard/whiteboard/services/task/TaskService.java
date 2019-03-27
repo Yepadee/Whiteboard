@@ -55,7 +55,7 @@ public class TaskService {
 					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
 					Files.write(fileNameAndPath, file.getBytes());
 					task.addFile(path + file.getOriginalFilename());
-					task.addAction(new TaskAction(userService.getLoggedInUser(), "submitted " + file.getOriginalFilename()));
+					task.addAction(new TaskAction(userService.getLoggedInUser(), "submitted \"" + file.getOriginalFilename() + "\""));
 				}
 				else {
 					System.out.println("File size exceeded for file " + path + file.getOriginalFilename());
@@ -77,7 +77,7 @@ public class TaskService {
 				File file = new File(filePath);
 				file.delete();
 				task.removeFile(filePath);
-				task.addAction(new TaskAction(userService.getLoggedInUser(), "deleted " + filename));
+				task.addAction(new TaskAction(userService.getLoggedInUser(), "deleted \"" + filename + "\""));
 				updateTask(task);
 				break;
 			}

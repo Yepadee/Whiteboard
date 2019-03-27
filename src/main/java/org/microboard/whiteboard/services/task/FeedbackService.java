@@ -62,7 +62,7 @@ public class FeedbackService {
 					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
 					Files.write(fileNameAndPath, file.getBytes());
 					feedback.addFile(path + file.getOriginalFilename());
-					feedback.addAction(new FeedbackAction(userService.getLoggedInUser(), "submitted " + file.getOriginalFilename()));
+					feedback.addAction(new FeedbackAction(userService.getLoggedInUser(), "submitted \"" + file.getOriginalFilename()+ "\""));
 				}
 				else {
 					System.out.println("File size exceeded for file " + path + file.getOriginalFilename());
@@ -89,7 +89,7 @@ public class FeedbackService {
 				File file = new File(filePath);
 				file.delete();
 				feedback.deleteFile(filePath);
-				feedback.addAction(new FeedbackAction(userService.getLoggedInUser(), "deleted " + filename));
+				feedback.addAction(new FeedbackAction(userService.getLoggedInUser(), "deleted \"" + filename + "\""));
 				updateFeedback(feedback);
 				break;
 			}

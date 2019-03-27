@@ -47,11 +47,11 @@ public abstract class BaseProjectService<T extends Project> {
 	public Long addProject(ProjectDto<T> projectDto) {
 		T newProject = projectDto.toProject();
 		UnitDirector creator = unitDirectorService.getLoggedInUser();
-		creator.addProject(newProject);
 		newProject.addAction(new ProjectAction(unitDirectorService.getLoggedInUser(), "Created project."));
+		creator.addProject(newProject);
+		
 		Long id = addProject(newProject);
 		createProjectUploadFolders(newProject);
-		
 		return id;
 	}
 	
