@@ -93,8 +93,9 @@ public class UnitDirectorController {
 		@ModelAttribute(name = "comments") String comments,
 		@ModelAttribute(name = "marks") Integer marks,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
-		Long feedbackId = taskService.getTask(task_id).getReconciledFeedback().getId();
-		feedbackService.submitFiles(feedbackId, files, comments, marks, true);
+		Feedback feedback = taskService.getTask(task_id).getReconciledFeedback();
+		//Long feedbackId = taskService.getTask(task_id).getReconciledFeedback().getId();
+		feedbackService.submitFeedback(feedback, files, comments, marks, true);
 		return "redirect:/unit_director/reconciliation/" + task_id;
 		
 		//--------------------------------------
@@ -118,8 +119,9 @@ public class UnitDirectorController {
 		@ModelAttribute(name = "comments") String comments,
 		@ModelAttribute(name = "marks") Integer marks,
 		@RequestParam("files") MultipartFile[] files) throws IOException {
-		Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
-		feedbackService.submitFiles(feedbackId, files, comments, marks, true);
+		Feedback feedback = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser());
+		//Long feedbackId = taskService.getTask(task_id).getFeedback().get(assessorService.getLoggedInUser()).getId();
+		feedbackService.submitFeedback(feedback, files, comments, marks, true);
 		return "redirect:/assessor/feedback/" + task_id;
 		
 		//--------------------------------------

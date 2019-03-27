@@ -48,7 +48,7 @@
 					</table>
 				</div>
 			</div>
-			<form th:action="@{/assessor/group_feedback/{taskId}(taskId=${task.id})}" method="post" id="feedbackSubmissionForm" enctype="multipart/form-data">
+			<form th:action="@{/assessor/feedback/{taskId}(taskId=${task.id})}" method="post" id="feedbackSubmissionForm" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-sm-8 table-wrapper">
 					<h1 th:text="Feedback"></h1>
@@ -95,16 +95,17 @@
 				<h1>Individual member feedback</h1>
 				<div class="col-sm-8 table-wrapper" th:each="member: ${task.accountable.members}">
 					<h3 th:text= "${member.name}"></h3>
-					
+					<form th:action="@{/assessor/group_feedback/{taskId}/{memberId}(taskId=${task.id}, memberId=${member.id})}" method="post" id="feedbackSubmissionForm" enctype="multipart/form-data">
 					<label for="comments">Comments</label>
-					<textarea id="comments" name="comments" th:text="${individualFeedbacks.get(member.id)}" rows="3" placeholder="Add a comment"></textarea>
+					<textarea id="comments" name="comments" rows="3" placeholder="Add a comment" th:text="${individualFeedbacks.get(member.id).txtFeedback}"></textarea>
 					<label for="marks">Marks</label>
-					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${feedback.marks}" placeholder="Mark" required></input>
+					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${individualFeedbacks.get(member.id).marks}" placeholder="Mark" required></input>
 					
 					<label for="private">Visible to Student?</label>
-					<input id="private" type="checkbox" name="private" th:value="${feedback.visible}">
+					<input id="private" type="checkbox" name="private" th:value="${individualFeedbacks.get(member.id).visible}">
 					<input type="file" name="files" multiple>
 					<input type="submit" value="Submit" />
+					</form>
 				</div>
 			</div>
 		</div>
