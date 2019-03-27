@@ -13,6 +13,7 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +28,7 @@ import javax.persistence.JoinTable;
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.feedback.Feedback;
+import org.microboard.whiteboard.model.log.TaskAction;
 import org.microboard.whiteboard.model.task.visitors.TaskVisitor;
 import org.microboard.whiteboard.model.user.Assessor;
 
@@ -54,6 +56,8 @@ public abstract class Task {
 	@Column(name="fileName")
 	private List<String> fileNames = new ArrayList<>();
 	
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "task")
+	private List<TaskAction> actions = new ArrayList<>();
 	
 	private String status = "new";
 	
@@ -101,46 +105,36 @@ public abstract class Task {
 	public void setReconciledFeedback(Feedback reconciledFeedback) {
 		this.reconciledFeedback = reconciledFeedback;
 	}
-	
-	
 	public void addFile(String fileName) {
 		this.fileNames.add(fileName);
 	}
-
 	public List<String> getAllUploads() {
 		List<String> allUploads = new ArrayList<String>();
 		allUploads.addAll(fileNames);
 		return allUploads;
 	}
-	
 	public void removeFile(String filePath) {
 		fileNames.remove(filePath);
 
 	}
-	
 	public Feedback getIndividualFeedback(Assessor assessor) {
 		return feedback.get(assessor);
 	}
-	
 	public void addMarker(Assessor assessor) {
 		Feedback feedbackTask = new Feedback(this);
 		assessor.addTaskFeedback(feedbackTask);
 		feedback.put(assessor, feedbackTask);
 	}
-	
 	public void removeMarker(Assessor assessor) {
 		feedback.remove(assessor);
 		assessor.removeTaskFeedack(feedback.get(assessor));		
 	}
-	
 	public List<Assessor> getMarkers() {
 		return new ArrayList<>(feedback.keySet());
 	}
-	
 	public Integer getNumMarkers() {
 		return feedback.size();
 	}
-	
 	public Integer getFeedbackSubmitted() {
 		int feedbackSubmitted = 0;
 		for (Feedback feedback : feedback.values()) {
@@ -150,8 +144,6 @@ public abstract class Task {
 		}
 		return feedbackSubmitted;
 	}
-	
-	
 	public List<FileDto> getFileInfo() {
 		//Look into making a mock file to test this
 		List<FileDto> fileinfo = new ArrayList<>();
@@ -164,6 +156,18 @@ public abstract class Task {
 			fileinfo.add(f);	
 		}
 		return fileinfo;
+	}
+	
+	public List<TaskAction> getActions() {
+		return actions;
+	}
+	public void setActions(List<TaskAction> actions) {
+		this.actions = actions;
+	}
+	
+	public void addAction(TaskAction action) {
+		action.setTask(this);
+		actions.add(action);
 	}
 	
 	public abstract Assessment getAssessment();

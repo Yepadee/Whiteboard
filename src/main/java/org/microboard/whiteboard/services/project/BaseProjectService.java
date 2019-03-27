@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.dto.project.ProjectDto;
 import org.microboard.whiteboard.dto.project.visitors.ProjectEditFiller;
+import org.microboard.whiteboard.model.log.ProjectAction;
 import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.visitors.ProjectFolderCreator;
 import org.microboard.whiteboard.model.user.UnitDirector;
@@ -47,6 +48,7 @@ public abstract class BaseProjectService<T extends Project> {
 		T newProject = projectDto.toProject();
 		UnitDirector creator = unitDirectorService.getLoggedInUser();
 		creator.addProject(newProject);
+		newProject.addAction(new ProjectAction(unitDirectorService.getLoggedInUser(), "Created project."));
 		Long id = addProject(newProject);
 		createProjectUploadFolders(newProject);
 		
@@ -57,6 +59,10 @@ public abstract class BaseProjectService<T extends Project> {
 		T project = getProject(projectDto.getId());
 		ProjectEditFiller editFiller = new ProjectEditFiller(project);
 		projectDto.accept(editFiller);
+		for (String actionDescription : editFiller.getEditSummary()) {
+			project.addAction(new ProjectAction(unitDirectorService.getLoggedInUser(), actionDescription));
+		}
+		
 		updateProject(project);
 	}
 	

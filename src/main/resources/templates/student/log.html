@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="${header}:: head"></head>
+<body>
+	<div th:replace="${sidebar}:: sidebar"></div>
+
+	<div class="right-side">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav navbar-left">
+					<h3>Log</h3>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div class="content">
+		<div class="container outstanding-tasks">
+			<div class="row">
+				<div class="col-sm-8 table-wrapper">
+				<h5>Task Actions</h5>
+				<div th:each="task: ${user.allTasks}">
+				<h3 th:text="${task.assessment.name}"></h3>
+					<table class="table panel panel-default" id="table" >
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Action</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="action: ${task.actions}">
+								<td><span th:text="${action.date}"></span></td>
+								<td><span th:text="${action.description}"></span></td>
+							</tr>
+						</tbody>
+					</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

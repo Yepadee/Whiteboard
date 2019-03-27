@@ -28,13 +28,13 @@ public abstract class ProjectController<T extends ProjectDto<?>> {
 	protected String viewProjectsPath = "/unit_director/projects";
 	
 	@Autowired
-	private UnitService unitService;
+	protected UnitService unitService;
 	
 	@Autowired
-	private AssessorService assessorService;
+	protected AssessorService assessorService;
 	
 	@Autowired
-	private UnitDirectorService unitDirectorService;
+	protected UnitDirectorService unitDirectorService;
 	
 	@ModelAttribute("user")
 	public UnitDirector getUnitDirector() {

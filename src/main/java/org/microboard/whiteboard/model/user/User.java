@@ -2,7 +2,6 @@ package org.microboard.whiteboard.model.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.DiscriminatorColumn;
@@ -11,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Version;
 
-import org.microboard.whiteboard.model.other.Log;
 import org.microboard.whiteboard.model.task.SoloTask;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.visitors.UserVisitor;

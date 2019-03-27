@@ -3,6 +3,7 @@ package org.microboard.whiteboard.controllers;
 import java.io.IOException;
 import java.util.List;
 import org.microboard.whiteboard.dto.task.FileDto;
+import org.microboard.whiteboard.model.log.TaskAction;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskFeedbackAccessValidator;
@@ -86,7 +87,6 @@ public class UserController {
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
 //			System.out.println("if");
-
 			taskService.deleteFile(id, filename);
 			return "redirect:/user/tasks/" + id;
 		} else {
@@ -103,6 +103,7 @@ public class UserController {
 		User user = userService.getLoggedInUser();
 		TaskAccessValidator accessValidator = new TaskAccessValidator(user);
 		task.accept(accessValidator);
+		task.addAction(new TaskAction(user, "Changed comment to "  + "\"" + comments + "\""));
 		if (accessValidator.getResult()) {
 			taskService.submitFiles(id, files, comments);
 			return "redirect:/user/tasks/" + id;
@@ -113,10 +114,7 @@ public class UserController {
 	
 	@GetMapping("/log")
 	public String getLogPage(Model model) {
-		OutstandingTaskGetter otg = new OutstandingTaskGetter();
-		User user = userService.getLoggedInUser();
-		user.accept(otg);
-		return otg.getResult();
+		return "student/log";
 	}
 	
 	

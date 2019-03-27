@@ -1,5 +1,7 @@
 package org.microboard.whiteboard.dto.project.visitors;
 
+import java.util.List;
+
 import org.microboard.whiteboard.dto.project.GroupProjectDto;
 import org.microboard.whiteboard.dto.project.SoloProjectDto;
 import org.microboard.whiteboard.model.project.GroupProject;
@@ -13,6 +15,10 @@ public class ProjectEditFiller extends ProjectDtoVisitor {
 	
 	public ProjectEditFiller(Project project) {
 		this.project = project;
+	}
+	
+	public List<String> getEditSummary() {
+		return editApplyer.getEditSummary();
 	}
 	
 	@Override

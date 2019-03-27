@@ -11,8 +11,11 @@ import java.util.Optional;
 
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.feedback.FeedbackUploadPathGen;
+import org.microboard.whiteboard.model.log.FeedbackAction;
+import org.microboard.whiteboard.model.log.TaskAction;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.repositories.task.FeedbackRepository;
+import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -23,8 +26,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FeedbackService {
+	
 	@Autowired
 	private FeedbackRepository feedbackRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	public Feedback getFeedback(long id) throws RuntimeException{
 		Optional<Feedback> maybeFeedback = feedbackRepository.findById(id);
@@ -55,6 +62,7 @@ public class FeedbackService {
 					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
 					Files.write(fileNameAndPath, file.getBytes());
 					feedback.addFile(path + file.getOriginalFilename());
+					feedback.addAction(new FeedbackAction(userService.getLoggedInUser(), "submitted " + file.getOriginalFilename()));
 				}
 				else {
 					System.out.println("File size exceeded for file " + path + file.getOriginalFilename());
@@ -67,6 +75,9 @@ public class FeedbackService {
 		feedback.setTxtFeedback(comments);
 		feedback.setMarks(marks);
 		feedback.setVisible(visible);
+		
+		feedback.addAction(new FeedbackAction(userService.getLoggedInUser(), "changed comments to \"" + comments + "\""));
+		
 		updateFeedback(feedback);
 	}
 	
@@ -78,6 +89,7 @@ public class FeedbackService {
 				File file = new File(filePath);
 				file.delete();
 				feedback.deleteFile(filePath);
+				feedback.addAction(new FeedbackAction(userService.getLoggedInUser(), "deleted " + filename));
 				updateFeedback(feedback);
 				break;
 			}
