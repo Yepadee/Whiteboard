@@ -14,7 +14,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import org.microboard.whiteboard.model.other.Log;
 import org.microboard.whiteboard.model.project.visitors.ProjectVisitor;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
@@ -25,7 +27,6 @@ import javax.persistence.DiscriminatorType;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Project {
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -79,23 +80,10 @@ public abstract class Project {
 	public void setUnit(Unit unit) {
 		this.unit = unit;
 	}
-	
+
 	public void addHelper(UnitDirector unitDirector) {
 		helpers.add(unitDirector);
 		unitDirector.getAssignedProjects().add(this);
-	}
-	
-	public boolean equals(Project project) {
-		boolean equal = true;
-		
-		equal = equal && id == project.getId();
-		equal = equal && name == project.getName();
-		equal = equal && description == project.getDescription();
-		equal = equal && creator.getId() == project.getCreator().getId();
-		equal = equal && helpers.equals(project.getHelpers());
-		equal = equal && unit.equals(project.getUnit());
-		
-		return equal;
 	}
 	
 	public abstract void accept(ProjectVisitor v);
