@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = CustomUserDetailsService.class)
-@Profile("prod")
+@Profile("dev")
 class SecurityConfigurationProd extends WebSecurityConfigurerAdapter  {
 
 	@Autowired
@@ -68,7 +68,7 @@ class SecurityConfigurationProd extends WebSecurityConfigurerAdapter  {
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = CustomUserDetailsService.class)
-@Profile("dev")
+@Profile("d")
 class SecurityConfigurationDev extends SecurityConfigurationProd  {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

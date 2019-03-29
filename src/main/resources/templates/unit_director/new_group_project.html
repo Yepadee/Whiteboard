@@ -118,7 +118,14 @@
                         <div class="form-group">
 							<div class="col-sm-6 col-sm-push-2">
 								<input type="submit" id="addGroup" name="addGroup" class="btn btn-blue" value="Add Group"></input>
-								<button type="submit" class="btn btn-black" name="addProject" data-toggle="modal" id="addProject"> Save Groups <span class="glyphicon glyphicon-chevron-right"></span> </button>
+								
+								 <div th:if="${groupProjectDto.id == null}">
+										<button type="submit" class="btn btn-black" name="addProject" data-toggle="modal" id="addProject"> Save Groups <span class="glyphicon glyphicon-chevron-right"></span> </button>
+								 </div>
+								 
+								  <div th:if="${groupProjectDto.id != null}">
+										<button type="submit" class="btn btn-black" name="editProject" data-toggle="modal" id="editProject"> Save Groups <span class="glyphicon glyphicon-chevron-right"></span> </button>
+								 </div>
 							</div>
 						</div>
 						<br>
