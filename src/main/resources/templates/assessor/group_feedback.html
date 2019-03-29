@@ -106,6 +106,27 @@
 					<input type="file" name="files" multiple>
 					<input type="submit" value="Submit" />
 					</form>
+					
+					<form name="deleteIndividualFeedback" class="form-horizontal" th:action="@{/assessor/group_feedback/delete/{id}/{memberid}(id=${task.id}, memberid=${member.id})}" method="post">
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>File</th>
+								<th>Size</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr th:each="file: ${individualFileInfos.get(member.id)}">
+							<td><a th:href="@{/assessor/group_feedback/download/{taskId}/{memberId}/{filename}(taskId=${task.id},memberId=${member.id},filename=${file.fileName})}">
+								<span th:text="${file.fileName}"></span></a></td>
+							<td><span th:text="${file.fileSize}"></span></td>
+							<td><button type="submit" name="deleteIndividualFeedback" th:value="${file.fileName}"  class="btn btn-lightred" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button><td/>
+						</tr>
+				</tbody>
+					</table>
+					</form>
+					 
 				</div>
 			</div>
 		</div>

@@ -1,6 +1,8 @@
 package org.microboard.whiteboard.controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +72,7 @@ public class AssessorController {
 		if (task instanceof GroupTask) {
 			groupTask = (GroupTask) task;
 			Map<Long,Feedback> individualFeedbacks = new HashMap<>();
+			Map<Long,List<FileDto>> individualFileInfos = new HashMap<>();
 			Map<User, GroupMemberFeedback> groupMemberFeedback = groupTask.getGroupMemberFeedback();
 		
 			for (User members : groupTask.getAccountable().getMembers()) {
@@ -77,13 +80,15 @@ public class AssessorController {
 				if (assessorFeedbacks.containsKey(assessor)) {
 					Feedback feedback = assessorFeedbacks.get(assessor);
 					individualFeedbacks.put(members.getId(), feedback);
-					System.out.println("Optional Feedback with user " + members.getName() + " : " + feedback);
+					System.out.println("Feedback with user " + members.getName() + " : " + feedback);
+					individualFileInfos.put(members.getId(), feedback.getFileInfo());
 				}
 				else {
 					individualFeedbacks.put(members.getId(), new Feedback());
 				}
 			}
 			model.addAttribute("individualFeedbacks", individualFeedbacks);
+			model.addAttribute("individualFileInfos", individualFileInfos);
 		}
 	}
 	
@@ -121,6 +126,26 @@ public class AssessorController {
 		
 		//--------------------------------------
 		//NO ACCESS VALIDATION- TODO!
+	}
+
+	@GetMapping("/group_feedback/download/{id}/{memberid}/{filename}")
+	public ResponseEntity<Resource> downloadIndividualFeedback(Model model, @PathVariable long id, @PathVariable long memberid, @PathVariable String filename) {
+		Assessor assessor = assessorService.getLoggedInUser();
+		GroupTask task = (GroupTask) taskService.getTask(id);
+		User member = userService.getUser(memberid);
+		Feedback feedback = task.getGroupMemberFeedback().get(member).getFeedback().get(assessor);
+		return feedbackService.downloadFile(feedback, filename);
+	}
+	
+	@PostMapping(value = "/group_feedback/delete/{id}/{memberid}" , params={"deleteIndividualFeedback"})
+	public String deleteIndividualFeedback(@PathVariable Long id, @PathVariable Long memberid,  @RequestParam("deleteIndividualFeedback") String filename) {
+		Assessor assessor = assessorService.getLoggedInUser();
+		GroupTask task = (GroupTask) taskService.getTask(id);
+		User member = userService.getUser(memberid);
+		Feedback feedback = task.getGroupMemberFeedback().get(member).getFeedback().get(assessor);
+		
+		feedbackService.deleteFile(feedback, filename);
+		return "redirect:/assessor/feedback/" + id;
 	}
 	
 	@GetMapping("/feedback/download/{id}/{filename}")
