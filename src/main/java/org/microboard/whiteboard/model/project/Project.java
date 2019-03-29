@@ -16,7 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.microboard.whiteboard.model.other.Log;
+import org.microboard.whiteboard.model.log.ProjectAction;
+import org.microboard.whiteboard.model.log.TaskAction;
 import org.microboard.whiteboard.model.project.visitors.ProjectVisitor;
 import org.microboard.whiteboard.model.user.Unit;
 import org.microboard.whiteboard.model.user.UnitDirector;
@@ -42,6 +43,9 @@ public abstract class Project {
 	@ManyToOne
 	@JoinColumn(name="unit_id", nullable=false)
 	private Unit unit;
+	
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "project")
+	private List<ProjectAction> actions = new ArrayList<>();
 	
 	
 	public Long getId() {
@@ -86,6 +90,17 @@ public abstract class Project {
 		unitDirector.getAssignedProjects().add(this);
 	}
 	
+	public List<ProjectAction> getActions() {
+		return actions;
+	}
+	public void setActions(List<ProjectAction> actions) {
+		this.actions = actions;
+	}
+	
+	public void addAction(ProjectAction action) {
+		action.setProject(this);
+		actions.add(action);
+	}
 	public abstract void accept(ProjectVisitor v);
 
 }

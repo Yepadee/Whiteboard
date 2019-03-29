@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -14,8 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.microboard.whiteboard.dto.task.FileDto;
+import org.microboard.whiteboard.model.log.FeedbackAction;
+import org.microboard.whiteboard.model.log.TaskAction;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.Assessor;
 
@@ -36,10 +40,14 @@ public class Feedback {
 	private String status = "new";
 	private boolean visible;
 	private Integer marks;
+	
 	@ElementCollection
 	@CollectionTable(name="feedback_file_names", joinColumns=@JoinColumn(name="marker_task_id"))
 	@Column(name="fileName")
 	private List<String> fileNames = new ArrayList<>();
+	
+	@OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, mappedBy = "feedback")
+	private List<FeedbackAction> actions = new ArrayList<>();
 	
 	public Feedback() {}
 	
@@ -118,6 +126,18 @@ public class Feedback {
 			fileinfo.add(f);	
 		}
 		return fileinfo;
+	}
+	
+	public List<FeedbackAction> getActions() {
+		return actions;
+	}
+	public void setActions(List<FeedbackAction> actions) {
+		this.actions = actions;
+	}
+	
+	public void addAction(FeedbackAction action) {
+		action.setFeedback(this);
+		actions.add(action);
 	}
 
 	public Date getMarkerExtension() {

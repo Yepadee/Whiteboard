@@ -3,6 +3,9 @@ package org.microboard.whiteboard.controllers;
 import java.util.List;
 
 import org.microboard.whiteboard.dto.project.GroupProjectDto;
+import org.microboard.whiteboard.model.project.GroupProject;
+import org.microboard.whiteboard.model.project.SoloProject;
+import org.microboard.whiteboard.model.project.visitors.ProjectTemplateFiller;
 import org.microboard.whiteboard.services.project.GroupProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +31,9 @@ public class GroupProjectController extends ProjectController<GroupProjectDto> {
 	
 	@GetMapping("/edit_group_project/{id}")
 	public String editProject(Model model, @PathVariable Long id) {
-		GroupProjectDto editProject = groupProjectService.getGroupProjectDto(id);
-		model.addAttribute("groupProjectDto", editProject);
-		model.addAttribute("path", editGroupProjectPath + id);
+		ProjectTemplateFiller templateFiller = new ProjectTemplateFiller(model);
+		GroupProject project = groupProjectService.getProject(id);
+		project.accept(templateFiller);
 		return newGroupProjectPath;
 	}
 
@@ -104,6 +107,7 @@ public class GroupProjectController extends ProjectController<GroupProjectDto> {
 	
 	@PostMapping(value="/new_group_project", params= {"editProject"})
 	public String editProject(Model model, GroupProjectDto projectDto) {
+		System.out.println("Edit");
 		if (! projectDto.validate()) {
 			model.addAttribute("error", projectDto.getErrorMsg());
 		} else {

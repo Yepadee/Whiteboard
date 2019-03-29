@@ -6,14 +6,14 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.microboard.whiteboard.dto.task.FileDto;
+import org.microboard.whiteboard.model.log.TaskAction;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.TaskUploadPathGen;
 import org.microboard.whiteboard.repositories.task.TaskRepository;
+import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -26,6 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class TaskService {
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	public Task getTask(long id) throws RuntimeException{
 		Optional<Task> maybeTask = taskRepository.findById(id);
@@ -52,6 +55,7 @@ public class TaskService {
 					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
 					Files.write(fileNameAndPath, file.getBytes());
 					task.addFile(path + file.getOriginalFilename());
+					task.addAction(new TaskAction(userService.getLoggedInUser(), "submitted \"" + file.getOriginalFilename() + "\""));
 				}
 				else {
 					System.out.println("File size exceeded for file " + path + file.getOriginalFilename());
@@ -59,8 +63,8 @@ public class TaskService {
 				}
 			}
 		}
-		
 		task.setTxtSubmission(comments);
+		task.addAction(new TaskAction(userService.getLoggedInUser(), "changed comments to \"" + comments + "\""));
 		updateTask(task);
 	}
 	
@@ -73,6 +77,7 @@ public class TaskService {
 				File file = new File(filePath);
 				file.delete();
 				task.removeFile(filePath);
+				task.addAction(new TaskAction(userService.getLoggedInUser(), "deleted \"" + filename + "\""));
 				updateTask(task);
 				break;
 			}

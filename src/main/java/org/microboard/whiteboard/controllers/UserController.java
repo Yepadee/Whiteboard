@@ -8,6 +8,7 @@ import org.microboard.whiteboard.model.task.visitors.TaskAccessValidator;
 import org.microboard.whiteboard.model.task.visitors.TaskFeedbackAccessValidator;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.HeaderGetter;
+import org.microboard.whiteboard.model.user.visitors.LogGetter;
 import org.microboard.whiteboard.model.user.visitors.OutstandingTaskGetter;
 import org.microboard.whiteboard.model.user.visitors.SidebarGetter;
 import org.microboard.whiteboard.services.task.TaskService;
@@ -86,7 +87,6 @@ public class UserController {
 		task.accept(accessValidator);
 		if (accessValidator.getResult()) {
 //			System.out.println("if");
-
 			taskService.deleteFile(id, filename);
 			return "redirect:/user/tasks/" + id;
 		} else {
@@ -113,10 +113,10 @@ public class UserController {
 	
 	@GetMapping("/log")
 	public String getLogPage(Model model) {
-		OutstandingTaskGetter otg = new OutstandingTaskGetter();
+		LogGetter logGetter = new LogGetter();
 		User user = userService.getLoggedInUser();
-		user.accept(otg);
-		return otg.getResult();
+		user.accept(logGetter);
+		return logGetter.getResult();
 	}
 	
 	

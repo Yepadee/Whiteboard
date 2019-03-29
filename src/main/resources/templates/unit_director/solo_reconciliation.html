@@ -48,6 +48,7 @@
 
 			<div th:each="feedback : ${task.feedback}">
 				<div class="row">
+<<<<<<< HEAD
 					<div class="col-sm-10 table-wrapper">
 						<p class="sub-title" th:text="Feedback"></p>
 						<p class="font-bold">Marker Name: <span class="font-normal" th:text="${feedback.key.userName}"></span></p>
@@ -56,6 +57,10 @@
 						<label for="mark">Mark: </label>
 						<span if="marks" th:text="${feedback.value.marks}"></span>
 						<br><br>
+
+						<label for="public">Public?</label>
+						<span id="public" th:text="${feedback.value.visible}"></span>
+
 						<div class="form-horizontal">
 							<p class="font-bold">Feedback Files</p>
 							<table class="table panel panel-default" id="table">
