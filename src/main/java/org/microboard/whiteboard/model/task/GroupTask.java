@@ -1,5 +1,6 @@
 package org.microboard.whiteboard.model.task;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,6 +79,24 @@ public class GroupTask extends Task {
 	@Override
 	public void accept(TaskVisitor v) {
 		v.visit(this);
+	}
+	public Date getStudentDeadline()
+	{
+		if(getStudentExtension() != null)
+		{
+			return getStudentExtension();
+		}
+		return groupAssessment.getStudentDeadline();
+		 
+	}
+	public Date getMarkerDeadline()
+	{
+		if(getMarkerExtension() != null)
+		{
+			return getMarkerExtension();
+		}
+		return groupAssessment.getMarkerDeadline();
+		 
 	}
 	
 }

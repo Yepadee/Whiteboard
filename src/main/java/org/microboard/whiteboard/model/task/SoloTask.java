@@ -1,5 +1,7 @@
 package org.microboard.whiteboard.model.task;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -47,6 +49,24 @@ public class SoloTask extends Task {
 	@Override
 	public void accept(TaskVisitor v) {
 		v.visit(this);
+	}
+	public Date getStudentDeadline()
+	{
+		if(getStudentExtension() != null)
+		{
+			return getStudentExtension();
+		}
+		return soloAssessment.getStudentDeadline();
+		 
+	}
+	public Date getMarkerDeadline()
+	{
+		if(getMarkerExtension() != null)
+		{
+			return getMarkerExtension();
+		}
+		return soloAssessment.getMarkerDeadline();
+		 
 	}
 
 }

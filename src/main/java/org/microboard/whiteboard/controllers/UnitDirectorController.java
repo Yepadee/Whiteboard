@@ -1,13 +1,20 @@
 package org.microboard.whiteboard.controllers;
 
 import java.io.IOException;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.dto.user.SelectedUsersDto;
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.visitors.EditPathGetter;
+import org.microboard.whiteboard.model.project.visitors.ProjectModelFiller;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.ReconciliationPageGetter;
 import org.microboard.whiteboard.model.user.UnitDirector;
@@ -21,9 +28,13 @@ import org.microboard.whiteboard.services.user.StudentService;
 import org.microboard.whiteboard.services.user.UnitDirectorService;
 import org.microboard.whiteboard.services.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,6 +72,7 @@ public class UnitDirectorController {
 		UnitDirector unitDirector = unitDirectorService.getLoggedInUser();
 		model.addAttribute("projects", unitDirector.getMyProjects());
 		model.addAttribute("assignedProjects", unitDirector.getAssignedProjects());
+		
 		return "unit_director/view_projects";
 	}
 	
@@ -69,7 +81,63 @@ public class UnitDirectorController {
 		Project project = projectService.getProject(id);
 		EditPathGetter epg = new EditPathGetter();
 		project.accept(epg);
+//		System.out.println(epg.getResult());
 		return "redirect:" + epg.getResult() + "/" + id;
+	}
+	
+	@GetMapping("/add_extensions/{id}")
+	public String addExtensions(@PathVariable Long id,Model model)
+	{
+		Project project = projectService.getProject(id);
+//		EditPathGetter epg = new EditPathGetter();
+//		project.accept(epg);
+//		model.addAttribute("project",project);
+		ProjectModelFiller pmf = new ProjectModelFiller(model);
+		project.accept(pmf);
+		
+		System.out.println("Entered add_extensions");
+		
+		return "unit_director/add_extensions";
+	}
+	@PostMapping("/save_extensions/student/{task_id}")
+	public String editExtensionStudent(@PathVariable Long task_id,
+		@RequestParam(name = "studentDeadline") Date date
+		/*@RequestParam("studentDeadline") 
+    	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date*/) throws IOException {
+		Task task = taskService.getTask(task_id);
+		System.out.println("reached:");
+		//Long feedbackId = taskService.getTask(task_id).getReconciledFeedback().getId();
+		task.setStudentExtension(date);
+		System.out.println(task.getStudentExtension());
+		taskService.updateTask(task);
+		return "redirect:/unit_director/add_extensions/" + task_id;
+		
+		//--------------------------------------
+		//NO ACCESS VALIDATION- TODO!
+	}
+
+	@PostMapping("/save_extensions/marker/{task_id}")
+	public String editExtensionMarker(@PathVariable Long task_id,
+		@RequestParam(name = "markerDeadline") Date date
+		/*@RequestParam("studentDeadline") 
+		@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date*/) throws IOException {
+		Task task = taskService.getTask(task_id);
+		System.out.println("reached:");
+		//Long feedbackId = taskService.getTask(task_id).getReconciledFeedback().getId();
+		task.setMarkerExtension(date);
+		System.out.println(task.getMarkerExtension());
+		taskService.updateTask(task);
+		return "redirect:/unit_director/add_extensions/" + task_id;
+		
+		//--------------------------------------
+		//NO ACCESS VALIDATION- TODO!
+	}
+
+	@InitBinder
+	protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder) {
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");   
+	    dateFormat.setLenient(false);
+	    binder.registerCustomEditor(Date.class, null,  new CustomDateEditor(dateFormat, true));
 	}
 	
 	@GetMapping("/reconciliation/{id}")

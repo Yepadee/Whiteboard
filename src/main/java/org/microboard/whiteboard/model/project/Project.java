@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.log.ProjectAction;
 import org.microboard.whiteboard.model.log.TaskAction;
 import org.microboard.whiteboard.model.project.visitors.ProjectVisitor;
@@ -102,5 +103,6 @@ public abstract class Project {
 		actions.add(action);
 	}
 	public abstract void accept(ProjectVisitor v);
+//	public abstract List<Assessment> getAssessment();
 
 }

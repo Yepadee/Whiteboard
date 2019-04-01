@@ -33,6 +33,10 @@
 								<td><a
 									th:href="@{/unit_director/edit_project/{projectId}(projectId=${project.id})}"
 									class="btn btn-primary btn-xs">Edit</a></td>
+								<td><a
+								th:href="@{/unit_director/add_extensions/{projectId}(projectId=${project.id})}"
+								class="btn btn-primary btn-xs">Extensions</a></td>
+									
 							</tr>
 						</tbody>
 					</table>
@@ -53,9 +57,30 @@
 								<td><a
 									th:href="@{/unit_director/edit_project/{projectId}(projectId=${project.id})}"
 									class="btn btn-primary btn-xs">Edit</a></td>
+								
 							</tr>
 						</tbody>
 					</table>
+					<!--  <h5>Change deadlines</h5>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>Project ID</th>
+								<th>Project Name</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="project: ${user.assignedProjects}">
+								<td><span th:text="${project.id}"></span></td>
+								<td><span th:text="${project.name}"></span></td>
+								<td><a
+									th:href="@{/unit_director/edit_project/{projectId}(projectId=${project.id})}"
+									class="btn btn-primary btn-xs">Edit</a></td>
+							</tr>
+						</tbody>
+					</table>-->
+					
 				</div>
 			</div>
 		</div>

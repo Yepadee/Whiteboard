@@ -40,6 +40,7 @@ public abstract class Task {
 	private Long id;
 	
 	private Date studentExtension;
+	private Date markerExtension;
 	
 	@OneToOne(cascade = {CascadeType.ALL}, orphanRemoval = true)
 	private Feedback reconciledFeedback = new Feedback(this);
@@ -170,7 +171,14 @@ public abstract class Task {
 		actions.add(action);
 	}
 	
+	public abstract Date getStudentDeadline();
 	public abstract Assessment getAssessment();
 	
 	public abstract void accept(TaskVisitor v);
+	public Date getMarkerExtension() {
+		return markerExtension;
+	}
+	public void setMarkerExtension(Date markerExtension) {
+		this.markerExtension = markerExtension;
+	}
 }
