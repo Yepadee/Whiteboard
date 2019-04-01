@@ -80,6 +80,7 @@ public class GroupTask extends Task {
 	public void accept(TaskVisitor v) {
 		v.visit(this);
 	}
+	
 	public Date getStudentDeadline()
 	{
 		if(getStudentExtension() != null)

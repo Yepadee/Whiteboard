@@ -49,7 +49,7 @@
 			<form th:action="@{/assessor/feedback/{taskId}(taskId=${task.id})}" method="post" id="feedbackSubmissionForm" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-sm-11 table-wrapper">
-					<div class="form-group">
+						<div class="form-group">
 							<label class="col-sm-2" for="comments">Feedback: </label>
 							<div class="col-sm-8">
 								<textarea class="form-control" id="comments" name="comments" th:text="${feedback.txtFeedback}" form="feedbackSubmissionForm" rows="5" placeholder="Feedback"></textarea>
@@ -62,8 +62,7 @@
 								<input type="file" name="files" class="" multiple>
 							</div>
 						</div>
-					
-					
+										
 						<br>
 						<div class="clearfix"></div>
 						<div class="form-group">

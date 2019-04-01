@@ -188,5 +188,34 @@ $(document).ready(function(){
 	//$(".chosen-single span").text("Select");
 	//$('#example-single').multiselect();
 	$(".chosen").chosen();
+	
+	
+	
+	//Update the status =>orange if a student/user submitted => green if unit-director submitted
+	$.each($(".submission-status-under-process"), function(){
+    	if($(this).text() == "completed"){
+    		$(this).parent().removeClass("task-defult");
+    		$(this).parent().addClass("task-under-process");
+    	}
+    });
+	
+	$.each($(".submission-status-number"), function(){
+		var txt = $(this).text();
+		var x1 = txt.substr(0, txt.indexOf('/'));
+		var x2 = txt.substr((txt.indexOf('/')+1),txt.length);
+		
+		if(x1>0 && x1==x2){
+			$(this).parent().removeClass("task-defult");
+    		$(this).parent().addClass("task-under-process");
+		}		
+	});
+	
+	$.each($(".submission-status-completed"), function(){
+    	if($(this).text() == "completed"){
+    		$(this).parent().removeClass("task-defult");
+    		$(this).parent().removeClass("task-under-process");
+    		$(this).parent().addClass("task-completed");
+    	}
+    });
 });
 

@@ -94,50 +94,71 @@ public class ProjectEditApplyer {
 
 				// Editing an existing assessment
 				if (!newUnit) {
-					SoloAssessment assessment = findSoloAssessmentById(oldAssessments, assessmentId).get();
-					// If new unit, remove all tasks and add new tasks for members of the new
-					// cohort.
-					if (newUnit) {
-						assessment.getTasks().removeAll(assessment.getTasks());
-						for (User user : project.getUnit().getCohort()) {
-							SoloTask newTask = new SoloTask();
-							user.addTask(newTask);
-							assessment.addTask(newTask);
-
-						}
-					}
-
-					// Add markers to each task
-					for (SoloTask soloTask : assessment.getTasks()) {
-						List<Assessor> oldMarkers = soloTask.getMarkers();
-						Set<Assessor> presentMarkers = new HashSet<>();
-
-						User accountable = soloTask.getAccountable();
-						for (MarkerUserDto markerDto : editAssessment.getSoloMarkerDtos()) {
-							Assessor marker = markerDto.getMarker();
-
-							if (markerDto.getToMark().contains(accountable)) {
-								if (!soloTask.getMarkers().contains(marker)) {
-									soloTask.addMarker(marker);
-									editSummary.add("asigned marker \"" + marker.getName() + "\" to \""
-											+ soloTask.getAccountable().getName() + "\" on assessment " + "\""
-											+ assessment.getName() + "\"");
-								}
-								presentMarkers.add(marker);
+					Optional<SoloAssessment> maybeAssessment = findSoloAssessmentById(oldAssessments, assessmentId);
+					if (maybeAssessment.isPresent()) {
+						SoloAssessment assessment = findSoloAssessmentById(oldAssessments, assessmentId).get();
+						// If new unit, remove all tasks and add new tasks for members of the new
+						// cohort.
+						if (newUnit) {
+							assessment.getTasks().removeAll(assessment.getTasks());
+							for (User user : project.getUnit().getCohort()) {
+								SoloTask newTask = new SoloTask();
+								user.addTask(newTask);
+								assessment.addTask(newTask);
+	
 							}
 						}
-
-						List<Assessor> removedMarkers = new ArrayList<>(oldMarkers);
-						removedMarkers.removeAll(presentMarkers);
-						for (Assessor assessor : removedMarkers) {
-							soloTask.removeMarker(assessor);
-							editSummary.add("removed marker \"" + assessor.getName() + "\" from marking \""
-									+ soloTask.getAccountable().getName() + "\" on assessment " + "\""
-									+ assessment.getName() + "\"");
+	
+						// Add markers to each task
+						for (SoloTask soloTask : assessment.getTasks()) {
+							List<Assessor> oldMarkers = soloTask.getMarkers();
+							Set<Assessor> presentMarkers = new HashSet<>();
+	
+							User accountable = soloTask.getAccountable();
+							for (MarkerUserDto markerDto : editAssessment.getSoloMarkerDtos()) {
+								Assessor marker = markerDto.getMarker();
+	
+								if (markerDto.getToMark().contains(accountable)) {
+									if (!soloTask.getMarkers().contains(marker)) {
+										soloTask.addMarker(marker);
+										editSummary.add("asigned marker \"" + marker.getName() + "\" to \""
+												+ soloTask.getAccountable().getName() + "\" on assessment " + "\""
+												+ assessment.getName() + "\"");
+									}
+									presentMarkers.add(marker);
+								}
+							}
+	
+							List<Assessor> removedMarkers = new ArrayList<>(oldMarkers);
+							removedMarkers.removeAll(presentMarkers);
+							for (Assessor assessor : removedMarkers) {
+								soloTask.removeMarker(assessor);
+								editSummary.add("removed marker \"" + assessor.getName() + "\" from marking \""
+										+ soloTask.getAccountable().getName() + "\" on assessment " + "\""
+										+ assessment.getName() + "\"");
+							}
 						}
+						presentAssessments.add(assessment);
+						applyCoreAssessmentEdits(assessment, editAssessment);
+					} else {
+						// Adding a new assessment (save as new)
+						editSummary.add("Added new assessment \"" + editAssessment.getName() + "\"");
+						SoloAssessment assessment = new SoloAssessment();
+						for (User user : project.getUnit().getCohort()) {
+							SoloTask soloTask = new SoloTask();
+							assessment.addTask(soloTask);
+
+							for (MarkerUserDto markerDto : editAssessment.getSoloMarkerDtos()) {
+								Assessor marker = markerDto.getMarker();
+								if (markerDto.getToMark().contains(user)) {
+									soloTask.addMarker(marker);
+								}
+							}
+							soloTask.setAccountable(user);
+						}
+						project.addAssessment(assessment);
+						applyCoreAssessmentEdits(assessment, editAssessment);
 					}
-					presentAssessments.add(assessment);
-					applyCoreAssessmentEdits(assessment, editAssessment);
 				}
 			} else {
 				// Adding a new assessment
@@ -193,35 +214,47 @@ public class ProjectEditApplyer {
 			if (groupId != null) {
 				Optional<Group> maybeGroup = findByGroupId(project.getGroups(), groupId);
 				if (!newUnit) {
-					Group oldGroup = maybeGroup.get();
-					presentGroups.add(oldGroup);
-					List<User> toRemove = new ArrayList<>();
-					for (User member : oldGroup.getMembers()) {
-						if (!newGroup.getMembers().contains(member)) {
-							toRemove.add(member);
-						}
-					}
-
-					for (User user : toRemove) {
-						oldGroup.getMembers().remove(user);
-						user.getGroups().remove(oldGroup);
-						for (GroupTask groupTask : oldGroup.getTasks()) {
-							groupTask.removeIndividualFeedback(user);
-						}
-						editSummary.add("removed user \"" + user.getName() + "\" from  \"" + oldGroup.getName() + "\"");
-
-					}
-
-					for (User member : newGroup.getMembers()) {
-						if (!oldGroup.getMembers().contains(member)) {
-							editSummary.add("added user \"" + member.getName() + "\" to  \"" + oldGroup.getName() + "\"");
-							oldGroup.addMember(member);
-							for (GroupTask groupTask : oldGroup.getTasks()) {
-								groupTask.addIndividualFeedback(member);
+					if (maybeGroup.isPresent()) {
+						Group oldGroup = maybeGroup.get();
+						oldGroup.setName(newGroup.getName());
+						presentGroups.add(oldGroup);
+						List<User> toRemove = new ArrayList<>();
+						for (User member : oldGroup.getMembers()) {
+							if (!newGroup.getMembers().contains(member)) {
+								toRemove.add(member);
 							}
 						}
+	
+						for (User user : toRemove) {
+							oldGroup.getMembers().remove(user);
+							user.getGroups().remove(oldGroup);
+							for (GroupTask groupTask : oldGroup.getTasks()) {
+								groupTask.removeIndividualFeedback(user);
+							}
+							editSummary.add("removed user \"" + user.getName() + "\" from  \"" + oldGroup.getName() + "\"");
+	
+						}
+	
+						for (User member : newGroup.getMembers()) {
+							if (!oldGroup.getMembers().contains(member)) {
+								editSummary.add("added user \"" + member.getName() + "\" to  \"" + oldGroup.getName() + "\"");
+								oldGroup.addMember(member);
+								for (GroupTask groupTask : oldGroup.getTasks()) {
+									groupTask.addIndividualFeedback(member);
+								}
+							}
+						}
+					} else {
+						Group group = new Group();
+						group.setName(newGroup.getName());
+						group.setMembers(newGroup.getMembers());
+						for (User member : newGroup.getMembers()) {
+							member.getGroups().add(group);
+						}
+						project.addGroup(group);
+						editSummary.add("added group \"" + group.getName() + "\"");
 					}
-				}
+				} 
 			} else {
 				for (User member : newGroup.getMembers()) {
 					member.getGroups().add(newGroup);
@@ -248,39 +281,64 @@ public class ProjectEditApplyer {
 			if (assessmentId != null) {
 				// Editing an existing assessment
 				if (!newUnit) {
-					GroupAssessment assessment = findByGroupAssessmentId(oldAssessments, assessmentId).get();
-					// Add markers to each task
-					for (GroupTask groupTask : assessment.getTasks()) {
-						List<Assessor> oldMarkers = groupTask.getMarkers();
-						Set<Assessor> presentMarkers = new HashSet<>();
-
-						Group accountable = groupTask.getAccountable();
-						for (MarkerGroupDto markerDto : editAssessment.getGroupMarkerDtos()) {
-							Assessor marker = markerDto.getMarker();
-							for (Group group : markerDto.getToMark()) {
-								if (group.getId() == accountable.getId()) {
-									if (!groupTask.getMarkers().contains(marker)) {
-										groupTask.addMarker(marker);
-										editSummary.add("asigned marker \"" + marker.getName() + "\" to \""
-												+ groupTask.getAccountable().getName() + "\"");
+					Optional<GroupAssessment> maybeAssessment = findByGroupAssessmentId(oldAssessments, assessmentId);
+					if (maybeAssessment.isPresent()) {
+						GroupAssessment assessment = maybeAssessment.get();
+						// Add markers to each task
+						for (GroupTask groupTask : assessment.getTasks()) {
+							List<Assessor> oldMarkers = groupTask.getMarkers();
+							Set<Assessor> presentMarkers = new HashSet<>();
+	
+							Group accountable = groupTask.getAccountable();
+							for (MarkerGroupDto markerDto : editAssessment.getGroupMarkerDtos()) {
+								Assessor marker = markerDto.getMarker();
+								for (Group group : markerDto.getToMark()) {
+									if (group.getId() == accountable.getId()) {
+										if (!groupTask.getMarkers().contains(marker)) {
+											groupTask.addMarker(marker);
+											editSummary.add("asigned marker \"" + marker.getName() + "\" to \""
+													+ groupTask.getAccountable().getName() + "\"");
+										}
+										presentMarkers.add(marker);
+										break;
 									}
-									presentMarkers.add(marker);
-									break;
+								}
+							}
+	
+							List<Assessor> removedMarkers = new ArrayList<>(oldMarkers);
+							removedMarkers.removeAll(presentMarkers);
+							for (Assessor assessor : removedMarkers) {
+								groupTask.removeMarker(assessor);
+								editSummary.add("removed marker \"" + assessor.getName() + "\" from marking \""
+										+ groupTask.getAccountable().getName() + "\"");
+							}
+	
+						}
+						presentAssessments.add(assessment);
+						applyCoreAssessmentEdits(assessment, editAssessment);
+					} else {
+						// Adding a new assessment (save as new)
+						editSummary.add("Added new assessment \"" + editAssessment.getName() + "\"");
+						GroupAssessment assessment = new GroupAssessment();
+						for (Group group : project.getGroups()) {
+							GroupTask groupTask = new GroupTask();
+
+							for (User member : group.getMembers()) {
+								groupTask.addIndividualFeedback(member);
+							}
+							assessment.addTask(groupTask);
+							group.addTask(groupTask);
+
+							for (MarkerGroupDto markerDto : editAssessment.getGroupMarkerDtos()) {
+								Assessor marker = markerDto.getMarker();
+								if (markerDto.getToMark().contains(group)) {
+									groupTask.addMarker(marker);
 								}
 							}
 						}
-
-						List<Assessor> removedMarkers = new ArrayList<>(oldMarkers);
-						removedMarkers.removeAll(presentMarkers);
-						for (Assessor assessor : removedMarkers) {
-							groupTask.removeMarker(assessor);
-							editSummary.add("removed marker \"" + assessor.getName() + "\" from marking \""
-									+ groupTask.getAccountable().getName() + "\"");
-						}
-
+						project.addAssessment(assessment);
+						applyCoreAssessmentEdits(assessment, editAssessment);
 					}
-					presentAssessments.add(assessment);
-					applyCoreAssessmentEdits(assessment, editAssessment);
 				}
 			} else {
 				// Adding a new assessment

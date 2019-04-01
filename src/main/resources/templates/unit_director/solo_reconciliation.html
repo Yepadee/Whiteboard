@@ -17,18 +17,15 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper table-orange">
-					<p>Assessment Name: <span  class="font-bold" th:text="${task.assessment.name}"></span></p>
-					<p>Student Name: <span class="font-bold" th:text="${task.accountable.name}"></span></p>
-					<div th:if="${task.txtSubmission != null}">
-						<label for="comments">Student Comments</label>
-						<p id="comments" th:text="${task.txtSubmission}"></p>
-					</div>
+				<div class="col-sm-10 table-wrapper table-orange">
+					<p class="sub-sub-title" >Assessment Name: <span  class="font-normal" th:text="${task.assessment.name}"></span></p>
+					<p class="sub-sub-title" >Student Name: <span class="font-normal" th:text="${task.accountable.name}"></span></p>
+					<p class="sub-sub-title" th:if="${task.txtSubmission != null}"><span>Student Comment: </span><span class="font-normal" id="comments" th:text="${task.txtSubmission}"></span></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-8 table-wrapper table-orange">
-					<h2>Student Files:</h2>
+				<div class="col-sm-10 table-wrapper table-orange">
+					<p class="font-bold">Student Files:</p>
 					<table class="table panel panel-default" id="table">
 						<thead>
 							<tr>
@@ -51,16 +48,21 @@
 
 			<div th:each="feedback : ${task.feedback}">
 				<div class="row">
-					<div class="col-sm-8 table-wrapper">
-						<h1 th:text="Feedback"></h1>
-						<h2 th:text="${feedback.key.userName}"></h2>
-						<label for="comments">Comments</label>
-						<span id="comments" th:text="${feedback.value.txtFeedback}"></span>
-						<br>
-						<label for="mark">Mark</label>
+<<<<<<< HEAD
+					<div class="col-sm-10 table-wrapper">
+						<p class="sub-title" th:text="Feedback"></p>
+						<p class="font-bold">Marker Name: <span class="font-normal" th:text="${feedback.key.userName}"></span></p>
+						<p class="font-bold" >Marker Comment: <span class="font-normal" th:text="${feedback.value.txtFeedback}"></span></p>
+						
+						<label for="mark">Mark: </label>
 						<span if="marks" th:text="${feedback.value.marks}"></span>
+						<br><br>
+
+						<label for="public">Public?</label>
+						<span id="public" th:text="${feedback.value.visible}"></span>
+
 						<div class="form-horizontal">
-							<h2>Feedback Files:</h2>
+							<p class="font-bold">Feedback Files</p>
 							<table class="table panel panel-default" id="table">
 								<thead>
 									<tr>
@@ -87,20 +89,51 @@
 
 			<form th:action="@{/unit_director/reconciliation/{taskId}(taskId=${task.id})}" method="post" id="reconciliationSubmissionForm" enctype="multipart/form-data">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h1>Reconciliation</h1>
-
-					<label for="comments">Comments</label>
-					<textarea id="comments" name="comments" th:text="${task.reconciledFeedback.txtFeedback}" rows="3" placeholder="Add a comment"></textarea>
-					<label for="marks">Marks</label>
-					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${task.reconciledFeedback.marks}" placeholder="Mark" required></input>
-					<input type="file" name="files" multiple> <input
-						type="submit" value="Submit" />
+				<div class="col-sm-10 table-wrapper">
+					<p class="sub-title">Reconciliation</p>
+					<div class="form-group">
+						<label class="col-sm-2" for="comments">Comment: </label>
+						<div class="col-sm-8">
+							<textarea class="form-control" id="comments" name="comments" th:text="${task.reconciledFeedback.txtFeedback}" rows="5" placeholder="Please add a comment here"></textarea>
+						</div>
+					</div>
+					<div class="clearfix"></div><br>
+					<div class="form-group">
+						<div class="col-sm-4 col-sm-push-2">
+							<input type="file" name="files" class="" multiple>
+						</div>
+					</div>
+					<br>
+					<div class="clearfix"></div>
+					<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+					</div>
+					<br><br>
+					<div class="form-group">
+						<div class="col-sm-8 col-sm-push-2">
+							<label for="marks">Marks </label>
+							<input  type="number" min="0" max="21" id="marks" name="marks" th:value="${task.reconciledFeedback.marks}"  required></input>
+							<span>out of 21</span>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<br>
+					
+					<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-4 col-sm-push-2">
+							<input type="submit" value="Submit" class="btn btn-blue">
+						</div>
+					</div>
+					
 				</div>
 			</div>
 			</form>
 			<div class="row">
-				<div class="col-sm-8 table-wrapper"> 
+				<div class="col-sm-10 table-wrapper"> 
 				<form name="deleteFeedback" class="form-horizontal" th:action="@{/unit_director/reconciliation/delete/{id}(id=${task.id})}" method="post">
 					<h2>Reconciliation Files:</h2>
 					<table class="table panel panel-default" id="table">
@@ -123,6 +156,7 @@
 					</form>
 				</div>
 			</div>
+			<br><br>
 		</div>
 	</div>
 </body>
