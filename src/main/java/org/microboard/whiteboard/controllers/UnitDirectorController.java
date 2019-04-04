@@ -17,6 +17,7 @@ import org.microboard.whiteboard.model.project.visitors.EditPathGetter;
 import org.microboard.whiteboard.model.project.visitors.ProjectModelFiller;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.task.visitors.ReconciliationPageGetter;
+import org.microboard.whiteboard.model.task.visitors.TaskProjectGetter;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.UserPermChangeValidator;
@@ -110,7 +111,9 @@ public class UnitDirectorController {
 		task.setStudentExtension(date);
 		System.out.println(task.getStudentExtension());
 		taskService.updateTask(task);
-		return "redirect:/unit_director/add_extensions/" + task_id;
+		TaskProjectGetter tpg = new TaskProjectGetter();
+		task.accept(tpg);
+		return "redirect:/unit_director/add_extensions/" + tpg.getResult().getId();
 		
 		//--------------------------------------
 		//NO ACCESS VALIDATION- TODO!
