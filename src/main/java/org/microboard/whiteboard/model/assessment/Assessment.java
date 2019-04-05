@@ -29,6 +29,8 @@ public abstract class Assessment {
 	
 	private int weight;
 
+	private Boolean marksReleased;
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,6 +77,14 @@ public abstract class Assessment {
 
 	public void setWeight(int weight) {
 		this.weight = weight;
+	}
+
+	public Boolean getMarksReleased() {
+		return marksReleased;
+	}
+
+	public void setMarksReleased(Boolean marksReleased) {
+		this.marksReleased = marksReleased;
 	}
 	
 	
