@@ -52,10 +52,19 @@ public class TaskService {
 		for (MultipartFile file : files) {
 			if (!file.isEmpty() && !file.equals(null)) {
 				if (file.getSize() < 524288000) {
-					Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
-					Files.write(fileNameAndPath, file.getBytes());
-					task.addFile(path + file.getOriginalFilename());
-					task.addAction(new TaskAction(userService.getLoggedInUser(), "submitted \"" + file.getOriginalFilename() + "\""));
+					if (!task.getFileNames().contains(path + file.getOriginalFilename())) {
+						Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
+						Files.write(fileNameAndPath, file.getBytes());
+						task.addFile(path + file.getOriginalFilename());
+						task.addAction(new TaskAction(userService.getLoggedInUser(), "submitted \"" + file.getOriginalFilename() + "\""));
+					}
+					else {
+						System.out.println("The file " + path + file.getOriginalFilename() + " already exists and will be replaced.");
+						Path fileNameAndPath = Paths.get(path,file.getOriginalFilename());
+						Files.delete(fileNameAndPath);
+						Files.write(fileNameAndPath, file.getBytes());
+						task.addAction(new TaskAction(userService.getLoggedInUser(), "submitted \"" + file.getOriginalFilename() + "\""));
+					}
 				}
 				else {
 					System.out.println("File size exceeded for file " + path + file.getOriginalFilename());
