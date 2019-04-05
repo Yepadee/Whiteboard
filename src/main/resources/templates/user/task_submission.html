@@ -68,6 +68,9 @@
 				</tbody>
 			</table>
 			</form>
+			<div th:if="${task.assessment.marksReleased}">
+				<span th:text="${task.reconciledFeedback.marks}"></span>
+			</div>
 			</div>
 			</div>
 		</div>

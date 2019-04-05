@@ -19,7 +19,6 @@ import javax.persistence.OneToMany;
 
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.model.log.FeedbackAction;
-import org.microboard.whiteboard.model.log.TaskAction;
 import org.microboard.whiteboard.model.task.Task;
 import org.microboard.whiteboard.model.user.Assessor;
 

@@ -48,14 +48,13 @@
 
 			<div th:each="feedback : ${task.feedback}">
 				<div class="row">
-<<<<<<< HEAD
 					<div class="col-sm-10 table-wrapper">
 						<p class="sub-title" th:text="Feedback"></p>
 						<p class="font-bold">Marker Name: <span class="font-normal" th:text="${feedback.key.userName}"></span></p>
 						<p class="font-bold" >Marker Comment: <span class="font-normal" th:text="${feedback.value.txtFeedback}"></span></p>
 						
 						<label for="mark">Mark: </label>
-						<span if="marks" th:text="${feedback.value.marks}"></span>
+						<span id="marks" th:text="${feedback.value.marks}"></span>
 						<br><br>
 
 						<label for="public">Public?</label>

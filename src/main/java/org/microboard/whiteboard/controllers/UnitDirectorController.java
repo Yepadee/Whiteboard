@@ -6,11 +6,13 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.microboard.whiteboard.dto.task.FileDto;
 import org.microboard.whiteboard.dto.user.SelectedUsersDto;
+import org.microboard.whiteboard.model.assessment.Assessment;
 import org.microboard.whiteboard.model.feedback.Feedback;
 import org.microboard.whiteboard.model.project.Project;
 import org.microboard.whiteboard.model.project.visitors.EditPathGetter;
@@ -21,6 +23,7 @@ import org.microboard.whiteboard.model.task.visitors.TaskProjectGetter;
 import org.microboard.whiteboard.model.user.UnitDirector;
 import org.microboard.whiteboard.model.user.User;
 import org.microboard.whiteboard.model.user.visitors.UserPermChangeValidator;
+import org.microboard.whiteboard.services.assessment.AssessmentService;
 import org.microboard.whiteboard.services.project.ProjectService;
 import org.microboard.whiteboard.services.task.FeedbackService;
 import org.microboard.whiteboard.services.task.TaskService;
@@ -60,6 +63,9 @@ public class UnitDirectorController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private AssessmentService assessmentService;
 	
 	@Autowired
 	private TaskService taskService;
@@ -134,6 +140,15 @@ public class UnitDirectorController {
 		
 		//--------------------------------------
 		//NO ACCESS VALIDATION- TODO!
+	}
+	
+	@PostMapping("/release_marks/{project_id}/{assessment_id}")
+	public String releaseMarks(@PathVariable Long project_id, @PathVariable Long assessment_id, @RequestParam(name = "release_marks") Optional<?> releaseMarks) {
+		Assessment assessment = assessmentService.getAssessment(assessment_id).get();
+		assessment.setMarksReleased(releaseMarks.isPresent());
+		assessmentService.updateAssessment(assessment);
+		System.out.println("release marks");
+		return "redirect:/unit_director/add_extensions/" + project_id;
 	}
 
 	@InitBinder

@@ -19,6 +19,11 @@
 				<div class="col-sm-8 table-wrapper">
 					<h5>My Projects</h5>
 					<div th:each="assessment : ${project.assessments}">
+						<span th:text="${assessment.name}"></span>
+						<form th:action="@{/unit_director/release_marks/{projectId}/{assessmentId}(projectId=${assessment.project.id}, assessmentId=${assessment.id})}" method="post">
+						<label for="visible">Release Marks?</label>
+						<input id="release_marks" type="checkbox" name="release_marks" th:checked="${assessment.marksReleased}" onChange="this.form.submit()">
+						</form>
 						<table class="table panel panel-default" id="table">
 							<thead>
 								<tr>
@@ -33,14 +38,14 @@
 									<td><span th:text="${task.accountable.name}"></span></td>
 									
 									<td>
-									<form th:action="@{/unit_director/save_extensions/student/{taskId}(taskId=${task.id})}" method="post" enctype="multipart/form-data">
+									<form th:action="@{/unit_director/save_extensions/student/{taskId}(taskId=${task.id})}" method="post">
 									<!-- <span th:text="${task.studentExtension}"> xcsgs</span>-->
 									<input class="form-control" th:text="${task.studentExtension}" type="datetime-local" id="studentDeadline" name="studentDeadline">
 									<button type="submit" name="save"  class="btn btn-lightred" onclick="return confirm('Are you sure you want to change this deadline?');">Save</button>
 									</form>	
 									</td>
 									<td>
-									<form th:action="@{/unit_director/save_extensions/marker/{taskId}(taskId=${task.id})}" method="post" enctype="multipart/form-data">
+									<form th:action="@{/unit_director/save_extensions/marker/{taskId}(taskId=${task.id})}" method="post">
 									<!-- <span th:text="${task.studentExtension}"> xcsgs</span>-->
 									<input class="form-control" th:text="${task.markerExtension}" type="datetime-local" id="markerDeadline" name="markerDeadline">
 									<button type="submit" name="save"  class="btn btn-lightred" onclick="return confirm('Are you sure you want to change this deadline?');">Save</button>
