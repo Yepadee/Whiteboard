@@ -36,7 +36,7 @@ import org.microboard.whiteboard.model.user.Assessor;
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Task {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_gen")
 	private Long id;
 	
 	private Date studentExtension;

@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 @DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
 public abstract class Assessment {
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "assessment_gen")
 	private Long id;
 	
 	private String name;
