@@ -58,7 +58,7 @@
 						<span id="comments" th:text="${feedback.value.txtFeedback}"></span>
 						<br>
 						<label for="mark">Mark</label>
-						<span if="marks" th:text="${feedback.value.marks}"></span>
+						<span id="marks" th:text="${feedback.value.marks}"></span>
 						<div class="form-horizontal">
 							<h2>Feedback Files:</h2>
 							<table class="table panel panel-default" id="table">
@@ -84,7 +84,46 @@
 					</div>
 				</div>
 			</div>
-
+			<div th:each="groupFeedback : ${task.groupMemberFeedback}">
+				
+				<div th:each="feedback : ${groupFeedback.value.feedback}">
+					<div class="row">
+						<div class="col-sm-8 table-wrapper">
+							<h1 th:text="Feedback"></h1>
+							<span th:text="${groupFeedback.key.name}"></span>
+							<h2 th:text="${feedback.key.userName}"></h2>
+							<label for="comments">Comments</label>
+							<span id="comments" th:text="${feedback.value.txtFeedback}"></span>
+							<br>
+							<label for="mark">Mark</label>
+							<span id="marks" th:text="${feedback.value.marks}"></span>
+							<div class="form-horizontal">
+								<h2>Feedback Files:</h2>
+								<table class="table panel panel-default" id="table">
+									<thead>
+										<tr>
+											<th>File</th>
+											<th>Size</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<!--  -->
+										<tr th:each="file: ${feedback.value.fileInfo}">
+											<td><a
+												th:href="@{/assessor/feedback/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+													<span th:text="${file.fileName}"></span>
+											</a></td>
+											<td><span th:text="${file.fileSize}"></span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<form th:action="@{/unit_director/reconciliation/{taskId}(taskId=${task.id})}" method="post" id="reconciliationSubmissionForm" enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-sm-8 table-wrapper">
