@@ -106,10 +106,10 @@ public class UnitDirectorController {
 		/*@RequestParam("studentDeadline") 
     	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date date*/) throws IOException {
 		Task task = taskService.getTask(task_id);
-		System.out.println("reached:");
+		//System.out.println("reached:");
 		//Long feedbackId = taskService.getTask(task_id).getReconciledFeedback().getId();
 		task.setStudentExtension(date);
-		System.out.println(task.getStudentExtension());
+		//System.out.println(task.getStudentExtension());
 		taskService.updateTask(task);
 		TaskProjectGetter tpg = new TaskProjectGetter();
 		task.accept(tpg);
@@ -130,7 +130,9 @@ public class UnitDirectorController {
 		task.setMarkerExtension(date);
 		System.out.println(task.getMarkerExtension());
 		taskService.updateTask(task);
-		return "redirect:/unit_director/add_extensions/" + task_id;
+		TaskProjectGetter tpg = new TaskProjectGetter();
+		task.accept(tpg);
+		return "redirect:/unit_director/add_extensions/" + tpg.getResult().getId();
 		
 		//--------------------------------------
 		//NO ACCESS VALIDATION- TODO!
