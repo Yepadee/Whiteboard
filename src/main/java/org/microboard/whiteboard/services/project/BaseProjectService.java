@@ -74,6 +74,7 @@ public abstract class BaseProjectService<T extends Project> {
 	
 	public void updateProject(T project) {
 		projectRepository.save(project);
+		createProjectUploadFolders(project);
 	}
 	
 	public void deleteProject(long id) {

@@ -29,24 +29,22 @@ public class ProjectFolderCreator extends ProjectVisitor {
 
 	@Override
 	public void visit(GroupProject project) {
-		System.out.println("Called on project " + project.getName());
+		//System.out.println("Called on project " + project.getName());
 		String path = System.getProperty("user.dir") + "/uploads/";
 		path += project.getUnit().getUnitCode()+"/";
-		File f = new File(path);
-		if (!f.exists()) {
-			path += project.getId() + "/";
-			List<Group> groups = project.getGroups();
-			for (Group group : groups) {
-				String groupPath = path + group.getName() + "/";
-				for (GroupAssessment assessment : project.getAssessments()) {
-					String feedbackPath = groupPath + assessment.getId() + "/feedback/";
-					for (User user : group.getMembers()) {
-						System.out.println("Created folder " + feedbackPath + user.getName());
-						new File(feedbackPath + user.getName() + "/").mkdirs();
-					}
+		path += project.getId() + "/";
+		
+		List<Group> groups = project.getGroups();
+		for (Group group : groups) {
+			String groupPath = path + group.getName() + "/";
+			for (GroupAssessment assessment : project.getAssessments()) {
+				System.out.println("Group assessment: " + assessment.getName());
+				String feedbackPath = groupPath + assessment.getId() + "/feedback/";
+				for (User user : group.getMembers()) {
+					//System.out.println("Created folder " + feedbackPath + user.getName());
+					new File(feedbackPath + user.getName() + "/").mkdirs();
 				}
 			}
 		}
 	}
-
 }
