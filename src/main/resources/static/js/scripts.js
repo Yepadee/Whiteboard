@@ -192,6 +192,8 @@ $(document).ready(function(){
 	
 	
 	//Update the status =>orange if a student/user submitted => green if unit-director submitted
+	
+	
 	$.each($(".submission-status-under-process"), function(){
     	if($(this).text() == "completed"){
     		$(this).parent().removeClass("task-defult");

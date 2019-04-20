@@ -624,3 +624,7 @@ body {
 	font-size: 12px;
 }
 /* End of number of user selected */
+.extensions{
+	width:75%;
+	display: inline;
+}
