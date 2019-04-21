@@ -16,9 +16,9 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-12 table-wrapper">
+				<div class="col-sm-9 col-lg-12 table-wrapper">
 					<p class="sub-title">To Mark</p>
-					<table class="table panel panel-default" id="table">
+					<table class="table panel panel-default table-bordered" id="table">
 						<thead>
 							<tr>
 								<th>Project</th>
@@ -53,7 +53,7 @@
 					
 				});
 				</script>
-				<div class="col-sm-12 table-wrapper">
+				<div class="col-sm-9 col-lg-12 table-wrapper">
 					<p class="sub-title">Reconciliation</h3>
 					<div th:each="project : ${user.myProjects}">
 					<p class="sub-sub-title"><span class="glyphicon glyphicon-triangle-right"></span>Projects (<span class="sub-sub-sub-title" th:text="${project.name}"></span> )</p>
@@ -114,7 +114,7 @@
 						</table>
 					</div>
 					</div>
-					<div class="col-sm-12 table-wrapper">
+					<div class="col-sm-9 col-lg-12 table-wrapper">
 
 					<p class="sub-title">Submissions</p>
 					<table class="table panel panel-default" id="table">

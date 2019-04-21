@@ -16,6 +16,7 @@ body {
   margin: 0;
   font-family: "Lato", sans-serif;
   background: #f2f8f9;
+  overflow-x: hidden;
 }
 
 /* Buttons */
@@ -221,6 +222,7 @@ body {
   height: 100%;
   overflow: auto;
   font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
 }
 
 .sidebar .logo{
@@ -294,24 +296,30 @@ body {
 .sidebar a.new_project:hover {
   background-color: #039b50;
 }
-#new_project{
+#new_project,
+#new_project-mobileView{
 	margin-top:-10px;
 }
 
-#new_project>li>a{
+#new_project>li>a,
+#new_project-mobileView>li>a{
 	margin-bottom: 0;
 	padding-left: 20px;
 	font-size: 15px;
 }
-#new_project>li:last-child>a{
+#new_project>li:last-child>a,
+#new_project-mobileView>li:last-child>a{
 	padding-top: 5px;
 	margin-top: 0;
 }
 #new_project>li>a:hover,
-#new_project>li>a:focus{
+#new_project>li>a:focus,
+#new_project-mobileView>li>a:hover,
+#new_project-mobileView>li>a:focus{
 	color: #00ce68;
 }
-#new_project>li>a .glyphicon{
+#new_project>li>a .glyphicon,
+#new_project-mobileView>li>a .glyphicon{
 	font-size: 11px;
 }
 .sidebar a.allProject{

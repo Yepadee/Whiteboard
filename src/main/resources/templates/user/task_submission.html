@@ -17,7 +17,7 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-11 table-wrapper">
+				<div class="col-sm-9 col-lg-12 table-wrapper">
 					<form th:action="@{/user/tasks/{taskId}(taskId=${task.id})}" method="post" id="submissionForm" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="col-sm-2" for="comments">Comment: </label>
@@ -42,7 +42,7 @@
 						</div>
 					</form>
 				</div>
-				<div class="col-sm-11 table-wrapper">
+				<div class="col-sm-9 col-lg-12 table-wrapper">
 				<form name="deleteFile" class="form-horizontal" th:action="@{/user/tasks/delete/{id}(id=${task.id})}" method="post">
 				
 					<h4 class="font-bold">Uploaded files:</h4>

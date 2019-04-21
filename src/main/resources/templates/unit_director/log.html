@@ -17,11 +17,12 @@
 		<div class="container outstanding-tasks">
 			<div class="row">
 			
-				<div class="col-sm-8 table-wrapper">
-				<h5>Project Log (My Projects)</h5>
+				<div class="col-sm-9 col-lg-12 table-wrapper">
+				<h4>Project Log (My Projects)</h4>
 				<div th:each="project: ${user.myProjects}">
-				<h3><span th:text="${project.name}"></span></h3>
-					<h3>UnitDirector Actions</h3>
+				<br><br>
+					<p class="font-bold" style="text-decoration: underline;"><span th:text="${project.name}"></span></p>
+					<p class="font-bold">UnitDirector Actions</p>
 					<table class="table panel panel-default" id="table" >
 						<thead>
 							<tr>
@@ -39,10 +40,10 @@
 							</tr>
 						</tbody>
 					</table>
-					
+					<br><br>
 				<div th:each="assessment: ${project.assessments}">
-				<h3><span th:text="${assessment.name}"></span></h3>
-					<h3>Student Actions</h3>
+					<p class="font-bold" style="text-decoration: underline;"><span th:text="${assessment.name}"></span></p>
+					<p class="font-bold">Student Actions</p>
 					<table class="table panel panel-default" id="table" >
 						<thead>
 							<tr>
@@ -60,8 +61,8 @@
 							</tr>
 						</tbody>
 					</table>
-					
-					<h3>Assessor Feedback Actions</h3>
+					<br><br>
+					<p class="font-bold">Assessor Feedback Actions</p>
 					
 					<table class="table panel panel-default" id="table">
 						<thead>
@@ -90,11 +91,12 @@
 				</div>	
 				</div>
 				
-				<div class="col-sm-8 table-wrapper">
+				<div class="col-sm-9 col-lg-12 table-wrapper">
 				<h5>Project Log (Assigned Projects)</h5>
 				<div th:each="project: ${user.assignedProjects}">
-				<h3><span th:text="${project.name}"></span></h3>
-					<h3>UnitDirector Actions</h3>
+				<br><br>
+					<p class="font-bold" style="text-decoration: underline;"><span th:text="${project.name}"></span></p>
+					<p class="font-bold">UnitDirector Actions</h3>
 					<table class="table panel panel-default" id="table" >
 						<thead>
 							<tr>
@@ -112,10 +114,10 @@
 							</tr>
 						</tbody>
 					</table>
-					
+					<br><br>
 				<div th:each="assessment: ${project.assessments}">
-				<h3><span th:text="${assessment.name}"></span></h3>
-					<h3>Student Actions</h3>
+					<p class="font-bold" style="text-decoration: underline;"><span th:text="${assessment.name}"></span></p>
+					<p class="font-bold">Student Actions</p>
 					<table class="table panel panel-default" id="table" >
 						<thead>
 							<tr>
@@ -133,8 +135,8 @@
 							</tr>
 						</tbody>
 					</table>
-					
-					<h3>Assessor Feedback Actions</h3>
+					<br><br>
+					<p class="font-bold">Assessor Feedback Actions</p>
 					
 					<table class="table panel panel-default" id="table">
 						<thead>
@@ -162,11 +164,12 @@
 				</div>
 				</div>	
 						
-				<div class="col-sm-8 table-wrapper">
+				<div class="col-sm-9 col-lg-12 table-wrapper">
 				<h5>Feedback Log</h5>
 				<div th:each="feedback: ${user.taskFeedback}">
-				<h3><span th:text="${feedback.task.assessment.project.name}"></span>: <span th:text="${feedback.task.assessment.name}"></span></h3>
-					<h3>My Actions</h3>
+					<br><br>
+					<p class="font-bold" style="text-decoration: underline;"><span th:text="${feedback.task.assessment.project.name}"></span>: <span th:text="${feedback.task.assessment.name}"></span></p>
+					<p class="font-bold">My Actions</p>
 					<table class="table panel panel-default" id="table" >
 						<thead>
 							<tr>
@@ -183,7 +186,7 @@
 						</tbody>
 					</table>
 					
-					<h3><span th:text="${feedback.task.accountable.name}"></span>'s Actions</h3>
+					<p class="font-bold"><span th:text="${feedback.task.accountable.name}"></span>'s Actions</p>
 					<table class="table panel panel-default" id="table" >
 						<thead>
 							<tr>
@@ -203,7 +206,7 @@
 					</div>
 				</div>
 				
-				<div class="col-sm-8 table-wrapper">
+				<div class="col-sm-9 col-lg-12 table-wrapper">
 				<h5>My Actions (Tasks)</h5>
 				<div th:each="task: ${user.allTasks}">
 				<h3><span th:text="${task.assessment.project.name}"></span>: <span th:text="${task.assessment.name}"></span></h3>

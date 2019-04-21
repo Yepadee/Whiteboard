@@ -82,7 +82,7 @@
 	                    	<input type="hidden" th:field="*{groups[__${g.index}__].id}" th:value="*{groups[__${g.index}__].id}">
 	                        <div class="markerWrapper">
 	                        	<div class="form-group">
-                                	<div class="col-sm-3 col-sm-push-2">
+                                	<div class="col-xs-5 col-xm-push-7 col-sm-3 col-sm-push-2">
                                     	<div class="form-group">
                                         	<label class="control-label" for="groupName">Name:</label>
 											<input class="form-control" placeholder="Group Name" type="text" id="groupName" th:field="*{groups[__${g.index}__].name}" name="groupName">
@@ -169,7 +169,7 @@
                                      	<label for="deadline">Weight:</label>
                                      </div>
                                      <div class="form-group">
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3 col-md-2">
                                         	<div class="input-group">
 	                                            <span class="input-group-addon">%</span>
 	                                            <input class="form-control" th:field="*{{assessments[__${a.index}__].weight}}" type="number" min="0" max="100" id="weight">
