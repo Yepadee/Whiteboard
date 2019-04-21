@@ -3,7 +3,66 @@
 	
 }
 @media screen and (max-width: 767px) {
-	
+.right-side, .sidebar{
+	display:none;
+}
+.mobile-container-menu {
+  display:block;
+  background-color: #fff;
+  padding-top: 5px;
+  border-bottom: 1px solid #8f2222;
+}
+
+.mobile-container-topnav {
+  overflow: hidden;
+  position: relative;
+}
+
+.mobile-container-topnav #myLinks {
+  padding:0;
+  padding-top:10px;
+  margin-top:10px;
+  border-top: 1px solid #8f2222;
+  display: none;
+  background: #8f2222;
+}
+
+.mobile-container-topnav a {
+  color: #cacaca;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  display: block;
+  padding-top: 13px;
+}
+
+.mobile-container-topnav a.icon {
+  background: #fff;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #570000;
+  border: 1px solid #570000;
+  padding: 14px 16px; 
+}
+
+.mobile-container-topnav .logo {
+  width:200px;
+  height:50px;
+  background-color: #fff;
+  padding-left: 5px;
+  padding-bottom: 5px;
+}
+
+.mobile-container-topnav .new_project{
+	color: #fff;
+	font-size: 16px;
+}
+.mobile-container-topnav .new_project:active,
+.mobile-container-topnav .new_project:focus,
+.mobile-container-topnav .new_project:hover{
+	color: #fff;
 }
 @media screen and (max-width: 700px) {
    

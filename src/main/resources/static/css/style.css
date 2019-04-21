@@ -337,49 +337,49 @@ body {
 /* End Of the Sidebar*/
 
 /* Top Navbar */
-.navbar{
+.right-side .navbar{
   min-height: 65px;
 }
-.navbar-inverse{
+.right-side .navbar-inverse{
   background: #570000;
 }
 .navbar-right{
 	margin-right: 20px;
 }
-.navbar-fixed-bottom, .navbar-fixed-top {
+.navbar-fixed-bottom,.right-side .navbar-fixed-top {
     left: 250px;
 }
-.navbar-nav>li>a {
+.right-side .navbar-nav>li>a {
     padding-top: 25px;
     padding-bottom: 25px;
     font-size: 13px;
     color: #fff;
   }
-  .navbar-inverse .navbar-nav >li>a{
-    color: #fff;
-  }
-  .navbar-inverse .navbar-left >li:active,
-  .navbar-inverse .navbar-left >li:hover,
-  .navbar-inverse .navbar-left > .active > a,
-  .navbar-inverse .navbar-left > .active > a:hover,
-  .navbar-inverse .navbar-left > .active > a:active
-  .navbar-inverse .navbar-left > .active > a:focus{
-    background: #971212;
-  }
-  .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    padding-top: 15px;
+.right-side .navbar-inverse .navbar-nav >li>a{
+   color: #fff;
 }
-.navbar-nav>li>.dropdown-menu{
+.right-side .navbar-inverse .navbar-left >li:active,
+.right-side .navbar-inverse .navbar-left >li:hover,
+.right-side .navbar-inverse .navbar-left > .active > a,
+.right-side .navbar-inverse .navbar-left > .active > a:hover,
+.right-side .navbar-inverse .navbar-left > .active > a:active
+.right-side .navbar-inverse .navbar-left > .active > a:focus{
+  background: #971212;
+}
+ .right-side .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+   padding-top: 15px;
+}
+.right-side .navbar-nav>li>.dropdown-menu{
   background: #971212;
   border-radius: 5px;
 }
-.navbar-nav .dropdown-menu>li>a{
+.right-side .navbar-nav .dropdown-menu>li>a{
   color: #fff;
   padding: 10px 10px;
   padding-right: 60px;
 }
-.navbar-nav .dropdown-menu>li>a:hover,
-.navbar-nav .dropdown-menu>li>a:focus{
+.right-side .navbar-nav .dropdown-menu>li>a:hover,
+.right-side .navbar-nav .dropdown-menu>li>a:focus{
   background: #993535;
   color: #fff;
 }
@@ -425,6 +425,13 @@ body {
 	color: #fff;
 }
 /* End of the Top Navbar */
+
+/* Top Navbar for Mobile View */
+.mobile-container-menu{
+	display: none;
+}
+/* End of Top Navbar for Mobile View */
+
 
 /* Content */
 .content {
