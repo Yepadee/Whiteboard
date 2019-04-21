@@ -61,7 +61,8 @@ body{
   position: relative;
 }
 
-.mobile-container-topnav #myLinks {
+.mobile-container-topnav #myLinks,
+.mobile-container-topnav #myLinks-student {
   padding:0;
   padding-top:10px;
   margin-top:10px;
