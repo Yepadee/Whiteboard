@@ -25,6 +25,7 @@
 								<th>Assessment</th>
 								<th>Deadline</th>
 								<th>Status</th>
+								<th>Marks Released?</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -34,6 +35,7 @@
 								<td><span th:text="${task.assessment.name}"></span></td>
 								<td><span th:text="${task.studentDeadline}" class="warning"></span></td>
 								<td><span th:text="${task.status}"></span></td>
+								<td><input type="checkbox" th:checked="${task.assessment.marksReleased}" onclick="return false;"/><span ></span>
 								<td><a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}"
 									class="btn btn-primary btn-xs">View</a></td>
 							</tr>

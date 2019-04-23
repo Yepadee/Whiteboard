@@ -68,8 +68,35 @@
 				</tbody>
 			</table>
 			</form>
+			</div>
+			
+			<div class="col-sm-11 table-wrapper">
 			<div th:if="${task.assessment.marksReleased}">
+				<h4 class="font-bold">Feedback:</h4>
+				<span>Marks: </span>
 				<span th:text="${task.reconciledFeedback.marks}"></span>
+				
+				<h4 class="font-bold">Feedback files:</h4>
+					<table class="table panel panel-default" id="table">
+						<thead>
+							<tr>
+								<th>File</th>
+								<th>Size</th>
+								<th></th>
+							</tr>
+						</thead>
+					<tbody>
+						<tr th:each="file: ${fileinfo}">
+							<td><a th:href="@{/user/tasks/download/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}">
+								<span th:text="${file.fileName}"></span></a></td>
+							<td><span th:text="${file.fileSize}"></span></td>
+							<!-- <td><a th:href="@{/user/tasks/delete/{taskId}/{filename}(taskId=${task.id},filename=${file.fileName})}"
+							 class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></td>-->	
+							<td><button type="submit" name="deleteFile" th:value="${file.fileName}"  class="btn btn-lightred" onclick="return confirm('Are you sure you want to delete this item?');">Delete</button><td/>
+								
+						</tr>
+				</tbody>
+				
 			</div>
 			</div>
 			</div>
