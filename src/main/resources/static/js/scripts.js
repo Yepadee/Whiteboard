@@ -7,6 +7,7 @@ $('#example-single').multiselect({
 
 
 $(document).ready(function(){
+		
 	$("#flip1").click(function(){$("#panel1").slideToggle("slow");});
 	$("#flip2").click(function(){$("#panel2").slideToggle("slow");});
 	$("#flip3").click(function(){$("#panel3").slideToggle("slow");});
@@ -192,6 +193,8 @@ $(document).ready(function(){
 	
 	
 	//Update the status =>orange if a student/user submitted => green if unit-director submitted
+	
+	
 	$.each($(".submission-status-under-process"), function(){
     	if($(this).text() == "completed"){
     		$(this).parent().removeClass("task-defult");

@@ -1,5 +1,36 @@
-<div class="sidebar" th:fragment="sidebar">
+<div th:fragment="sidebar">
+	<!-- Navigation Menu for Mobile View -->
+	<div class="mobile-container-menu">
+	
+	<!-- Top Navigation Menu -->
+	  <div class="mobile-container-topnav">
+	  	<img  th:src="@{/img/logo.png}" class="logo">
+	    <div id="myLinks-student">
+	      
+			<div class="clearfix"></div>
+			<a href="/" class="allProject">
+				<span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp; Outstanding Tasks
+			</a>
+			<div class="clearfix"></div>
+			<a href="/user/log">
+				<span class="glyphicon glyphicon-edit"></span> <span class="sidebar-element">View Log</span>
+			</a>
 
+			<a class="logout" href="/logout"> <span
+				class="glyphicon glyphicon-log-out"></span> <span class="">Log
+					Out</span>
+			</a>
+			
+	    </div>
+	    <a href="javascript:void(0);" class="glyphicon glyphicon-align-justify icon" onclick="myFunction()">
+	      <i class="fa fa-bars"></i>
+	    </a>
+	  </div>
+	</div>
+	
+	
+	
+	<div class="sidebar">
 	<img th:src="@{/img/logo.png}" src="./img/logo.png" class="logo">
 	<div class="nav-profile">
 		<div class="profile-image">
@@ -24,16 +55,8 @@
 	<a href="/" class="allProject"><span
 		class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp; Outstanding
 		Tasks</a>
-	<div class="clearfix"></div>
-	<div class="form-group">
-		<hr class="col-sm-12" />
-	</div>
-	<div class="clearfix"></div>
-    <br>
-
-	<a href="/"> <span class="glyphicon glyphicon-briefcase"></span> <span
-		class="sidebar-element">Completed Tasks</span>
-	</a> <a href="/user/log"> <span
+	<br>
+	<a href="/user/log"> <span
 		class="glyphicon glyphicon-edit"></span> <span class="sidebar-element">View
 			Log</span>
 	</a>
@@ -46,4 +69,15 @@
 			Out</span>
 	</a>
 
+</div>
+<script type="text/javascript">
+		function myFunction() {
+		  var myLinks = document.getElementById("myLinks-student");
+		  if (myLinks.style.display === "block") {
+			  myLinks.style.display = "none";
+		  } else {
+			  myLinks.style.display = "block";
+		  }
+		}
+	</script>
 </div>

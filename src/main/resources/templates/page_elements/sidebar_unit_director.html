@@ -1,60 +1,123 @@
-<div class="sidebar" th:fragment="sidebar">
-  <img  th:src="@{/img/logo.png}" class="logo">
-	  <div class="nav-profile">
-	    <div class="profile-image">
-	      <img th:src="@{/img/no-profile-photo.jpg}" alt="profile image" class="img-circle">
+<div th:fragment="sidebar">
+	
+	<!-- Navigation Menu for Mobile View -->
+	<div class="mobile-container-menu">
+	
+	<!-- Top Navigation Menu -->
+	  <div class="mobile-container-topnav">
+	  	<img  th:src="@{/img/logo.png}" class="logo">
+	    <div id="myLinks">
+	      <a href="#new_project-mobileView" data-toggle="collapse" aria-expanded="false" class="new_project toggle">New Project &nbsp;&nbsp; <span  class="glyphicon glyphicon-chevron-right" id="arrow"></span></a>
+	       <ul class="collapse list-unstyled" id="new_project-mobileView">
+	           <li class="sub_new_project"><a th:href="@{/unit_director/new_solo_project}"><span  class="glyphicon glyphicon-chevron-right"></span> Solo Project</a></li>
+	           <li class="sub_new_project"><a th:href="@{/unit_director/new_group_project}"><span  class="glyphicon glyphicon-chevron-right"></span> Group Project</a></li>
+	       </ul>
+	       <div class="clearfix"></div>	       
+		   <hr class="col-sm-12" />
+		   <div class="clearfix"></div>
+			<a href="/" class="allProject"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp; Outstanding Tasks</a>
+		   <div class="clearfix"></div>
+		   <a href="/unit_director/projects">
+		    <span class="glyphicon glyphicon-globe"></span>
+		    <span class="sidebar-element">View Projects</span>
+		  </a>
+	
+	       <a href="/">
+		  	<span class="glyphicon glyphicon-briefcase"></span>
+		  	<span class="sidebar-element">Completed Tasks</span>
+		  </a>
+		  
+		  <a href="/user/log">
+		    <span class="glyphicon glyphicon-edit"></span>
+		    <span class="sidebar-element">View Log</span>
+		  </a>
+	
+		  <a href="/unit_director/manage_perms">
+		    <span class="glyphicon glyphicon-cog"></span>
+		    <span class="sidebar-element">Manage permissions</span> 
+		  </a>
+		  <a class="logout" href="/logout">
+			  <span class="glyphicon glyphicon-log-out"></span>
+			    <span class="">Log Out</span>
+		  </a>
+		  
 	    </div>
-	    <div class="text-wrapper">
-	      <div class="profile">
-		      <p class="profile-name"><span th:text="${user.userName}"></span></p>
-		      <small class="designation text-muted">Unit Director</small>
-		      <span class="glyphicon glyphicon-asterisk"></span>
-	      </div>
-	    </div>
+	    <a href="javascript:void(0);" class="glyphicon glyphicon-align-justify icon" onclick="myFunction2()">
+	      <i class="fa fa-bars"></i>
+	    </a>
 	  </div>
-	  
-	  <a href="#new_project" data-toggle="collapse" aria-expanded="false" class="new_project toggle">New Project &nbsp;&nbsp; <span  class="glyphicon glyphicon-chevron-right" id="arrow"></span></a>
-       <ul class="collapse list-unstyled" id="new_project">
-           <li class="sub_new_project"><a th:href="@{/unit_director/new_solo_project}"><span  class="glyphicon glyphicon-chevron-right"></span> Solo Project</a></li>
-           <li class="sub_new_project"><a th:href="@{/unit_director/new_group_project}"><span  class="glyphicon glyphicon-chevron-right"></span> Group Project</a></li>
-       </ul>
-       <div class="clearfix"></div>
-       <div class="form-group">
-			<hr class="col-sm-12" />
-		</div>
-		<div class="clearfix"></div>
-		<a href="/" class="allProject"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp; Outstanding Tasks</a>
-	  <div class="clearfix"></div>
-       <div class="form-group">
-			<hr class="col-sm-12" />
-		</div>
-		<div class="clearfix"></div>
-		
-	  
-	  <a href="/unit_director/projects">
-	    <span class="glyphicon glyphicon-globe"></span>
-	    <span class="sidebar-element">View Projects</span>
-	  </a>
+	</div>
 
-	  <a href="/">
-	  	<span class="glyphicon glyphicon-briefcase"></span>
-	  	<span class="sidebar-element">Completed Tasks</span>
-	  </a>
-	  
-	  <a href="/user/log">
-	    <span class="glyphicon glyphicon-edit"></span>
-	    <span class="sidebar-element">View Log</span>
-	  </a>
-
-	  <a href="/unit_director/manage_perms">
-	    <span class="glyphicon glyphicon-cog"></span>
-	    <span class="sidebar-element">Manage permissions</span> 
-	  </a>
-	  <div class="form-group">
-			<hr class="col-sm-12"/>
-	  </div>
-	  <a class="logout" href="/logout">
-		  <span class="glyphicon glyphicon-log-out"></span>
-		    <span class="">Log Out</span>
-	  </a>
+	<div class="sidebar">
+	  <img  th:src="@{/img/logo.png}" class="logo">
+		  <div class="nav-profile">
+		    <div class="profile-image">
+		      <img th:src="@{/img/no-profile-photo.jpg}" alt="profile image" class="img-circle">
+		    </div>
+		    <div class="text-wrapper">
+		      <div class="profile">
+			      <p class="profile-name"><span th:text="${user.userName}"></span></p>
+			      <small class="designation text-muted">Unit Director</small>
+			      <span class="glyphicon glyphicon-asterisk"></span>
+		      </div>
+		    </div>
+		  </div>
+		  
+		  <a href="#new_project" data-toggle="collapse" aria-expanded="false" class="new_project toggle">New Project &nbsp;&nbsp; <span  class="glyphicon glyphicon-chevron-right" id="arrow"></span></a>
+	       <ul class="collapse list-unstyled" id="new_project">
+	           <li class="sub_new_project"><a th:href="@{/unit_director/new_solo_project}"><span  class="glyphicon glyphicon-chevron-right"></span> Solo Project</a></li>
+	           <li class="sub_new_project"><a th:href="@{/unit_director/new_group_project}"><span  class="glyphicon glyphicon-chevron-right"></span> Group Project</a></li>
+	       </ul>
+	       <div class="clearfix"></div>
+	       <div class="form-group">
+				<hr class="col-sm-12" />
+			</div>
+			<div class="clearfix"></div>
+			<a href="/" class="allProject"><span class="glyphicon glyphicon-tasks"></span>&nbsp;&nbsp; Outstanding Tasks</a>
+		  <div class="clearfix"></div>
+	       <div class="form-group">
+				<hr class="col-sm-12" />
+			</div>
+			<div class="clearfix"></div>
+			
+		  
+		  <a href="/unit_director/projects">
+		    <span class="glyphicon glyphicon-globe"></span>
+		    <span class="sidebar-element">View Projects</span>
+		  </a>
+	
+		  <a href="/">
+		  	<span class="glyphicon glyphicon-briefcase"></span>
+		  	<span class="sidebar-element">Completed Tasks</span>
+		  </a>
+		  
+		  <a href="/user/log">
+		    <span class="glyphicon glyphicon-edit"></span>
+		    <span class="sidebar-element">View Log</span>
+		  </a>
+	
+		  <a href="/unit_director/manage_perms">
+		    <span class="glyphicon glyphicon-cog"></span>
+		    <span class="sidebar-element">Manage permissions</span> 
+		  </a>
+		  <div class="form-group">
+				<hr class="col-sm-12"/>
+		  </div>
+		  <a class="logout" href="/logout">
+			  <span class="glyphicon glyphicon-log-out"></span>
+			    <span class="">Log Out</span>
+		  </a>
+	</div>
+	
+	<script type="text/javascript">
+		function myFunction2() {
+		  var myLinks = document.getElementById("myLinks");
+		  if (myLinks.style.display === "block") {
+			  myLinks.style.display = "none";
+		  } else {
+			  myLinks.style.display = "block";
+		  }
+		}
+	</script>
 </div>
+
