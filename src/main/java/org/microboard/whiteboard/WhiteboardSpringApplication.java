@@ -80,6 +80,7 @@ public class WhiteboardSpringApplication {
 			for (int i = 1; i <= numUsers; i ++) {
 				User s = new Student();
 				s.setUserName("User " + i);
+				s.setPassword("test");
 				userService.addUser(s);
 				unit1.addUser(s);
 			}
@@ -96,6 +97,7 @@ public class WhiteboardSpringApplication {
 			for (int i = numUsers + 1; i <= numUsers * 2; i ++) {
 				User s = new Student();
 				s.setUserName("User " + i);
+				s.setPassword("test");
 				userService.addUser(s);
 				unit2.addUser(s);
 			}
