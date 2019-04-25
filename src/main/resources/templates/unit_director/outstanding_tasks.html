@@ -36,20 +36,15 @@
 								<td><span th:text="${feedback.task.assessment.name}"></span></td>
 								<td><span th:text="${feedback.task.accountable.name}"></span></td>
 								<td><span th:text="${feedback.task.markerDeadline}" class="warning"></span></td>
-								<td><span th:text="${feedback.task.status}"></span></td>
-								<td><span th:text="${feedback.status}"></span></td>
+								<td class="submission-status-under-process"><span th:text="${feedback.task.status}"></span></td>
+								<td class="submission-status-completed"><span th:text="${feedback.status}"></span></td>
 								<td><a th:href="@{/assessor/feedback/{taskId}(taskId=${feedback.task.id})}"
 									class="btn btn-primary btn-xs">View</a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-				<script type="text/javascript">
-				$(document).ready(function(){
-					
-					
-				});
-				</script>
+				
 				<div class="col-sm-9 col-lg-12 table-wrapper">
 					<p class="sub-title">Reconciliation</h3>
 					<div th:each="project : ${user.myProjects}">
@@ -73,7 +68,7 @@
 									<td><span th:text="${assessment.name}"></span></td>
 									<td><span th:text="${task.accountable.name}"></span></td>
 									<td><span th:text="${task.status}"></span></td>
-									<td class="submission-status-completed"><span th:text="${task.reconciledFeedback.status}"></span></td>
+									<td class="submission-status-completed" ><span th:text="${task.reconciledFeedback.status}"></span></td>
 									<td class="submission-status-number"><span th:text="${task.feedbackSubmitted}"></span>/<span th:text="${task.numMarkers}"></span></td>
 									<td><a th:href="@{/unit_director/reconciliation/{taskId}(taskId=${task.id})}"
 										class="btn btn-primary btn-xs">View</a></td>
@@ -100,8 +95,8 @@
 								<tr th:each="task : ${assessment.tasks}">
 									<td><span th:text="${assessment.name}"></span></td>
 									<td><span th:text="${task.accountable.name}"></span></td>
-									<td><span th:text="${task.status}"></span></td>
-									<td><span th:text="${task.reconciledFeedback.status}"></span></td>
+									<td class="submission-status-under-process"><span th:text="${task.status}"></span></td>
+									<td class="submission-status-completed"><span th:text="${task.reconciledFeedback.status}"></span></td>
 									<td><span th:text="${task.feedbackSubmitted}"></span>/<span th:text="${task.numMarkers}"></span></td>
 									<td><a th:href="@{/unit_director/reconciliation/{id}(id=${task.id})}"
 										class="btn btn-primary btn-xs">View</a></td>
@@ -129,7 +124,7 @@
 								<td><span th:text="${task.assessment.project.name}"></span></td>
 								<td><span th:text="${task.assessment.name}"></span></td>
 								<td><span th:text="${task.studentDeadline}" class="warning"></span></td>
-								<td><span th:text="${task.status}"></span></td>
+								<td class="submission-status-completed" ><span th:text="${task.status}"></span></td>
 								<td><a th:href="@{/user/tasks/{taskId}(taskId=${task.id})}"
 									class="btn btn-primary btn-xs">View</a></td>
 							</tr>
