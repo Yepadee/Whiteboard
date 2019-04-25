@@ -9,7 +9,7 @@
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="nav navbar-nav navbar-left">
-					<h3 th:text = "${task.accountable.name}" ></h3>
+					<h3> Feedback Submission - <span th:text = "${task.accountable.name}"></span> </h3>
 				</div>
 			</div>
 		</nav>
@@ -17,18 +17,19 @@
 	<div class="content">
 		<div class="container outstanding-tasks">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h1 th:text="${task.assessment.name}"></h1>
-
+				<div class="col-sm-11 table-wrapper table-orange">
+					<p class="sub-sub-title" >Assessment Name: <span  class="font-normal" th:text="${task.assessment.name}"></span></p>
 					<div th:if="${task.txtSubmission != null}">
-						<label for="comments">Group Comments</label>
-						<p id="comments" th:text="${task.txtSubmission}"></p>
+						<label for="comments" class="sub-sub-title" >Group Comments</label>
+						<p class="sub-sub-title font-normal" id="comments" th:text="${task.txtSubmission}"></p>
 					</div>
+					
 				</div>
+			
 			</div>
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h2>Group Files:</h2>
+				<div class="col-sm-11 table-wrapper table-orange">
+					<p class="sub-sub-title" >Group Files:</p>
 					<table class="table panel panel-default" id="table">
 						<thead>
 							<tr>
@@ -50,26 +51,55 @@
 			</div>
 			<form th:action="@{/assessor/feedback/{taskId}(taskId=${task.id})}" method="post" id="feedbackSubmissionForm" enctype="multipart/form-data">
 			<div class="row">
-				<div class="col-sm-8 table-wrapper">
-					<h1 th:text="Feedback"></h1>
-
-					<label for="comments">Comments</label>
-					<textarea id="comments" name="comments" th:text="${feedback.txtFeedback}" rows="3" placeholder="Add a comment"></textarea>
-					<label for="marks">Marks</label>
-					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${feedback.marks}" placeholder="Mark" required></input>
+				<div class="col-sm-11 table-wrapper">
+					<div class="form-group">
+						<label class="col-sm-2" for="comments">Feedback: </label>
+						<div class="col-sm-8">
+							<textarea class="form-control" id="comments" name="comments" th:text="${feedback.txtFeedback}" form="feedbackSubmissionForm" rows="5" placeholder="Feedback"></textarea>
+						</div>
+					</div>
+					<div class="clearfix"></div><br>
+					<div class="form-group">
+						<div class="col-sm-4 col-sm-push-2">
+							<input type="file" name="files" class="" multiple>
+						</div>
+					</div>	
 					<br>
-					<label for="private">Visible to Group?</label>
-					<input id="private" type="checkbox" name="private" th:value="${feedback.visible}">
+					<div class="clearfix"></div>
+					<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+					</div>
+					<br><br>
+					
+					<label for="private">Visible to Student?</label> 
+					<input id="private" type="checkbox" name="private" th:checked="${feedback.visible}"> 
 					<br>
-					<input type="file" name="files" multiple>
-					<input type="submit" value="Submit" />
+					<label class="col-sm-2" for="marks">Marks: </label>
+					<div class="col-sm-8">
+						<input type="number" min="0" max="21" id="marks" name="marks" th:value="${feedback.marks}" placeholder="Mark" required></input>
+						<span>out of 21</span>
+					</div>
+					
+					<div class="clearfix"></div>
+					<br>
+					
+					<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-4 col-sm-push-2">
+							<input type="submit" value="Submit" class="btn btn-blue">
+						</div>
+					</div>
+					
 				</div>
 			</div>
 			</form>
 			<div class="row">
-				<div class="col-sm-8 table-wrapper"> 
+				<div class="col-sm-11 table-wrapper"> 
 				<form name="deleteFeedback" class="form-horizontal" th:action="@{/assessor/feedback/delete/{id}(id=${task.id})}" method="post">
-					<h2>Feedback Files:</h2>
+					<h4 class="font-bold">Feedback Files:</h4>
 					<table class="table panel panel-default" id="table">
 						<thead>
 							<tr>
@@ -91,20 +121,56 @@
 				</div>
 			</div>
 			
+			<br><br><br>
 			<div class="row">
-				<h1>Individual member feedback</h1>
+				<h4 class="font-bold">Individual member feedback</h4>
 				<div class="col-sm-8 table-wrapper" th:each="member: ${task.accountable.members}">
-					<h3 th:text= "${member.name}"></h3>
+					<p class="sub-sub-title font-normal" th:text= "${member.name}"></p>
 					<form th:action="@{/assessor/group_feedback/{taskId}/{memberId}(taskId=${task.id}, memberId=${member.id})}" method="post" id="feedbackSubmissionForm" enctype="multipart/form-data">
-					<label for="comments">Comments</label>
-					<textarea id="comments" name="comments" rows="3" placeholder="Add a comment" th:text="${individualFeedbacks.get(member.id).txtFeedback}"></textarea>
-					<label for="marks">Marks</label>
-					<input type="number" min="0" max="21" id="marks" name="marks" th:value="${individualFeedbacks.get(member.id).marks}" placeholder="Mark" required></input>
 					
-					<label for="private">Visible to Student?</label>
-					<input id="private" type="checkbox" name="private" th:value="${individualFeedbacks.get(member.id).visible}">
-					<input type="file" name="files" multiple>
-					<input type="submit" value="Submit" />
+					
+					
+					
+					<div class="form-group">
+						<label class="col-sm-2" for="comments">Comments: </label>
+						<div class="col-sm-8">
+							<textarea class="form-control" id="comments" name="comments" th:text="${individualFeedbacks.get(member.id).txtFeedback}"  rows="5" placeholder="Comment"></textarea>
+						</div>
+					</div>
+					<div class="clearfix"></div><br>
+					<div class="form-group">
+						<div class="col-sm-4 col-sm-push-2">
+							<input type="file" name="files" class="" multiple>
+						</div>
+					</div>	
+					<br>
+					<div class="clearfix"></div>
+					<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+					</div>
+					<br><br>
+					
+					<label for="private">Visible to Student?</label> 
+					<input id="private" type="checkbox" name="private" th:value="${individualFeedbacks.get(member.id).visible}"> 
+					<br>
+					<label class="col-sm-2" for="marks">Marks: </label>
+					<div class="col-sm-8">
+						<input type="number" min="0" max="21" id="marks" name="marks" th:value="${individualFeedbacks.get(member.id).marks}" placeholder="Mark" required></input>
+						<span>out of 21</span>
+					</div>
+					
+					<div class="clearfix"></div>
+					<br>
+					
+					<div class="form-group">
+						<hr class="dottedLine col-sm-8 col-sm-push-2" />
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-4 col-sm-push-2">
+							<input type="submit" value="Submit" class="btn btn-blue">
+						</div>
+					</div>
 					</form>
 					
 					<form name="deleteIndividualFeedback" class="form-horizontal" th:action="@{/assessor/group_feedback/delete/{id}/{memberid}(id=${task.id}, memberid=${member.id})}" method="post">
