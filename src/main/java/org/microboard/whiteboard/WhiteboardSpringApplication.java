@@ -77,10 +77,11 @@ public class WhiteboardSpringApplication {
 			Unit unit1 = new Unit();
 			unit1.setUnitName("Computer Science in Society");
 			unit1.setUnitCode("COMS20003");
+			String passEnc = en.encode("test");
 			for (int i = 1; i <= numUsers; i ++) {
 				User s = new Student();
 				s.setUserName("User " + i);
-				s.setPassword(en.encode("test"));
+				s.setPassword(passEnc);
 				userService.addUser(s);
 				unit1.addUser(s);
 			}
@@ -97,7 +98,7 @@ public class WhiteboardSpringApplication {
 			for (int i = numUsers + 1; i <= numUsers * 2; i ++) {
 				User s = new Student();
 				s.setUserName("User " + i);
-				s.setPassword(en.encode("test"));
+				s.setPassword(passEnc);
 				userService.addUser(s);
 				unit2.addUser(s);
 			}

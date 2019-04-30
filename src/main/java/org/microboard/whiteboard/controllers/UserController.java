@@ -56,6 +56,13 @@ public class UserController {
 		if (accessValidator.getResult()) {
 			List<FileDto> fileinfo = task.getFileInfo();
 			model.addAttribute("fileinfo", fileinfo);
+			
+			if (task.getAssessment().getMarksReleased()) {
+				List<FileDto> feedbackFileinfo = task.getReconciledFeedback().getFileInfo();
+				model.addAttribute("feedbackFileinfo", feedbackFileinfo);
+			}
+
+			
 			model.addAttribute("task", task);
 			return taskSubmissionPage;
 		} else {

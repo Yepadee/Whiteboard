@@ -96,8 +96,10 @@ public class TaskService {
 	public ResponseEntity<Resource> downloadFile(long id, String filename) {
 		Task task = getTask(id);
 		List<String> filePaths = task.getFileNames();
+		filePaths.addAll(task.getReconciledFeedback().getFileNames());
 		for (String filepath : filePaths) {
 			String filepathWithoutPath = filepath.substring(filepath.lastIndexOf("/")+1);
+			System.out.println(filepath);
 			if (filepathWithoutPath.equals(filename)) {
 				try {
 					Path path = Paths.get(filepath);
